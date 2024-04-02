@@ -20,8 +20,8 @@ class UsersTableSeeder extends Seeder
             0 =>
                 array (
                     'id' => 1,
-                    'name' => 'Mr.Vương',
-                    'email' => 'vuongtanlong@gmail.com',
+                    'name' => 'Phạm Hồng Hải',
+                    'email' => 'phamhonghai@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,
@@ -31,8 +31,8 @@ class UsersTableSeeder extends Seeder
             1 =>
                 array (
                     'id' => 2,
-                    'name' => 'Ms.Mơ',
-                    'email' => 'mo@gmail.com',
+                    'name' => 'Nguyễn Xuân Trường',
+                    'email' => 'nguyenxuantruong@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,
@@ -42,8 +42,8 @@ class UsersTableSeeder extends Seeder
             2 =>
                 array (
                     'id' => 3,
-                    'name' => 'Mr.Thường',
-                    'email' => 'teddy.dang@cj.net',
+                    'name' => 'Nguyễn Tiến Dũng',
+                    'email' => 'nguyentiendung@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,
@@ -53,8 +53,8 @@ class UsersTableSeeder extends Seeder
             3 =>
                 array (
                     'id' => 4,
-                    'name' => 'Ms.Ngan',
-                    'email' => 'thinga.tran@gmail.com',
+                    'name' => 'Nguyễn Văn Cường',
+                    'email' => 'nguyenvancuong@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,
@@ -64,8 +64,8 @@ class UsersTableSeeder extends Seeder
             4 =>
                 array (
                     'id' => 5,
-                    'name' => 'Ms.Huong',
-                    'email' => 'huong.crossland@gmail.com',
+                    'name' => 'Bùi Thị Nụ',
+                    'email' => 'buithinu@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,
@@ -75,8 +75,8 @@ class UsersTableSeeder extends Seeder
             5 =>
                 array (
                     'id' => 6,
-                    'name' => 'Mr.Long',
-                    'email' => 'long.enerfo@gmail.com',
+                    'name' => 'Tạ Văn Toại',
+                    'email' => 'tavantoai@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,
@@ -86,8 +86,8 @@ class UsersTableSeeder extends Seeder
             6 =>
                 array (
                     'id' => 7,
-                    'name' => 'Ms.Tina',
-                    'email' => 'tina-acc@gmail.com',
+                    'name' => 'Phạm Thị Trang',
+                    'email' => 'phamthitrang@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,
@@ -97,8 +97,8 @@ class UsersTableSeeder extends Seeder
             7 =>
                 array (
                     'id' => 8,
-                    'name' => 'Ms.Ngọc',
-                    'email' => 'ngoc.samaco@gmail.com',
+                    'name' => 'Lê Thị Hồng',
+                    'email' => 'lethihong@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'email_verified_at' => null,
                     'remember_token' => null,

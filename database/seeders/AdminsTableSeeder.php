@@ -30,8 +30,8 @@ class AdminsTableSeeder extends Seeder
             1 =>
                 array (
                     'id' => 2,
-                    'name' => 'Bùi Thị Nụ',
-                    'email' => 'buithinu@honghafeed.com.vn',
+                    'name' => 'Trần Thị Bích Phương',
+                    'email' => 'tranthibichphuong@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'remember_token' => null,
                     'created_at' => Carbon::now(),
@@ -40,8 +40,8 @@ class AdminsTableSeeder extends Seeder
             2 =>
                 array (
                     'id' => 3,
-                    'name' => 'Nguyễn Xuân Hảo',
-                    'email' => 'nguyenxuanhao@honghafeed.com.vn',
+                    'name' => 'Phạm Thị Thơm',
+                    'email' => 'phamthithom@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'remember_token' => null,
                     'created_at' => Carbon::now(),
@@ -50,8 +50,18 @@ class AdminsTableSeeder extends Seeder
             3 =>
                 array (
                     'id' => 4,
-                    'name' => 'Đỗ Đức Thanh',
-                    'email' => 'doducthanh@longhaigroup.com.vn',
+                    'name' => 'Nguyễn Thị Ngọc Lan',
+                    'email' => 'nguyenthingoclan@honghafeed.com.vn',
+                    'password' => bcrypt('Hongha@123'),
+                    'remember_token' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            4 =>
+                array (
+                    'id' => 5,
+                    'name' => 'Tạ Văn Toại',
+                    'email' => 'tavantoai@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'remember_token' => null,
                     'created_at' => Carbon::now(),
