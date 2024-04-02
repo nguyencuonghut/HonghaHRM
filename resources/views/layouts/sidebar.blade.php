@@ -87,7 +87,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link {{ Request::is('admin/admins*') ? 'active' : '' }}">
+            <a href="{{route('admin.admins.index')}}" class="nav-link {{ Request::is('admin/admins*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-lock"></i>
               <p>
                 Người quản trị
