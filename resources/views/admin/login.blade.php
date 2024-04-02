@@ -59,7 +59,7 @@
       </form>
 
       <p class="mb-1">
-        <a href="{{ url('admin/password/reset') }}">Tôi quên mật khẩu</a>
+        <a href="{{ url('admin/forgot-password') }}">Tôi quên mật khẩu</a>
       </p>
     </div>
     <!-- /.card-body -->
