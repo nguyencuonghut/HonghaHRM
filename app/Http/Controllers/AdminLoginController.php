@@ -34,10 +34,16 @@ class AdminLoginController extends Controller
 
     public function handleLogin(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+        $rules = [
+            'email' => 'required|email',
+            'password' => 'required',
+        ];
+        $messages = [
+            'email.required' => 'Bạn phải nhập địa chỉ email.',
+            'email.email' => 'Email sai định dạng.',
+            'password.required' => 'Bạn phải nhập mật khẩu.',
+        ];
+        $credentials = $request->validate($rules,$messages);
 
         if (Auth::guard('admin')->attempt($credentials)) {
             $request->session()->regenerate();
