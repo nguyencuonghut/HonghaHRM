@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Department;
 use App\Models\User;
+use App\Notifications\UserCreated;
 use Datatables;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Support\Str;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminUserController extends Controller
 {
@@ -21,7 +27,8 @@ class AdminUserController extends Controller
      */
     public function create()
     {
-        //
+        $departments = Department::all()->pluck('name', 'id');
+        return view('admin.user.create', ['departments' => $departments]);
     }
 
     /**
@@ -29,7 +36,37 @@ class AdminUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255',
+            'department_id' => 'required',
+        ];
+        $messages = [
+            'name.required' => 'Bạn phải nhập tên.',
+            'name.max' => 'Tên dài quá 255 ký tự.',
+            'type.required' => 'Bạn phải nhập kiểu người dùng.',
+            'email.required' => 'Bạn phải nhập địa chỉ email.',
+            'email.email' => 'Email sai định dạng.',
+            'email.max' => 'Email dài quá 255 ký tự.',
+            'department_id.required' => 'Bạn phải chọn phòng ban.',
+        ];
+        $request->validate($rules,$messages);
+
+        $password = Str::random(8);
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = Hash::make($password);
+        $user->save();
+
+        //Create user_department pivot item
+        $user->departments()->attach([$request->department_id]);
+
+        //Send password to user's email
+        Notification::route('mail' , $user->email)->notify(new UserCreated($user->id, $password));
+
+        Alert::toast('Tạo người dùng mới thành công!', 'success', 'top-right');
+        return redirect()->route('admin.users.index');
     }
 
     /**

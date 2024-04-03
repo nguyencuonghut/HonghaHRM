@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Datatables;
 use App\Models\Department;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminDepartmentController extends Controller
 {
@@ -21,7 +22,7 @@ class AdminDepartmentController extends Controller
      */
     public function create()
     {
-        //
+        return "Tạo phòng/ban";
     }
 
     /**
@@ -29,7 +30,26 @@ class AdminDepartmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'code' => 'required|unique:departments',
+            'name' => 'required|max:255',
+        ];
+        $messages = [
+            'code.required' => 'Bạn phải nhập mã.',
+            'code.unique' => 'Mã đã tồn tại.',
+            'name.required' => 'Bạn phải nhập tên.',
+            'name.max' => 'Tên dài quá 255 ký tự.',
+        ];
+        $request->validate($rules,$messages);
+
+        //Create new Department
+        $department = new Department();
+        $department->name = $request->name;
+        $department->code = $request->code;
+        $department->save();
+
+        Alert::toast('Thêm phòng ban mới thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**

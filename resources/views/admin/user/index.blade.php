@@ -39,15 +39,15 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                @can('create-user')
+                @auth('admin')
                 <a href="{{ route('admin.users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Tạo mới</a>
-                @endcan
+                @endauth
 
-                @can('import-user')
+                @auth('admin')
                 <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_user">
                     <i class="fas fa-file-excel"></i> Import
                 </button>
-                @endcan
+                @endauth
                 <table id="users-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

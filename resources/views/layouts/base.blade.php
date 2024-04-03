@@ -25,6 +25,7 @@
 
   @yield('content')
 
+  @include('sweetalert::alert')
   @include('layouts.notification')
   @include('layouts.footer')
 
