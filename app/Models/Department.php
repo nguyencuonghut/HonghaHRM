@@ -19,6 +19,6 @@ class Department extends Model
      */
     public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'user_department');
+        return $this->belongsToMany(User::class, 'user_department')->withTimestamps();;
     }
 }
