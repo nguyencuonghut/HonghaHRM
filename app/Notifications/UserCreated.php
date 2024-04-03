@@ -42,7 +42,7 @@ class UserCreated extends Notification implements ShouldQueue
         $url = '/';
         $user = User::findOrFail($this->user_id);
         return (new MailMessage)
-                    ->subject('Kích hoạt tài khoản phần mềm Tender Honghafeed ' . $user->name)
+                    ->subject('Kích hoạt tài khoản phần mềm Honghafeed HRM ' . $user->name)
                     ->line('Xin mời kích hoạt tài khoản: ' . $user->name .  ' (' . $user->email . ')')
                     ->line('Mật khẩu: ' . $this->password)
                     ->action('Đăng nhập tài khoản của bạn', url($url))
