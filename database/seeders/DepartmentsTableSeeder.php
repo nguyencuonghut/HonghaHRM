@@ -20,7 +20,7 @@ class DepartmentsTableSeeder extends Seeder
             0 =>
                 array (
                     'id' => 1,
-                    'code' => 'BGĐ',
+                    'code' => 'GĐ',
                     'name' => 'Ban Giám Đốc',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
@@ -28,7 +28,7 @@ class DepartmentsTableSeeder extends Seeder
             1 =>
                 array (
                     'id' => 2,
-                    'code' => 'KSNB',
+                    'code' => 'KS',
                     'name' => 'Phòng Kiểm Soát Nội Bộ',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
