@@ -63,8 +63,7 @@
                                             <i class="fas fa-plus"></i>
                                         </button>
                                         <div class="controls">
-                                            <select name="department_id" id="department_id" class="form-control select2">
-                                                <option selected="selected" disabled>Chọn phòng ban</option>
+                                            <select name="department_id[]" id="department_id[]" data-placeholder="Chọn phòng ban" class="form-control select2" multiple="multiple" style="width: 100%;">
                                                 @foreach($departments as $key => $value)
                                                     <option value="{{$key}}">{{$value}}</option>
                                                 @endforeach

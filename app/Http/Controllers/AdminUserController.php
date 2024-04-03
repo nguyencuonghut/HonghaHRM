@@ -60,7 +60,7 @@ class AdminUserController extends Controller
         $user->save();
 
         //Create user_department pivot item
-        $user->departments()->attach([$request->department_id]);
+        $user->departments()->attach($request->department_id);
 
         //Send password to user's email
         Notification::route('mail' , $user->email)->notify(new UserCreated($user->id, $password));
@@ -111,6 +111,19 @@ class AdminUserController extends Controller
             })
             ->editColumn('email', function ($users) {
                 return $users->email;
+            })
+            ->editColumn('departments', function ($users) {
+                $i = 0;
+                $length = count($users->departments);
+                $departments_list = '';
+                foreach ($users->departments as $item) {
+                    if(++$i === $length) {
+                        $departments_list =  $departments_list . $item->name;
+                    } else {
+                        $departments_list = $departments_list . $item->name . ', ';
+                    }
+                }
+                return $departments_list;
             })
             ->addColumn('actions', function ($users) {
                 $action = '<a href="' . route("admin.users.edit", $users->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>

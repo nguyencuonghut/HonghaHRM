@@ -36,8 +36,8 @@ class DepartmentsTableSeeder extends Seeder
             2 =>
                 array (
                     'id' => 3,
-                    'code' => 'HCNS',
-                    'name' => 'Phòng Hành Chính Nhân Sự',
+                    'code' => 'TM',
+                    'name' => 'Phòng Thu Mua',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
