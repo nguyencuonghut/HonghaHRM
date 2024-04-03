@@ -94,6 +94,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('admin.departments.index')}}" class="nav-link {{ Request::is('admin/departments*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-sitemap"></i>
+              <p>
+                Phòng Ban
+              </p>
+            </a>
+          </li>
           @endauth
         </ul>
       </nav>

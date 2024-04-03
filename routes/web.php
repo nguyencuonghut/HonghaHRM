@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminAdminController;
+use App\Http\Controllers\AdminDepartmentController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
@@ -34,6 +35,9 @@ Route::post('/admin/reset-password', [AdminLoginController::class, 'submitResetP
 Route::name('admin.')->prefix('admin')->group(function() {
     Route::group(['middleware'=>'auth:admin'], function() {
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
+
+        Route::get('departments/data', [AdminDepartmentController::class, 'anyData'])->name('departments.data');
+        Route::resource('departments', AdminDepartmentController::class);
 
         Route::get('admins/data', [AdminAdminController::class, 'anyData'])->name('admins.data');
         Route::resource('admins', AdminAdminController::class);
