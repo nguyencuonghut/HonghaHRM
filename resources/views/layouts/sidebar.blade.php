@@ -95,7 +95,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="#" class="nav-link {{ Request::is('admin/departments*') || Request::is('admin/divisions*') ? 'active' : '' }}">
+            <a href="#" class="nav-link {{ Request::is('admin/departments*') || Request::is('admin/divisions*') || Request::is('admin/positions*')? 'active' : '' }}">
               <i class="nav-icon fas fa-sitemap"></i>
               <p>
                 Tổ chức
@@ -113,6 +113,12 @@
                 <a href="{{route('admin.divisions.index')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Bộ phận</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.positions.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Chức vụ</p>
                 </a>
               </li>
             </ul>
