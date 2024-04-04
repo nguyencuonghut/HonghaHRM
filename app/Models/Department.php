@@ -15,10 +15,18 @@ class Department extends Model
     protected $fillable = ['code',  'name'];
 
     /**
-     * The users that belong to the role.
+     * The users that belong to the department.
      */
     public function users(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'user_department')->withTimestamps();;
+    }
+
+    /**
+     * The devisions that belong to the department.
+     */
+    public function divisions()
+    {
+        return $this->hasMany(Division::class);
     }
 }

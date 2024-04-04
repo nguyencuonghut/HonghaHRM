@@ -95,12 +95,27 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.departments.index')}}" class="nav-link {{ Request::is('admin/departments*') ? 'active' : '' }}">
+            <a href="#" class="nav-link {{ Request::is('admin/departments*') || Request::is('admin/divisions*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-sitemap"></i>
               <p>
-                Phòng Ban
+                Tổ chức
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.departments.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Phòng ban</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.divisions.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Bộ phận</p>
+                </a>
+              </li>
+            </ul>
           </li>
           @endauth
         </ul>

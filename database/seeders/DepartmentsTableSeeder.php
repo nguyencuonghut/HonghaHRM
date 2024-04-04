@@ -57,6 +57,22 @@ class DepartmentsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            5 =>
+                array (
+                    'id' => 6,
+                    'code' => 'SX',
+                    'name' => 'Phòng Sản Xuất',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            6 =>
+                array (
+                    'id' => 7,
+                    'code' => 'KH',
+                    'name' => 'Phòng Kho',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

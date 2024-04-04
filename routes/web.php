@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminDepartmentController;
+use App\Http\Controllers\AdminDivisionController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
@@ -38,6 +39,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('departments/data', [AdminDepartmentController::class, 'anyData'])->name('departments.data');
         Route::resource('departments', AdminDepartmentController::class);
+
+        Route::get('divisions/data', [AdminDivisionController::class, 'anyData'])->name('divisions.data');
+        Route::resource('divisions', AdminDivisionController::class);
 
         Route::get('admins/data', [AdminAdminController::class, 'anyData'])->name('admins.data');
         Route::resource('admins', AdminAdminController::class);
