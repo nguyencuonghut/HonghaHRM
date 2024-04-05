@@ -142,4 +142,9 @@ class AdminUserController extends Controller
     {
 
     }
+
+    public function gallery()
+    {
+        return view('admin.user.gallery');
+    }
 }

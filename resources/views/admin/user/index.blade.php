@@ -42,7 +42,15 @@
                 @auth('admin')
                 <a href="{{ route('admin.users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Tạo mới</a>
                 @endauth
-
+                <div class="btn-group float-right">
+                    &nbsp;
+                    <a href="{{route('admin.users.gallery')}}" class="btn btn-info {{Route::is('admin.users.gallery') ? 'active' : ''}}">
+                        <i class="fas fa-th"></i>
+                    </a>
+                    <a href="{{route('admin.users.index')}}" class="btn btn-info {{Route::is('admin.users.index') ? 'active' : ''}}">
+                        <i class="fas fa-list"></i>
+                    </a>
+                </div>
                 @auth('admin')
                 <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#import_user">
                     <i class="fas fa-file-excel"></i> Import
