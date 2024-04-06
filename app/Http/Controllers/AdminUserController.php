@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Department;
+use App\Models\Division;
 use App\Models\User;
 use App\Notifications\UserCreated;
 use Datatables;
@@ -28,7 +29,8 @@ class AdminUserController extends Controller
     public function create()
     {
         $departments = Department::all()->pluck('name', 'id');
-        return view('admin.user.create', ['departments' => $departments]);
+        $divisions = Division::all()->pluck('name', 'id');
+        return view('admin.user.create', ['departments' => $departments, 'divisions' => $divisions]);
     }
 
     /**

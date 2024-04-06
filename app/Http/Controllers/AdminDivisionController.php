@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Division;
 use Datatables;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminDivisionController extends Controller
 {
@@ -29,7 +30,29 @@ class AdminDivisionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'code' => 'required|unique:divisions',
+            'name' => 'required|max:255',
+            'department_id' => 'required',
+        ];
+        $messages = [
+            'code.required' => 'Bạn phải nhập mã.',
+            'code.unique' => 'Mã đã tồn tại.',
+            'name.required' => 'Bạn phải nhập tên.',
+            'name.max' => 'Tên dài quá 255 ký tự.',
+            'department_id.required' => 'Bạn chọn phòng.',
+        ];
+        $request->validate($rules,$messages);
+
+        //Create new Division
+        $division = new Division();
+        $division->name = $request->name;
+        $division->code = $request->code;
+        $division->department_id = $request->department_id;
+        $division->save();
+
+        Alert::toast('Thêm bộ phận mới thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**

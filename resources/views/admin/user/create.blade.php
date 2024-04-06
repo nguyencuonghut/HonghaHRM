@@ -58,13 +58,31 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Phòng ban</label>
-                                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_bid">
+                                        <label class="required-field" class="control-label">Phòng</label>
+                                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_department">
                                             <i class="fas fa-plus"></i>
                                         </button>
                                         <div class="controls">
                                             <select name="department_id[]" id="department_id[]" data-placeholder="Chọn phòng ban" class="form-control select2" multiple="multiple" style="width: 100%;">
                                                 @foreach($departments as $key => $value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="control-group">
+                                        <label class="control-label">Bộ phận</label>
+                                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_division">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                        <div class="controls">
+                                            <select name="division_id" id="division_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
+                                                @foreach($divisions as $key => $value)
                                                     <option value="{{$key}}">{{$value}}</option>
                                                 @endforeach
                                             </select>
@@ -84,7 +102,7 @@
 
                     <form class="form-horizontal" method="post" action="{{ route('admin.departments.store') }}" name="create_department" id="create_department" novalidate="novalidate">
                         {{ csrf_field() }}
-                        <div class="modal fade" id="add_bid">
+                        <div class="modal fade" id="add_department">
                             <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -123,6 +141,63 @@
                         </div>
                       </form>
                       <!-- /.modal -->
+
+                      <form class="form-horizontal" method="post" action="{{ route('admin.divisions.store') }}" name="create_division" id="create_division" novalidate="novalidate">
+                        {{ csrf_field() }}
+                        <div class="modal fade" id="add_division">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Thêm bộ phận</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Mã</label>
+                                                    <div class="controls">
+                                                        <input type="text" class="form-control" name="code" id="code" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Tên</label>
+                                                    <div class="controls">
+                                                        <input type="text" class="form-control" name="name" id="name" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Thuộc phòng</label>
+                                                    <div class="controls">
+                                                        <select name="department_id" id="department_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
+                                                            @foreach($departments as $key => $value)
+                                                                <option value="{{$key}}">{{$value}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                        </div>
+                      </form>
+                      <!-- /.modal -->
+
                 </div>
             </div>
         </div>
