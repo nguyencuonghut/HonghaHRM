@@ -152,7 +152,6 @@ class AdminUserController extends Controller
                     ->orWhere('email', 'like', '%'.$search.'%');
             })
             ->paginate(3);
-            $users->appends(['q' => $search]);
         } else {
             $users = User::orderBy('name', 'asc')->paginate(3);
         }
