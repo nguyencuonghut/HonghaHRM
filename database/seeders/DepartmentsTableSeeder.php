@@ -73,6 +73,46 @@ class DepartmentsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            7 =>
+                array (
+                    'id' => 8,
+                    'code' => 'KD',
+                    'name' => 'Phòng Kinh Doanh',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            8 =>
+                array (
+                    'id' => 9,
+                    'code' => 'HCNS',
+                    'name' => 'Phòng Hành Chính Nhân Sự',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            9 =>
+                array (
+                    'id' => 10,
+                    'code' => 'MKT',
+                    'name' => 'Phòng Truyền Thông',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            10 =>
+                array (
+                    'id' => 11,
+                    'code' => 'CL',
+                    'name' => 'Phòng Chất Lượng',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            11 =>
+                array (
+                    'id' => 12,
+                    'code' => 'PT',
+                    'name' => 'Phòng Trại',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

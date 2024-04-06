@@ -105,6 +105,50 @@ class UsersTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            8 =>
+                array (
+                    'id' => 9,
+                    'name' => 'Hoàng Thị Ngọc Ánh',
+                    'email' => 'hoangthingocanh@honghafeed.com.vn',
+                    'password' => bcrypt('Hongha@123'),
+                    'email_verified_at' => null,
+                    'remember_token' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            9 =>
+                array (
+                    'id' => 10,
+                    'name' => 'Phạm Thị Thơm',
+                    'email' => 'phamthithom@honghafeed.com.vn',
+                    'password' => bcrypt('Hongha@123'),
+                    'email_verified_at' => null,
+                    'remember_token' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            10 =>
+                array (
+                    'id' => 11,
+                    'name' => 'Trần Thị Bích Phương',
+                    'email' => 'tranthibichphuong@honghafeed.com.vn',
+                    'password' => bcrypt('Hongha@123'),
+                    'email_verified_at' => null,
+                    'remember_token' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            11 =>
+                array (
+                    'id' => 12,
+                    'name' => 'Nguyễn Thị Ngọc Lan',
+                    'email' => 'nguyenthingoclan@honghafeed.com.vn',
+                    'password' => bcrypt('Hongha@123'),
+                    'email_verified_at' => null,
+                    'remember_token' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

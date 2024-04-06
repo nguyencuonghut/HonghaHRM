@@ -81,6 +81,46 @@ class UserDepartmentTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            8 =>
+                array (
+                    'id' => 9,
+                    'user_id' => 9,
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            9 =>
+                array (
+                    'id' => 10,
+                    'user_id' => 9,
+                    'department_id' => 9,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            10 =>
+                array (
+                    'id' => 11,
+                    'user_id' => 10,
+                    'department_id' => 9,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            11 =>
+                array (
+                    'id' => 12,
+                    'user_id' => 11,
+                    'department_id' => 9,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            12 =>
+                array (
+                    'id' => 13,
+                    'user_id' => 12,
+                    'department_id' => 9,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }
