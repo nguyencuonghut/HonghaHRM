@@ -121,6 +121,14 @@ class UserDepartmentTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            13 =>
+                array (
+                    'id' => 14,
+                    'user_id' => 13,
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

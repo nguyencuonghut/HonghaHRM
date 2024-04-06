@@ -50,4 +50,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Department::class, 'user_department')->withTimestamps();;
     }
+
+    /**
+     * The roles that belong to the user.
+     */
+    public function divisions(): BelongsToMany
+    {
+        return $this->belongsToMany(Division::class, 'user_division')->withTimestamps();;
+    }
 }

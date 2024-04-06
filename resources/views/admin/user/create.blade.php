@@ -81,7 +81,7 @@
                                             <i class="fas fa-plus"></i>
                                         </button>
                                         <div class="controls">
-                                            <select name="division_id" id="division_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
+                                            <select name="division_id" id="division_id" data-placeholder="Chọn bộ phận" class="form-control select2" multiple="multiple" style="width: 100%;">
                                                 @foreach($divisions as $key => $value)
                                                     <option value="{{$key}}">{{$value}}</option>
                                                 @endforeach

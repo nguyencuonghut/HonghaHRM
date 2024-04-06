@@ -64,6 +64,10 @@ class AdminUserController extends Controller
         //Create user_department pivot item
         $user->departments()->attach($request->department_id);
 
+        //Create user_division pivot item
+        if ($request->division_id) {
+            $user->divisions()->attach($request->division_id);
+        }
         //Send password to user's email
         Notification::route('mail' , $user->email)->notify(new UserCreated($user->id, $password));
 
@@ -126,6 +130,27 @@ class AdminUserController extends Controller
                     }
                 }
                 return $departments_list;
+            })
+            ->addColumn('actions', function ($users) {
+                $action = '<a href="' . route("admin.users.edit", $users->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                           <form style="display:inline" action="'. route("admin.users.destroy", $users->id) . '" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                return $action;
+            })
+            ->editColumn('divisions', function ($users) {
+                $i = 0;
+                $length = count($users->divisions);
+                $divisions_list = '';
+                foreach ($users->divisions as $item) {
+                    if(++$i === $length) {
+                        $divisions_list =  $divisions_list . $item->name;
+                    } else {
+                        $divisions_list = $divisions_list . $item->name . ', ';
+                    }
+                }
+                return $divisions_list;
             })
             ->addColumn('actions', function ($users) {
                 $action = '<a href="' . route("admin.users.edit", $users->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>

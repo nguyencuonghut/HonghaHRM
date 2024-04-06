@@ -35,6 +35,15 @@ class DivisionsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            2 =>
+                array (
+                    'id' => 3,
+                    'code' => 'AD',
+                    'name' => 'Bộ phận Admin',
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

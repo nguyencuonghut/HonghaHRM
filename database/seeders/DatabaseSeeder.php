@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             AdminsTableSeeder::class,
             UsersTableSeeder::class,
             UserDepartmentTableSeeder::class,
+            UserDivisionTableSeeder::class,
             PositionsTableSeeder::class,
         ]);
     }
