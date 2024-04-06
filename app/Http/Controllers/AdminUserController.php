@@ -147,9 +147,13 @@ class AdminUserController extends Controller
     {
         $search =  $request->input('search');
         if ($search != ""){
-            $users = User::where(function ($query) use ($search){
+            $users = User::with('departments')->where(function ($query) use ($search){
                 $query->where('name', 'like', '%'.$search.'%')
-                    ->orWhere('email', 'like', '%'.$search.'%');
+                    ->orWhere('email', 'like', '%'.$search.'%')
+                    ->orWhereHas('departments' ,function($q) use ($search) {
+                        $q->where('name', 'like', '%'.$search.'%')
+                            ->orWhere('code', 'like', '%'.$search.'%');
+                    });
             })
             ->paginate(3);
         } else {
