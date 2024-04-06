@@ -145,6 +145,7 @@ class AdminUserController extends Controller
 
     public function gallery()
     {
-        return view('admin.user.gallery');
+        $users = User::orderBy('name', 'asc')->paginate(3);
+        return view('admin.user.gallery', ['users' => $users]);
     }
 }

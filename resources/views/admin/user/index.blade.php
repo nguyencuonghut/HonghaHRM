@@ -48,7 +48,7 @@
                         <i class="fas fa-th"></i>
                     </a>
                     <a href="{{route('admin.users.index')}}" class="btn btn-info {{Route::is('admin.users.index') ? 'active' : ''}}">
-                        <i class="fas fa-list"></i>
+                        <i class="fas fa-bars"></i>
                     </a>
                 </div>
                 @auth('admin')
