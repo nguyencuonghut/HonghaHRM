@@ -64,6 +64,7 @@
                     <th>Email</th>
                     <th>Phòng Ban</th>
                     <th>Bộ phận</th>
+                    <th>Chức vụ</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
                   </thead>
@@ -141,14 +142,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
 
             },
@@ -156,28 +157,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             }
         ],
@@ -189,6 +190,7 @@
             {data: 'email', name: 'email'},
             {data: 'departments', name: 'departments'},
             {data: 'divisions', name: 'divisions'},
+            {data: 'positions', name: 'positions'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#users-table_wrapper .col-md-6:eq(0)');

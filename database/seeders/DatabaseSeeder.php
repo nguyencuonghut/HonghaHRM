@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             UserDepartmentTableSeeder::class,
             UserDivisionTableSeeder::class,
             PositionsTableSeeder::class,
+            UserPositionTableSeeder::class,
         ]);
     }
 }

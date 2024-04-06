@@ -152,6 +152,19 @@ class AdminUserController extends Controller
                 }
                 return $divisions_list;
             })
+            ->editColumn('positions', function ($users) {
+                $i = 0;
+                $length = count($users->positions);
+                $positions_list = '';
+                foreach ($users->positions as $item) {
+                    if(++$i === $length) {
+                        $positions_list =  $positions_list . $item->name;
+                    } else {
+                        $positions_list = $positions_list . $item->name . ', ';
+                    }
+                }
+                return $positions_list;
+            })
             ->addColumn('actions', function ($users) {
                 $action = '<a href="' . route("admin.users.edit", $users->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                            <form style="display:inline" action="'. route("admin.users.destroy", $users->id) . '" method="POST">

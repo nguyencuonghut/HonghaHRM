@@ -52,10 +52,18 @@ class User extends Authenticatable
     }
 
     /**
-     * The roles that belong to the user.
+     * The divisions that belong to the user.
      */
     public function divisions(): BelongsToMany
     {
         return $this->belongsToMany(Division::class, 'user_division')->withTimestamps();;
+    }
+
+    /**
+     * The positions that belong to the user.
+     */
+    public function positions(): BelongsToMany
+    {
+        return $this->belongsToMany(Position::class, 'user_position')->withTimestamps();;
     }
 }
