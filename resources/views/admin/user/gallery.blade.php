@@ -72,8 +72,20 @@
             @foreach ($users as $user)
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
                     <div class="card bg-light d-flex flex-fill">
+                    @php
+                        $i = 0;
+                        $length = count($user->positions);
+                        $positions_list = '';
+                        foreach ($user->positions as $item) {
+                            if(++$i === $length) {
+                                $positions_list =  $positions_list . $item->name;
+                            } else {
+                                $positions_list = $positions_list . $item->name . ', ';
+                            }
+                        }
+                    @endphp
                     <div class="card-header text-muted border-bottom-0">
-                        Nhân viên Kế Toán
+                        {{$positions_list}}
                     </div>
                     <div class="card-body pt-0">
                         <div class="row">
