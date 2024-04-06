@@ -47,8 +47,27 @@
                 <i class="fas fa-file-excel"></i> Import
             </button>
             @endauth
+
+            <div class="row">
+                &nbsp;
+                <div class="col-md-12">
+                    <form action="{{route('admin.users.gallery')}}" method="get" novalidate="novalidate">
+                        {{ csrf_field() }}
+                        <div class="input-group">
+                            <input type="search" name="search" id="search" class="form-control form-control-lg" placeholder="Nhập từ khóa tìm kiếm">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-lg btn-default">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
         </div>
       <div class="card-body pb-0">
+        @if($users->count())
         <div class="row">
             @foreach ($users as $user)
                 <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
@@ -95,13 +114,46 @@
                 </div>
             @endforeach
       </div>
+      @else
+        Không tìm thấy kết quả
+      @endif
     </div>
+    <!-- Modal -->
+    <form class="form-horizontal" method="post" action="{{ route('admin.users.import') }}" enctype="multipart/form-data" name="import-user" id="import-user" novalidate="novalidate">
+        {{ csrf_field() }}
+        <div class="modal fade" id="import_user">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group mb-4">
+                            <div class="custom-file text-left">
+                                <input type="file" name="file" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Chọn file</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Import</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </div>
+    </form>
+    <!-- /.modal -->
+
     <!-- /.card-body -->
     <div class="card-footer">
         {{-- @if ($paginator->hasPages()) --}}
         <nav aria-label="Contacts Page Navigation">
             <ul class="pagination justify-content-center m-0">
-                {{ $users->links() }}
+                {{ $users->appends(request()->except('page'))->links() }}
             </ul>
         </nav>
         {{-- @endif --}}

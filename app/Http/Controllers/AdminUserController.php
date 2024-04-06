@@ -140,12 +140,22 @@ class AdminUserController extends Controller
 
     public function import(Request $request)
     {
-
+        return "Import file";
     }
 
-    public function gallery()
+    public function gallery(Request $request)
     {
-        $users = User::orderBy('name', 'asc')->paginate(3);
+        $search =  $request->input('search');
+        if ($search != ""){
+            $users = User::where(function ($query) use ($search){
+                $query->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('email', 'like', '%'.$search.'%');
+            })
+            ->paginate(3);
+            $users->appends(['q' => $search]);
+        } else {
+            $users = User::orderBy('name', 'asc')->paginate(3);
+        }
         return view('admin.user.gallery', ['users' => $users]);
     }
 }
