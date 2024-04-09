@@ -207,9 +207,9 @@ class AdminUserController extends Controller
                             ->orWhere('code', 'like', '%'.$search.'%');
                     });
             })
-            ->paginate(3);
+            ->paginate(9);
         } else {
-            $users = User::orderBy('name', 'asc')->paginate(3);
+            $users = User::orderBy('name', 'asc')->paginate(9);
         }
         return view('admin.user.gallery', ['users' => $users]);
     }
