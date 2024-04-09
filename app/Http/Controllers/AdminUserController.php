@@ -59,6 +59,18 @@ class AdminUserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = Hash::make($password);
+        // Store image
+        if ($request->hasFile('img_path')) {
+            $path = 'dist/img';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('img_path');
+            $name = str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $user->img_path = $path . '/' . $name;
+        }
         $user->save();
 
         //Create user_department pivot item

@@ -34,7 +34,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                    <form class="form-horizontal" method="post" action="{{ url('admin/users') }}" name="add_admin" id="add_admin" novalidate="novalidate">{{ csrf_field() }}
+                    <form class="form-horizontal" method="post" action="{{ url('admin/users') }}" name="add_admin" id="add_admin" enctype="multipart/form-data" novalidate="novalidate">{{ csrf_field() }}
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Phòng</label>
                                         <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_department">
@@ -71,10 +71,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <label class="control-label">Bộ phận</label>
                                         <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_division">
@@ -86,6 +84,18 @@
                                                     <option value="{{$key}}">{{$value}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="control-group">
+                                        <label class="control-label">Ảnh</label>
+                                        <div class="custom-file text-left">
+                                            <input type="file" name="img_path" class="custom-file-input" id="img_path">
+                                            <label class="custom-file-label" for="img_path">Chọn ảnh</label>
                                         </div>
                                     </div>
                                 </div>
@@ -215,5 +225,10 @@
         theme: 'bootstrap4'
         })
     })
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
 </script>
 @endpush

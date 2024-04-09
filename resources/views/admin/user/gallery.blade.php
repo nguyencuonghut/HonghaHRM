@@ -111,7 +111,7 @@
                             </ul>
                         </div>
                         <div class="col-5 text-center">
-                            <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                            <img src="{{asset($user->img_path)}}" alt="user-avatar" class="img-circle img-fluid">
                         </div>
                         </div>
                     </div>
