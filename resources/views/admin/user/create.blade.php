@@ -101,6 +101,33 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <label class="required-field" class="control-label">Department</label>
+                                        <div class="controls">
+                                            <select name="sel_department" id="sel_department" data-placeholder="Chọn phòng ban" class="form-control select2" multiple="multiple" style="width: 100%;">
+                                                @foreach($departments as $key => $value)
+                                                    <option value="{{$key}}">{{$value}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <label class="control-label">Division</label>
+                                        <div class="controls">
+                                            <select name="sel_division" id="sel_division" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
+
+                                                <option value='0'>-- Select division --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <br>
                             <div class="control-group">
                                 <div class="controls">
@@ -229,6 +256,40 @@
     $(".custom-file-input").on("change", function() {
         var fileName = $(this).val().split("\\").pop();
         $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+
+    $("#sel_department").on("change", function() {
+        // Department id
+        var id = $(this).val();
+
+        // Empty the dropdown
+        $('#sel_division').find('option').not(':first').remove();
+
+        console.log(id);
+        var url = "{{ route('admin.departments.getDivision', ":id") }}";
+        url = url.replace(':id', id);
+        // AJAX request
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            success: function(response){
+                var len = 0;
+                if(response['data'] != null){
+                    len = response['data'].length;
+                }
+
+                if(len > 0){
+                    // Read data and create <option >
+                    for(var i=0; i<len; i++){
+                        var id = response['data'][i].id;
+                        var name = response['data'][i].name;
+                        var option = "<option value='"+id+"'>"+name+"</option>";
+                        $("#sel_division").append(option);
+                    }
+                }
+            }
+        });
     });
 </script>
 @endpush

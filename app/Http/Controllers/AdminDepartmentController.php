@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Datatables;
 use App\Models\Department;
+use App\Models\Division;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminDepartmentController extends Controller
@@ -105,5 +106,16 @@ class AdminDepartmentController extends Controller
             })
             ->rawColumns(['actions'])
             ->make(true);
+    }
+
+    public function getDivision($department_id)
+    {
+        $divisionData['data'] = Division::orderby("name","asc")
+                                    ->select('id','name')
+                                    ->where('department_id',$department_id)
+                                    ->get();
+
+        return response()->json($divisionData);
+
     }
 }

@@ -38,6 +38,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
     Route::group(['middleware'=>'auth:admin'], function() {
         Route::get('/', [AdminHomeController::class, 'index'])->name('home');
 
+        Route::get('departments/get-division/{department_id}', [AdminDepartmentController::class, 'getDivision'])->name('departments.getDivision');
         Route::get('departments/data', [AdminDepartmentController::class, 'anyData'])->name('departments.data');
         Route::resource('departments', AdminDepartmentController::class);
 
