@@ -128,6 +128,25 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="control-group">
+                                        <label class="required-field" class="control-label">Địa chỉ</label>
+                                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_commune">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                        <div class="controls">
+                                            <select name="commune_id" id="commune_id" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn địa chỉ --" disabled="disabled" selected="selected">-- Chọn địa chỉ --</option>
+                                                @foreach($communes as $commune)
+                                                    <option value="{{$commune->id}}">{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <br>
                             <div class="control-group">
                                 <div class="controls">
@@ -217,6 +236,108 @@
                                                         <select name="department_id" id="department_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
                                                             @foreach($departments as $key => $value)
                                                                 <option value="{{$key}}">{{$value}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                        </div>
+                      </form>
+                      <!-- /.modal -->
+
+
+                      <form class="form-horizontal" method="post" action="{{ route('admin.communes.store') }}" name="create_commune" id="create_commune" novalidate="novalidate">
+                        {{ csrf_field() }}
+                        <div class="modal fade" id="add_commune">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Thêm xã/phường</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Tên xã/phường</label>
+                                                    <div class="controls">
+                                                        <input type="text" class="form-control" name="name" id="name" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Thuộc quận/huyện </label>
+                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_district">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                    <div class="controls">
+                                                        <select name="district_id" id="district_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                            <option value="-- Chọn quận/huyện --" disabled="disabled" selected="selected">-- Chọn quận/huyện --</option>
+                                                            @foreach($districts as $district)
+                                                                <option value="{{$district->id}}">{{$district->name}} - {{$district->province->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                        </div>
+                      </form>
+                      <!-- /.modal -->
+
+                      <form class="form-horizontal" method="post" action="{{ route('admin.districts.store') }}" name="create_district" id="create_district" novalidate="novalidate">
+                        {{ csrf_field() }}
+                        <div class="modal fade" id="add_district">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Thêm Quận Huyện</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Tên quận/huyện</label>
+                                                    <div class="controls">
+                                                        <input type="text" class="form-control" name="name" id="name" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Thuộc tỉnh </label>
+                                                    <div class="controls">
+                                                        <select name="province_id" id="province_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                            <option value="-- Chọn tỉnh --" disabled="disabled" selected="selected">-- Chọn tỉnh --</option>
+                                                            @foreach($provinces as $province)
+                                                                <option value="{{$province->id}}">{{$province->name}}</option>
                                                             @endforeach
                                                         </select>
                                                     </div>

@@ -7,6 +7,9 @@ use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminDepartmentController;
 use App\Http\Controllers\AdminDivisionController;
 use App\Http\Controllers\AdminPositionController;
+use App\Http\Controllers\AdminProvinceController;
+use App\Http\Controllers\AdminDistrictController;
+use App\Http\Controllers\AdminCommuneController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
@@ -47,6 +50,15 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('positions/data', [AdminPositionController::class, 'anyData'])->name('positions.data');
         Route::resource('positions', AdminPositionController::class);
+
+        Route::get('provinces/data', [AdminProvinceController::class, 'anyData'])->name('provinces.data');
+        Route::resource('provinces', AdminProvinceController::class);
+
+        Route::get('districts/data', [AdminDistrictController::class, 'anyData'])->name('districts.data');
+        Route::resource('districts', AdminDistrictController::class);
+
+        Route::get('communes/data', [AdminCommuneController::class, 'anyData'])->name('communes.data');
+        Route::resource('communes', AdminCommuneController::class);
 
         Route::get('admins/data', [AdminAdminController::class, 'anyData'])->name('admins.data');
         Route::resource('admins', AdminAdminController::class);

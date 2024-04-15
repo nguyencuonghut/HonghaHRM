@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Commune;
 use App\Models\Department;
+use App\Models\District;
 use App\Models\Division;
+use App\Models\Province;
 use App\Models\User;
 use App\Notifications\UserCreated;
 use Datatables;
@@ -30,7 +33,16 @@ class AdminUserController extends Controller
     {
         $departments = Department::all()->pluck('name', 'id');
         $divisions = Division::all()->pluck('name', 'id');
-        return view('admin.user.create', ['departments' => $departments, 'divisions' => $divisions]);
+        $provinces = Province::orderBy('name' ,'asc')->get();
+        $districts = District::orderBy('name' ,'asc')->get();
+        $communes = Commune::orderBy('name' ,'asc')->get();
+        return view('admin.user.create',
+                    ['departments' => $departments,
+                    'divisions' => $divisions,
+                    'provinces' => $provinces,
+                    'districts' => $districts,
+                    'communes' => $communes
+                    ]);
     }
 
     /**

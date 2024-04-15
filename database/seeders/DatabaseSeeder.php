@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
             UserDivisionTableSeeder::class,
             PositionsTableSeeder::class,
             UserPositionTableSeeder::class,
+            ProvincesTableSeeder::class,
+            DistrictsTableSeeder::class,
+            CommunesTableSeeder::class,
         ]);
     }
 }
