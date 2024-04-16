@@ -30,7 +30,7 @@ class AdminRecruitmentProposalController extends Controller
     {
         //Check authorize
         if(!Auth::user()->can('create-propose')) {
-            Alert::toast('Bạn không có quyền tạo đề xuất!', 'error', 'top-right');
+            Alert::toast('Bạn không có quyền thêm đề xuất!', 'error', 'top-right');
             return redirect()->route('admin.recruitment.proposals.index');
         }
         $jobs = Job::orderBy('name', 'asc')->get();
@@ -81,7 +81,7 @@ class AdminRecruitmentProposalController extends Controller
         $proposal->status = 'Mở';
         $proposal->save();
 
-        Alert::toast('Tạo yêu cầu tuyển dụng mới thành công!', 'success', 'top-right');
+        Alert::toast('Thêm yêu cầu tuyển dụng mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.recruitment.proposals.index');
     }
 

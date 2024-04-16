@@ -45,7 +45,7 @@ class AdminCommuneController extends Controller
         $commune->district_id = $request->district_id;
         $commune->save();
 
-        Alert::toast('Tạo xã/phường mới thành công!', 'success', 'top-right');
+        Alert::toast('Thêm xã/phường mới thành công!', 'success', 'top-right');
         return redirect()->back();
     }
 

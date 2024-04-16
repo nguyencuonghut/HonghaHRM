@@ -47,7 +47,7 @@ class AdminJobController extends Controller
         }
         $job->save();
 
-        Alert::toast('Tạo vị trí mới thành công!', 'success', 'top-right');
+        Alert::toast('Thêm vị trí mới thành công!', 'success', 'top-right');
         return redirect()->back();
     }
 

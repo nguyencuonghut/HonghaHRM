@@ -23,7 +23,7 @@ class AdminDepartmentController extends Controller
      */
     public function create()
     {
-        return "Tạo phòng/ban";
+        return "Thêm phòng/ban";
     }
 
     /**

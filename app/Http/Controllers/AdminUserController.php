@@ -95,7 +95,7 @@ class AdminUserController extends Controller
         //Send password to user's email
         Notification::route('mail' , $user->email)->notify(new UserCreated($user->id, $password));
 
-        Alert::toast('Tạo người dùng mới thành công!', 'success', 'top-right');
+        Alert::toast('Thêm người dùng mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.users.index');
     }
 

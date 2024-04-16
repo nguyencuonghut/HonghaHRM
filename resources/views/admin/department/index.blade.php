@@ -39,7 +39,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                <a href="{{ route('admin.departments.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Tạo mới</a>
+                <a href="{{ route('admin.departments.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 <table id="departments-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

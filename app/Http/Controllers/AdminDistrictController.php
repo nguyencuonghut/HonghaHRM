@@ -44,7 +44,7 @@ class AdminDistrictController extends Controller
         $district->province_id = $request->province_id;
         $district->save();
 
-        Alert::toast('Tạo quận/huyện mới thành công!', 'success', 'top-right');
+        Alert::toast('Thêm quận/huyện mới thành công!', 'success', 'top-right');
         return redirect()->back();
     }
 

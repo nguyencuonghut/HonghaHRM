@@ -31,7 +31,7 @@
         <!-- /.card-header -->
         <div class="card-body">
             @auth('admin')
-            <a href="{{ route('admin.users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Tạo mới</a>
+            <a href="{{ route('admin.users.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
             @endauth
             <div class="btn-group float-right">
                 &nbsp;
