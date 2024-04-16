@@ -39,9 +39,9 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                @auth('admin')
+                @can('create-propose')
                 <a href="{{ route('admin.recruitment.proposals.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Tạo mới</a>
-                @endauth
+                @endcan
                 <table id="proposals-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

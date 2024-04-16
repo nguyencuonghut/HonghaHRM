@@ -28,6 +28,11 @@ class AdminRecruitmentProposalController extends Controller
      */
     public function create()
     {
+        //Check authorize
+        if(!Auth::user()->can('create-propose')) {
+            Alert::toast('Bạn không có quyền tạo đề xuất!', 'error', 'top-right');
+            return redirect()->route('admin.recruitment.proposals.index');
+        }
         $jobs = Job::orderBy('name', 'asc')->get();
         $departments = Department::all()->pluck('name', 'id');
         $divisions = Division::all()->pluck('name', 'id');
