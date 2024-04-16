@@ -15,4 +15,10 @@ class Admin extends Authenticatable
     protected $fillable = ['email',  'password'];
 
     protected $hidden = ['password',  'remember_token'];
+
+
+    public function proposals()
+    {
+        return $this->hasMany(RecruitmentProposal::class);
+    }
 }

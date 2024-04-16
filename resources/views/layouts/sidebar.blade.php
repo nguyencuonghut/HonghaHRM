@@ -47,6 +47,37 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link">
+              <i class="nav-icon fas fa-search-location"></i>
+              <p>
+                Tuyển dụng
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Yêu cầu</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Kế hoạch</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Thông báo</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           @else
           <li class="nav-item">
             <a href="{{route('user.home')}}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">

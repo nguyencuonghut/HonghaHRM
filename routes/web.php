@@ -10,7 +10,9 @@ use App\Http\Controllers\AdminPositionController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminDistrictController;
 use App\Http\Controllers\AdminCommuneController;
+use App\Http\Controllers\AdminJobController;
 use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\AdminRecruitmentProposalController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -60,6 +62,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('communes/data', [AdminCommuneController::class, 'anyData'])->name('communes.data');
         Route::resource('communes', AdminCommuneController::class);
 
+        Route::get('jobs/data', [AdminJobController::class, 'anyData'])->name('jobs.data');
+        Route::resource('jobs', AdminJobController::class);
+
         Route::get('admins/data', [AdminAdminController::class, 'anyData'])->name('admins.data');
         Route::resource('admins', AdminAdminController::class);
 
@@ -67,6 +72,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('users/data', [AdminUserController::class, 'anyData'])->name('users.data');
         Route::resource('users', AdminUserController::class);
         Route::post('users/import', [AdminUserController::class, 'import'])->name('users.import');
+
+        Route::get('recruitment/proposals/data', [AdminRecruitmentProposalController::class, 'anyData'])->name('recruitment.proposals.data');
+        Route::resource('recruitment/proposals', AdminRecruitmentProposalController::class, ['names' => 'recruitment.proposals']);
     });
 });
 

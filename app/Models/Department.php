@@ -29,4 +29,14 @@ class Department extends Model
     {
         return $this->hasMany(Division::class);
     }
+
+    public function proposals()
+    {
+        return $this->hasMany(RecruitmentProposal::class);
+    }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
 }

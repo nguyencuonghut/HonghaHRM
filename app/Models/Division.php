@@ -24,4 +24,9 @@ class Division extends Model
     {
         return $this->belongsToMany(User::class, 'user_division')->withTimestamps();;
     }
+
+    public function jobs()
+    {
+        return $this->hasMany(Job::class);
+    }
 }

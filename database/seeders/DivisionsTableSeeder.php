@@ -44,6 +44,69 @@ class DivisionsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            3 =>
+                array (
+                    'id' => 4,
+                    'code' => 'BV',
+                    'name' => 'Ban bảo vệ',
+                    'department_id' => 9,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            4 =>
+                array (
+                    'id' => 5,
+                    'code' => 'CNKT',
+                    'name' => 'Công nhân kỹ thuật',
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            5 =>
+                array (
+                    'id' => 6,
+                    'code' => 'KTTT',
+                    'name' => 'Kỹ thuật thị trường',
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            6 =>
+                array (
+                    'id' => 7,
+                    'code' => 'GSGC',
+                    'name' => 'KD gia súc gia cầm',
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            7 =>
+                array (
+                    'id' => 8,
+                    'code' => 'KTT',
+                    'name' => 'Kỹ thuật trại',
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            8 =>
+                array (
+                    'id' => 9,
+                    'code' => 'TS',
+                    'name' => 'KD thủy sản',
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            9 =>
+                array (
+                    'id' => 10,
+                    'code' => 'TTY',
+                    'name' => 'Thuốc thú y',
+                    'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }
