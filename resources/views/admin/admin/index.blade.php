@@ -48,6 +48,7 @@
                     <th>STT</th>
                     <th>Họ tên</th>
                     <th>Email</th>
+                    <th>Vai trò</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
                   </thead>
@@ -96,14 +97,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
 
             },
@@ -111,28 +112,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             }
         ],
@@ -142,6 +143,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
+            {data: 'role', name: 'role'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#admins-table_wrapper .col-md-6:eq(0)');

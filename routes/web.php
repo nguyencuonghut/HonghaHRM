@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminAdminController;
 use App\Http\Controllers\AdminDepartmentController;
 use App\Http\Controllers\AdminDivisionController;
@@ -64,6 +65,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('jobs/data', [AdminJobController::class, 'anyData'])->name('jobs.data');
         Route::resource('jobs', AdminJobController::class);
+
+        Route::get('roles/data', [AdminRoleController::class, 'anyData'])->name('roles.data');
+        Route::resource('roles', AdminRoleController::class);
 
         Route::get('admins/data', [AdminAdminController::class, 'anyData'])->name('admins.data');
         Route::resource('admins', AdminAdminController::class);
