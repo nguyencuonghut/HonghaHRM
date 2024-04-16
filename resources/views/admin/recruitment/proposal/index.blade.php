@@ -40,13 +40,14 @@
               <!-- /.card-header -->
               <div class="card-body">
                 @can('create-propose')
-                <a href="{{ route('admin.recruitment.proposals.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Tạo mới</a>
+                <a href="{{ route('admin.recruitment.proposals.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
-                <table id="proposals-table" class="table table-bordered table-striped">
+                <table id="proposals-table" class="table table-bordered table-striped full-width">
                   <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Vị trí</th>
+                    <th style="width: 12%;">Vị trí</th>
+                    <th style="width: 12%;">Phòng ban</th>
                     <th>Số lượng</th>
                     <th>Lý do</th>
                     <th>Yêu cầu</th>
@@ -105,14 +106,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
                 }
 
             },
@@ -120,28 +121,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11]
+                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
                 }
             }
         ],
@@ -150,6 +151,7 @@
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'job', name: 'job'},
+            {data: 'department', name: 'department'},
             {data: 'quantity', name: 'quantity'},
             {data: 'reason', name: 'reason'},
             {data: 'requirement', name: 'requirement'},

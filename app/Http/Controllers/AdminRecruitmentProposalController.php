@@ -126,6 +126,14 @@ class AdminRecruitmentProposalController extends Controller
             ->editColumn('job', function ($proposals) {
                 return $proposals->job->name;
             })
+            ->editColumn('department', function ($proposals) {
+                $department = '';
+                $department = $proposals->job->department->name;
+                if ($proposals->division_id) {
+                    $department = $department . $proposals->job->division->name;
+                }
+                return $department;
+            })
             ->editColumn('quantity', function ($proposals) {
                 return $proposals->quantity;
             })
