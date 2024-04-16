@@ -42,7 +42,7 @@
                 @can('create-propose')
                 <a href="{{ route('admin.recruitment.proposals.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
-                <table id="proposals-table" class="table table-bordered table-striped full-width">
+                <table id="proposals-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>STT</th>
