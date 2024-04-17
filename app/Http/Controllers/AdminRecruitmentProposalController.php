@@ -73,7 +73,7 @@ class AdminRecruitmentProposalController extends Controller
         $proposal->reason           = $request->reason;
         $proposal->requirement      = $request->requirement;
         $proposal->salary           = $request->salary;
-        $proposal->work_time        = Carbon::createFromFormat('d/m/Y', $request->work_time);//Carbon::createFromFormat('d-m-Y', c)->format('Y-m-d');
+        $proposal->work_time        = Carbon::createFromFormat('d/m/Y', $request->work_time);
         if ($request->note) {
             $proposal->note = $request->note;
         }
