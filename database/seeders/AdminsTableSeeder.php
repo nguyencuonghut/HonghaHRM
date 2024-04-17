@@ -28,17 +28,17 @@ class AdminsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
-            1 =>
-                array (
-                    'id' => 2,
-                    'name' => 'Trần Thị Bích Phương',
-                    'email' => 'tranthibichphuong@honghafeed.com.vn',
-                    'password' => bcrypt('Hongha@123'),
-                    'role_id' => 4,
-                    'remember_token' => null,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ),
+            // 1 =>
+            //     array (
+            //         'id' => 2,
+            //         'name' => 'Trần Thị Bích Phương',
+            //         'email' => 'tranthibichphuong@honghafeed.com.vn',
+            //         'password' => bcrypt('Hongha@123'),
+            //         'role_id' => 4,
+            //         'remember_token' => null,
+            //         'created_at' => Carbon::now(),
+            //         'updated_at' => Carbon::now(),
+            //     ),
             2 =>
                 array (
                     'id' => 3,
@@ -50,17 +50,17 @@ class AdminsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
-            3 =>
-                array (
-                    'id' => 4,
-                    'name' => 'Nguyễn Thị Ngọc Lan',
-                    'email' => 'nguyenthingoclan@honghafeed.com.vn',
-                    'password' => bcrypt('Hongha@123'),
-                    'role_id' => 4,
-                    'remember_token' => null,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now(),
-                ),
+            // 3 =>
+            //     array (
+            //         'id' => 4,
+            //         'name' => 'Nguyễn Thị Ngọc Lan',
+            //         'email' => 'nguyenthingoclan@honghafeed.com.vn',
+            //         'password' => bcrypt('Hongha@123'),
+            //         'role_id' => 4,
+            //         'remember_token' => null,
+            //         'created_at' => Carbon::now(),
+            //         'updated_at' => Carbon::now(),
+            //     ),
             4 =>
                 array (
                     'id' => 5,
