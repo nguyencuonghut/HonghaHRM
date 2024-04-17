@@ -11,7 +11,7 @@ use App\Http\Controllers\AdminPositionController;
 use App\Http\Controllers\AdminProvinceController;
 use App\Http\Controllers\AdminDistrictController;
 use App\Http\Controllers\AdminCommuneController;
-use App\Http\Controllers\AdminJobController;
+use App\Http\Controllers\AdminCompanyJobController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRecruitmentProposalController;
 use App\Http\Controllers\UserHomeController;
@@ -63,8 +63,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('communes/data', [AdminCommuneController::class, 'anyData'])->name('communes.data');
         Route::resource('communes', AdminCommuneController::class);
 
-        Route::get('jobs/data', [AdminJobController::class, 'anyData'])->name('jobs.data');
-        Route::resource('jobs', AdminJobController::class);
+        Route::get('company_jobs/data', [AdminCompanyJobController::class, 'anyData'])->name('company_jobs.data');
+        Route::resource('company_jobs', AdminCompanyJobController::class);
 
         Route::get('roles/data', [AdminRoleController::class, 'anyData'])->name('roles.data');
         Route::resource('roles', AdminRoleController::class);

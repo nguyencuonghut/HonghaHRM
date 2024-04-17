@@ -14,9 +14,9 @@ class JobsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('jobs')->delete();
+        DB::table('company_jobs')->delete();
 
-        DB::table('jobs')->insert(array (
+        DB::table('company_jobs')->insert(array (
             0 =>
                 array (
                     'id' => 1,

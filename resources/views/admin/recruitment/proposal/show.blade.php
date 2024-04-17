@@ -48,7 +48,7 @@
                       <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
                             <div class="tab-pane fade" id="custom-tabs-one-profile-2" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-2">
-                                <h2>{{$proposal->job->name}}</h2>
+                                <h2>{{$proposal->company_job->name}}</h2>
                                 <div class="card">
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -58,17 +58,17 @@
                             </div>
 
                             <div class="tab-pane fade" id="custom-tabs-one-profile-1" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-1">
-                                <h2>{{$proposal->job->name}}</h2>
+                                <h2>{{$proposal->company_job->name}}</h2>
                                 <div class="card">
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                      {{$proposal->job->department->name}}
+                                      {{$proposal->company_job->department->name}}
                                     </div>
                                   </div>
                             </div>
 
                           <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                            <h2>{{$proposal->job->name}}</h2>
+                            <h2>{{$proposal->company_job->name}}</h2>
                             <div class="card">
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -76,10 +76,10 @@
                                         <div class="col-sm-4 invoice-col">
                                           <address>
                                             <strong>Phòng ban</strong><br>
-                                            @if ($proposal->job->division_id)
-                                                {{$proposal->job->division->name}}<br>
+                                            @if ($proposal->company_job->division_id)
+                                                {{$proposal->company_job->division->name}}<br>
                                             @endif
-                                            {{$proposal->job->department->name}}<br>
+                                            {{$proposal->company_job->department->name}}<br>
                                           </address>
                                         </div>
                                         <!-- /.col -->
@@ -208,7 +208,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                            <h2>{{$proposal->job->name}}</h2>
+                            <h2>{{$proposal->company_job->name}}</h2>
                             <div class="card">
                                 <!-- /.card-header -->
                                 <div class="card-body">

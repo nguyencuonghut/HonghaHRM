@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use App\Models\Division;
-use App\Models\Job;
+use App\Models\CompanyJob;
 use App\Models\RecruitmentProposal;
 use Carbon\Carbon;
 use Datatables;
@@ -33,11 +33,11 @@ class AdminRecruitmentProposalController extends Controller
             Alert::toast('Bạn không có quyền thêm đề xuất!', 'error', 'top-right');
             return redirect()->route('admin.recruitment.proposals.index');
         }
-        $jobs = Job::orderBy('name', 'asc')->get();
+        $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         $departments = Department::all()->pluck('name', 'id');
         $divisions = Division::all()->pluck('name', 'id');
         return view('admin.recruitment.proposal.create',
-                    ['jobs' => $jobs,
+                    ['company_jobs' => $company_jobs,
                     'departments' => $departments,
                     'divisions' => $divisions,
                     ]);
@@ -49,7 +49,7 @@ class AdminRecruitmentProposalController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'job_id' => 'required',
+            'company_job_id' => 'required',
             'quantity' => 'required',
             'reason' => 'required',
             'requirement' => 'required',
@@ -57,7 +57,7 @@ class AdminRecruitmentProposalController extends Controller
             'work_time' => 'required',
         ];
         $messages = [
-            'job_id.required' => 'Bạn phải chọn vị trí.',
+            'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'quantity.required' => 'Bạn phải nhập số lượng.',
             'reason.required' => 'Bạn phải nhập lý do.',
             'requirement.required' => 'Bạn phải nhập yêu cầu.',
@@ -68,12 +68,12 @@ class AdminRecruitmentProposalController extends Controller
 
         //Create new RecruitmentProposal
         $proposal = new RecruitmentProposal();
-        $proposal->job_id        = $request->job_id;
-        $proposal->quantity      = $request->quantity;
-        $proposal->reason        = $request->reason;
-        $proposal->requirement   = $request->requirement;
-        $proposal->salary        = $request->salary;
-        $proposal->work_time     = Carbon::createFromFormat('d/m/Y', $request->work_time);//Carbon::createFromFormat('d-m-Y', c)->format('Y-m-d');
+        $proposal->company_job_id   = $request->company_job_id;
+        $proposal->quantity         = $request->quantity;
+        $proposal->reason           = $request->reason;
+        $proposal->requirement      = $request->requirement;
+        $proposal->salary           = $request->salary;
+        $proposal->work_time        = Carbon::createFromFormat('d/m/Y', $request->work_time);//Carbon::createFromFormat('d-m-Y', c)->format('Y-m-d');
         if ($request->note) {
             $proposal->note = $request->note;
         }
@@ -121,17 +121,17 @@ class AdminRecruitmentProposalController extends Controller
 
     public function anyData()
     {
-        $proposals = RecruitmentProposal::with(['job', 'creator', 'reviewer', 'approver'])->get();
+        $proposals = RecruitmentProposal::with(['company_job', 'creator', 'reviewer', 'approver'])->get();
         return Datatables::of($proposals)
             ->addIndexColumn()
-            ->editColumn('job', function ($proposals) {
-                return '<a href="'.route('admin.recruitment.proposals.show', $proposals->id).'">'.$proposals->job->name.'</a>';
+            ->editColumn('company_job', function ($proposals) {
+                return '<a href="'.route('admin.recruitment.proposals.show', $proposals->id).'">'.$proposals->company_job->name.'</a>';
             })
             ->editColumn('department', function ($proposals) {
                 $department = '';
-                $department = $proposals->job->department->name;
+                $department = $proposals->company_job->department->name;
                 if ($proposals->division_id) {
-                    $department = $department . $proposals->job->division->name;
+                    $department = $department . $proposals->company_job->division->name;
                 }
                 return $department;
             })
@@ -179,7 +179,7 @@ class AdminRecruitmentProposalController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['job', 'actions', 'status', 'requirement', 'reason', 'note'])
+            ->rawColumns(['company_job', 'actions', 'status', 'requirement', 'reason', 'note'])
             ->make(true);
     }
 
@@ -199,6 +199,9 @@ class AdminRecruitmentProposalController extends Controller
         $proposal->reviewer_id = Auth::user()->id;
         $proposal->status = 'Đã kiểm tra';
         $proposal->save();
+
+        //Send notification to request to approve
+
 
         Alert::toast('Kiểm tra thành công!', 'success', 'top-right');
         return redirect()->route('admin.recruitment.proposals.index');

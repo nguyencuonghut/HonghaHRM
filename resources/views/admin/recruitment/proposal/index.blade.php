@@ -150,7 +150,7 @@
         ajax: ' {!! route('admin.recruitment.proposals.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'job', name: 'job'},
+            {data: 'company_job', name: 'company_job'},
             {data: 'department', name: 'department'},
             {data: 'quantity', name: 'quantity'},
             {data: 'reason', name: 'reason'},

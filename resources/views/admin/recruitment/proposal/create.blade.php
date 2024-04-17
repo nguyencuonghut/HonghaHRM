@@ -49,10 +49,10 @@
                                             <i class="fas fa-plus"></i>
                                         </button>
                                         <div class="controls">
-                                            <select name="job_id" id="job_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
+                                            <select name="company_job_id" id="company_job_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
                                                 <option value="-- Chọn vị trí --" disabled="disabled" selected="selected">-- Chọn vị trí --</option>
-                                                @foreach($jobs as $job)
-                                                    <option value="{{$job->id}}">{{$job->name}} - {{$job->division_id ? $job->division->name : ''}} {{$job->department_id ? $job->department->name : ''}}</option>
+                                                @foreach($company_jobs as $company_job)
+                                                    <option value="{{$company_job->id}}">{{$company_job->name}} - {{$company_job->division_id ? $company_job->division->name : ''}} {{$company_job->department_id ? $company_job->department->name : ''}}</option>
                                                 @endforeach
                                             </select>
                                         </div>
@@ -134,7 +134,7 @@
                         <div>
                     </form>
 
-                    <form class="form-horizontal" method="post" action="{{ route('admin.jobs.store') }}" name="create_job" id="create_job" novalidate="novalidate">
+                    <form class="form-horizontal" method="post" action="{{ route('admin.company_jobs.store') }}" name="create_job" id="create_job" novalidate="novalidate">
                         {{ csrf_field() }}
                         <div class="modal fade" id="add_job">
                             <div class="modal-dialog modal-lg">

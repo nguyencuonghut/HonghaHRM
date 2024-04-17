@@ -9,7 +9,7 @@ class RecruitmentProposal extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job',
+    protected $fillable = ['company_job_id',
                             'quantity',
                             'reason',
                             'requirement',
@@ -26,9 +26,9 @@ class RecruitmentProposal extends Model
                             'approver_comment'
                             ];
 
-    public function job()
+    public function company_job()
     {
-        return $this->belongsTo(Job::class, 'job_id');
+        return $this->belongsTo(CompanyJob::class, 'company_job_id');
     }
 
     public function creator()

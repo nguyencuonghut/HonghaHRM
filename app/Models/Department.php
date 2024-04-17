@@ -35,8 +35,8 @@ class Department extends Model
         return $this->hasMany(RecruitmentProposal::class);
     }
 
-    public function jobs()
+    public function company_jobs()
     {
-        return $this->hasMany(Job::class);
+        return $this->hasMany(CompanyJob::class);
     }
 }
