@@ -88,9 +88,10 @@ class AdminRecruitmentProposalController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(RecruitmentProposal $recruitmentProposal)
+    public function show($id)
     {
-        //
+        $proposal = RecruitmentProposal::findOrFail($id);
+        return view('admin.recruitment.proposal.show',compact('proposal'));
     }
 
     /**
@@ -124,7 +125,7 @@ class AdminRecruitmentProposalController extends Controller
         return Datatables::of($proposals)
             ->addIndexColumn()
             ->editColumn('job', function ($proposals) {
-                return $proposals->job->name;
+                return '<a href="'.route('admin.recruitment.proposals.show', $proposals->id).'">'.$proposals->job->name.'</a>';
             })
             ->editColumn('department', function ($proposals) {
                 $department = '';
@@ -178,7 +179,28 @@ class AdminRecruitmentProposalController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'status', 'requirement', 'reason', 'note'])
+            ->rawColumns(['job', 'actions', 'status', 'requirement', 'reason', 'note'])
             ->make(true);
+    }
+
+    public function review(Request $request, $id)
+    {
+        $rules = [
+            'reviewer_result' => 'required',
+        ];
+        $messages = [
+            'reviewer_result.required' => 'Bạn phải chọn kết quả.',
+        ];
+        $request->validate($rules,$messages);
+
+        $proposal = RecruitmentProposal::findOrFail($id);
+        $proposal->reviewer_result = $request->reviewer_result;
+        $proposal->reviewer_comment = $request->reviewer_comment;
+        $proposal->reviewer_id = Auth::user()->id;
+        $proposal->status = 'Đã kiểm tra';
+        $proposal->save();
+
+        Alert::toast('Kiểm tra thành công!', 'success', 'top-right');
+        return redirect()->route('admin.recruitment.proposals.index');
     }
 }

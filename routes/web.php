@@ -77,6 +77,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('users', AdminUserController::class);
         Route::post('users/import', [AdminUserController::class, 'import'])->name('users.import');
 
+        Route::post('recruitment/proposals/review/{proposal_id}', [AdminRecruitmentProposalController::class, 'review'])->name('recruitment.proposals.review');
         Route::get('recruitment/proposals/data', [AdminRecruitmentProposalController::class, 'anyData'])->name('recruitment.proposals.data');
         Route::resource('recruitment/proposals', AdminRecruitmentProposalController::class, ['names' => 'recruitment.proposals']);
     });
