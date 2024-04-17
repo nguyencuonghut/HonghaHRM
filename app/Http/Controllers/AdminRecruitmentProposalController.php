@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Division;
 use App\Models\CompanyJob;
 use App\Models\RecruitmentProposal;
+use App\Notifications\RecruitmentProposalCreated;
 use App\Notifications\RecruitmentProposalRequestApprove;
 use App\Notifications\RecruitmentProposalRejected;
 use Carbon\Carbon;
@@ -83,6 +84,12 @@ class AdminRecruitmentProposalController extends Controller
         $proposal->creator_id     = Auth::user()->id;
         $proposal->status = 'Mở';
         $proposal->save();
+
+        //Send notification to reviewer
+        $reviewers = Admin::where('role_id', 4)->get(); //2: Nhân sự
+        foreach ($reviewers as $reviewer) {
+            Notification::route('mail' , $reviewer->email)->notify(new RecruitmentProposalCreated($proposal->id));
+        }
 
         Alert::toast('Thêm yêu cầu tuyển dụng mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.recruitment.proposals.index');
