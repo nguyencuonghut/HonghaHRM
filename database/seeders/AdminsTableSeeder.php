@@ -43,7 +43,7 @@ class AdminsTableSeeder extends Seeder
                 array (
                     'id' => 3,
                     'name' => 'Phạm Thị Thơm',
-                    'email' => 'phamthithom@honghafeed.com.vn',
+                    'email' => 'ns@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'role_id' => 4,
                     'remember_token' => null,
@@ -65,7 +65,7 @@ class AdminsTableSeeder extends Seeder
                 array (
                     'id' => 5,
                     'name' => 'Tạ Văn Toại',
-                    'email' => 'tavantoai@honghafeed.com.vn',
+                    'email' => 'gd@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'role_id' => 2,
                     'remember_token' => null,
@@ -76,7 +76,7 @@ class AdminsTableSeeder extends Seeder
                 array (
                     'id' => 6,
                     'name' => 'Hoàng Thị Ngọc Ánh',
-                    'email' => 'hoangthingocanh@honghafeed.com.vn',
+                    'email' => 'tdv@honghafeed.com.vn',
                     'password' => bcrypt('Hongha@123'),
                     'role_id' => 3,
                     'remember_token' => null,
