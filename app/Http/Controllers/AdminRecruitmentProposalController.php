@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use App\Models\Department;
 use App\Models\Division;
 use App\Models\CompanyJob;
 use App\Models\RecruitmentProposal;
+use App\Notifications\RecruitmentProposalRequestApprove;
+use App\Notifications\RecruitmentProposalRejected;
 use Carbon\Carbon;
 use Datatables;
 use Illuminate\Http\Request;
@@ -200,10 +203,19 @@ class AdminRecruitmentProposalController extends Controller
         $proposal->status = 'Đã kiểm tra';
         $proposal->save();
 
-        //Send notification to request to approve
-
+        //Send notification
+        if ('Đồng ý' == $proposal->reviewer_result) {
+            // Send notification to request approve
+            $leaders = Admin::where('role_id', 2)->get(); //2: Ban lãnh đạo
+            foreach ($leaders as $leader) {
+                Notification::route('mail' , $leader->email)->notify(new RecruitmentProposalRequestApprove($proposal->id));
+            }
+        } else {
+            // Send notification for reject status to the creator
+            Notification::route('mail' , $proposal->creator->email)->notify(new RecruitmentProposalRejected($proposal->id));
+        }
 
         Alert::toast('Kiểm tra thành công!', 'success', 'top-right');
-        return redirect()->route('admin.recruitment.proposals.index');
+        return redirect()->back();
     }
 }
