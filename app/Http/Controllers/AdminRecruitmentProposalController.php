@@ -10,6 +10,7 @@ use App\Models\RecruitmentProposal;
 use App\Notifications\RecruitmentProposalCreated;
 use App\Notifications\RecruitmentProposalRequestApprove;
 use App\Notifications\RecruitmentProposalRejected;
+use App\Notifications\RecruitmentProposalApproved;
 use Carbon\Carbon;
 use Datatables;
 use Illuminate\Http\Request;
@@ -223,6 +224,32 @@ class AdminRecruitmentProposalController extends Controller
         }
 
         Alert::toast('Kiểm tra thành công!', 'success', 'top-right');
+        return redirect()->back();
+    }
+
+
+    public function approve(Request $request, $id)
+    {
+        $rules = [
+            'approver_result' => 'required',
+        ];
+        $messages = [
+            'approver_result.required' => 'Bạn phải chọn kết quả.',
+        ];
+        $request->validate($rules,$messages);
+
+        $proposal = RecruitmentProposal::findOrFail($id);
+        $proposal->approver_result = $request->approver_result;
+        $proposal->approver_comment = $request->approver_comment;
+        $proposal->approver_id = Auth::user()->id;
+        $proposal->status = 'Đã duyệt';
+        $proposal->save();
+
+        //Send notification to creator and reviewer
+        Notification::route('mail' , $proposal->creator->email)->notify(new RecruitmentProposalApproved($proposal->id));
+        Notification::route('mail' , $proposal->reviewer->email)->notify(new RecruitmentProposalApproved($proposal->id));
+
+        Alert::toast('Phê duyệt thành công!', 'success', 'top-right');
         return redirect()->back();
     }
 }

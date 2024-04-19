@@ -198,12 +198,15 @@
                                     @if (('Mở' == $proposal->status || 'Đã kiểm tra' == $proposal->status)
                                         && 'Nhân Sự' == Auth::user()->role->name)
                                         <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_review">
-                                        Kiểm tra
-                                    </button>
+                                            Kiểm tra
+                                        </button>
                                     @endif
-                                    <a href="#">
-                                        <button role="button" type="button" class="btn btn-success float-right"> Phê duyệt</button>
-                                    </a>
+                                    @if (('Đã kiểm tra' == $proposal->status || 'Đã duyệt' == $proposal->status)
+                                        && 'Ban lãnh đạo' == Auth::user()->role->name)
+                                        <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_approve">
+                                            Phê duyệt
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -226,7 +229,7 @@
                   </div>
             </div>
 
-            <!-- Modals -->
+            <!-- Modals for review-->
             <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.proposals.review', $proposal->id) }}" name="make_review" id="make_review" novalidate="novalidate">
                 {{ csrf_field() }}
                 <div class="modal fade" id="create_review">
@@ -243,7 +246,7 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Kết quả</label>
                                             <div class="controls">
-                                                <select name="reviewer_result" id="approve_result" class="form-control" style="width: 100%;">
+                                                <select name="reviewer_result" id="reviewer_result" class="form-control" style="width: 100%;">
                                                     <option disabled="disabled" selected="selected" disabled>-- Chọn --</option>
                                                         <option value="Đồng ý">Đồng ý</option>
                                                         <option value="Từ chối">Từ chối</option>
@@ -258,6 +261,53 @@
                                             <label class="control-label">Giải thích</label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="reviewer_comment" id="reviewer_comment" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                </div>
+            </form>
+
+            <!-- Modals for approve -->
+            <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.proposals.approve', $proposal->id) }}" name="make_approve" id="make_approve" novalidate="novalidate">
+                {{ csrf_field() }}
+                <div class="modal fade" id="create_approve">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Kết quả</label>
+                                            <div class="controls">
+                                                <select name="approver_result" id="approver_result" class="form-control" style="width: 100%;">
+                                                    <option disabled="disabled" selected="selected" disabled>-- Chọn --</option>
+                                                        <option value="Đồng ý">Đồng ý</option>
+                                                        <option value="Từ chối">Từ chối</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="control-label">Giải thích</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" name="approver_comment" id="approver_comment" required="">
                                             </div>
                                         </div>
                                     </div>
