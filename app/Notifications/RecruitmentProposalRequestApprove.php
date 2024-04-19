@@ -37,7 +37,7 @@ class RecruitmentProposalRequestApprove extends Notification implements ShouldQu
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $url = '/admin/recruitment/proposals/approve/' . $this->proposal_id;
+        $url = '/admin/recruitment/proposals/' . $this->proposal_id;
         $proposal = RecruitmentProposal::findOrFail($this->proposal_id);
         if ($proposal->company_job->division_id) {
             return (new MailMessage)

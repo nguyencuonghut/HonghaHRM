@@ -122,7 +122,9 @@
                                         <div class="col-sm-4 invoice-col">
                                           <address>
                                             <strong>Mức lương</strong><br>
-                                            {{number_format($proposal->salary, 0, '.', ',')}} <sup>đ</sup><br>
+                                            @if ($proposal->salary)
+                                                {{number_format($proposal->salary, 0, '.', ',')}} <sup>đ</sup><br>
+                                            @endif
                                           </address>
                                         </div>
                                     </div>
