@@ -17,7 +17,7 @@ return new class extends Migration
             $table->integer('quantity');
             $table->text('reason');
             $table->text('requirement');
-            $table->bigInteger('salary');
+            $table->bigInteger('salary')->nullable();
             $table->date('work_time');
             $table->text('note')->nullable();
             $table->enum('status', ['Mở', 'Đã kiểm tra', 'Đã duyệt']);

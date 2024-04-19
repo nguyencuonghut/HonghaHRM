@@ -58,7 +58,6 @@ class AdminRecruitmentProposalController extends Controller
             'quantity' => 'required',
             'reason' => 'required',
             'requirement' => 'required',
-            'salary' => 'required',
             'work_time' => 'required',
         ];
         $messages = [
@@ -66,7 +65,6 @@ class AdminRecruitmentProposalController extends Controller
             'quantity.required' => 'Bạn phải nhập số lượng.',
             'reason.required' => 'Bạn phải nhập lý do.',
             'requirement.required' => 'Bạn phải nhập yêu cầu.',
-            'salary.required' => 'Bạn phải nhập mức lương',
             'work_time.required' => 'Bạn phải nhập thời gian.',
         ];
         $request->validate($rules,$messages);
@@ -77,7 +75,9 @@ class AdminRecruitmentProposalController extends Controller
         $proposal->quantity         = $request->quantity;
         $proposal->reason           = $request->reason;
         $proposal->requirement      = $request->requirement;
-        $proposal->salary           = $request->salary;
+        if ($request->salary) {
+            $proposal->salary       = $request->salary;
+        }
         $proposal->work_time        = Carbon::createFromFormat('d/m/Y', $request->work_time);
         if ($request->note) {
             $proposal->note = $request->note;

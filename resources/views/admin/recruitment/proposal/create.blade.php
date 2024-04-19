@@ -95,7 +95,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Mức lương (VNĐ)</label>
+                                        <label class="control-label">Mức lương (VNĐ)</label>
                                         <div class="controls">
                                             <input type="number" class="form-control" name="salary" id="salary" required="">
                                         </div>
