@@ -142,14 +142,8 @@
                                         <!-- /.col -->
                                         <div class="col-sm-4 invoice-col">
                                           <address>
-                                            <strong>Trạng thái</strong><br>
-                                            @if($proposal->status == 'Mở')
-                                                <span class="badge badge-primary">Mở</span>
-                                            @elseif($proposal->status == 'Đã kiểm tra')
-                                                <span class="badge badge-warning">Đã kiểm tra</span>
-                                            @else
-                                                <span class="badge badge-success">Đã duyệt</span>
-                                            @endif
+                                            <strong>Người tạo</strong><br>
+                                            {{$proposal->creator->name}}<br>
                                           </address>
                                         </div>
                                     </div>
@@ -159,8 +153,14 @@
                                         <!-- /.col -->
                                         <div class="col-sm-4 invoice-col">
                                           <address>
-                                            <strong>Người tạo</strong><br>
-                                            {{$proposal->creator->name}}<br>
+                                            <strong>Trạng thái</strong><br>
+                                            @if($proposal->status == 'Mở')
+                                                <span class="badge badge-primary">Mở</span>
+                                            @elseif($proposal->status == 'Đã kiểm tra')
+                                                <span class="badge badge-warning">Đã kiểm tra</span>
+                                            @else
+                                                <span class="badge badge-success">Đã duyệt</span>
+                                            @endif
                                           </address>
                                         </div>
                                         <!-- /.col -->
@@ -187,7 +187,17 @@
                                           <address>
                                             <strong>Người phê duyệt</strong><br>
                                             @if ($proposal->approver_id)
-                                              {{$proposal->approver->name}}<br>
+                                              {{$proposal->approver->name}}
+                                            @endif
+                                            @if ($proposal->approver_result)
+                                                @if($proposal->approver_result == 'Đồng ý')
+                                                    <span class="badge badge-success">Đồng ý</span>
+                                                @else
+                                                    <span class="badge badge-danger">Từ chối</span> <br>
+                                                    @if ($proposal->approver_comment)
+                                                        (<small>{{$proposal->approver_comment}}</small>)
+                                                    @endif
+                                                @endif
                                             @endif
                                           </address>
                                         </div>
