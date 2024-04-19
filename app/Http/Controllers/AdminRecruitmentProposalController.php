@@ -7,6 +7,7 @@ use App\Models\Department;
 use App\Models\Division;
 use App\Models\CompanyJob;
 use App\Models\RecruitmentProposal;
+use App\Models\RecruitmentMethod;
 use App\Notifications\RecruitmentProposalCreated;
 use App\Notifications\RecruitmentProposalRequestApprove;
 use App\Notifications\RecruitmentProposalRejected;
@@ -87,7 +88,7 @@ class AdminRecruitmentProposalController extends Controller
         $proposal->save();
 
         //Send notification to reviewer
-        $reviewers = Admin::where('role_id', 4)->get(); //2: Nhân sự
+        $reviewers = Admin::where('role_id', 4)->get(); //4: Nhân sự
         foreach ($reviewers as $reviewer) {
             Notification::route('mail' , $reviewer->email)->notify(new RecruitmentProposalCreated($proposal->id));
         }
@@ -102,7 +103,11 @@ class AdminRecruitmentProposalController extends Controller
     public function show($id)
     {
         $proposal = RecruitmentProposal::findOrFail($id);
-        return view('admin.recruitment.proposal.show',compact('proposal'));
+        $methods = RecruitmentMethod::all()->pluck('name', 'id');
+        return view('admin.recruitment.proposal.show',
+                    ['proposal' => $proposal,
+                     'methods' => $methods,
+                    ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class RecruitmentProposal extends Model
 {
@@ -44,5 +45,10 @@ class RecruitmentProposal extends Model
     public function approver()
     {
         return $this->belongsTo(Admin::class, 'approver_id');
+    }
+
+    public function plan(): HasOne
+    {
+        return $this->hasOne(RecruitmentPlan::class, 'proposal_id');
     }
 }

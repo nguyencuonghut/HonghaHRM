@@ -14,6 +14,7 @@ use App\Http\Controllers\AdminCommuneController;
 use App\Http\Controllers\AdminCompanyJobController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRecruitmentProposalController;
+use App\Http\Controllers\AdminRecruitmentPlanController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -81,6 +82,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('recruitment/proposals/review/{proposal_id}', [AdminRecruitmentProposalController::class, 'review'])->name('recruitment.proposals.review');
         Route::get('recruitment/proposals/data', [AdminRecruitmentProposalController::class, 'anyData'])->name('recruitment.proposals.data');
         Route::resource('recruitment/proposals', AdminRecruitmentProposalController::class, ['names' => 'recruitment.proposals']);
+
+        Route::resource('recruitment/plans', AdminRecruitmentPlanController::class, ['names' => 'recruitment.plans']);
     });
 });
 

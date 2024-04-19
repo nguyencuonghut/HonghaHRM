@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             DistrictsTableSeeder::class,
             CommunesTableSeeder::class,
             JobsTableSeeder::class,
+            RecruitmentMethodsTableSeeder::class,
         ]);
     }
 }
