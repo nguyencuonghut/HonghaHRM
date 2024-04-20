@@ -83,6 +83,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('recruitment/proposals/data', [AdminRecruitmentProposalController::class, 'anyData'])->name('recruitment.proposals.data');
         Route::resource('recruitment/proposals', AdminRecruitmentProposalController::class, ['names' => 'recruitment.proposals']);
 
+        Route::post('recruitment/plans/approve/{proposal_id}', [AdminRecruitmentPlanController::class, 'approve'])->name('recruitment.plans.approve');
         Route::resource('recruitment/plans', AdminRecruitmentPlanController::class, ['names' => 'recruitment.plans']);
     });
 });

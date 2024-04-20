@@ -9,6 +9,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\RecruitmentPlanRequestApprove;
+use App\Notifications\RecruitmentPlanApproved;
 
 class AdminRecruitmentPlanController extends Controller
 {
@@ -94,5 +95,29 @@ class AdminRecruitmentPlanController extends Controller
     public function destroy(RecruitmentPlan $recruitmentPlan)
     {
         //
+    }
+
+    public function approve(Request $request, $id)
+    {
+        $rules = [
+            'approver_result' => 'required',
+        ];
+        $messages = [
+            'approver_result.required' => 'Bạn phải chọn kết quả.',
+        ];
+        $request->validate($rules,$messages);
+
+        $plan = RecruitmentPlan::findOrFail($id);
+        $plan->approver_result = $request->approver_result;
+        $plan->approver_comment = $request->approver_comment;
+        $plan->approver_id = Auth::user()->id;
+        $plan->status = 'Đã duyệt';
+        $plan->save();
+
+        //Send notification to creator
+        Notification::route('mail' , $plan->creator->email)->notify(new RecruitmentPlanApproved($plan->id));
+
+        Alert::toast('Phê duyệt thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 }

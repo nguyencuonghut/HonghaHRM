@@ -359,6 +359,14 @@
                                     </div>
                                     @endif
                                 </div>
+
+                                <div class="card-footer clearfix">
+                                    @if ('Ban lãnh đạo' == Auth::user()->role->name)
+                                        <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_plan_approve">
+                                            Phê duyệt
+                                        </button>
+                                    @endif
+                                </div>
                             </div>
                         </div>
                       </div>
@@ -414,7 +422,7 @@
                 </div>
             </form>
 
-            <!-- Modals for approve -->
+            <!-- Modals for proposal approve -->
             <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.proposals.approve', $proposal->id) }}" name="make_approve" id="make_approve" novalidate="novalidate">
                 {{ csrf_field() }}
                 <div class="modal fade" id="create_approve">
@@ -461,7 +469,7 @@
                 </div>
             </form>
 
-            <!-- Modals for plan -->
+            <!-- Modals for create plan -->
             <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.plans.store') }}" name="make_plan" id="make_plan" novalidate="novalidate">
                 {{ csrf_field() }}
                 <div class="modal fade" id="create_plan">
@@ -510,6 +518,52 @@
                 </div>
             </form>
 
+            <!-- Modals for plan approve -->
+            <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.plans.approve', $proposal->plan->id) }}" name="make_plan_approve" id="make_plan_approve" novalidate="novalidate">
+                {{ csrf_field() }}
+                <div class="modal fade" id="create_plan_approve">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Kết quả</label>
+                                            <div class="controls">
+                                                <select name="approver_result" id="approver_result" class="form-control" style="width: 100%;">
+                                                    <option disabled="disabled" selected="selected" disabled>-- Chọn --</option>
+                                                        <option value="Đồng ý">Đồng ý</option>
+                                                        <option value="Từ chối">Từ chối</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="control-label">Giải thích</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" name="approver_comment" id="approver_comment" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                </div>
+            </form>
         </div>
     </section>
 </div>
