@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\RecruitmentPlanRequestApprove;
 
 class AdminRecruitmentPlanController extends Controller
 {
@@ -56,7 +57,7 @@ class AdminRecruitmentPlanController extends Controller
         //Send notification to approver
         $approvers = Admin::where('role_id', 2)->get(); //2: Ban lãnh đạo
         foreach ($approvers as $approver) {
-            //Notification::route('mail' , $approver->email)->notify(new RecruitmentPlanCreated($plan->id));
+            Notification::route('mail' , $approver->email)->notify(new RecruitmentPlanRequestApprove($plan->id));
         }
 
         Alert::toast('Thêm kế hoạch tuyển dụng mới thành công!', 'success', 'top-right');
