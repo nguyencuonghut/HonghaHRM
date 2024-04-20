@@ -41,24 +41,45 @@ class RecruitmentProposalApproved extends Notification implements ShouldQueue
         $proposal = RecruitmentProposal::findOrFail($this->proposal_id);
 
         if ('Đồng ý' == $proposal->approver_result) {
-            return (new MailMessage)
-                ->subject('Kết quả phê duyệt đề xuất tuyển dụng ' . $proposal->company_job->name)
-                ->line('Ban lãnh đạo đã phê duyệt đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name . '.')
-                ->line('Bộ phận: ' . $proposal->company_job->division->name . '.')
-                ->line('Phòng ban: ' . $proposal->company_job->department->name . '.')
-                ->line('Kết quả: ' . $proposal->approver_result)
-                ->action('Xem chi tiết', url($url))
-                ->line('Xin cảm ơn!');
+            if ($proposal->company_job->division_id) {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name . '.')
+                    ->line('Bộ phận: ' . $proposal->company_job->division->name . '.')
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $proposal->approver_result)
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            } else {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name . '.')
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $proposal->approver_result)
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            }
         } else {
-            return (new MailMessage)
-                ->subject('Kết quả phê duyệt đề xuất tuyển dụng ' . $proposal->company_job->name)
-                ->line('Ban lãnh đạo đã phê duyệt đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name . '.')
-                ->line('Bộ phận: ' . $proposal->company_job->division->name . '.')
-                ->line('Phòng ban: ' . $proposal->company_job->department->name . '.')
-                ->line('Kết quả: ' . $proposal->approver_result . '.')
-                ->line('Giải thích: ' . $proposal->approver_comment . '.')
-                ->action('Xem chi tiết', url($url))
-                ->line('Xin cảm ơn!');
+            if ($proposal->company_job->division_id) {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name . '.')
+                    ->line('Bộ phận: ' . $proposal->company_job->division->name . '.')
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $proposal->approver_result . '.')
+                    ->line('Giải thích: ' . $proposal->approver_comment . '.')
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            } else {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name . '.')
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $proposal->approver_result . '.')
+                    ->line('Giải thích: ' . $proposal->approver_comment . '.')
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            }
         }
     }
 

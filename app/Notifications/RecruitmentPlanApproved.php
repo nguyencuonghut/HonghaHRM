@@ -41,24 +41,45 @@ class RecruitmentPlanApproved extends Notification implements ShouldQueue
         $url = '/admin/recruitment/proposals/' . $plan->proposal_id;
 
         if ('Đồng ý' == $plan->approver_result) {
-            return (new MailMessage)
-                ->subject('Kết quả phê duyệt kế hoạch tuyển dụng ' . $plan->proposal->company_job->name)
-                ->line('Ban lãnh đạo đã phê duyệt kế hoạch tuyển dụng vị trí: ' . $plan->proposal->company_job->name . '.')
-                ->line('Bộ phận: ' . $plan->proposal->company_job->division->name . '.')
-                ->line('Phòng ban: ' . $plan->proposal->company_job->department->name . '.')
-                ->line('Kết quả: ' . $plan->approver_result)
-                ->action('Xem chi tiết', url($url))
-                ->line('Xin cảm ơn!');
+            if ($plan->proposal->company_job->division_id) {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt kế hoạch tuyển dụng ' . $plan->proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt kế hoạch tuyển dụng vị trí: ' . $plan->proposal->company_job->name . '.')
+                    ->line('Bộ phận: ' . $plan->proposal->company_job->division->name . '.')
+                    ->line('Phòng ban: ' . $plan->proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $plan->approver_result)
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            } else {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt kế hoạch tuyển dụng ' . $plan->proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt kế hoạch tuyển dụng vị trí: ' . $plan->proposal->company_job->name . '.')
+                    ->line('Phòng ban: ' . $plan->proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $plan->approver_result)
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            }
         } else {
-            return (new MailMessage)
-                ->subject('Kết quả phê duyệt kế hoạch tuyển dụng ' . $plan->proposal->company_job->name)
-                ->line('Ban lãnh đạo đã phê duyệt kế hoạch tuyển dụng vị trí: ' . $plan->proposal->company_job->name . '.')
-                ->line('Bộ phận: ' . $plan->proposal->company_job->division->name . '.')
-                ->line('Phòng ban: ' . $plan->proposal->company_job->department->name . '.')
-                ->line('Kết quả: ' . $plan->approver_result . '.')
-                ->line('Giải thích: ' . $plan->approver_comment . '.')
-                ->action('Xem chi tiết', url($url))
-                ->line('Xin cảm ơn!');
+            if ($plan->proposal->company_job->division_id) {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt kế hoạch tuyển dụng ' . $plan->proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt kế hoạch tuyển dụng vị trí: ' . $plan->proposal->company_job->name . '.')
+                    ->line('Bộ phận: ' . $plan->proposal->company_job->division->name . '.')
+                    ->line('Phòng ban: ' . $plan->proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $plan->approver_result . '.')
+                    ->line('Giải thích: ' . $plan->approver_comment . '.')
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            } else {
+                return (new MailMessage)
+                    ->subject('Kết quả phê duyệt kế hoạch tuyển dụng ' . $plan->proposal->company_job->name)
+                    ->line('Ban lãnh đạo đã phê duyệt kế hoạch tuyển dụng vị trí: ' . $plan->proposal->company_job->name . '.')
+                    ->line('Phòng ban: ' . $plan->proposal->company_job->department->name . '.')
+                    ->line('Kết quả: ' . $plan->approver_result . '.')
+                    ->line('Giải thích: ' . $plan->approver_comment . '.')
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+            }
         }
     }
 
