@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
             CommunesTableSeeder::class,
             JobsTableSeeder::class,
             RecruitmentMethodsTableSeeder::class,
+            RecruitmentSocialMediaTableSeeder::class,
         ]);
     }
 }

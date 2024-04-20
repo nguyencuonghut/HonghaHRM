@@ -51,4 +51,9 @@ class RecruitmentProposal extends Model
     {
         return $this->hasOne(RecruitmentPlan::class, 'proposal_id');
     }
+
+    public function announcement(): HasOne
+    {
+        return $this->hasOne(RecruitmentAnnouncement::class, 'proposal_id');
+    }
 }
