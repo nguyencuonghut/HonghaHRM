@@ -219,7 +219,8 @@
                                         </button>
                                     @endif
                                     @if (('Đã kiểm tra' == $proposal->status || 'Đã duyệt' == $proposal->status)
-                                        && 'Ban lãnh đạo' == Auth::user()->role->name)
+                                        && 'Ban lãnh đạo' == Auth::user()->role->name
+                                        && !$proposal->plan)
                                         <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_approve">
                                             Phê duyệt
                                         </button>
