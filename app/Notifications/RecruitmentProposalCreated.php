@@ -39,13 +39,23 @@ class RecruitmentProposalCreated extends Notification implements ShouldQueue
     {
         $url = '/admin/recruitment/proposals/' . $this->proposal_id;
         $proposal = RecruitmentProposal::findOrFail($this->proposal_id);
-        return (new MailMessage)
-        ->subject('Đề nghị kiểm tra đề xuất tuyển dụng ' . $proposal->company_job->name)
-        ->line('Xin mời kiểm tra đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name)
-        ->line('Bộ phận: ' . $proposal->company_job->division->name)
-        ->line('Phòng ban: ' . $proposal->company_job->department->name)
-        ->action('Kiểm tra', url($url))
-        ->line('Xin cảm ơn!');
+
+        if ($proposal->company_job->division_id) {
+            return (new MailMessage)
+                    ->subject('Đề nghị kiểm tra đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Xin mời kiểm tra đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name)
+                    ->line('Bộ phận: ' . $proposal->company_job->division->name)
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name)
+                    ->action('Kiểm tra', url($url))
+                    ->line('Xin cảm ơn!');
+        } else {
+            return (new MailMessage)
+                    ->subject('Đề nghị kiểm tra đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Xin mời kiểm tra đề xuất tuyển dụng vị trí: ' . $proposal->company_job->name)
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name)
+                    ->action('Kiểm tra', url($url))
+                    ->line('Xin cảm ơn!');
+        }
     }
 
     /**

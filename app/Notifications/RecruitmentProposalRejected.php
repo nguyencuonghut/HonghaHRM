@@ -39,16 +39,28 @@ class RecruitmentProposalRejected extends Notification implements ShouldQueue
     {
         $url = '/admin/recruitment/proposals/' . $this->proposal_id;
         $proposal = RecruitmentProposal::findOrFail($this->proposal_id);
-        return (new MailMessage)
-        ->subject('Từ chối đề xuất tuyển dụng ' . $proposal->company_job->name)
-        ->line('Đề xuất tuyển dụng của bạn cho đã bị từ chối.')
-        ->line('Vị trí: ' . $proposal->company_job->name)
-        ->line('Bộ phận: ' . $proposal->company_job->division->name)
-        ->line('Phòng ban: ' . $proposal->company_job->department->name)
-        ->line('Người từ chối: ' . $proposal->reviewer->name)
-        ->line('Lý do: ' . $proposal->reviewer_comment)
-        ->action('Xem chi tiết', url($url))
-        ->line('Xin cảm ơn!');
+        if ($proposal->company_job->division_id) {
+            return (new MailMessage)
+                    ->subject('Từ chối đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Đề xuất tuyển dụng của bạn cho đã bị từ chối.')
+                    ->line('Vị trí: ' . $proposal->company_job->name)
+                    ->line('Bộ phận: ' . $proposal->company_job->division->name)
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name)
+                    ->line('Người từ chối: ' . $proposal->reviewer->name)
+                    ->line('Lý do: ' . $proposal->reviewer_comment)
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+        } else {
+            return (new MailMessage)
+                    ->subject('Từ chối đề xuất tuyển dụng ' . $proposal->company_job->name)
+                    ->line('Đề xuất tuyển dụng của bạn cho đã bị từ chối.')
+                    ->line('Vị trí: ' . $proposal->company_job->name)
+                    ->line('Phòng ban: ' . $proposal->company_job->department->name)
+                    ->line('Người từ chối: ' . $proposal->reviewer->name)
+                    ->line('Lý do: ' . $proposal->reviewer_comment)
+                    ->action('Xem chi tiết', url($url))
+                    ->line('Xin cảm ơn!');
+        }
 
     }
 
