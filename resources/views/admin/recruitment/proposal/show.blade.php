@@ -296,7 +296,8 @@
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     @if('Nhân Sự' == Auth::user()->role->name
-                                        && !$proposal->plan)
+                                        && !$proposal->plan
+                                        && 'Đã duyệt' == $proposal->status)
                                         <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_plan">
                                             Tạo
                                         </button>
