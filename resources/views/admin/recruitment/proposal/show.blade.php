@@ -85,6 +85,7 @@
                                               <th>Số điện thoại</th>
                                               <th>Ngày sinh</th>
                                               <th>Địa chỉ</th>
+                                              <th>CV</th>
                                               <th>Thao tác</th>
                                             </tr>
                                             </thead>
@@ -1048,6 +1049,7 @@
                 {data: 'phone', name: 'phone'},
                 {data: 'date_of_birth', name: 'date_of_birth'},
                 {data: 'addr', name: 'addr'},
+                {data: 'cv_file', name: 'cv_file'},
                 {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]
         }).buttons().container().appendTo('#candidates-table_wrapper .col-md-6:eq(0)');

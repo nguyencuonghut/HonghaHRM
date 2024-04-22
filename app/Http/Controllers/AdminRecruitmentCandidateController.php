@@ -136,7 +136,7 @@ class AdminRecruitmentCandidateController extends Controller
 
     public function anyData()
     {
-        $candidates = RecruitmentCandidate::select(['id', 'name', 'email', 'phone', 'date_of_birth', 'commune_id'])->get();
+        $candidates = RecruitmentCandidate::select(['id', 'name', 'email', 'phone', 'date_of_birth', 'commune_id', 'cv_file'])->get();
         return Datatables::of($candidates)
             ->addIndexColumn()
             ->editColumn('name', function ($candidates) {
@@ -154,6 +154,10 @@ class AdminRecruitmentCandidateController extends Controller
             ->editColumn('addr', function ($candidates) {
                 return $candidates->commune->name . ' - ' . $candidates->commune->district->name . ' - ' . $candidates->commune->district->province->name;
             })
+            ->editColumn('cv_file', function ($candidates) {
+                $url = '../../../' . $candidates->cv_file;
+                return '<a href="' . $url . '" target="_blank"><i class="far fa-file-pdf"></i></a>';
+            })
             ->addColumn('actions', function ($users) {
                 $action = '<a href="' . route("admin.recruitment.candidates.edit", $users->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                            <form style="display:inline" action="'. route("admin.recruitment.candidates.destroy", $users->id) . '" method="POST">
@@ -162,7 +166,7 @@ class AdminRecruitmentCandidateController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'cv_file'])
             ->make(true);
     }
 }
