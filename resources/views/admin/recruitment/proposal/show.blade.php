@@ -786,7 +786,7 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">CV</label>
                                             <div class="custom-file text-left">
-                                                <input type="file" name="cv_file" class="custom-file-input" id="cv_file">
+                                                <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
                                                 <label class="custom-file-label" for="cv_file">Chọn file</label>
                                             </div>
                                         </div>
