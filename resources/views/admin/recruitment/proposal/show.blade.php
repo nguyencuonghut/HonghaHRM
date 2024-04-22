@@ -45,16 +45,12 @@
                           <li class="nav-item">
                             <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Chi tiết</a>
                           </li>
-                          @if ('Đã duyệt' == $proposal->status)
                           <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Kế hoạch</a>
                           </li>
-                          @endif
-                          @if ('Đã duyệt' == $proposal->plan->status)
                           <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-profile-tab-1" data-toggle="pill" href="#custom-tabs-one-profile-1" role="tab" aria-controls="custom-tabs-one-profile-1" aria-selected="false">Đăng tin</a>
                           </li>
-                          @endif
                           <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-profile-tab-2" data-toggle="pill" href="#custom-tabs-one-profile-2" role="tab" aria-controls="custom-tabs-one-profile-2" aria-selected="false">Ứng viên</a>
                           </li>
@@ -100,7 +96,6 @@
                             </div>
 
                             <!-- Announcement Tab -->
-                            @if ('Đã duyệt' == $proposal->plan->status)
                             <div class="tab-pane fade" id="custom-tabs-one-profile-1" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-1">
                                 <h2>{{$proposal->company_job->name}}</h2>
                                 <div class="card">
@@ -135,7 +130,6 @@
                                     </div>
                                   </div>
                             </div>
-                            @endif
 
                           <!-- Proposal Tab -->
                           <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
@@ -296,7 +290,6 @@
                         </div>
 
                         <!-- Plan Tab -->
-                        @if ('Đã duyệt' == $proposal->status)
                         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                             <h2>{{$proposal->company_job->name}}</h2>
                             <div class="card">
@@ -440,7 +433,6 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
                       </div>
                       <!-- /.card -->
                     </div>
