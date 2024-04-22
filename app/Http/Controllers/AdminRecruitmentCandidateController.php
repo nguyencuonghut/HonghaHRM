@@ -134,9 +134,9 @@ class AdminRecruitmentCandidateController extends Controller
     }
 
 
-    public function anyData()
+    public function anyData($proposal_id)
     {
-        $candidates = RecruitmentCandidate::select(['id', 'name', 'email', 'phone', 'date_of_birth', 'commune_id', 'cv_file'])->get();
+        $candidates = RecruitmentCandidate::where('proposal_id', $proposal_id)->select(['id', 'name', 'email', 'phone', 'date_of_birth', 'commune_id', 'cv_file'])->get();
         return Datatables::of($candidates)
             ->addIndexColumn()
             ->editColumn('name', function ($candidates) {

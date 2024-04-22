@@ -1041,7 +1041,7 @@
                 }
             ],
             dom: 'Blfrtip',
-            ajax: ' {!! route('admin.recruitment.candidates.data') !!}',
+            ajax: ' {!! route('admin.recruitment.candidates.data', $proposal->id) !!}',
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex'},
                 {data: 'name', name: 'name'},
