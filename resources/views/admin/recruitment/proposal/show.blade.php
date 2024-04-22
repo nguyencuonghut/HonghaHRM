@@ -45,9 +45,11 @@
                           <li class="nav-item">
                             <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Chi tiết</a>
                           </li>
+                          @if ('Đã duyệt' == $proposal->status)
                           <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Kế hoạch</a>
                           </li>
+                          @endif
                           <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-profile-tab-1" data-toggle="pill" href="#custom-tabs-one-profile-1" role="tab" aria-controls="custom-tabs-one-profile-1" aria-selected="false">Đăng tin</a>
                           </li>
@@ -290,14 +292,14 @@
                         </div>
 
                         <!-- Plan Tab -->
+                        @if ('Đã duyệt' == $proposal->status)
                         <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
                             <h2>{{$proposal->company_job->name}}</h2>
                             <div class="card">
                                 <!-- /.card-header -->
                                 <div class="card-body">
                                     @if('Nhân Sự' == Auth::user()->role->name
-                                        && !$proposal->plan
-                                        && 'Đã duyệt' == $proposal->status)
+                                        && !$proposal->plan)
                                         <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_plan">
                                             Tạo
                                         </button>
@@ -434,6 +436,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                       </div>
                       <!-- /.card -->
                     </div>
