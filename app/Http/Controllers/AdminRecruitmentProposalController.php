@@ -12,6 +12,7 @@ use App\Models\Province;
 use App\Models\RecruitmentProposal;
 use App\Models\RecruitmentMethod;
 use App\Models\RecruitmentSocialMedia;
+use App\Models\RecruitmentCandidate;
 use App\Models\CvReceiveMethod;
 use App\Notifications\RecruitmentProposalCreated;
 use App\Notifications\RecruitmentProposalRequestApprove;
@@ -114,6 +115,7 @@ class AdminRecruitmentProposalController extends Controller
         $provinces = Province::orderBy('name' ,'asc')->get();
         $districts = District::orderBy('name' ,'asc')->get();
         $communes = Commune::orderBy('name' ,'asc')->get();
+        $candidates = RecruitmentCandidate::orderBy('name', 'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,
@@ -122,6 +124,7 @@ class AdminRecruitmentProposalController extends Controller
                      'districts' => $districts,
                      'communes' => $communes,
                      'receive_methods' => $receive_methods,
+                     'candidates' => $candidates,
                     ]);
     }
 

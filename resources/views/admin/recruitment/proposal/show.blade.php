@@ -66,9 +66,18 @@
                                     <div class="card-body">
                                         @if('Nhân Sự' == Auth::user()->role->name
                                         && $proposal->announcement)
-                                            <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#create_candidate">
-                                                Tạo
+                                            <label class="required-field" class="control-label">Chọn ứng viên</label>
+                                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#create_candidate">
+                                                <i class="fas fa-plus"></i>
                                             </button>
+                                            <div class="controls">
+                                                <select name="district_id" id="district_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    @foreach($candidates as $candidate)
+                                                        <option value="{{$candidate->id}}">{{$candidate->name}} - {{$candidate->email}} - {{$candidate->cccd}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             <br>
                                             <br>
                                         @endif
