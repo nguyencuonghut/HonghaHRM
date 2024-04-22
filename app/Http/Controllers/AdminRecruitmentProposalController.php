@@ -152,7 +152,7 @@ class AdminRecruitmentProposalController extends Controller
 
     public function anyData()
     {
-        $proposals = RecruitmentProposal::with(['company_job', 'creator', 'reviewer', 'approver'])->get();
+        $proposals = RecruitmentProposal::with(['company_job', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
         return Datatables::of($proposals)
             ->addIndexColumn()
             ->editColumn('company_job', function ($proposals) {
