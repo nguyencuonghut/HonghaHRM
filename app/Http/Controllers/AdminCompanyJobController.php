@@ -6,7 +6,7 @@ use App\Models\Job;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class AdminJobController extends Controller
+class AdminCompanyJobController extends Controller
 {
     /**
      * Display a listing of the resource.
