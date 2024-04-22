@@ -97,8 +97,8 @@ class AdminRecruitmentCandidateController extends Controller
         //Send password to candidate's email
         Notification::route('mail' , $candidate->email)->notify(new CandidateCvReceived($candidate->id));
 
-        Alert::toast('Thêm người dùng mới thành công!', 'success', 'top-right');
-        return redirect()->route('admin.users.index');
+        Alert::toast('Thêm ứng viên mới thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**
