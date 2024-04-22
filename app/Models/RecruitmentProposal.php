@@ -56,4 +56,9 @@ class RecruitmentProposal extends Model
     {
         return $this->hasOne(RecruitmentAnnouncement::class, 'proposal_id');
     }
+
+    public function candidates()
+    {
+        return $this->hasMany(RecruitmentCandidate::class);
+    }
 }

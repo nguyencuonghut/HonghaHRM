@@ -25,4 +25,9 @@ class Admin extends Authenticatable
     {
         return $this->hasMany(RecruitmentProposal::class);
     }
+
+    public function candidates()
+    {
+        return $this->hasMany(RecruitmentCandidate::class);
+    }
 }

@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Commune;
 use App\Models\Department;
+use App\Models\District;
 use App\Models\Division;
 use App\Models\CompanyJob;
+use App\Models\Province;
 use App\Models\RecruitmentProposal;
 use App\Models\RecruitmentMethod;
 use App\Models\RecruitmentSocialMedia;
+use App\Models\CvReceiveMethod;
 use App\Notifications\RecruitmentProposalCreated;
 use App\Notifications\RecruitmentProposalRequestApprove;
 use App\Notifications\RecruitmentProposalRejected;
@@ -105,11 +109,19 @@ class AdminRecruitmentProposalController extends Controller
     {
         $proposal = RecruitmentProposal::findOrFail($id);
         $methods = RecruitmentMethod::all()->pluck('name', 'id');
+        $receive_methods = CvReceiveMethod::all()->pluck('name', 'id');
         $social_media = RecruitmentSocialMedia::all()->pluck('name', 'id');
+        $provinces = Province::orderBy('name' ,'asc')->get();
+        $districts = District::orderBy('name' ,'asc')->get();
+        $communes = Commune::orderBy('name' ,'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,
                      'social_media' => $social_media,
+                     'provinces' => $provinces,
+                     'districts' => $districts,
+                     'communes' => $communes,
+                     'receive_methods' => $receive_methods,
                     ]);
     }
 

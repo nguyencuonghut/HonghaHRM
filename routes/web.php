@@ -16,6 +16,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRecruitmentProposalController;
 use App\Http\Controllers\AdminRecruitmentPlanController;
 use App\Http\Controllers\AdminRecruitmentAnnouncementController;
+use App\Http\Controllers\AdminRecruitmentCandidateController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -88,6 +89,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/plans', AdminRecruitmentPlanController::class, ['names' => 'recruitment.plans']);
 
         Route::resource('recruitment/announcements', AdminRecruitmentAnnouncementController::class, ['names' => 'recruitment.announcements']);
+
+        Route::get('recruitment/candidates/data', [AdminRecruitmentCandidateController::class, 'anyData'])->name('recruitment.candidates.data');
+        Route::resource('recruitment/candidates', AdminRecruitmentCandidateController::class, ['names' => 'recruitment.candidates']);
     });
 });
 
