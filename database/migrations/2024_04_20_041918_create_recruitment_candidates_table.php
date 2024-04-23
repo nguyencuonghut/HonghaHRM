@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('recruitment_candidates', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('proposal_id')->constrained('recruitment_proposals');
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
@@ -22,9 +21,6 @@ return new class extends Migration
             $table->date('issued_date');
             $table->string('issued_by');
             $table->enum('gender', ['Nam', 'Nữ']);
-            $table->string('cv_file');
-            $table->foreignId('receive_method')->constrained('cv_receive_methods');
-            $table->enum('batch', ['Đợt 1', 'Đợt 2', 'Đợt 3', 'Đợt 4', 'Đợt 5']);
             $table->foreignId('commune_id')->constrained('communes');
             $table->foreignId('creator_id')->constrained('admins');
             $table->timestamps();

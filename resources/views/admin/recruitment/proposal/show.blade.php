@@ -3,10 +3,6 @@
 @endsection
 
 @push('styles')
-  <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
@@ -61,47 +57,134 @@
                             <!-- Candidate Tab -->
                             <div class="tab-pane fade" id="custom-tabs-one-profile-2" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-2">
                                 <h2>{{$proposal->company_job->name}}</h2>
+                                @if('Nhân Sự' == Auth::user()->role->name
+                                    && $proposal->announcement)
+                                    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{ route('admin.recruitment.proposal_candidates.store') }}" name="create_proposal_candidate" id="create_proposal_candidate" novalidate="novalidate">
+                                        {{ csrf_field() }}
+                                    <div class="card">
+                                        <div class="card-body">
+
+                                            <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal->id}}">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <label class="required-field" class="control-label">Nhập ứng viên</label>
+                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#create_candidate">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                    <div class="controls">
+                                                        <select name="candidate_id" id="candidate_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                            @foreach($candidates as $candidate)
+                                                                <option value="{{$candidate->id}}">{{$candidate->name}} - {{$candidate->email}} - CCCD {{$candidate->cccd}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="control-group">
+                                                        <label class="required-field" class="control-label">CV</label>
+                                                        <div class="custom-file text-left">
+                                                            <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
+                                                            <label class="custom-file-label" for="cv_file">Chọn file</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="control-group">
+                                                        <label class="required-field" class="control-label">Nhận CV qua</label>
+                                                        <div class="controls">
+                                                            <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                @foreach ($receive_methods as $key => $value)
+                                                                    <option value="{{$key}}">{{$value}}</option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="control-group">
+                                                        <label class="required-field" class="control-label">Đợt</label>
+                                                        <div class="controls">
+                                                            <select name="batch" id="batch" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                <option value="Đợt 1">Đợt 1</option>
+                                                                <option value="Đợt 2">Đợt 2</option>
+                                                                <option value="Đợt 3">Đợt 3</option>
+                                                                <option value="Đợt 4">Đợt 4</option>
+                                                                <option value="Đợt 5">Đợt 5</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer justify-content-between">
+                                            <button type="submit" class="btn btn-primary">Thêm</button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                @endif
+
+                                @if ($proposal->candidates->count())
                                 <div class="card">
+                                    <div class="card-header">
+                                        Danh sách ứng viên
+                                    </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
-                                        @if('Nhân Sự' == Auth::user()->role->name
-                                        && $proposal->announcement)
-                                            <label class="required-field" class="control-label">Chọn ứng viên</label>
-                                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#create_candidate">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                            <div class="controls">
-                                                <select name="district_id" id="district_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    @foreach($candidates as $candidate)
-                                                        <option value="{{$candidate->id}}">{{$candidate->name}} - {{$candidate->email}} - {{$candidate->cccd}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                            <br>
-                                            <br>
-                                        @endif
-                                        @php
-                                            $candidates = App\Models\RecruitmentCandidate::where('proposal_id', $proposal->id)->get();
-                                        @endphp
-                                        @if ($candidates->count())
+                                        <div class="table-responsive">
                                           <table id="candidates-table" class="table table-bordered table-striped">
                                             <thead>
                                             <tr>
-                                              <th>STT</th>
                                               <th style="width: 12%;">Tên</th>
                                               <th style="width: 12%;">Email</th>
-                                              <th>Số điện thoại</th>
+                                              <th>Điện thoại</th>
                                               <th>Ngày sinh</th>
+                                              <th>CCCD</th>
                                               <th>Địa chỉ</th>
                                               <th>CV</th>
                                               <th>Thao tác</th>
                                             </tr>
                                             </thead>
+
+                                            <tbody>
+                                                @foreach ($proposal->candidates as $candidate)
+                                                <tr>
+                                                  <td>{{$candidate->name}}</td>
+                                                  <td>{{$candidate->email}}</td>
+                                                  <td>{{$candidate->phone}}</td>
+                                                  <td>{{ date('d/m/Y', strtotime($candidate->date_of_birth)) }}</td>
+                                                  <td>{{$candidate->cccd}}</td>
+                                                  <td>{{$candidate->commune->name}} - {{$candidate->commune->district->name}} - {{$candidate->commune->district->province->name}}</td>
+                                                  @php
+                                                      $proposal_candidate = App\Models\ProposalCandidate::where('proposal_id', $proposal->id)->where('candidate_id', $candidate->id)->first();
+                                                      $url = '<a target="_blank" href="../../../' . $proposal_candidate->cv_file . '"><i class="far fa-file-pdf"></i></a>';
+
+                                                      //TODO: need to correct the route of edit/delete
+                                                      $action = '<a href="' . route("admin.recruitment.candidates.edit", $proposal_candidate->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                                                                    <form style="display:inline" action="'. route("admin.recruitment.candidates.destroy", $proposal_candidate->id) . '" method="POST">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                                                <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                                                  @endphp
+                                                  <td>{!! $url !!}</td>
+                                                  <td>{!! $action !!}</td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
                                           </table>
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
+                                @endif
                             </div>
 
                             <!-- Announcement Tab -->
@@ -809,7 +892,7 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Nhận CV qua</label>
                                             <div class="controls">
-                                                <select name="receive_method" id="receive_method" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                     @foreach ($receive_methods as $key => $value)
                                                         <option value="{{$key}}">{{$value}}</option>
@@ -956,20 +1039,6 @@
 
 
 @push('scripts')
-<!-- DataTables  & Plugins -->
-<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
-<script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-<script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-<script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-<script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-
 <!-- Select2 -->
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
@@ -1003,67 +1072,6 @@
         $('#issued_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
-
-        $("#candidates-table").DataTable({
-            "responsive": true, "lengthChange": false, "autoWidth": false,
-            buttons: [
-                {
-                    extend: 'copy',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5]
-                    }
-                },
-                {
-                    extend: 'csv',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5]
-                    }
-
-                },
-                {
-                    extend: 'excel',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5]
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5]
-                    }
-                },
-                {
-                    extend: 'print',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5]
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4,5]
-                    }
-                }
-            ],
-            dom: 'Blfrtip',
-            ajax: ' {!! route('admin.recruitment.candidates.data', $proposal->id) !!}',
-            columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
-                {data: 'email', name: 'email'},
-                {data: 'phone', name: 'phone'},
-                {data: 'date_of_birth', name: 'date_of_birth'},
-                {data: 'addr', name: 'addr'},
-                {data: 'cv_file', name: 'cv_file'},
-                {data: 'actions', name: 'actions', orderable: false, searchable: false},
-        ]
-        }).buttons().container().appendTo('#candidates-table_wrapper .col-md-6:eq(0)');
     })
 </script>
 @endpush

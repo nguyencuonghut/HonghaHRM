@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\RecruitmentCandidate;
+use App\Models\RecruitmentProposal;
+use App\Models\ProposalCandidate;
 use Illuminate\Http\Request;
 use App\Notifications\CandidateCvReceived;
 use Datatables;
@@ -46,7 +48,8 @@ class AdminRecruitmentCandidateController extends Controller
             'gender' => 'required',
             'commune_id' => 'required',
             'cv_file' => 'required',
-            'receive_method' => 'required',
+            'cv_receive_method_id' => 'required',
+            'batch' => 'required',
         ];
         $messages = [
             'proposal_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
@@ -62,12 +65,12 @@ class AdminRecruitmentCandidateController extends Controller
             'gender.required' => 'Bạn phải chọn giới tính.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'cv_file.required' => 'Bạn phải chọn file CV.',
-            'receive_method.required' => 'Bạn phải chọn cách nhận CV.',
+            'cv_receive_method_id.required' => 'Bạn phải chọn cách nhận CV.',
+            'batch.required' => 'Bạn phải chọn đợt.',
         ];
         $request->validate($rules,$messages);
 
         $candidate = new RecruitmentCandidate();
-        $candidate->proposal_id = $request->proposal_id;
         $candidate->name = $request->name;
         $candidate->email = $request->email;
         $candidate->phone = $request->phone;
@@ -77,25 +80,31 @@ class AdminRecruitmentCandidateController extends Controller
         $candidate->issued_by = $request->issued_by;
         $candidate->gender = $request->gender;
         $candidate->commune_id = $request->commune_id;
-        $candidate->batch = $request->batch;
-        $candidate->receive_method = $request->receive_method;
         $candidate->creator_id = Auth::user()->id;
-        // Store CV file
+        $candidate->save();
+
+        // Create ProposalCandidate
+        $proposal_candidate = new ProposalCandidate();
+        $proposal_candidate->proposal_id = $request->proposal_id;
+        $proposal_candidate->candidate_id = $candidate->id;
         if ($request->hasFile('cv_file')) {
             $path = 'dist/cv';
 
             !file_exists($path) && mkdir($path, 0777, true);
 
             $file = $request->file('cv_file');
-            $name = str_replace(' ', '_', $file->getClientOriginalName());
+            $name = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
             $file->move($path, $name);
 
-            $candidate->cv_file = $path . '/' . $name;
+            $proposal_candidate->cv_file = $path . '/' . $name;
         }
-        $candidate->save();
+        $proposal_candidate->batch = $request->batch;
+        $proposal_candidate->cv_receive_method_id = $request->cv_receive_method_id;
+        $proposal_candidate->creator_id = Auth::user()->id;
+        $proposal_candidate->save();
 
-        //Send password to candidate's email
-        Notification::route('mail' , $candidate->email)->notify(new CandidateCvReceived($candidate->id));
+        // Send password to candidate's email
+        Notification::route('mail' , $candidate->email)->notify(new CandidateCvReceived($proposal_candidate->proposal_id));
 
         Alert::toast('Thêm ứng viên mới thành công!', 'success', 'top-right');
         return redirect()->back();
@@ -131,42 +140,5 @@ class AdminRecruitmentCandidateController extends Controller
     public function destroy(Candidate $candidate)
     {
         //
-    }
-
-
-    public function anyData($proposal_id)
-    {
-        $candidates = RecruitmentCandidate::where('proposal_id', $proposal_id)->select(['id', 'name', 'email', 'phone', 'date_of_birth', 'commune_id', 'cv_file'])->get();
-        return Datatables::of($candidates)
-            ->addIndexColumn()
-            ->editColumn('name', function ($candidates) {
-                return $candidates->name;
-            })
-            ->editColumn('email', function ($candidates) {
-                return $candidates->email;
-            })
-            ->editColumn('phone', function ($candidates) {
-                return $candidates->phone;
-            })
-            ->editColumn('date_of_birth', function ($candidates) {
-                return date('d/m/Y', strtotime($candidates->date_of_birth));
-            })
-            ->editColumn('addr', function ($candidates) {
-                return $candidates->commune->name . ' - ' . $candidates->commune->district->name . ' - ' . $candidates->commune->district->province->name;
-            })
-            ->editColumn('cv_file', function ($candidates) {
-                $url = '../../../' . $candidates->cv_file;
-                return '<a href="' . $url . '" target="_blank"><i class="far fa-file-pdf"></i></a>';
-            })
-            ->addColumn('actions', function ($users) {
-                $action = '<a href="' . route("admin.recruitment.candidates.edit", $users->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                           <form style="display:inline" action="'. route("admin.recruitment.candidates.destroy", $users->id) . '" method="POST">
-                    <input type="hidden" name="_method" value="DELETE">
-                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
-                return $action;
-            })
-            ->rawColumns(['actions', 'cv_file'])
-            ->make(true);
     }
 }

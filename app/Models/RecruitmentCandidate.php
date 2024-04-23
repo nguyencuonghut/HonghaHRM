@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RecruitmentCandidate extends Model
 {
@@ -26,9 +27,9 @@ class RecruitmentCandidate extends Model
         'creator_id',
     ];
 
-    public function proposal(): BelongsTo
+    public function proposals(): BelongsToMany
     {
-        return $this->belongsTo(RecruitmentProposal::class);
+        return $this->belongsToMany(RecruitmentProposal::class, 'proposal_candidate', 'proposal_id', 'candidate_id')->withTimestamps();;
     }
 
     public function cv_receive_method(): BelongsTo

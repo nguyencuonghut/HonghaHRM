@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class RecruitmentProposal extends Model
 {
@@ -57,8 +58,8 @@ class RecruitmentProposal extends Model
         return $this->hasOne(RecruitmentAnnouncement::class, 'proposal_id');
     }
 
-    public function candidates()
+    public function candidates(): BelongsToMany
     {
-        return $this->hasMany(RecruitmentCandidate::class);
+        return $this->belongsToMany(RecruitmentCandidate::class, 'proposal_candidate', 'proposal_id', 'candidate_id')->withTimestamps();;
     }
 }

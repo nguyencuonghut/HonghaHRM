@@ -115,7 +115,8 @@ class AdminRecruitmentProposalController extends Controller
         $provinces = Province::orderBy('name' ,'asc')->get();
         $districts = District::orderBy('name' ,'asc')->get();
         $communes = Commune::orderBy('name' ,'asc')->get();
-        $candidates = RecruitmentCandidate::orderBy('name', 'asc')->get();
+        $my_candidate_ids = $proposal->candidates->pluck('id')->toArray();
+        $candidates = RecruitmentCandidate::whereNotIn('id', $my_candidate_ids)->orderBy('name', 'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,
