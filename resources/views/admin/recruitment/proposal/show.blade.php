@@ -702,171 +702,6 @@
                 </div>
             </form>
 
-            <!-- Modals for create candiate -->
-            <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.candidates.store') }}" enctype="multipart/form-data" name="make_candidate" id="make_candidate" novalidate="novalidate">
-                {{ csrf_field() }}
-                <div class="modal fade" id="create_candidate">
-                    <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal->id}}">
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Họ tên</label>
-                                            <div class="controls">
-                                                <input type="text" class="form-control" name="name" id="name" required="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Email</label>
-                                            <div class="controls">
-                                                <input type="email" class="form-control" name="email" id="email" required="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Số điện thoại</label>
-                                            <div class="controls">
-                                                <input type="text" class="form-control" name="phone" id="phone" required="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="required-field">Ngày sinh</label>
-                                        <div class="input-group date" id="date_of_birth" data-target-input="nearest">
-                                            <input type="text" name="date_of_birth" class="form-control datetimepicker-input" data-target="#date_of_birth"/>
-                                            <div class="input-group-append" data-target="#date_of_birth" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">CCCD</label>
-                                            <div class="controls">
-                                                <input type="text" class="form-control" name="cccd" id="cccd" required="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <label class="required-field">Ngày cấp</label>
-                                        <div class="input-group date" id="issued_date" data-target-input="nearest">
-                                            <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date"/>
-                                            <div class="input-group-append" data-target="#issued_date" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Nơi cấp</label>
-                                            <div class="controls">
-                                                <input type="text" class="form-control" name="issued_by" id="issued_by" required="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Giới tính</label>
-                                            <div class="controls">
-                                                <select name="gender" id="gender" data-placeholder="Chọn giới tính" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    <option value="Nam">Nam</option>
-                                                    <option value="Nữ">Nữ</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Địa chỉ</label>
-                                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_commune">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                            <div class="controls">
-                                                <select name="commune_id" id="commune_id" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn địa chỉ --" disabled="disabled" selected="selected">-- Chọn địa chỉ --</option>
-                                                    @foreach($communes as $commune)
-                                                        <option value="{{$commune->id}}">{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-12">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">CV</label>
-                                            <div class="custom-file text-left">
-                                                <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
-                                                <label class="custom-file-label" for="cv_file">Chọn file</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Nhận CV qua</label>
-                                            <div class="controls">
-                                                <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    @foreach ($receive_methods as $key => $value)
-                                                        <option value="{{$key}}">{{$value}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Đợt</label>
-                                            <div class="controls">
-                                                <select name="batch" id="batch" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    <option value="Đợt 1">Đợt 1</option>
-                                                    <option value="Đợt 2">Đợt 2</option>
-                                                    <option value="Đợt 3">Đợt 3</option>
-                                                    <option value="Đợt 4">Đợt 4</option>
-                                                    <option value="Đợt 5">Đợt 5</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                            <button type="submit" class="btn btn-primary">Lưu</button>
-                            </div>
-                        </div>
-                        <!-- /.modal-content -->
-                    </div>
-                </div>
-            </form>
-
             <!-- Modals for create commune -->
             <form class="form-horizontal" method="post" action="{{ route('admin.communes.store') }}" name="create_commune" id="create_commune" novalidate="novalidate">
                 {{ csrf_field() }}
@@ -1056,6 +891,171 @@
                     </div>
                 </form>
               <!-- /.modal -->
+
+            <!-- Modals for create candiate -->
+            <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.candidates.store') }}" enctype="multipart/form-data" name="make_candidate" id="make_candidate" novalidate="novalidate">
+                {{ csrf_field() }}
+                <div class="modal fade" id="create_candidate">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal->id}}">
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Họ tên</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" name="name" id="name" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Email</label>
+                                            <div class="controls">
+                                                <input type="email" class="form-control" name="email" id="email" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Số điện thoại</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" name="phone" id="phone" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="required-field">Ngày sinh</label>
+                                        <div class="input-group date" id="date_of_birth" data-target-input="nearest">
+                                            <input type="text" name="date_of_birth" class="form-control datetimepicker-input" data-target="#date_of_birth"/>
+                                            <div class="input-group-append" data-target="#date_of_birth" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">CCCD</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" name="cccd" id="cccd" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <label class="required-field">Ngày cấp</label>
+                                        <div class="input-group date" id="issued_date" data-target-input="nearest">
+                                            <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date"/>
+                                            <div class="input-group-append" data-target="#issued_date" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Nơi cấp</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" name="issued_by" id="issued_by" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Giới tính</label>
+                                            <div class="controls">
+                                                <select name="gender" id="gender" data-placeholder="Chọn giới tính" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nữ">Nữ</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Địa chỉ</label>
+                                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_commune">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                            <div class="controls">
+                                                <select name="commune_id" id="commune_id" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn địa chỉ --" disabled="disabled" selected="selected">-- Chọn địa chỉ --</option>
+                                                    @foreach($communes as $commune)
+                                                        <option value="{{$commune->id}}">{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">CV</label>
+                                            <div class="custom-file text-left">
+                                                <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
+                                                <label class="custom-file-label" for="cv_file">Chọn file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Nhận CV qua</label>
+                                            <div class="controls">
+                                                <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    @foreach ($receive_methods as $key => $value)
+                                                        <option value="{{$key}}">{{$value}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Đợt</label>
+                                            <div class="controls">
+                                                <select name="batch" id="batch" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    <option value="Đợt 1">Đợt 1</option>
+                                                    <option value="Đợt 2">Đợt 2</option>
+                                                    <option value="Đợt 3">Đợt 3</option>
+                                                    <option value="Đợt 4">Đợt 4</option>
+                                                    <option value="Đợt 5">Đợt 5</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                </div>
+            </form>
 
         </div>
     </section>
