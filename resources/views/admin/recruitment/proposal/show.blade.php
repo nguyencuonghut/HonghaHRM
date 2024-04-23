@@ -59,75 +59,14 @@
                                 <h2>{{$proposal->company_job->name}}</h2>
                                 @if('Nhân Sự' == Auth::user()->role->name
                                     && $proposal->announcement)
-                                    <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{ route('admin.recruitment.proposal_candidates.store') }}" name="create_proposal_candidate" id="create_proposal_candidate" novalidate="novalidate">
-                                        {{ csrf_field() }}
                                     <div class="card">
                                         <div class="card-body">
-
-                                            <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal->id}}">
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <label class="required-field" class="control-label">Nhập ứng viên</label>
-                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#create_candidate">
-                                                        <i class="fas fa-plus"></i>
-                                                    </button>
-                                                    <div class="controls">
-                                                        <select name="candidate_id" id="candidate_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                            @foreach($candidates as $candidate)
-                                                                <option value="{{$candidate->id}}">{{$candidate->name}} - {{$candidate->email}} - CCCD {{$candidate->cccd}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <div class="control-group">
-                                                        <label class="required-field" class="control-label">CV</label>
-                                                        <div class="custom-file text-left">
-                                                            <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
-                                                            <label class="custom-file-label" for="cv_file">Chọn file</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <div class="control-group">
-                                                        <label class="required-field" class="control-label">Nhận CV qua</label>
-                                                        <div class="controls">
-                                                            <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                @foreach ($receive_methods as $key => $value)
-                                                                    <option value="{{$key}}">{{$value}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
-                                                    <div class="control-group">
-                                                        <label class="required-field" class="control-label">Đợt</label>
-                                                        <div class="controls">
-                                                            <select name="batch" id="batch" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                <option value="Đợt 1">Đợt 1</option>
-                                                                <option value="Đợt 2">Đợt 2</option>
-                                                                <option value="Đợt 3">Đợt 3</option>
-                                                                <option value="Đợt 4">Đợt 4</option>
-                                                                <option value="Đợt 5">Đợt 5</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="modal-footer justify-content-between">
-                                            <button type="submit" class="btn btn-primary">Thêm</button>
+                                            @if('Nhân Sự' == Auth::user()->role->name
+                                            && $proposal->announcement)
+                                                <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#add_proposal_candidate">
+                                                    Thêm
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
                                     </form>
@@ -1030,6 +969,92 @@
                     </div>
                 </div>
               </form>
+              <!-- /.modal -->
+
+
+              <!-- Modals for create proposal_candidate -->
+                <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{ route('admin.recruitment.proposal_candidates.store') }}" name="create_proposal_candidate" id="create_proposal_candidate" novalidate="novalidate">
+                    {{ csrf_field() }}
+                    <div class="modal fade" id="add_proposal_candidate">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4>Thêm ứng viên</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal->id}}">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="required-field" class="control-label">Nhập ứng viên</label>
+                                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#create_candidate">
+                                                <i class="fas fa-plus"></i>
+                                            </button>
+                                            <div class="controls">
+                                                <select name="candidate_id" id="candidate_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    @foreach($candidates as $candidate)
+                                                        <option value="{{$candidate->id}}">{{$candidate->name}} - {{$candidate->email}} - CCCD {{$candidate->cccd}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">CV</label>
+                                                <div class="custom-file text-left">
+                                                    <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
+                                                    <label class="custom-file-label" for="cv_file">Chọn file</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">Nhận CV qua</label>
+                                                <div class="controls">
+                                                    <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                        @foreach ($receive_methods as $key => $value)
+                                                            <option value="{{$key}}">{{$value}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">Đợt</label>
+                                                <div class="controls">
+                                                    <select name="batch" id="batch" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                        <option value="Đợt 1">Đợt 1</option>
+                                                        <option value="Đợt 2">Đợt 2</option>
+                                                        <option value="Đợt 3">Đợt 3</option>
+                                                        <option value="Đợt 4">Đợt 4</option>
+                                                        <option value="Đợt 5">Đợt 5</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                    </div>
+                </form>
               <!-- /.modal -->
 
         </div>
