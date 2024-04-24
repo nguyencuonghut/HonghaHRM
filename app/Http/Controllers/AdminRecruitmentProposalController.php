@@ -109,14 +109,13 @@ class AdminRecruitmentProposalController extends Controller
     public function show($id)
     {
         $proposal = RecruitmentProposal::findOrFail($id);
-        $methods = RecruitmentMethod::all()->pluck('name', 'id');
-        $receive_methods = CvReceiveMethod::all()->pluck('name', 'id');
+        $methods = RecruitmentMethod::orderBy('name' ,'asc')->get();
+        $receive_methods = CvReceiveMethod::orderBy('name' ,'asc')->get();
         $social_media = RecruitmentSocialMedia::all()->pluck('name', 'id');
         $provinces = Province::orderBy('name' ,'asc')->get();
         $districts = District::orderBy('name' ,'asc')->get();
         $communes = Commune::orderBy('name' ,'asc')->get();
-        $my_candidate_ids = $proposal->candidates->pluck('id')->toArray();
-        $candidates = RecruitmentCandidate::whereNotIn('id', $my_candidate_ids)->orderBy('name', 'asc')->get();
+        $candidates = RecruitmentCandidate::orderBy('id', 'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,

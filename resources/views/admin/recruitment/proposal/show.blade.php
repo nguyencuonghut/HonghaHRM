@@ -106,10 +106,8 @@
                                                   @php
                                                       $proposal_candidate = App\Models\ProposalCandidate::where('proposal_id', $proposal->id)->where('candidate_id', $candidate->id)->first();
                                                       $url = '<a target="_blank" href="../../../' . $proposal_candidate->cv_file . '"><i class="far fa-file-pdf"></i></a>';
-
-                                                      //TODO: need to correct the route of edit/delete
-                                                      $action = '<a href="' . route("admin.recruitment.candidates.edit", $proposal_candidate->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                                                                    <form style="display:inline" action="'. route("admin.recruitment.candidates.destroy", $proposal_candidate->id) . '" method="POST">
+                                                      $action = '<a href="#edit{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit' . $proposal_candidate->id. '"><i class="fas fa-edit"></i></a>
+                                                                    <form style="display:inline" action="'. route("admin.recruitment.proposal_candidates.destroy", $proposal_candidate->id) . '" method="POST">
                                                                 <input type="hidden" name="_method" value="DELETE">
                                                                 <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                                                 <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
@@ -117,6 +115,91 @@
                                                   <td>{!! $url !!}</td>
                                                   <td>{!! $action !!}</td>
                                                 </tr>
+                                                <!-- Modals for edit proposal_candidate -->
+                                                <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{ route('admin.recruitment.proposal_candidates.update', $proposal_candidate->id) }}" name="update_proposal_candidate" id="update_proposal_candidate" novalidate="novalidate">
+                                                    {{ csrf_field() }}
+                                                    @method('PATCH')
+                                                    <div class="modal fade" tabindex="-1" id="edit{{$proposal_candidate->id}}">
+                                                        <div class="modal-dialog modal-lg">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h4>Thêm ứng viên</h4>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                        <span aria-hidden="true">&times;</span>
+                                                                    </button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <input type="hidden" name="proposal_id" id="proposal_id" value="{{$proposal->id}}">
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <label class="required-field" class="control-label">Nhập ứng viên</label>
+                                                                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#create_candidate">
+                                                                                <i class="fas fa-plus"></i>
+                                                                            </button>
+                                                                            <div class="controls">
+                                                                                <select name="candidate_id" id="candidate_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                                    @foreach($candidates as $candidate)
+                                                                                        <option value="{{$candidate->id}}" @if ($candidate->id == $proposal_candidate->candidate_id) selected @endif>{{$candidate->name}} - {{$candidate->email}} - CCCD {{$candidate->cccd}}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-12">
+                                                                            <div class="control-group">
+                                                                                <label class="required-field" class="control-label">CV</label>
+                                                                                <div class="custom-file text-left">
+                                                                                    <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
+                                                                                    <label class="custom-file-label" for="cv_file">Chọn file</label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <div class="control-group">
+                                                                                <label class="required-field" class="control-label">Nhận CV qua</label>
+                                                                                <div class="controls">
+                                                                                    <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                                        @foreach ($receive_methods as $receive_method)
+                                                                                            <option value="{{$receive_method->id}}" @if ($receive_method->id == $proposal_candidate->cv_receive_method_id) selected @endif>{{$receive_method->name}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <div class="control-group">
+                                                                                <label class="required-field" class="control-label">Đợt</label>
+                                                                                <div class="controls">
+                                                                                    <select name="batch" id="batch" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                                        <option value="Đợt 1" @if ('Đợt 1' == $proposal_candidate->batch) selected @endif>Đợt 1</option>
+                                                                                        <option value="Đợt 2" @if ('Đợt 2' == $proposal_candidate->batch) selected @endif>Đợt 2</option>
+                                                                                        <option value="Đợt 3" @if ('Đợt 3' == $proposal_candidate->batch) selected @endif>Đợt 3</option>
+                                                                                        <option value="Đợt 4" @if ('Đợt 4' == $proposal_candidate->batch) selected @endif>Đợt 4</option>
+                                                                                        <option value="Đợt 5" @if ('Đợt 5' == $proposal_candidate->batch) selected @endif>Đợt 5</option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                                <button type="submit" class="btn btn-primary">Lưu</button>
+                                                                </div>
+                                                            </div>
+                                                            <!-- /.modal-content -->
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <!-- /.modal -->
                                                 @endforeach
                                             </tbody>
                                           </table>
@@ -585,8 +668,8 @@
                                             <label class="required-field" class="control-label">Cách thức tuyển</label>
                                             <div class="controls">
                                                 <select name="method_id[]" id="method_id[]" data-placeholder="Chọn" class="form-control select2" multiple="multiple" style="width: 100%;">
-                                                    @foreach($methods as $key => $value)
-                                                        <option value="{{$key}}">{{$value}}</option>
+                                                    @foreach($methods as $method)
+                                                        <option value="{{$method->id}}">{{$method->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -857,8 +940,8 @@
                                                 <div class="controls">
                                                     <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                         <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                        @foreach ($receive_methods as $key => $value)
-                                                            <option value="{{$key}}">{{$value}}</option>
+                                                        @foreach ($receive_methods as $receive_method)
+                                                            <option value="{{$receive_method->id}}">{{$receive_method->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -1023,8 +1106,8 @@
                                             <div class="controls">
                                                 <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    @foreach ($receive_methods as $key => $value)
-                                                        <option value="{{$key}}">{{$value}}</option>
+                                                    @foreach ($receive_methods as $receive_method)
+                                                        <option value="{{$receive_method->id}}">{{$receive_method->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -1056,7 +1139,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </section>
 </div>
