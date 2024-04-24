@@ -20,7 +20,7 @@ class AdminRecruitmentCandidateController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.candidate.index');
     }
 
     /**
@@ -140,5 +140,45 @@ class AdminRecruitmentCandidateController extends Controller
     public function destroy(Candidate $candidate)
     {
         //
+    }
+
+
+    public function anyData()
+    {
+        $candidates = RecruitmentCandidate::with(['commune', 'proposals'])->orderBy('name', 'desc')->get();
+        return Datatables::of($candidates)
+            ->addIndexColumn()
+            ->editColumn('name', function ($candidates) {
+                return '<a href="'.route('admin.recruitment.candidates.show', $candidates->id).'">'.$candidates->name.'</a>';
+            })
+            ->editColumn('email', function ($candidates) {
+                return $candidates->email;
+            })
+            ->editColumn('phone', function ($candidates) {
+                return $candidates->phone;
+            })
+            ->editColumn('addr', function ($candidates) {
+                return $candidates->commune->name .' - ' .  $candidates->commune->district->name .' - ' . $candidates->commune->district->province->name;
+            })
+            ->editColumn('cccd', function ($candidates) {
+                return $candidates->cccd;
+            })
+            ->addColumn('recruitments', function ($candidates) {
+                $recruitments = '';
+                foreach ($candidates->proposals as $proposal) {
+                    $recruitments = $recruitments . ' - ' . $proposal->company_job->name . '<br>';
+                }
+                return $recruitments;
+            })
+            ->addColumn('actions', function ($candidates) {
+                $action = '<a href="' . route("admin.recruitment.candidates.edit", $candidates->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                           <form style="display:inline" action="'. route("admin.recruitment.candidates.destroy", $candidates->id) . '" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                return $action;
+            })
+            ->rawColumns(['actions', 'name', 'recruitments'])
+            ->make(true);
     }
 }

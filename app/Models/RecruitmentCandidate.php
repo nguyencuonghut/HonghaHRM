@@ -29,7 +29,7 @@ class RecruitmentCandidate extends Model
 
     public function proposals(): BelongsToMany
     {
-        return $this->belongsToMany(RecruitmentProposal::class, 'proposal_candidate', 'proposal_id', 'candidate_id')->withTimestamps();;
+        return $this->belongsToMany(RecruitmentProposal::class, 'proposal_candidate', 'candidate_id', 'proposal_id')->withTimestamps();;
     }
 
     public function cv_receive_method(): BelongsTo

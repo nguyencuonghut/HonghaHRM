@@ -91,6 +91,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::resource('recruitment/announcements', AdminRecruitmentAnnouncementController::class, ['names' => 'recruitment.announcements']);
 
+        Route::get('recruitment/candidates/data', [AdminRecruitmentCandidateController::class, 'anyData'])->name('recruitment.candidates.data');
         Route::resource('recruitment/candidates', AdminRecruitmentCandidateController::class, ['names' => 'recruitment.candidates']);
 
         Route::resource('recruitment/proposal_candidates', AdminProposalCandidateController::class, ['names' => 'recruitment.proposal_candidates']);

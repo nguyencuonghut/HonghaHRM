@@ -77,7 +77,14 @@
               </li>
             </ul>
           </li>
-
+          <li class="nav-item">
+            <a href="{{route('admin.recruitment.candidates.index')}}" class="nav-link {{ Request::is('admin/recruitment.candidates*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Ứng viên
+              </p>
+            </a>
+          </li>
           @else
           <li class="nav-item">
             <a href="{{route('user.home')}}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">

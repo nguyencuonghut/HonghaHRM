@@ -90,6 +90,7 @@
                                               <th>CCCD</th>
                                               <th>Địa chỉ</th>
                                               <th>CV</th>
+                                              <th>Đợt</th>
                                               <th>Thao tác</th>
                                             </tr>
                                             </thead>
@@ -113,6 +114,7 @@
                                                                 <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                                                   @endphp
                                                   <td>{!! $url !!}</td>
+                                                  <td>{{$proposal_candidate->batch}}</td>
                                                   <td>{!! $action !!}</td>
                                                 </tr>
                                                 <!-- Modals for edit proposal_candidate -->
