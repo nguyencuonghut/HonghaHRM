@@ -113,9 +113,11 @@ class AdminRecruitmentCandidateController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Candidate $candidate)
+    public function show($id)
     {
-        //
+        $candidate = RecruitmentCandidate::findOrFail($id);
+
+        return view('admin.candidate.show', ['candidate' => $candidate]);
     }
 
     /**
