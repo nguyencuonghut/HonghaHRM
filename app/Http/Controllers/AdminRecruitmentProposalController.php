@@ -8,6 +8,7 @@ use App\Models\Department;
 use App\Models\District;
 use App\Models\Division;
 use App\Models\CompanyJob;
+use App\Models\Education;
 use App\Models\Province;
 use App\Models\RecruitmentProposal;
 use App\Models\RecruitmentMethod;
@@ -116,6 +117,7 @@ class AdminRecruitmentProposalController extends Controller
         $districts = District::orderBy('name' ,'asc')->get();
         $communes = Commune::orderBy('name' ,'asc')->get();
         $candidates = RecruitmentCandidate::orderBy('id', 'asc')->get();
+        $educations = Education::orderBy('id', 'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,
@@ -125,6 +127,7 @@ class AdminRecruitmentProposalController extends Controller
                      'communes' => $communes,
                      'receive_methods' => $receive_methods,
                      'candidates' => $candidates,
+                     'educations' => $educations,
                     ]);
     }
 

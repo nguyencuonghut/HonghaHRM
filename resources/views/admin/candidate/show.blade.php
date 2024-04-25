@@ -28,7 +28,7 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <!-- Profile Image -->
                 <div class="card card-primary card-outline">
                 <div class="card-body box-profile">
@@ -51,6 +51,21 @@
                         <li class="list-group-item">
                             <b class="float-left">Địa chỉ</b> <a class="float-right">{{$candidate->commune->name}} - {{$candidate->commune->district->name}} - {{$candidate->commune->district->province->name}}</a>
                         </li>
+                        <li class="list-group-item">
+                            <b class="float-left">Trình độ</b>
+                            <a class="float-right">
+                                @php
+                                    $educations_info = '';
+
+                                    foreach ($candidate->educations as $education) {
+                                        $candidate_education = App\Models\CandidateEducation::where('candidate_id', $candidate->id)->where('education_id', $education->id)->first();
+                                        $educations_info = $educations_info . $education->name . ' - ' . $candidate_education->major . '<br>';
+
+                                    }
+                                @endphp
+                                {!! $educations_info !!}
+                            </a>
+                        </li>
                     </ul>
                 </div>
                 <!-- /.card-body -->
@@ -58,7 +73,7 @@
                 </div>
                 <!-- /.card -->
             </div>
-            <div class="col-md-9">
+            <div class="col-md-8">
                 <div class="card">
                 <div class="card-header">
                     <h5 class="card-title">Tất cả ứng tuyển</h5>

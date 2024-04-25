@@ -46,4 +46,9 @@ class RecruitmentCandidate extends Model
     {
         return $this->belongsTo(Commune::class);
     }
+
+    public function educations(): BelongsToMany
+    {
+        return $this->belongsToMany(Education::class, 'candidate_education', 'candidate_id', 'education_id')->withTimestamps();;
+    }
 }

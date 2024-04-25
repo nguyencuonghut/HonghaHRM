@@ -191,6 +191,30 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+
+                                                                    <div class="row">
+                                                                        <div class="col-6">
+                                                                            <div class="control-group">
+                                                                                <label class="required-field" class="control-label">Trường</label>
+                                                                                <div class="controls">
+                                                                                    <select name="education_id" id="education_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                                        @foreach ($educations as $education)
+                                                                                            <option value="{{$education->id}}" @if ($education->id == $proposal_candidate->cv_receive_method_id) selected @endif>{{$education->name}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="col-6">
+                                                                            <div class="control-group">
+                                                                                <label class="required-field" class="control-label">Ngành</label>
+                                                                                <div class="controls">
+                                                                                    <input type="text" class="form-control" name="major" id="major" required="">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 <div class="modal-footer justify-content-between">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -965,6 +989,31 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="required-field" class="control-label">Trình độ</label>
+                                            <table class="table table-bordered" id="dynamicTable">
+                                                <tr>
+                                                    <th class="required-field">Trường</th>
+                                                    <th>Ngành</th>
+                                                    <th style="width: 14%;">Thao tác</th>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <select name="addmore[0][education_id]" class="form-control select2" style="width: 100%;">
+                                                            <option selected="selected" disabled>Chọn trường</option>
+                                                            @foreach($educations as $education)
+                                                                <option value="{{$education->id}}">{{$education->name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td><input type="text" name="addmore[0][major]" placeholder="Ngành" class="form-control" /></td>
+                                                    <td><button type="button" name="add_education" id="add_education" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -1180,6 +1229,21 @@
         });
         $('#issued_date').datetimepicker({
             format: 'DD/MM/YYYY'
+        });
+
+        var i = 0;
+        $("#add_education").click(function(){
+            ++i;
+            $("#dynamicTable").append('<tr><td><select name="addmore['+i+'][education_id]" class="form-control select2" style="width: 100%;"><option selected="selected" disabled>Chọn trường</option>@foreach($educations as $education)<option value="{{$education->id}}">{{$education->name}}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][major]" placeholder="Ngành" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-trash-alt"></i></button></td></tr>');
+
+            //Reinitialize Select2 Elements
+            $('.select2').select2({
+                theme: 'bootstrap4'
+            })
+        });
+
+        $(document).on('click', '.remove-tr', function(){
+            $(this).parents('tr').remove();
         });
     })
 </script>
