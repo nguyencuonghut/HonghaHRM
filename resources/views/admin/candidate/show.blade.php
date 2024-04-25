@@ -37,41 +37,59 @@
                     <h3 class="profile-username text-center">{{$candidate->name}}</h3>
 
                     <p class="text-muted text-center">{{$candidate->email}}</p>
-
-                    <ul class="list-group list-group-unbordered mb-3">
-                        <li class="list-group-item">
-                            <b class="float-left">Điện thoại</b> <a class="float-right">{{$candidate->phone}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b class="float-left">Ngày sinh</b> <a class="float-right">{{date('d/m/Y', strtotime($candidate->date_of_birth))}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b class="float-left">CCCD</b> <a class="float-right">{{$candidate->cccd}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b class="float-left">Địa chỉ</b> <a class="float-right">{{$candidate->commune->name}} - {{$candidate->commune->district->name}} - {{$candidate->commune->district->province->name}}</a>
-                        </li>
-                        <li class="list-group-item">
-                            <b class="float-left">Trình độ</b>
-                            <a class="float-right">
-                                @php
-                                    $educations_info = '';
-
-                                    foreach ($candidate->educations as $education) {
-                                        $candidate_education = App\Models\CandidateEducation::where('candidate_id', $candidate->id)->where('education_id', $education->id)->first();
-                                        $educations_info = $educations_info . $education->name . ' - ' . $candidate_education->major . '<br>';
-
-                                    }
-                                @endphp
-                                {!! $educations_info !!}
-                            </a>
-                        </li>
-                    </ul>
                 </div>
                 <!-- /.card-body -->
                 </div>
                 </div>
                 <!-- /.card -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">Chi tiết</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                      <strong><i class="fas fa-mobile-alt mr-1"></i> Điện thoại</strong>
+                      <p class="text-muted">
+                        {{$candidate->phone}}
+                      </p>
+                      <hr>
+
+                      <strong><i class="fas fa-calendar-alt mr-1"></i> Ngày sinh</strong>
+                      <p class="text-muted">
+                        {{date('d/m/Y', strtotime($candidate->date_of_birth))}}
+                      </p>
+                      <hr>
+
+                      <strong><i class="fas fa-id-card mr-1"></i> CCCD</strong>
+                      <p class="text-muted">
+                        {{$candidate->cccd}}
+                      </p>
+                      <hr>
+
+                      <strong><i class="fas fa-map-marker-alt mr-1"></i> Địa chỉ</strong>
+                      <p class="text-muted">
+                        {{$candidate->commune->name}} - {{$candidate->commune->district->name}} - {{$candidate->commune->district->province->name}}
+                      </p>
+                      <hr>
+
+                      <strong><i class="fas fa-graduation-cap mr-1"></i> Trình độ</strong>
+                      <p class="text-muted">
+                        @php
+                            $educations_info = '';
+
+                            foreach ($candidate->educations as $education) {
+                                $candidate_education = App\Models\CandidateEducation::where('candidate_id', $candidate->id)->where('education_id', $education->id)->first();
+                                $educations_info = $educations_info . $education->name . ' - ' . $candidate_education->major . '<br>';
+
+                            }
+                        @endphp
+                        {!! $educations_info !!}
+                      </p>
+                      <hr>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.card -->
             </div>
             <div class="col-md-8">
                 <div class="card">
