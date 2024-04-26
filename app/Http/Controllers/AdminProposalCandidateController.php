@@ -40,7 +40,6 @@ class AdminProposalCandidateController extends Controller
             'cv_file' => 'required',
             'cv_receive_method_id' => 'required',
             'batch' => 'required',
-            'addmore.*.education_id' => 'required',
         ];
         $messages = [
             'proposal_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
@@ -48,7 +47,6 @@ class AdminProposalCandidateController extends Controller
             'cv_file.required' => 'Bạn phải chọn file CV.',
             'cv_receive_method_id.required' => 'Bạn phải chọn cách nhận CV.',
             'batch.required' => 'Bạn phải chọn đợt.',
-            'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
         ];
 
         $request->validate($rules,$messages);
@@ -71,19 +69,6 @@ class AdminProposalCandidateController extends Controller
         $proposal_candidate->cv_receive_method_id = $request->cv_receive_method_id;
         $proposal_candidate->creator_id = Auth::user()->id;
         $proposal_candidate->save();
-
-        //dd($request->addmore);
-        // Create CandidateEducation
-        foreach ($request->addmore as $item) {
-            //dd($item['major']);
-            $candidate_education = new CandidateEducation();
-            $candidate_education->candidate_id = $request->candidate_id;
-            $candidate_education->education_id = $item['education_id'];
-            if ($item['major']) {
-                $candidate_education->major = $item['major'];
-            }
-            $candidate_education->save();
-        }
 
         // Send notification to candidate's email
         $candidate = RecruitmentCandidate::findOrFail($request->candidate_id);

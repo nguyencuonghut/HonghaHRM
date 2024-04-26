@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\RecruitmentCandidate;
 use App\Models\RecruitmentProposal;
 use App\Models\ProposalCandidate;
+use App\Models\CandidateEducation;
 use Illuminate\Http\Request;
-use App\Notifications\CandidateCvReceived;
 use Datatables;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Notification;
@@ -47,9 +47,7 @@ class AdminRecruitmentCandidateController extends Controller
             'issued_by' => 'required',
             'gender' => 'required',
             'commune_id' => 'required',
-            'cv_file' => 'required',
-            'cv_receive_method_id' => 'required',
-            'batch' => 'required',
+            'addmore.*.education_id' => 'required',
         ];
         $messages = [
             'proposal_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
@@ -64,9 +62,7 @@ class AdminRecruitmentCandidateController extends Controller
             'issued_by.required' => 'Bạn phải nhập nơi cấp.',
             'gender.required' => 'Bạn phải chọn giới tính.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
-            'cv_file.required' => 'Bạn phải chọn file CV.',
-            'cv_receive_method_id.required' => 'Bạn phải chọn cách nhận CV.',
-            'batch.required' => 'Bạn phải chọn đợt.',
+            'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
         ];
         $request->validate($rules,$messages);
 
@@ -83,28 +79,17 @@ class AdminRecruitmentCandidateController extends Controller
         $candidate->creator_id = Auth::user()->id;
         $candidate->save();
 
-        // Create ProposalCandidate
-        $proposal_candidate = new ProposalCandidate();
-        $proposal_candidate->proposal_id = $request->proposal_id;
-        $proposal_candidate->candidate_id = $candidate->id;
-        if ($request->hasFile('cv_file')) {
-            $path = 'dist/cv';
-
-            !file_exists($path) && mkdir($path, 0777, true);
-
-            $file = $request->file('cv_file');
-            $name = time() . '_' . str_replace(' ', '_', $file->getClientOriginalName());
-            $file->move($path, $name);
-
-            $proposal_candidate->cv_file = $path . '/' . $name;
+        // Create CandidateEducation
+        foreach ($request->addmore as $item) {
+            //dd($item['major']);
+            $candidate_education = new CandidateEducation();
+            $candidate_education->candidate_id = $candidate->id;
+            $candidate_education->education_id = $item['education_id'];
+            if ($item['major']) {
+                $candidate_education->major = $item['major'];
+            }
+            $candidate_education->save();
         }
-        $proposal_candidate->batch = $request->batch;
-        $proposal_candidate->cv_receive_method_id = $request->cv_receive_method_id;
-        $proposal_candidate->creator_id = Auth::user()->id;
-        $proposal_candidate->save();
-
-        // Send password to candidate's email
-        Notification::route('mail' , $candidate->email)->notify(new CandidateCvReceived($proposal_candidate->proposal_id));
 
         Alert::toast('Thêm ứng viên mới thành công!', 'success', 'top-right');
         return redirect()->back();

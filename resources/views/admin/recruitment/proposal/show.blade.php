@@ -57,28 +57,20 @@
                             <!-- Candidate Tab -->
                             <div class="tab-pane fade" id="custom-tabs-one-profile-2" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-2">
                                 <h2>{{$proposal->company_job->name}}</h2>
-                                @if('Nhân Sự' == Auth::user()->role->name
-                                    && $proposal->announcement)
-                                    <div class="card">
-                                        <div class="card-body">
-                                            @if('Nhân Sự' == Auth::user()->role->name
-                                            && $proposal->announcement)
-                                                <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#add_proposal_candidate">
-                                                    Thêm
-                                                </button>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    </form>
-                                @endif
-
-                                @if ($proposal->candidates->count())
                                 <div class="card">
                                     <div class="card-header">
                                         Danh sách ứng viên
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
+                                        @if('Nhân Sự' == Auth::user()->role->name
+                                            && $proposal->announcement)
+                                                <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#add_proposal_candidate">
+                                                    Thêm
+                                                </button>
+                                        @endif
+                                        <br>
+                                        <br>
                                         <div class="table-responsive">
                                           <table id="candidates-table" class="table table-bordered table-striped">
                                             <thead>
@@ -232,7 +224,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endif
                             </div>
 
                             <!-- Announcement Tab -->
@@ -989,31 +980,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <label class="required-field" class="control-label">Trình độ</label>
-                                            <table class="table table-bordered" id="dynamicTable">
-                                                <tr>
-                                                    <th class="required-field">Trường</th>
-                                                    <th>Ngành</th>
-                                                    <th style="width: 14%;">Thao tác</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <select name="addmore[0][education_id]" class="form-control select2" style="width: 100%;">
-                                                            <option selected="selected" disabled>Chọn trường</option>
-                                                            @foreach($educations as $education)
-                                                                <option value="{{$education->id}}">{{$education->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </td>
-                                                    <td><input type="text" name="addmore[0][major]" placeholder="Ngành" class="form-control" /></td>
-                                                    <td><button type="button" name="add_education" id="add_education" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -1033,6 +999,7 @@
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
+                                <h4>Tạo mới ứng viên</h4>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -1137,47 +1104,28 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row">
                                     <div class="col-12">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">CV</label>
-                                            <div class="custom-file text-left">
-                                                <input type="file" name="cv_file" accept="application/pdf" class="custom-file-input" id="cv_file">
-                                                <label class="custom-file-label" for="cv_file">Chọn file</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row">
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Nhận CV qua</label>
-                                            <div class="controls">
-                                                <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    @foreach ($receive_methods as $receive_method)
-                                                        <option value="{{$receive_method->id}}">{{$receive_method->name}}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="control-group">
-                                            <label class="required-field" class="control-label">Đợt</label>
-                                            <div class="controls">
-                                                <select name="batch" id="batch" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    <option value="Đợt 1">Đợt 1</option>
-                                                    <option value="Đợt 2">Đợt 2</option>
-                                                    <option value="Đợt 3">Đợt 3</option>
-                                                    <option value="Đợt 4">Đợt 4</option>
-                                                    <option value="Đợt 5">Đợt 5</option>
-                                                </select>
-                                            </div>
-                                        </div>
+                                        <label class="required-field" class="control-label">Trình độ</label>
+                                        <table class="table table-bordered" id="dynamicTable">
+                                            <tr>
+                                                <th class="required-field">Trường</th>
+                                                <th>Ngành</th>
+                                                <th style="width: 14%;">Thao tác</th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <select name="addmore[0][education_id]" class="form-control select2" style="width: 100%;">
+                                                        <option selected="selected" disabled>Chọn trường</option>
+                                                        @foreach($educations as $education)
+                                                            <option value="{{$education->id}}">{{$education->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td><input type="text" name="addmore[0][major]" placeholder="Ngành" class="form-control" /></td>
+                                                <td><button type="button" name="add_education" id="add_education" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
+                                            </tr>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
