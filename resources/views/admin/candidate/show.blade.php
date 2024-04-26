@@ -37,6 +37,7 @@
                     <h3 class="profile-username text-center">{{$candidate->name}}</h3>
 
                     <p class="text-muted text-center">{{$candidate->email}}</p>
+                    <a href="{{route('admin.recruitment.candidates.edit', $candidate->id)}}" class="btn btn-warning btn-block"><b>Sửa thông tin</b></a>
                 </div>
                 <!-- /.card-body -->
                 </div>
