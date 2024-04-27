@@ -117,7 +117,7 @@ class AdminRecruitmentProposalController extends Controller
         $districts = District::orderBy('name' ,'asc')->get();
         $communes = Commune::orderBy('name' ,'asc')->get();
         $candidates = RecruitmentCandidate::orderBy('id', 'asc')->get();
-        $educations = Education::orderBy('id', 'asc')->get();
+        $educations = Education::orderBy('name', 'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,

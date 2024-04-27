@@ -153,7 +153,12 @@
                                         <label class="required-field" class="control-label">Trình độ</label>
                                         <table class="table table-bordered" id="dynamicTable">
                                             <tr>
-                                                <th class="required-field">Trường</th>
+                                                <th class="required-field">
+                                                    Trường
+                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_education">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                </th>
                                                 <th>Ngành</th>
                                                 <th style="width: 14%;"><button type="button" name="add_education" id="add_education" class="btn btn-success">Thêm</button></th>
                                             </tr>
@@ -279,6 +284,41 @@
                                                                     <option value="{{$province->id}}">{{$province->name}}</option>
                                                                 @endforeach
                                                             </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                            </div>
+                        </form>
+                        <!-- /.modal -->
+
+                        <!-- Modals for create education -->
+                        <form class="form-horizontal" method="post" action="{{ route('admin.educations.store') }}" name="create_education" id="create_education" novalidate="novalidate">
+                            {{ csrf_field() }}
+                            <div class="modal fade" id="make_education">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4>Thêm trường</h4>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="control-group">
+                                                        <label class="required-field" class="control-label">Tên trường</label>
+                                                        <div class="controls">
+                                                            <input type="text" class="form-control" name="name" id="name" required="">
                                                         </div>
                                                     </div>
                                                 </div>

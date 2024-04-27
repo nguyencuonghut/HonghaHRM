@@ -118,7 +118,7 @@ class AdminRecruitmentCandidateController extends Controller
         $communes = Commune::orderBy('name', 'asc')->get();
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
-        $educations = Education::orderBy('id', 'asc')->get();
+        $educations = Education::orderBy('name', 'asc')->get();
         return view('admin.candidate.edit',
                     ['candidate' => $candidate,
                     'communes' => $communes,
