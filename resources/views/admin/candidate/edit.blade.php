@@ -105,7 +105,7 @@
                                     <div class="col-6">
                                         <label class="control-label">Ngày cấp</label>
                                         <div class="input-group date" id="issued_date" data-target-input="nearest">
-                                            <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date" value="{{date('d/m/Y', strtotime($candidate->issued_date))}}"/>
+                                            <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date" @if ($candidate->issued_date) value="{{date('d/m/Y', strtotime($candidate->issued_date))}}" @endif/>
                                             <div class="input-group-append" data-target="#issued_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
