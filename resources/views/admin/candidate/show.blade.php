@@ -52,7 +52,9 @@
                       <strong><i class="fas fa-mobile-alt mr-1"></i> Điện thoại</strong>
                       <p class="text-muted">
                         - Cá nhân: {{$candidate->phone}} <br>
+                        @if($candidate->relative_phone)
                         - Người thân: {{$candidate->relative_phone}}
+                        @endif
                       </p>
                       <hr>
 

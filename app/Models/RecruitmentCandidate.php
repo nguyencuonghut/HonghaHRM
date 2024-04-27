@@ -25,6 +25,7 @@ class RecruitmentCandidate extends Model
         'commune_id',
         'cv_receive_method',
         'batch',
+        'note',
         'creator_id',
     ];
 

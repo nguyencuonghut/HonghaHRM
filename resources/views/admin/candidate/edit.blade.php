@@ -6,6 +6,8 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <!-- Summernote -->
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
 @endpush
@@ -72,7 +74,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="required-field" class="control-label">Số điện thoại người thân</label>
+                                            <label class="control-label">Số điện thoại người thân</label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="relative_phone" id="relative_phone" required="" value="{{$candidate->relative_phone}}">
                                             </div>
@@ -92,7 +94,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="required-field" class="control-label">CCCD</label>
+                                            <label class="control-label">CCCD</label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="cccd" id="cccd" required="" value="{{$candidate->cccd}}">
                                             </div>
@@ -101,7 +103,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
-                                        <label class="required-field">Ngày cấp</label>
+                                        <label class="control-label">Ngày cấp</label>
                                         <div class="input-group date" id="issued_date" data-target-input="nearest">
                                             <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date" value="{{date('d/m/Y', strtotime($candidate->issued_date))}}"/>
                                             <div class="input-group-append" data-target="#issued_date" data-toggle="datetimepicker">
@@ -111,7 +113,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="required-field" class="control-label">Nơi cấp</label>
+                                            <label class="control-label">Nơi cấp</label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" name="issued_by" id="issued_by" required="" value="{{$candidate->issued_by}}">
                                             </div>
@@ -139,7 +141,7 @@
                                             </button>
                                             <div class="controls">
                                                 <select name="commune_id" id="commune_id" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn địa chỉ --" disabled="disabled" selected="selected">-- Chọn địa chỉ --</option>
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                     @foreach($communes as $commune)
                                                         <option value="{{$commune->id}}" @if ($commune->id == $candidate->commune_id) selected @endif>{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
                                                     @endforeach
@@ -187,6 +189,15 @@
                                             @endphp
                                             @endforeach
                                         </table>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="control-label">Ghi chú</label>
+                                        <textarea id="note" name="note">
+                                            {{$candidate->note}}
+                                        </textarea>
                                     </div>
                                 </div>
 
@@ -348,6 +359,8 @@
 <!-- Select2 -->
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+<!-- Summernote -->
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 
@@ -387,6 +400,20 @@
         $(document).on('click', '.remove-tr', function(){
             $(this).parents('tr').remove();
         });
+
+        // Summernote
+        $("#note").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
+        $('#note').summernote({
+            height: 80,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        })
     })
 </script>
 @endpush

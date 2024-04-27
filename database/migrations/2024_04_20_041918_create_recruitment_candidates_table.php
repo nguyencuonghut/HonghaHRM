@@ -16,14 +16,15 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
-            $table->string('relative_phone');
+            $table->string('relative_phone')->nullable();
             $table->date('date_of_birth');
-            $table->string('cccd')->unique();
-            $table->date('issued_date');
-            $table->string('issued_by');
+            $table->string('cccd')->unique()->nullable();
+            $table->date('issued_date')->nullable();
+            $table->string('issued_by')->nullable();
             $table->enum('gender', ['Nam', 'Nữ']);
             $table->foreignId('commune_id')->constrained('communes');
             $table->foreignId('creator_id')->constrained('admins');
+            $table->text('note')->nullable();
             $table->timestamps();
         });
     }

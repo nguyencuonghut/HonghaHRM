@@ -137,7 +137,7 @@
                                         </button>
                                         <div class="controls">
                                             <select name="commune_id" id="commune_id" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
-                                                <option value="-- Chọn địa chỉ --" disabled="disabled" selected="selected">-- Chọn địa chỉ --</option>
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                 @foreach($communes as $commune)
                                                     <option value="{{$commune->id}}">{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
                                                 @endforeach
