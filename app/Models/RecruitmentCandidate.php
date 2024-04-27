@@ -12,8 +12,8 @@ class RecruitmentCandidate extends Model
     use HasFactory;
 
     protected $fillable = [
-        'proposal_id',
         'name',
+        'email',
         'phone',
         'relative_phone',
         'date_of_birth',
@@ -21,10 +21,7 @@ class RecruitmentCandidate extends Model
         'issued_date',
         'issued_by',
         'gender',
-        'cv_file',
         'commune_id',
-        'cv_receive_method',
-        'batch',
         'note',
         'creator_id',
     ];
