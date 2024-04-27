@@ -160,7 +160,7 @@
                                                                     <div class="row">
                                                                         <div class="col-6">
                                                                             <div class="control-group">
-                                                                                <label class="required-field" class="control-label">Nhận CV qua</label>
+                                                                                <label class="required-field" class="control-label">Nguồn tin</label>
                                                                                 <div class="controls">
                                                                                     <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                                                         <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
@@ -828,7 +828,7 @@
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="control-group">
-                                                <label class="required-field" class="control-label">Nhận CV qua</label>
+                                                <label class="required-field" class="control-label">Nguồn tin</label>
                                                 <div class="controls">
                                                     <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                         <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
