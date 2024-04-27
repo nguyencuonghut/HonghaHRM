@@ -64,12 +64,14 @@
                       </p>
                       <hr>
 
+                      @if ($candidate->cccd)
                       <strong><i class="fas fa-id-card mr-1"></i> CCCD</strong>
                       <p class="text-muted">
                         - Số: {{$candidate->cccd}} <br>
                         - Cấp bởi: {{$candidate->issued_by}}
                       </p>
                       <hr>
+                      @endif
 
                       <strong><i class="fas fa-map-marker-alt mr-1"></i> Địa chỉ</strong>
                       <p class="text-muted">
