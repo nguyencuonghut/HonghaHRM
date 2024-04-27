@@ -15,6 +15,7 @@ class RecruitmentCandidate extends Model
         'proposal_id',
         'name',
         'phone',
+        'relative_phone',
         'date_of_birth',
         'cccd',
         'issued_date',

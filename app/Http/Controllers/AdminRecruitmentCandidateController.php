@@ -7,6 +7,8 @@ use App\Models\RecruitmentProposal;
 use App\Models\ProposalCandidate;
 use App\Models\Education;
 use App\Models\Commune;
+use App\Models\District;
+use App\Models\Province;
 use App\Models\CandidateEducation;
 use Illuminate\Http\Request;
 use Datatables;
@@ -42,6 +44,7 @@ class AdminRecruitmentCandidateController extends Controller
             'name' => 'required',
             'email' => 'required|email|max:255',
             'phone' => 'required',
+            'relative_phone' => 'required',
             'date_of_birth' => 'required',
             'cccd' => 'required',
             'issued_date' => 'required',
@@ -55,7 +58,8 @@ class AdminRecruitmentCandidateController extends Controller
             'email.required' => 'Bạn phải nhập địa chỉ email.',
             'email.email' => 'Email sai định dạng.',
             'email.max' => 'Email dài quá 255 ký tự.',
-            'phone.required' => 'Bạn phải số điện thoại.',
+            'phone.required' => 'Bạn phải nhập số điện thoại.',
+            'relative_phone.required' => 'Bạn phải nhập số điện thoại người thân',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
             'cccd.required' => 'Bạn phải nhập số CCCD.',
             'issued_date.required' => 'Bạn phải nhập ngày cấp.',
@@ -70,6 +74,7 @@ class AdminRecruitmentCandidateController extends Controller
         $candidate->name = $request->name;
         $candidate->email = $request->email;
         $candidate->phone = $request->phone;
+        $candidate->relative_phone = $request->relative_phone;
         $candidate->date_of_birth = Carbon::createFromFormat('d/m/Y', $request->date_of_birth);
         $candidate->cccd = $request->cccd;
         $candidate->issued_date = Carbon::createFromFormat('d/m/Y', $request->issued_date);
@@ -111,10 +116,14 @@ class AdminRecruitmentCandidateController extends Controller
     {
         $candidate = RecruitmentCandidate::findOrFail($id);
         $communes = Commune::orderBy('name', 'asc')->get();
+        $districts = District::orderBy('name', 'asc')->get();
+        $provinces = Province::orderBy('name', 'asc')->get();
         $educations = Education::orderBy('id', 'asc')->get();
         return view('admin.candidate.edit',
                     ['candidate' => $candidate,
                     'communes' => $communes,
+                    'districts' => $districts,
+                    'provinces' => $provinces,
                     'educations' => $educations,
                     ]);
     }
@@ -128,6 +137,7 @@ class AdminRecruitmentCandidateController extends Controller
             'name' => 'required',
             'email' => 'required|email|max:255',
             'phone' => 'required',
+            'relative_phone' => 'required',
             'date_of_birth' => 'required',
             'cccd' => 'required',
             'issued_date' => 'required',
@@ -141,7 +151,8 @@ class AdminRecruitmentCandidateController extends Controller
             'email.required' => 'Bạn phải nhập địa chỉ email.',
             'email.email' => 'Email sai định dạng.',
             'email.max' => 'Email dài quá 255 ký tự.',
-            'phone.required' => 'Bạn phải số điện thoại.',
+            'phone.required' => 'Bạn phải nhập số điện thoại.',
+            'relative_phone.required' => 'Bạn phải nhập số điện thoai người thân',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
             'cccd.required' => 'Bạn phải nhập số CCCD.',
             'issued_date.required' => 'Bạn phải nhập ngày cấp.',
@@ -156,6 +167,7 @@ class AdminRecruitmentCandidateController extends Controller
         $candidate->name = $request->name;
         $candidate->email = $request->email;
         $candidate->phone = $request->phone;
+        $candidate->relative_phone = $request->relative_phone;
         $candidate->date_of_birth = Carbon::createFromFormat('d/m/Y', $request->date_of_birth);
         $candidate->cccd = $request->cccd;
         $candidate->issued_date = Carbon::createFromFormat('d/m/Y', $request->issued_date);

@@ -51,7 +51,8 @@
                     <div class="card-body">
                       <strong><i class="fas fa-mobile-alt mr-1"></i> Điện thoại</strong>
                       <p class="text-muted">
-                        {{$candidate->phone}}
+                        - Cá nhân: {{$candidate->phone}} <br>
+                        - Người thân: {{$candidate->relative_phone}}
                       </p>
                       <hr>
 
@@ -63,7 +64,8 @@
 
                       <strong><i class="fas fa-id-card mr-1"></i> CCCD</strong>
                       <p class="text-muted">
-                        {{$candidate->cccd}}
+                        - Số: {{$candidate->cccd}} <br>
+                        - Cấp bởi: {{$candidate->issued_by}}
                       </p>
                       <hr>
 

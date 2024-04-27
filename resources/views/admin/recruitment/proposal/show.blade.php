@@ -1035,6 +1035,17 @@
                                         </div>
                                     </div>
                                     <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Số điện thoại người thân</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" name="relative_phone" id="relative_phone" required="">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
                                         <label class="required-field">Ngày sinh</label>
                                         <div class="input-group date" id="date_of_birth" data-target-input="nearest">
                                             <input type="text" name="date_of_birth" class="form-control datetimepicker-input" data-target="#date_of_birth"/>
@@ -1043,9 +1054,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                <div class="row">
                                     <div class="col-6">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">CCCD</label>
@@ -1054,6 +1062,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-6">
                                         <label class="required-field">Ngày cấp</label>
                                         <div class="input-group date" id="issued_date" data-target-input="nearest">
@@ -1063,8 +1073,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
                                     <div class="col-6">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Nơi cấp</label>
@@ -1073,6 +1081,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
                                     <div class="col-6">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Giới tính</label>
@@ -1085,9 +1095,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Địa chỉ</label>
                                             <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_commune">
@@ -1109,7 +1117,7 @@
                                         <label class="required-field" class="control-label">Trình độ</label>
                                         <table class="table table-bordered" id="dynamicTable">
                                             <tr>
-                                                <th class="required-field">Trường</th>
+                                                <th class="required-field" style="width: 50%;">Trường</th>
                                                 <th>Ngành</th>
                                                 <th style="width: 14%;">Thao tác</th>
                                             </tr>

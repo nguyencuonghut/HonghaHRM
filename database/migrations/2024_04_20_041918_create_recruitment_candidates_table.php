@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
+            $table->string('relative_phone');
             $table->date('date_of_birth');
             $table->string('cccd')->unique();
             $table->date('issued_date');
