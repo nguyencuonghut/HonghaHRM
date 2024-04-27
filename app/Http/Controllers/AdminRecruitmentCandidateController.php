@@ -231,7 +231,8 @@ class AdminRecruitmentCandidateController extends Controller
             ->addColumn('recruitments', function ($candidates) {
                 $recruitments = '';
                 foreach ($candidates->proposals as $proposal) {
-                    $recruitments = $recruitments . ' - ' . $proposal->company_job->name . '<br>';
+                    $url = '<a href="' . route('admin.recruitment.proposals.show', $proposal->id) . '">' . $proposal->company_job->name . '</a>';
+                    $recruitments = $recruitments . ' - ' . $url . '<br>';
                 }
                 return $recruitments;
             })

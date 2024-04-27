@@ -90,7 +90,9 @@
                                             <tbody>
                                                 @foreach ($proposal->candidates as $candidate)
                                                 <tr>
-                                                  <td>{{$candidate->name}}</td>
+                                                  <td>
+                                                    <a href="{{route('admin.recruitment.candidates.show', $candidate->id)}}">{{$candidate->name}}</a>
+                                                  </td>
                                                   <td>{{$candidate->email}}</td>
                                                   <td>{{$candidate->phone}}</td>
                                                   <td>{{ date('d/m/Y', strtotime($candidate->date_of_birth)) }}</td>

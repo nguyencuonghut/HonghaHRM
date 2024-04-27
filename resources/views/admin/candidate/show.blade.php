@@ -118,7 +118,11 @@
                                 <tbody>
                                     @foreach ($candidate->proposals as $proposal)
                                     <tr>
-                                      <td>{{$proposal->company_job->name}}</td>
+                                      <td>
+                                        <a href="{{route('admin.recruitment.proposals.show', $proposal->id)}}">
+                                            {{$proposal->company_job->name}}
+                                        </a>
+                                      </td>
                                       <td>
                                         @if ($proposal->company_job->division_id)
                                         {{$proposal->company_job->division->name}}
