@@ -1019,9 +1019,16 @@
 
                                 <div class="row">
                                     <div class="col-12">
+                                        <label class="required-field" class="control-label">Kinh nghiệm</label>
+                                        <textarea id="experience" name="experience">
+                                        </textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
                                         <label class="control-label">Ghi chú</label>
                                         <textarea id="note" name="note">
-                                            {{$candidate->note}}
                                         </textarea>
                                     </div>
                                 </div>
@@ -1232,18 +1239,30 @@
         });
 
         // Summernote
+        $("#experience").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
         $("#note").on("summernote.enter", function(we, e) {
             $(this).summernote("pasteHTML", "<br><br>");
             e.preventDefault();
         });
-        $('#note').summernote({
-            height: 80,
+        $('#experience').summernote({
+            height: 90,
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'clear']],
                 ['color', ['color']],
             ]
-        })
+        });
+        $('#note').summernote({
+            height: 50,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        });
     })
 </script>
 @endpush
