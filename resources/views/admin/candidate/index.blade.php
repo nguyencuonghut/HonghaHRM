@@ -218,6 +218,14 @@
 
                                     <div class="row">
                                         <div class="col-12">
+                                            <label class="required-field" class="control-label">Kinh nghiệm</label>
+                                            <textarea id="experience" name="experience">
+                                            </textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
                                             <label class="control-label">Ghi chú</label>
                                             <textarea id="note" name="note">
                                             </textarea>
@@ -448,8 +456,20 @@
             $(this).summernote("pasteHTML", "<br><br>");
             e.preventDefault();
         });
+        $("#experience").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
         $('#note').summernote({
-            height: 80,
+            height: 50,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        })
+        $('#experience').summernote({
+            height: 90,
             toolbar: [
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'clear']],

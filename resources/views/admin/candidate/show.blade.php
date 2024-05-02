@@ -92,6 +92,12 @@
                         @endphp
                         {!! $educations_info !!}
                       </p>
+
+                      <strong><i class="fas fa-suicase mr-1"></i> Kinh nghiệm</strong>
+                      <p class="text-muted">
+                        {!! preg_replace('/<p[^>]*>(.*)<\/p[^>]*>/i', '$1', $candidate->experience) !!}
+                      </p>
+
                       <hr>
                     </div>
                     <!-- /.card-body -->

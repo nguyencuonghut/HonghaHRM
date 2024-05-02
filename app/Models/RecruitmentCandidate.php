@@ -23,6 +23,7 @@ class RecruitmentCandidate extends Model
         'gender',
         'commune_id',
         'note',
+        'experience',
         'creator_id',
     ];
 

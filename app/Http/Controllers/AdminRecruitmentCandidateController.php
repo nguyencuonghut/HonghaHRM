@@ -91,6 +91,7 @@ class AdminRecruitmentCandidateController extends Controller
         }
         $candidate->gender = $request->gender;
         $candidate->commune_id = $request->commune_id;
+        $candidate->experience = $request->experience;
         if ($request->note) {
             $candidate->issued_by = $request->note;
         }
@@ -187,6 +188,7 @@ class AdminRecruitmentCandidateController extends Controller
         }
         $candidate->gender = $request->gender;
         $candidate->commune_id = $request->commune_id;
+        $candidate->experience = $request->experience;
         if ($request->note) {
             $candidate->issued_by = $request->note;
         }

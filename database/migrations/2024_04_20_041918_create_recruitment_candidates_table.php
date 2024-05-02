@@ -24,6 +24,7 @@ return new class extends Migration
             $table->enum('gender', ['Nam', 'Nữ']);
             $table->foreignId('commune_id')->constrained('communes');
             $table->foreignId('creator_id')->constrained('admins');
+            $table->text('experience');
             $table->text('note')->nullable();
             $table->timestamps();
         });
