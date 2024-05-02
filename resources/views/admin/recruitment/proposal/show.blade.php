@@ -806,7 +806,7 @@
                                                 <select name="candidate_id" id="candidate_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                     @foreach($candidates as $candidate)
-                                                        <option value="{{$candidate->id}}">{{$candidate->name}} - {{$candidate->email}} - CCCD {{$candidate->cccd}}</option>
+                                                        <option value="{{$candidate->id}}">{{$candidate->name}} - {{$candidate->email}} - {{$candidate->phone}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
