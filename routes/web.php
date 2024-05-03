@@ -19,6 +19,7 @@ use App\Http\Controllers\AdminRecruitmentPlanController;
 use App\Http\Controllers\AdminRecruitmentAnnouncementController;
 use App\Http\Controllers\AdminRecruitmentCandidateController;
 use App\Http\Controllers\AdminProposalCandidateController;
+use App\Http\Controllers\AdminProposalCandidateFilterController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -99,6 +100,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/candidates', AdminRecruitmentCandidateController::class, ['names' => 'recruitment.candidates']);
 
         Route::resource('recruitment/proposal_candidates', AdminProposalCandidateController::class, ['names' => 'recruitment.proposal_candidates']);
+
+        Route::resource('recruitment/proposal_candidate_filter', AdminProposalCandidateFilterController::class, ['names' => 'recruitment.proposal_candidate_filter']);
+
     });
 });
 

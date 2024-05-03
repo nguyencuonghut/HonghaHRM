@@ -41,7 +41,7 @@ class RolesTableSeeder extends Seeder
             3 =>
                 array (
                     'id' => 4,
-                    'name' => 'Nhân Sự',
+                    'name' => 'Nhân sự',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
