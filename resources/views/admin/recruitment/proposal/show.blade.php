@@ -53,7 +53,7 @@
                             <a class="nav-link" id="custom-tabs-one-profile-tab-2" data-toggle="pill" href="#custom-tabs-one-profile-2" role="tab" aria-controls="custom-tabs-one-profile-2" aria-selected="false">Ứng viên</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-profile-tab-3" data-toggle="pill" href="#custom-tabs-one-profile-3" role="tab" aria-controls="custom-tabs-one-profile-3" aria-selected="false">Lọc hồ sơ</a>
+                            <a class="nav-link" id="custom-tabs-one-profile-tab-3" data-toggle="pill" href="#custom-tabs-one-profile-3" role="tab" aria-controls="custom-tabs-one-profile-3" aria-selected="false">Phỏng vấn sơ bộ</a>
                           </li>
                         </ul>
                       </div>
@@ -137,7 +137,7 @@
                                                         <div class="modal-dialog modal-lg">
                                                             <div class="modal-content">
                                                                 <div class="modal-header">
-                                                                    <h4>Lọc ứng viên</h4>
+                                                                    <h4>Kết quả sơ bộ</h4>
                                                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                         <span aria-hidden="true">&times;</span>
                                                                     </button>
