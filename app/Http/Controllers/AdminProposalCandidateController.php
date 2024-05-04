@@ -102,14 +102,12 @@ class AdminProposalCandidateController extends Controller
         $rules = [
             'proposal_id' => 'required',
             'candidate_id' => 'required',
-            'cv_file' => 'required',
             'cv_receive_method_id' => 'required',
             'batch' => 'required',
         ];
         $messages = [
             'proposal_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
             'candidate_id.required' => 'Bạn phải chọn tên ứng viên.',
-            'cv_file.required' => 'Bạn phải chọn file CV.',
             'cv_receive_method_id.required' => 'Bạn phải chọn cách nhận CV.',
             'batch.required' => 'Bạn phải chọn đợt.',
         ];
