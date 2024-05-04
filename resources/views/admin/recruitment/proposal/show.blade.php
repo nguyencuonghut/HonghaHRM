@@ -73,7 +73,6 @@
                                             <thead>
                                             <tr>
                                               <th>Tên</th>
-                                              <th>Email</th>
                                               <th>Nơi làm việc</th>
                                               <th>Mức lương</th>
                                               <th>Ghi chú</th>
@@ -91,13 +90,18 @@
                                                   <td>
                                                     <a href="{{route('admin.recruitment.candidates.show', $candidate->id)}}">{{$candidate->name}}</a>
                                                   </td>
-                                                  <td>{{$candidate->email}}</td>
                                                   @php
                                                       $proposal_candidate = App\Models\ProposalCandidate::where('proposal_id', $proposal->id)->where('candidate_id', $candidate->id)->first();
                                                       $filter = App\Models\ProposalCandidateFilter::where('proposal_candidate_id', $proposal_candidate->id)->first();
+                                                      $first_interview_invitation = App\Models\FirstInterviewInvitation::where('proposal_candidate_id', $proposal_candidate->id)->first();
                                                       if ($filter) {
-                                                        $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>
-                                                        <a href="#invite_first_interview{{' . $proposal_candidate->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#invite_first_interview' . $proposal_candidate->id. '"><i class="fas fa-paper-plane"></i></a>';
+                                                        if ('Đạt' == $filter->result) {
+                                                            $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>
+                                                            <a href="' . route("admin.recruitment.first_interview_invitation.add", $proposal_candidate->id) . '" class="btn btn-success btn-sm"><i class="fas fa-paper-plane"></i></a>';
+                                                        } else {
+
+                                                        $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>';
+                                                        }
                                                       } else {
                                                         $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>';
                                                       }
@@ -110,12 +114,17 @@
                                                   <td>{{$filter->note}}</td>
                                                   <td>
                                                     @if($filter->result == 'Đạt')
-                                                        <span class="badge badge-success">{{$filter->result}}</span>
+                                                        @if ($first_interview_invitation)
+                                                        <i class="fas fa-check-circle" style="color:green;"></i> <i class="fas fa-envelope" style="color:green;"></i>
+                                                        @else
+                                                        <i class="fas fa-check-circle" style="color:green;"></i>
+                                                        @endif
                                                     @else
-                                                        <span class="badge badge-danger">{{$filter->result}}</span>
+                                                        <i class="fas fa-times-circle" style="color:red;"></i>
                                                     @endif
                                                   </td>
                                                   @else
+                                                  <td></td>
                                                   <td></td>
                                                   <td></td>
                                                   <td></td>

@@ -20,6 +20,7 @@ use App\Http\Controllers\AdminRecruitmentAnnouncementController;
 use App\Http\Controllers\AdminRecruitmentCandidateController;
 use App\Http\Controllers\AdminProposalCandidateController;
 use App\Http\Controllers\AdminProposalCandidateFilterController;
+use App\Http\Controllers\AdminFirstInterviewInvitationController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -103,6 +104,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::resource('recruitment/proposal_candidate_filter', AdminProposalCandidateFilterController::class, ['names' => 'recruitment.proposal_candidate_filter']);
 
+        Route::get('recruitment/first_interview_invitation/add/{id}', [AdminFirstInterviewInvitationController::class, 'add'])->name('recruitment.first_interview_invitation.add');
+        Route::resource('recruitment/first_interview_invitation', AdminFirstInterviewInvitationController::class, ['names' => 'recruitment.first_interview_invitation'], ['except' => 'create']);
     });
 });
 
