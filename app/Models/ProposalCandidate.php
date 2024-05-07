@@ -22,4 +22,9 @@ class ProposalCandidate extends Pivot
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function filter()
+    {
+        return $this->hasOne(ProposalCandidateFilter::class, 'proposal_candidate_id');
+    }
 }

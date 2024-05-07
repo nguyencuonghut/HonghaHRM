@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('salary');
             $table->enum('result', ['Đạt', 'Loại']);
             $table->text('note')->nullable();
-            $table->foreignId('proposal_candidate_id')->constrained('proposal_candidate');
+            $table->foreignId('proposal_candidate_id')->constrained('proposal_candidate')->onDelete('cascade');
             $table->timestamps();
         });
     }
