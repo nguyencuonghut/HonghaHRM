@@ -37,6 +37,14 @@ class AdminFirstInterviewInvitationController extends Controller
                     );
     }
 
+    public function feedback($proposal_candidate_id)
+    {
+        $first_interview_invitation = FirstInterviewInvitation::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        return view('admin.recruitment.interview.first_interview_feedback',
+                    ['first_interview_invitation' => $first_interview_invitation]
+                    );
+    }
+
     /**
      * Store a newly created resource in storage.
      */
@@ -99,9 +107,26 @@ class AdminFirstInterviewInvitationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FirstInterviewInvitation $firstInterviewInvitation)
+    public function update(Request $request, $proposal_candidate_id)
     {
-        //
+        $rules = [
+            'feedback' => 'required',
+        ];
+        $messages = [
+            'feedback.required' => 'Bạn phải chọn phản hồi.',
+        ];
+        $request->validate($rules,$messages);
+
+        $first_interview_invitation = FirstInterviewInvitation::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        $first_interview_invitation->feedback = $request->feedback;
+        if ($request->note) {
+            $first_interview_invitation->note = $request->note;
+        }
+        $first_interview_invitation->save();
+
+        $proposal_candidate = ProposalCandidate::findOrFail($request->proposal_candidate_id);
+        Alert::toast('Cập nhật phản hồi thành công!', 'success', 'top-right');
+        return redirect()->route('admin.recruitment.proposals.show', $proposal_candidate->proposal_id);
     }
 
     /**

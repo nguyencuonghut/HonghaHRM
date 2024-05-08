@@ -77,6 +77,7 @@
                                               <th>Mức lương</th>
                                               <th>Ghi chú</th>
                                               <th>Kết quả</th>
+                                              <th>Phản hồi</th>
                                               <th>Đợt</th>
                                               @can('filter-candidate')
                                               <th>Thao tác</th>
@@ -96,14 +97,19 @@
                                                       $first_interview_invitation = App\Models\FirstInterviewInvitation::where('proposal_candidate_id', $proposal_candidate->id)->first();
                                                       if ($filter) {
                                                         if ('Đạt' == $filter->result) {
-                                                            $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>
-                                                            <a href="' . route("admin.recruitment.first_interview_invitation.add", $proposal_candidate->id) . '" class="btn btn-success btn-sm"><i class="fas fa-paper-plane"></i></a>';
+                                                            if ($first_interview_invitation) {
+                                                                $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>
+                                                                <a href="' . route("admin.recruitment.first_interview_invitation.add", $proposal_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>
+                                                                <a href="' . route("admin.recruitment.first_interview_invitation.feedback", $proposal_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-reply"></i></a>';
+                                                            } else {
+                                                                $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>
+                                                                <a href="' . route("admin.recruitment.first_interview_invitation.add", $proposal_candidate->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-paper-plane"></i></a>';
+                                                            }
                                                         } else {
-
-                                                        $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>';
+                                                            $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>';
                                                         }
                                                       } else {
-                                                        $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>';
+                                                        $action = '<a href="#candidate_filter{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#candidate_filter' . $proposal_candidate->id. '"><i class="fas fa-filter"></i></a>';
                                                       }
                                                   @endphp
                                                   @if($filter)
@@ -111,7 +117,12 @@
                                                     {{$filter->work_location}}
                                                   </td>
                                                   <td>{{number_format($filter->salary, 0, '.', ',')}} <sup>đ</sup></td>
-                                                  <td>{{$filter->note}}</td>
+                                                  <td>
+                                                    {{$filter->note}}
+                                                    @if ($first_interview_invitation)
+                                                     {{$first_interview_invitation->note}}
+                                                    @endif
+                                                  </td>
                                                   <td>
                                                     @if($filter->result == 'Đạt')
                                                         @if ($first_interview_invitation)
@@ -123,7 +134,19 @@
                                                         <i class="fas fa-times-circle" style="color:red;"></i>
                                                     @endif
                                                   </td>
+                                                  <td>
+                                                    @if ($first_interview_invitation)
+                                                        @if ('Đồng ý' == $first_interview_invitation->feedback)
+                                                            <span class="badge badge-success">{{$first_interview_invitation->feedback}}</span>
+                                                        @elseif ('Từ chối' == $first_interview_invitation->feedback)
+                                                            <span class="badge badge-danger">{{$first_interview_invitation->feedback}}</span>
+                                                        @else
+                                                            <span class="badge badge-warning">{{$first_interview_invitation->feedback}}</span>
+                                                        @endif
+                                                    @endif
+                                                  </td>
                                                   @else
+                                                  <td></td>
                                                   <td></td>
                                                   <td></td>
                                                   <td></td>

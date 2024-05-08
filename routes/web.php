@@ -105,6 +105,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/proposal_candidate_filter', AdminProposalCandidateFilterController::class, ['names' => 'recruitment.proposal_candidate_filter']);
 
         Route::get('recruitment/first_interview_invitation/add/{id}', [AdminFirstInterviewInvitationController::class, 'add'])->name('recruitment.first_interview_invitation.add');
+        Route::get('recruitment/first_interview_invitation/feedback/{id}', [AdminFirstInterviewInvitationController::class, 'feedback'])->name('recruitment.first_interview_invitation.feedback');
         Route::resource('recruitment/first_interview_invitation', AdminFirstInterviewInvitationController::class, ['names' => 'recruitment.first_interview_invitation'], ['except' => 'create']);
     });
 });

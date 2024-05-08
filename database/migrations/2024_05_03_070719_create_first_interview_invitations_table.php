@@ -18,7 +18,7 @@ return new class extends Migration
             $table->dateTime('interview_time');
             $table->text('interview_location');
             $table->text('contact');
-            $table->enum('feedback', ['Đồng ý', 'Từ chối']);
+            $table->enum('feedback', ['Đồng ý', 'Từ chối', 'Hẹn lại'])->nullable();
             $table->text('note')->nullable();
             $table->timestamps();
         });
