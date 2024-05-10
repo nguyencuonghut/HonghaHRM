@@ -12,6 +12,7 @@ class AuthServiceProvider extends ServiceProvider
     public static $permissions = [
         'create-propose' => ['Admin', 'Trưởng đơn vị'],
         'filter-candidate' => ['Admin', 'Nhân sự'],
+        'initial-interview' => ['Admin', 'Nhân sự'],
     ];
 
     /**

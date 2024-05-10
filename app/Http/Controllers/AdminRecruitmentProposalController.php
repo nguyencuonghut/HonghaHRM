@@ -118,6 +118,7 @@ class AdminRecruitmentProposalController extends Controller
         $communes = Commune::orderBy('name' ,'asc')->get();
         $candidates = RecruitmentCandidate::orderBy('id', 'asc')->get();
         $educations = Education::orderBy('name', 'asc')->get();
+        $hr_admins = Admin::where('role_id', 4)->orderBy('name', 'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,
@@ -128,6 +129,7 @@ class AdminRecruitmentProposalController extends Controller
                      'receive_methods' => $receive_methods,
                      'candidates' => $candidates,
                      'educations' => $educations,
+                     'hr_admins' => $hr_admins,
                     ]);
     }
 

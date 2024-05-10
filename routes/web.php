@@ -21,6 +21,7 @@ use App\Http\Controllers\AdminRecruitmentCandidateController;
 use App\Http\Controllers\AdminProposalCandidateController;
 use App\Http\Controllers\AdminProposalCandidateFilterController;
 use App\Http\Controllers\AdminFirstInterviewInvitationController;
+use App\Http\Controllers\AdminInitialInterviewController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -107,6 +108,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('recruitment/first_interview_invitation/add/{id}', [AdminFirstInterviewInvitationController::class, 'add'])->name('recruitment.first_interview_invitation.add');
         Route::get('recruitment/first_interview_invitation/feedback/{id}', [AdminFirstInterviewInvitationController::class, 'feedback'])->name('recruitment.first_interview_invitation.feedback');
         Route::resource('recruitment/first_interview_invitation', AdminFirstInterviewInvitationController::class, ['names' => 'recruitment.first_interview_invitation'], ['except' => 'create']);
+
+        Route::resource('recruitment/initial_interview', AdminInitialInterviewController::class, ['names' => 'recruitment.initial_interview']);
     });
 });
 
