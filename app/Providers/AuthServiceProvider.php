@@ -13,6 +13,7 @@ class AuthServiceProvider extends ServiceProvider
         'create-propose' => ['Admin', 'Trưởng đơn vị'],
         'filter-candidate' => ['Admin', 'Nhân sự'],
         'initial-interview' => ['Admin', 'Nhân sự'],
+        'create-exams-result' => ['Admin', 'Nhân sự'],
     ];
 
     /**

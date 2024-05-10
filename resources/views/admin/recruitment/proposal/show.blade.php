@@ -56,7 +56,7 @@
                             <a class="nav-link" id="custom-tabs-one-profile-tab-3" data-toggle="pill" href="#custom-tabs-one-profile-3" role="tab" aria-controls="custom-tabs-one-profile-3" aria-selected="false">Lọc hồ sơ</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-profile-tab-4" data-toggle="pill" href="#custom-tabs-one-profile-4" role="tab" aria-controls="custom-tabs-one-profile-4" aria-selected="false">Phỏng vấn sơ bộ</a>
+                            <a class="nav-link" id="custom-tabs-one-profile-tab-4" data-toggle="pill" href="#custom-tabs-one-profile-4" role="tab" aria-controls="custom-tabs-one-profile-4" aria-selected="false">Phỏng vấn</a>
                           </li>
                         </ul>
                       </div>
@@ -65,9 +65,10 @@
                             <!-- Phỏng vấn sơ bộ -->
                             <div class="tab-pane fade" id="custom-tabs-one-profile-4" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-4">
                                 <h2>{{$proposal->company_job->name}}</h2>
+                                <!-- Phỏng vấn sơ bộ -->
                                 <div class="card">
                                     <div class="card-header">
-                                        Danh sách ứng viên
+                                        Phỏng vấn sơ bộ
                                     </div>
                                     <!-- /.card-header -->
                                     <div class="card-body">
@@ -249,6 +250,137 @@
                                                                                             <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                                                             <option value="Đạt" @if ($initial_interview && 'Đạt' == $initial_interview->result) selected="selected" @endif>Đạt</option>
                                                                                             <option value="Không đạt" @if ($initial_interview && 'Không đạt' == $initial_interview->result) selected="selected" @endif>Không đạt</option>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="modal-footer justify-content-between">
+                                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                                                    <button type="submit" class="btn btn-primary">Lưu</button>
+                                                                    </div>
+                                                                </div>
+                                                                <!-- /.modal-content -->
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                    <!-- /.modal -->
+
+                                                @endif
+                                                @endforeach
+                                            </tbody>
+                                          </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Thi tuyển -->
+                                <div class="card">
+                                    <div class="card-header">
+                                        Thi tuyển
+                                    </div>
+                                    <!-- /.card-header -->
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                          <table id="exams-result-table" class="table table-bordered table-striped">
+                                            <thead>
+                                            <tr>
+                                              <th>Tên</th>
+                                              <th>Điểm</th>
+                                              <th>Kết quả</th>
+                                              @can('initial-interview')
+                                              <th>Thao tác</th>
+                                              @endcan
+                                            </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                @foreach ($proposal->candidates as $candidate)
+                                                @php
+                                                    $proposal_candidate = App\Models\ProposalCandidate::where('proposal_id', $proposal->id)->where('candidate_id', $candidate->id)->first();
+                                                    $first_interview_invitation = App\Models\FirstInterviewInvitation::where('proposal_candidate_id', $proposal_candidate->id)->first();
+                                                    $exam = App\Models\Examination::where('proposal_candidate_id', $proposal_candidate->id)->first();
+                                                    if ($exam) {
+                                                        $action = '<a href="#exam{{' . $proposal_candidate->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exam' . $proposal_candidate->id. '"><i class="fas fa-check"></i></a>
+                                                                <form style="display:inline" action="'. route("admin.recruitment.exam.destroy", $proposal_candidate->id) . '" method="POST">
+                                                                <input type="hidden" name="_method" value="DELETE">
+                                                                <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                                                <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                                                    } else {
+                                                        $action = '<a href="#exam{{' . $proposal_candidate->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exam' . $proposal_candidate->id. '"><i class="fas fa-check"></i></a>';
+                                                    }
+                                                @endphp
+                                                @if ($first_interview_invitation)
+                                                  @if ('Đồng ý' == $first_interview_invitation->feedback)
+                                                    <tr>
+                                                    <td>
+                                                        <a href="{{route('admin.recruitment.candidates.show', $candidate->id)}}">{{$candidate->name}}</a>
+                                                    </td>
+                                                    @if($exam)
+                                                    <td>
+                                                        {{$exam->candidate_score}}/{{$exam->standard_score}}
+                                                    </td>
+                                                    <td>
+                                                        @if('Đạt' == $exam->result)
+                                                          <span class="badge badge-success">{{$exam->result}}</span>
+                                                        @else
+                                                          <span class="badge badge-danger">{{$exam->result}}</span>
+                                                        @endif
+                                                    </td>
+                                                    @else
+                                                    <td></td>
+                                                    <td></td>
+                                                    @endif
+                                                    @can('create-exams-result')
+                                                    <td>{!! $action !!}</td>
+                                                    @endcan
+                                                    </tr>
+                                                    @endif
+
+                                                    <!-- Modals for examination -->
+                                                    @if ($exam)
+                                                    <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.exam.update', $proposal_candidate->id) }}" name="update_exam_result" id="update_exam_result" novalidate="novalidate">
+                                                        @method('PATCH')
+                                                    @else
+                                                    <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.exam.store', $proposal_candidate->id) }}" name="create_exam_result" id="create_exam_result" novalidate="novalidate">
+                                                    @endif
+                                                        {{ csrf_field() }}
+                                                        <div class="modal fade" tabindex="-1" id="exam{{$proposal_candidate->id}}">
+                                                            <div class="modal-dialog modal-lg">
+                                                                <div class="modal-content">
+                                                                    <div class="modal-header">
+                                                                        <h4>Thi tuyển</h4>
+                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                            <span aria-hidden="true">&times;</span>
+                                                                        </button>
+                                                                    </div>
+                                                                    <div class="modal-body">
+                                                                        <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">
+                                                                        <div class="row">
+                                                                            <div class="col-6">
+                                                                                <label class="required-field" class="control-label">Điểm chuẩn</label>
+                                                                                <div class="controls">
+                                                                                    <input type="number" class="form-control" name="standard_score" id="standard_score" required="" @if ($exam) value="{{$exam->standard_score}}" @endif>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-6">
+                                                                                <label class="required-field" class="control-label">Điểm thi</label>
+                                                                                <div class="controls">
+                                                                                    <input type="number" class="form-control" name="candidate_score" id="candidate_score" required="" @if ($exam) value="{{$exam->candidate_score}}" @endif>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <div class="control-group">
+                                                                                    <label class="required-field" class="control-label">Kết quả</label>
+                                                                                    <div class="controls">
+                                                                                        <select name="result" id="result" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                                            <option value="Đạt" @if ($exam && 'Đạt' == $exam->result) selected="selected" @endif>Đạt</option>
+                                                                                            <option value="Không đạt" @if ($exam && 'Không đạt' == $exam->result) selected="selected" @endif>Không đạt</option>
                                                                                         </select>
                                                                                     </div>
                                                                                 </div>
