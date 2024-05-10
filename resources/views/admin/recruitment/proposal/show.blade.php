@@ -56,7 +56,7 @@
                             <a class="nav-link" id="custom-tabs-one-profile-tab-3" data-toggle="pill" href="#custom-tabs-one-profile-3" role="tab" aria-controls="custom-tabs-one-profile-3" aria-selected="false">Lọc hồ sơ</a>
                           </li>
                           <li class="nav-item">
-                            <a class="nav-link" id="custom-tabs-one-profile-tab-4" data-toggle="pill" href="#custom-tabs-one-profile-4" role="tab" aria-controls="custom-tabs-one-profile-4" aria-selected="false">Phỏng vấn</a>
+                            <a class="nav-link" id="custom-tabs-one-profile-tab-4" data-toggle="pill" href="#custom-tabs-one-profile-4" role="tab" aria-controls="custom-tabs-one-profile-4" aria-selected="false">Phỏng vấn sơ bộ</a>
                           </li>
                         </ul>
                       </div>
