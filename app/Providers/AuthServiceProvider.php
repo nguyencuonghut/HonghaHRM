@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
         'filter-candidate' => ['Admin', 'Nhân sự'],
         'initial-interview' => ['Admin', 'Nhân sự'],
         'create-exams-result' => ['Admin', 'Nhân sự'],
+        'create-first-interview-result' => ['Admin', 'Nhân sự'],
     ];
 
     /**

@@ -40,7 +40,7 @@ class AdminInitialInterviewController extends Controller
         $messages = [
             'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
             'health_score.required' => 'Bạn phải chọn điểm sức khỏe',
-            'attitude_score.required' => 'Bạn phải chọn điểm thái độc.',
+            'attitude_score.required' => 'Bạn phải chọn điểm thái độ.',
             'stability_score.required' => 'Bạn phải chọn điểm ổn định công việc.',
             'interviewer_id.required' => 'Bạn phải chọn người đánh giá.',
             'result.required' => 'Bạn phải chọn kết quả.',
@@ -103,7 +103,7 @@ class AdminInitialInterviewController extends Controller
         $messages = [
             'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
             'health_score.required' => 'Bạn phải chọn điểm sức khỏe',
-            'attitude_score.required' => 'Bạn phải chọn điểm thái độc.',
+            'attitude_score.required' => 'Bạn phải chọn điểm thái độ.',
             'stability_score.required' => 'Bạn phải chọn điểm ổn định công việc.',
             'interviewer_id.required' => 'Bạn phải chọn người đánh giá.',
             'result.required' => 'Bạn phải chọn kết quả.',
