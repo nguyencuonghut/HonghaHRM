@@ -24,6 +24,7 @@ use App\Http\Controllers\AdminFirstInterviewInvitationController;
 use App\Http\Controllers\AdminInitialInterviewController;
 use App\Http\Controllers\AdminExaminationController;
 use App\Http\Controllers\AdminFirstInterviewDetailController;
+use App\Http\Controllers\AdminFirstInterviewResultController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -116,6 +117,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/exam', AdminExaminationController::class, ['names' => 'recruitment.exam']);
 
         Route::resource('recruitment/first_interview_detail', AdminFirstInterviewDetailController::class, ['names' => 'recruitment.first_interview_detail']);
+
+        Route::resource('recruitment/first_interview_result', AdminFirstInterviewResultController::class, ['names' => 'recruitment.first_interview_result']);
     });
 });
 

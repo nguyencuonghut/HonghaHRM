@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\FirstInterviewResult;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminFirstInterviewResultController extends Controller
 {
@@ -28,7 +29,27 @@ class AdminFirstInterviewResultController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'proposal_candidate_id' => 'required',
+            'interviewer_id' => 'required',
+            'result' => 'required',
+        ];
+        $messages = [
+            'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
+            'interviewer_id.required' => 'Bạn phải chọn người phỏng vấn',
+            'result.required' => 'Bạn phải chọn kết quả.',
+        ];
+
+        $request->validate($rules,$messages);
+
+        $first_interview_result = new FirstInterviewResult();
+        $first_interview_result->proposal_candidate_id = $request->proposal_candidate_id;
+        $first_interview_result->interviewer_id = $request->interviewer_id;
+        $first_interview_result->result = $request->result;
+        $first_interview_result->save();
+
+        Alert::toast('Nhập kết quả thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**
@@ -50,16 +71,39 @@ class AdminFirstInterviewResultController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FirstInterviewResult $firstInterviewResult)
+    public function update(Request $request, $proposal_candidate_id)
     {
-        //
+        $rules = [
+            'proposal_candidate_id' => 'required',
+            'interviewer_id' => 'required',
+            'result' => 'required',
+        ];
+        $messages = [
+            'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
+            'interviewer_id.required' => 'Bạn phải chọn người phỏng vấn',
+            'result.required' => 'Bạn phải chọn kết quả.',
+        ];
+
+        $request->validate($rules,$messages);
+
+        $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        $first_interview_result->proposal_candidate_id = $request->proposal_candidate_id;
+        $first_interview_result->interviewer_id = $request->interviewer_id;
+        $first_interview_result->result = $request->result;
+        $first_interview_result->save();
+
+        Alert::toast('Sửa kết quả thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FirstInterviewResult $firstInterviewResult)
+    public function destroy($proposal_candidate_id)
     {
-        //
+        $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        $first_interview_result->destroy($first_interview_result->id);
+        Alert::toast('Xóa kết quả thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 }

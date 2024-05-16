@@ -119,6 +119,7 @@ class AdminRecruitmentProposalController extends Controller
         $candidates = RecruitmentCandidate::orderBy('id', 'asc')->get();
         $educations = Education::orderBy('name', 'asc')->get();
         $hr_admins = Admin::where('role_id', 4)->orderBy('name', 'asc')->get();
+        $manager_admins = Admin::where('role_id', 3)->orderBy('name', 'asc')->get();
         return view('admin.recruitment.proposal.show',
                     ['proposal' => $proposal,
                      'methods' => $methods,
@@ -130,6 +131,7 @@ class AdminRecruitmentProposalController extends Controller
                      'candidates' => $candidates,
                      'educations' => $educations,
                      'hr_admins' => $hr_admins,
+                     'manager_admins' => $manager_admins,
                     ]);
     }
 
