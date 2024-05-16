@@ -103,7 +103,7 @@
                                                     @if ($first_interview_details)
                                                       @foreach ($first_interview_details  as $first_interview_detail)
                                                       @php
-                                                        $action = '<a href="#edit_first_interview_detail{{' . $first_interview_detail->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_first_interview_detail' . $first_interview_detail->id. '"><i class="fas fa-check"></i></a>
+                                                        $action = '<a href="#edit_first_interview_detail{{' . $first_interview_detail->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_first_interview_detail' . $first_interview_detail->id. '"><i class="fas fa-edit"></i></a>
                                                                 <form style="display:inline" action="'. route("admin.recruitment.first_interview_detail.destroy", $first_interview_detail->id) . '" method="POST">
                                                                 <input type="hidden" name="_method" value="DELETE">
                                                                 <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
