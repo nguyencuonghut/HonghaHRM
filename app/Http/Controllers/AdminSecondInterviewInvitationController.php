@@ -122,6 +122,8 @@ class AdminSecondInterviewInvitationController extends Controller
         $second_interview_invitation->feedback = $request->feedback;
         if ($request->note) {
             $second_interview_invitation->note = $request->note;
+        } else {
+            $second_interview_invitation->note = null;
         }
         $second_interview_invitation->save();
 

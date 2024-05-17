@@ -121,6 +121,8 @@ class AdminFirstInterviewInvitationController extends Controller
         $first_interview_invitation->feedback = $request->feedback;
         if ($request->note) {
             $first_interview_invitation->note = $request->note;
+        } else {
+            $first_interview_invitation->note = null;
         }
         $first_interview_invitation->save();
 
