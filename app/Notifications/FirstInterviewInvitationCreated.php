@@ -47,7 +47,7 @@ class FirstInterviewInvitationCreated extends Notification implements ShouldQueu
 
         return (new MailMessage)
                 ->subject('Mời phỏng vấn lần 1 cho vị trí ' . $proposal->company_job->name)
-                ->line('Xin mời bạn tham gia phỏng vấn cho vị trí: ' . $proposal->company_job->name . '.')
+                ->line('Xin mời bạn tham gia phỏng vấn lần 1 cho vị trí: ' . $proposal->company_job->name . '.')
                 ->line('Bộ phận: ' . $proposal->company_job->division->name . '.')
                 ->line('Phòng ban: ' . $proposal->company_job->department->name . '.')
                 ->line('Thời gian: ' . date('d//m/Y', strtotime($first_interview_invitation->interview_time)) . '.')
