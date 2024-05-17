@@ -82,7 +82,7 @@
                                         </div>
                                         <div class="card-body">
                                             @can('create-first-interview-result')
-                                            <a href="#first_interview_detail{{' . $proposal_candidate->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_first_interview_detail{{$proposal_candidate->id}}"><i class="fas fa-plus"></i> Thêm</a>
+                                            <a href="#first_interview_detail{{' . $proposal_candidate->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_first_interview_detail{{$proposal_candidate->id}}"><i class="fas fa-plus"></i></a>
                                             <br>
                                             <br>
                                             @endcan
@@ -303,6 +303,35 @@
                                                         </form>
                                                         <!-- /.modal -->
                                                       </tr>
+                                                      @php
+                                                          $first_interview_result = App\Models\FirstInterviewResult::where('proposal_candidate_id', $proposal_candidate->id)->first();
+                                                          $second_interview_invitation = App\Models\SecondInterviewInvitation::where('proposal_candidate_id', $proposal_candidate->id)->first();
+
+                                                          if ('Đạt' == $first_interview_result->result) {
+                                                            $action = '<a href="' . route('admin.recruitment.second_interview_invitation.add', $proposal_candidate->id). '" class="btn btn-success btn-sm"><i class="fas fa-paper-plane"></i></a>';
+                                                            $action .= '&nbsp';
+                                                          }
+                                                          if ($second_interview_invitation) {
+                                                            $action .='<a href="'. route('admin.recruitment.second_interview_invitation.feedback', $proposal_candidate->id) . '" class="btn btn-success btn-sm"><i class="fas fa-reply"></i></a>';
+                                                          } else {
+                                                            $action = '<a href="#create_first_interview_result" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create_first_interview_result' . $proposal_candidate->id. '"><i class="fas fa-reply"></i></a>';
+                                                          }
+                                                      @endphp
+                                                      @if ($second_interview_invitation)
+                                                      <tr>
+                                                        <td colspan="3"><strong>Mời phỏng vấn:</strong>
+                                                            @if ('Đồng ý' == $second_interview_invitation->feedback)
+                                                            <span class="badge badge-success">{{$second_interview_invitation->feedback}}</span>
+                                                            @elseif ('Từ chối' == $second_interview_invitation->feedback)
+                                                            <span class="badge badge-danger">{{$second_interview_invitation->feedback}}</span>
+                                                            @else
+                                                            <span class="badge badge-warning">{{$second_interview_invitation->feedback}}</span>
+                                                            @endif
+                                                            {{$second_interview_invitation->note}}
+                                                        </td>
+                                                        <td>{!! $action !!}</td>
+                                                      </tr>
+                                                      @endif
                                                     @else
                                                     <td></td>
                                                     <td></td>

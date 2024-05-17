@@ -25,6 +25,7 @@ use App\Http\Controllers\AdminInitialInterviewController;
 use App\Http\Controllers\AdminExaminationController;
 use App\Http\Controllers\AdminFirstInterviewDetailController;
 use App\Http\Controllers\AdminFirstInterviewResultController;
+use App\Http\Controllers\AdminSecondInterviewInvitationController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -119,6 +120,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/first_interview_detail', AdminFirstInterviewDetailController::class, ['names' => 'recruitment.first_interview_detail']);
 
         Route::resource('recruitment/first_interview_result', AdminFirstInterviewResultController::class, ['names' => 'recruitment.first_interview_result']);
+
+        Route::get('recruitment/second_interview_invitation/add/{id}', [AdminSecondInterviewInvitationController::class, 'add'])->name('recruitment.second_interview_invitation.add');
+        Route::get('recruitment/second_interview_invitation/feedback/{id}', [AdminSecondInterviewInvitationController::class, 'feedback'])->name('recruitment.second_interview_invitation.feedback');
+        Route::resource('recruitment/second_interview_invitation', AdminSecondInterviewInvitationController::class, ['names' => 'recruitment.second_interview_invitation'], ['except' => 'create']);
     });
 });
 
