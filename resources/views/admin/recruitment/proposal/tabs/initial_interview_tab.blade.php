@@ -42,7 +42,7 @@
                         }
                     @endphp
                     @if ($first_interview_invitation)
-                      @if ('Đồng ý' == $first_interview_invitation->feedback)
+                      @if ('Từ chối' != $first_interview_invitation->feedback)
                         <tr>
                         <td>
                             <a href="{{route('admin.recruitment.candidates.show', $candidate->id)}}">{{$candidate->name}}</a>
@@ -249,7 +249,7 @@
                         }
                     @endphp
                     @if ($first_interview_invitation)
-                      @if ('Đồng ý' == $first_interview_invitation->feedback)
+                      @if ('Từ chối' != $first_interview_invitation->feedback)
                         <tr>
                         <td>
                             <a href="{{route('admin.recruitment.candidates.show', $candidate->id)}}">{{$candidate->name}}</a>

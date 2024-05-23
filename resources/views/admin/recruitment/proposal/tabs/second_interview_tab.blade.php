@@ -9,7 +9,7 @@
         $second_interview_details = App\Models\SecondInterviewDetail::where('proposal_candidate_id', $proposal_candidate->id)->get();
       @endphp
       @if ($second_interview_invitation)
-        @if ('Đồng ý' == $second_interview_invitation->feedback)
+        @if ('Từ chối' != $second_interview_invitation->feedback)
         <div class="card">
             <div class="card-header">
                 <strong>{{$candidate->name}}</strong>
