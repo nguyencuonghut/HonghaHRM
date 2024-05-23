@@ -156,8 +156,8 @@
                                                         <div class="controls">
                                                             <select name="interviewer_id" id="interviewer_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                                 <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                @foreach ($manager_admins as $manager_admin)
-                                                                <option value="{{$manager_admin->id}}">{{$manager_admin->name}}</option>
+                                                                @foreach ($leader_admins as $leader_admin)
+                                                                <option value="{{$leader_admin->id}}">{{$leader_admin->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -210,8 +210,8 @@
                                                         <div class="controls">
                                                             <select name="interviewer_id" id="interviewer_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                                 <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                @foreach ($manager_admins as $manager_admin)
-                                                                <option value="{{$manager_admin->id}}" @if ($second_interview_result && $manager_admin->id == $second_interview_result->interviewer_id) selected="selected"@endif>{{$manager_admin->name}}</option>
+                                                                @foreach ($leader_admins as $leader_admin)
+                                                                <option value="{{$leader_admin->id}}" @if ($second_interview_result && $leader_admin->id == $second_interview_result->interviewer_id) selected="selected"@endif>{{$leader_admin->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
