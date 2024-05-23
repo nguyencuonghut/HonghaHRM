@@ -61,10 +61,14 @@
                           <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-profile-tab-5" data-toggle="pill" href="#custom-tabs-one-profile-5" role="tab" aria-controls="custom-tabs-one-profile-5" aria-selected="false">Phỏng vấn lần 1</a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-one-profile-tab-6" data-toggle="pill" href="#custom-tabs-one-profile-6" role="tab" aria-controls="custom-tabs-one-profile-6" aria-selected="false">Phỏng vấn lần 2</a>
+                          </li>
                         </ul>
                       </div>
                       <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
+                            @include('admin.recruitment.proposal.tabs.second_interview_tab')
                             @include('admin.recruitment.proposal.tabs.first_interview_tab')
                             @include('admin.recruitment.proposal.tabs.initial_interview_tab')
                             @include('admin.recruitment.proposal.tabs.proposal_candidate_filter_tab')
