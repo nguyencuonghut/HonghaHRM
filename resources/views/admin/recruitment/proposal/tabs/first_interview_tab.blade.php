@@ -126,10 +126,14 @@
                             @endphp
                             @if ($first_interview_result)
                             <td colspan="3"><strong>Kết quả: </strong>  <span class="badge @if ("Đạt" == $first_interview_result->result) badge-success @else badge-danger @endif">{{$first_interview_result->result}}</span> - phỏng vấn bởi {{$first_interview_result->interviewer->name}}</td>
+                            @can('create-first-interview-result')
                             <td>{!! $action !!}</td>
+                            @endcan
                             @elseif ($first_interview_details->count())
                             <td colspan="3"><strong>Kết quả</strong></td>
+                            @can('create-first-interview-result')
                             <td>{!! $action !!}</td>
+                            @endcan
                             @endif
 
                             <!-- Modals for create first_interview_result -->
@@ -278,14 +282,18 @@
                                     @else
                                     @endif
                                 </td>
+                                @can('create-first-interview-result')
                                 <td>{!! $action !!}</td>
+                                @endcan
                                 @else
                                     @php
                                         $action = '<a href="' . route('admin.recruitment.second_interview_invitation.add', $proposal_candidate->id). '" class="btn btn-success btn-sm"><i class="fas fa-paper-plane"></i></a>';
                                     @endphp
                                 <td colspan="3"><strong>Mời phỏng vấn:</strong>
                                 </td>
+                                @can('create-first-interview-result')
                                 <td>{!! $action !!}</td>
+                                @endcan
                                 @endif
                             </tr>
                             @endif
