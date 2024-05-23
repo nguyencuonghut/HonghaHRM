@@ -16,7 +16,7 @@
                   <th>Mức lương</th>
                   <th>Ghi chú</th>
                   <th>Kết quả</th>
-                  <th>Phỏng vấn</th>
+                  <th>Mời phỏng vấn</th>
                   <th>Đợt</th>
                   @can('filter-candidate')
                   <th style="width: 12%;">Thao tác</th>
@@ -64,13 +64,9 @@
                       </td>
                       <td>
                         @if($filter->result == 'Đạt')
-                            @if ($first_interview_invitation)
                             <span class="badge badge-success">{{$filter->result}}</span>
-                            @else
-                            <i class="fas fa-check-circle" style="color:green;"></i>
-                            @endif
                         @else
-                            <i class="fas fa-times-circle" style="color:red;"></i>
+                            <span class="badge badge-danger">{{$filter->result}}</span>
                         @endif
                       </td>
                       <td>
