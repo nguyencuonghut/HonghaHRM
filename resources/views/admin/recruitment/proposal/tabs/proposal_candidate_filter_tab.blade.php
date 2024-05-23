@@ -16,10 +16,10 @@
                   <th>Mức lương</th>
                   <th>Ghi chú</th>
                   <th>Kết quả</th>
-                  <th>Phản hồi</th>
+                  <th>Phỏng vấn</th>
                   <th>Đợt</th>
                   @can('filter-candidate')
-                  <th>Thao tác</th>
+                  <th style="width: 12%;">Thao tác</th>
                   @endcan
                 </tr>
                 </thead>
@@ -65,7 +65,7 @@
                       <td>
                         @if($filter->result == 'Đạt')
                             @if ($first_interview_invitation)
-                            <i class="fas fa-check-circle" style="color:green;"></i> <i class="fas fa-envelope" style="color:green;"></i>
+                            <span class="badge badge-success">{{$filter->result}}</span>
                             @else
                             <i class="fas fa-check-circle" style="color:green;"></i>
                             @endif
@@ -75,12 +75,15 @@
                       </td>
                       <td>
                         @if ($first_interview_invitation)
+                            @if ('Đã gửi' == $first_interview_invitation->status)
+                                - {{date('d/m/Y H:i', strtotime($first_interview_invitation->interview_time))}} tại {{$first_interview_invitation->interview_location}} <br>
+                            @endif
                             @if ('Đồng ý' == $first_interview_invitation->feedback)
-                                <span class="badge badge-success">{{$first_interview_invitation->feedback}}</span>
+                                - <span class="badge badge-success">{{$first_interview_invitation->feedback}}</span>
                             @elseif ('Từ chối' == $first_interview_invitation->feedback)
-                                <span class="badge badge-danger">{{$first_interview_invitation->feedback}}</span>
-                            @else
-                                <span class="badge badge-warning">{{$first_interview_invitation->feedback}}</span>
+                                - <span class="badge badge-danger">{{$first_interview_invitation->feedback}}</span>
+                            @elseif ('Hẹn lại' == $first_interview_invitation->feedback)
+                                - <span class="badge badge-warning">{{$first_interview_invitation->feedback}}</span>
                             @endif
                         @endif
                       </td>
