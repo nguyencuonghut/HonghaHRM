@@ -3,7 +3,7 @@
 <div class="tab-pane fade" id="custom-tabs-one-profile-4" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-4">
     <h2>{{$proposal->company_job->name}}</h2>
     <!-- Phỏng vấn sơ bộ -->
-    <div class="card">
+    <div class="card card-secondary">
         <div class="card-header">
             Phỏng vấn sơ bộ
         </div>
@@ -213,7 +213,7 @@
     </div>
 
     <!-- Thi tuyển -->
-    <div class="card">
+    <div class="card card-secondary">
         <div class="card-header">
             Thi tuyển
         </div>

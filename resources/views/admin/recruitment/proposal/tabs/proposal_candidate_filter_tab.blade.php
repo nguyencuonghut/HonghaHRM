@@ -1,9 +1,9 @@
 <!-- Lọc hồ sơ -->
 <div class="tab-pane fade" id="custom-tabs-one-profile-3" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-3">
     <h2>{{$proposal->company_job->name}}</h2>
-    <div class="card">
+    <div class="card card-secondary">
         <div class="card-header">
-            Danh sách ứng viên
+            Lọc hồ sơ
         </div>
         <!-- /.card-header -->
         <div class="card-body">

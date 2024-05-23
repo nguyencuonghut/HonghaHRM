@@ -1,7 +1,7 @@
 <!-- Candidate Tab -->
 <div class="tab-pane fade" id="custom-tabs-one-profile-2" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-2">
     <h2>{{$proposal->company_job->name}}</h2>
-    <div class="card">
+    <div class="card card-secondary">
         <div class="card-header">
             Danh sách ứng viên
         </div>
@@ -12,9 +12,9 @@
                     <button type="button" class="btn btn-success float-left" data-toggle="modal" data-target="#add_proposal_candidate">
                         Thêm
                     </button>
+                    <br>
+                    <br>
             @endif
-            <br>
-            <br>
             <div class="table-responsive">
               <table id="candidates-table" class="table table-bordered table-striped">
                 <thead>

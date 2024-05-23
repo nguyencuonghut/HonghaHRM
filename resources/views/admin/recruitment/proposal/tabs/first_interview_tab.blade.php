@@ -10,9 +10,9 @@
       @endphp
       @if ($first_interview_invitation)
         @if ('Từ chối' != $first_interview_invitation->feedback)
-        <div class="card">
+        <div class="card card-secondary">
             <div class="card-header">
-                <strong>{{$candidate->name}}</strong>
+                {{$candidate->name}}
             </div>
             <div class="card-body">
                 @can('create-first-interview-result')
