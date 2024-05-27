@@ -128,4 +128,26 @@ class AdminOfferController extends Controller
         Alert::toast('Xóa đề xuất thành công!', 'success', 'top-right');
         return redirect()->back();
     }
+
+    public function approve(Request $request)
+    {
+        $rules = [
+            'proposal_candidate_id' => 'required',
+            'result' => 'required',
+        ];
+        $messages = [
+            'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
+            'result.required' => 'Bạn phải nhập kết quả',
+        ];
+
+        $request->validate($rules,$messages);
+
+        $offer = Offer::where('proposal_candidate_id', $request->proposal_candidate_id)->first();
+        $offer->result = $request->result;
+        $offer->approver_id = Auth::user()->id;
+        $offer->save();
+
+        Alert::toast('Duyệt đề xuất thành công!', 'success', 'top-right');
+        return redirect()->back();
+    }
 }

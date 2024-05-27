@@ -31,19 +31,30 @@
                             <th>Chi tiết</th>
                             <th>Ghi chú</th>
                             <th>Phản hồi</th>
-                            @can('create-offer')
+                            <th>Kết quả</th>
+                            @canany(['create-offer', 'approve-offer'])
                             <th>Thao tác</th>
-                            @endcan
+                            @endcanany
                         </tr>
                     </thead>
                     <tbody>
                         @if ($offer)
                           @php
-                            $action = '<a href="#edit_offer{{' . $proposal_candidate->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_offer' . $proposal_candidate->id. '"><i class="fas fa-edit"></i></a>
+                            $action_create_offer = '<a href="#edit_offer{{' . $proposal_candidate->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_offer' . $proposal_candidate->id. '"><i class="fas fa-edit"></i></a>
                                     <form style="display:inline" action="'. route("admin.recruitment.offer.destroy", $proposal_candidate->id) . '" method="POST">
                                     <input type="hidden" name="_method" value="DELETE">
                                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                            $action_approve_offer = '<a href="#approve_offer{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approve_offer' . $proposal_candidate->id. '"><i class="fas fa-check"></i></a>';
+                            $action = '';
+                            if (Auth::user()->can('create-offer')) {
+                                $action = $action . $action_create_offer;
+
+                            }
+                            if (Auth::user()->can('approve-offer')) {
+                                $action = $action . $action_approve_offer;
+
+                            }
                           @endphp
                           <tr>
                             <td>{{number_format($offer->current_salary, 0, '.', ',')}}<sup>đ</sup></td>
@@ -53,9 +64,10 @@
                             <td>
                                 <span class="badge @if ("Đồng ý" == $offer->feedback) badge-success @else badge-danger @endif">{{$offer->feedback}}</span>
                             </td>
-                            @can('create-offer')
+                            <td>{{$offer->result}}, bởi {{$offer->approver->name}}</td>
+                            @canany(['create-offer', 'approve-offer'])
                             <td>{!! $action !!}</td>
-                            @endcan
+                            @endcanany
 
                             <!-- Modals for edit offer -->
                             <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.offer.update', $proposal_candidate->id) }}" name="update_offer" id="update_offer" novalidate="novalidate">
@@ -134,8 +146,54 @@
                                 </div>
                             </form>
                             <!-- /.modal -->
+
+                            <!-- Modals for approve offer -->
+                            <form class="form-horizontal" method="post" action="{{ route('admin.recruitment.offer.approve', $proposal_candidate->id) }}" name="approve_offer" id="approve_offer" novalidate="novalidate">
+                                {{ csrf_field() }}
+                                <div class="modal fade" tabindex="-1" id="approve_offer{{$proposal_candidate->id}}">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4>Duyệt đề xuất chế độ ứng viên {{$candidate->name}}</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="control-group">
+                                                            <div class="control-group">
+                                                                <label class="required-field" class="control-label">Kết quả</label>
+                                                                <div class="controls">
+                                                                    <select name="result" id="result" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                                        <option value="Ký HĐLĐ">Ký HĐLĐ</option>
+                                                                        <option value="Ký HĐTV">Ký HĐTV</option>
+                                                                        <option value="Ký HĐHV">Ký HĐHV</option>
+                                                                        <option value="Không đạt">Không đạt</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /.modal -->
                           </tr>
                         @else
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>

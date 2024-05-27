@@ -25,4 +25,9 @@ class Offer extends Model
     {
         return $this->belongsTo(Admin::class);
     }
+
+    public function approver(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class);
+    }
 }

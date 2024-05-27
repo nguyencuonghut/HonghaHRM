@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         'create-first-interview-result' => ['Admin', 'Nhân sự'],
         'create-second-interview-result' => ['Admin', 'Nhân sự'],
         'create-offer' => ['Admin', 'Nhân sự'],
+        'approve-offer' => ['Admin', 'Ban lãnh đạo'],
     ];
 
     /**

@@ -132,6 +132,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::resource('recruitment/second_interview_result', AdminSecondInterviewResultController::class, ['names' => 'recruitment.second_interview_result']);
 
+        Route::post('recruitment/offer/approve', [AdminOfferController::class, 'approve'])->name('recruitment.offer.approve');
         Route::resource('recruitment/offer', AdminOfferController::class, ['names' => 'recruitment.offer']);
     });
 });
