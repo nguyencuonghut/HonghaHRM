@@ -28,6 +28,7 @@ use App\Http\Controllers\AdminFirstInterviewResultController;
 use App\Http\Controllers\AdminSecondInterviewInvitationController;
 use App\Http\Controllers\AdminSecondInterviewDetailController;
 use App\Http\Controllers\AdminSecondInterviewResultController;
+use App\Http\Controllers\AdminOfferController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -130,6 +131,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/second_interview_detail', AdminSecondInterviewDetailController::class, ['names' => 'recruitment.second_interview_detail']);
 
         Route::resource('recruitment/second_interview_result', AdminSecondInterviewResultController::class, ['names' => 'recruitment.second_interview_result']);
+
+        Route::resource('recruitment/offer', AdminOfferController::class, ['names' => 'recruitment.offer']);
     });
 });
 
