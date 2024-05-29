@@ -81,7 +81,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Họ tên</label>
                                                 <div class="controls">
@@ -89,18 +89,15 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="control-group">
-                                                <label class="required-field" class="control-label">Email</label>
+                                                <label class="control-label">Email</label>
                                                 <div class="controls">
                                                     <input type="email" class="form-control" name="email" id="email" required="">
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Số điện thoại</label>
                                                 <div class="controls">
@@ -108,7 +105,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-4">
                                             <div class="control-group">
                                                 <label class="control-label">Số điện thoại người thân</label>
                                                 <div class="controls">
@@ -116,10 +116,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <label class="required-field">Ngày sinh</label>
                                             <div class="input-group date" id="date_of_birth" data-target-input="nearest">
                                                 <input type="text" name="date_of_birth" class="form-control datetimepicker-input" data-target="#date_of_birth"/>
@@ -128,7 +125,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="control-group">
                                                 <label class="control-label">CCCD</label>
                                                 <div class="controls">
@@ -137,8 +134,9 @@
                                             </div>
                                         </div>
                                     </div>
+
                                     <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <label class="control-label">Ngày cấp</label>
                                             <div class="input-group date" id="issued_date" data-target-input="nearest">
                                                 <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date"/>
@@ -146,8 +144,7 @@
                                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="col-6">
+                                        </div><div class="col-4">
                                             <div class="control-group">
                                                 <label class="control-label">Nơi cấp</label>
                                                 <div class="controls">
@@ -155,9 +152,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-6">
+                                        <div class="col-4">
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Giới tính</label>
                                                 <div class="controls">
@@ -166,6 +161,16 @@
                                                         <option value="Nam">Nam</option>
                                                         <option value="Nữ">Nữ</option>
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">Số nhà, thôn, xóm</label>
+                                                <div class="controls">
+                                                    <input type="text" class="form-control" name="address" id="address" required="">
                                                 </div>
                                             </div>
                                         </div>

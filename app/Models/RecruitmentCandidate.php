@@ -21,6 +21,7 @@ class RecruitmentCandidate extends Model
         'issued_date',
         'issued_by',
         'gender',
+        'address',
         'commune_id',
         'note',
         'experience',

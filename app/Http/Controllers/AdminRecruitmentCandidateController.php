@@ -52,21 +52,19 @@ class AdminRecruitmentCandidateController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|email|max:255',
             'phone' => 'required',
             'date_of_birth' => 'required',
             'gender' => 'required',
+            'address' => 'required',
             'commune_id' => 'required',
             'addmore.*.education_id' => 'required',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
-            'email.required' => 'Bạn phải nhập địa chỉ email.',
-            'email.email' => 'Email sai định dạng.',
-            'email.max' => 'Email dài quá 255 ký tự.',
             'phone.required' => 'Bạn phải nhập số điện thoại.',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
             'gender.required' => 'Bạn phải chọn giới tính.',
+            'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
         ];
@@ -74,7 +72,9 @@ class AdminRecruitmentCandidateController extends Controller
 
         $candidate = new RecruitmentCandidate();
         $candidate->name = $request->name;
-        $candidate->email = $request->email;
+        if ($request->email) {
+            $candidate->email = $request->email;
+        }
         $candidate->phone = $request->phone;
         if ($request->relative_phone) {
             $candidate->relative_phone = $request->relative_phone;
@@ -90,6 +90,7 @@ class AdminRecruitmentCandidateController extends Controller
             $candidate->issued_by = $request->issued_by;
         }
         $candidate->gender = $request->gender;
+        $candidate->address = $request->address;
         $candidate->commune_id = $request->commune_id;
         $candidate->experience = $request->experience;
         if ($request->note) {
@@ -149,21 +150,19 @@ class AdminRecruitmentCandidateController extends Controller
     {
         $rules = [
             'name' => 'required',
-            'email' => 'required|email|max:255',
             'phone' => 'required',
             'date_of_birth' => 'required',
             'gender' => 'required',
+            'address' => 'required',
             'commune_id' => 'required',
             'addmore.*.education_id' => 'required',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
-            'email.required' => 'Bạn phải nhập địa chỉ email.',
-            'email.email' => 'Email sai định dạng.',
-            'email.max' => 'Email dài quá 255 ký tự.',
             'phone.required' => 'Bạn phải nhập số điện thoại.',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
             'gender.required' => 'Bạn phải chọn giới tính.',
+            'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
         ];
@@ -171,7 +170,9 @@ class AdminRecruitmentCandidateController extends Controller
 
         $candidate = RecruitmentCandidate::findOrFail($id);
         $candidate->name = $request->name;
-        $candidate->email = $request->email;
+        if ($request->email) {
+            $candidate->email = $request->email;
+        }
         $candidate->phone = $request->phone;
         if ($request->relative_phone) {
             $candidate->relative_phone = $request->relative_phone;
@@ -187,6 +188,7 @@ class AdminRecruitmentCandidateController extends Controller
             $candidate->issued_by = $request->issued_by;
         }
         $candidate->gender = $request->gender;
+        $candidate->address = $request->address;
         $candidate->commune_id = $request->commune_id;
         $candidate->experience = $request->experience;
         if ($request->note) {
@@ -241,7 +243,7 @@ class AdminRecruitmentCandidateController extends Controller
                 return $candidates->phone;
             })
             ->editColumn('addr', function ($candidates) {
-                return $candidates->commune->name .' - ' .  $candidates->commune->district->name .' - ' . $candidates->commune->district->province->name;
+                return $candidates->address . ', ' .  $candidates->commune->name .', ' .  $candidates->commune->district->name .', ' . $candidates->commune->district->province->name;
             })
             ->editColumn('cccd', function ($candidates) {
                 return $candidates->cccd;

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('recruitment_candidates', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email')->unique();
+            $table->string('email')->nullable()->unique();
             $table->string('phone');
             $table->string('relative_phone')->nullable();
             $table->date('date_of_birth');
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('issued_date')->nullable();
             $table->string('issued_by')->nullable();
             $table->enum('gender', ['Nam', 'Nữ']);
+            $table->string('address');
             $table->foreignId('commune_id')->constrained('communes');
             $table->foreignId('creator_id')->constrained('admins');
             $table->text('experience');
