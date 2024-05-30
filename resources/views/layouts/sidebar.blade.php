@@ -85,6 +85,14 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="{{route('admin.calendars.index')}}" class="nav-link {{ Request::is('admin/calendars*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-calendar-alt"></i>
+              <p>
+                Lịch
+              </p>
+            </a>
+          </li>
           @else
           <li class="nav-item">
             <a href="{{route('user.home')}}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">
