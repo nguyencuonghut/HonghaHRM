@@ -75,7 +75,7 @@
 
                       <strong><i class="fas fa-map-marker-alt mr-1"></i> Địa chỉ</strong>
                       <p class="text-muted">
-                        {{$candidate->commune->name}} - {{$candidate->commune->district->name}} - {{$candidate->commune->district->province->name}}
+                        {{$candidate->address}}, {{$candidate->commune->name}}, {{$candidate->commune->district->name}}, {{$candidate->commune->district->province->name}}
                       </p>
                       <hr>
 
@@ -86,7 +86,11 @@
 
                             foreach ($candidate->educations as $education) {
                                 $candidate_education = App\Models\CandidateEducation::where('candidate_id', $candidate->id)->where('education_id', $education->id)->first();
-                                $educations_info = $educations_info . $education->name . ' - ' . $candidate_education->major . '<br>';
+                                if ($candidate_education->major) {
+                                    $educations_info = $educations_info . $education->name . ' - ' . $candidate_education->major . '<br>';
+                                } else {
+                                    $educations_info = $educations_info . $education->name;
+                                }
 
                             }
                         @endphp
