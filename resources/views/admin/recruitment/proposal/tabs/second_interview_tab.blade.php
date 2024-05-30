@@ -7,9 +7,10 @@
         $proposal_candidate = App\Models\ProposalCandidate::where('proposal_id', $proposal->id)->where('candidate_id', $candidate->id)->first();
         $second_interview_invitation = App\Models\SecondInterviewInvitation::where('proposal_candidate_id', $proposal_candidate->id)->first();
         $second_interview_details = App\Models\SecondInterviewDetail::where('proposal_candidate_id', $proposal_candidate->id)->get();
+        $first_interview_result = App\Models\FirstInterviewResult::where('proposal_candidate_id', $proposal_candidate->id)->first();
       @endphp
-      @if ($second_interview_invitation)
-        @if ('Từ chối' != $second_interview_invitation->feedback)
+      @if ((null == $second_interview_invitation && ($first_interview_result && 'Đạt' == $first_interview_result->result))
+      || ($second_interview_invitation && 'Từ chối' != $second_interview_invitation->feedback))
         <div class="card card-secondary">
             <div class="card-header">
                 {{$candidate->name}}
@@ -125,15 +126,15 @@
                               }
                             @endphp
                             @if ($second_interview_result)
-                            <td colspan="3"><strong>Kết quả: </strong>  <span class="badge @if ("Đạt" == $second_interview_result->result) badge-success @else badge-danger @endif">{{$second_interview_result->result}}</span> - phỏng vấn bởi {{$second_interview_result->interviewer->name}}</td>
-                            @can('create-second-interview-result')
-                            <td>{!! $action !!}</td>
-                            @endcan
-                            @elseif ($second_interview_details->count())
-                            <td colspan="3"><strong>Kết quả</strong></td>
-                            @can('create-second-interview-result')
-                            <td>{!! $action !!}</td>
-                            @endcan
+                              @can('create-second-interview-result')
+                                <td colspan="3"><strong>Kết quả: </strong>  <span class="badge @if ("Đạt" == $second_interview_result->result) badge-success @else badge-danger @endif">{{$second_interview_result->result}}</span> - phỏng vấn bởi {{$second_interview_result->interviewer->name}}</td>
+                                <td>{!! $action !!}</td>
+                              @endcan
+                            @else
+                              @can('create-second-interview-result')
+                                <td colspan="3"><strong>Kết quả</strong></td>
+                                <td>{!! $action !!}</td>
+                              @endcan
                             @endif
 
                             <!-- Modals for create second_interview_result -->
@@ -151,18 +152,7 @@
                                             <div class="modal-body">
                                                 <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <label class="control-label">Người phỏng vấn</label>
-                                                        <div class="controls">
-                                                            <select name="interviewer_id" id="interviewer_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                @foreach ($leader_admins as $leader_admin)
-                                                                <option value="{{$leader_admin->id}}">{{$leader_admin->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <div class="control-group">
                                                             <div class="control-group">
                                                                 <label class="control-label">Kết quả</label>
@@ -205,18 +195,7 @@
                                             <div class="modal-body">
                                                 <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <label class="control-label">Người phỏng vấn</label>
-                                                        <div class="controls">
-                                                            <select name="interviewer_id" id="interviewer_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                @foreach ($leader_admins as $leader_admin)
-                                                                <option value="{{$leader_admin->id}}" @if ($second_interview_result && $leader_admin->id == $second_interview_result->interviewer_id) selected="selected"@endif>{{$leader_admin->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <div class="control-group">
                                                             <div class="control-group">
                                                                 <label class="control-label">Kết quả</label>
@@ -313,8 +292,6 @@
             </div>
         </form>
         <!-- /.modal -->
-
-          @endif
       @endif
     @endforeach
 </div>
