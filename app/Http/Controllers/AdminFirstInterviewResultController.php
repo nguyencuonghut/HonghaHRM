@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\FirstInterviewResult;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
 
 class AdminFirstInterviewResultController extends Controller
 {
@@ -31,12 +32,10 @@ class AdminFirstInterviewResultController extends Controller
     {
         $rules = [
             'proposal_candidate_id' => 'required',
-            'interviewer_id' => 'required',
             'result' => 'required',
         ];
         $messages = [
             'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
-            'interviewer_id.required' => 'Bạn phải chọn người phỏng vấn',
             'result.required' => 'Bạn phải chọn kết quả.',
         ];
 
@@ -44,7 +43,7 @@ class AdminFirstInterviewResultController extends Controller
 
         $first_interview_result = new FirstInterviewResult();
         $first_interview_result->proposal_candidate_id = $request->proposal_candidate_id;
-        $first_interview_result->interviewer_id = $request->interviewer_id;
+        $first_interview_result->interviewer_id = Auth::user()->id;
         $first_interview_result->result = $request->result;
         $first_interview_result->save();
 
@@ -75,12 +74,10 @@ class AdminFirstInterviewResultController extends Controller
     {
         $rules = [
             'proposal_candidate_id' => 'required',
-            'interviewer_id' => 'required',
             'result' => 'required',
         ];
         $messages = [
             'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
-            'interviewer_id.required' => 'Bạn phải chọn người phỏng vấn',
             'result.required' => 'Bạn phải chọn kết quả.',
         ];
 
@@ -88,7 +85,7 @@ class AdminFirstInterviewResultController extends Controller
 
         $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
         $first_interview_result->proposal_candidate_id = $request->proposal_candidate_id;
-        $first_interview_result->interviewer_id = $request->interviewer_id;
+        $first_interview_result->interviewer_id = Auth::user()->id;
         $first_interview_result->result = $request->result;
         $first_interview_result->save();
 

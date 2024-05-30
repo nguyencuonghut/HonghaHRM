@@ -58,6 +58,7 @@
                             @else
                               <span class="badge badge-danger">{{$initial_interview->result}}</span>
                             @endif
+                            - {{$initial_interview->interviewer->name}}
                         </td>
                         @else
                         <td></td>
@@ -101,7 +102,7 @@
                                                 <div class="col-6">
                                                     <div class="control-group">
                                                         <div class="control-group">
-                                                            <label class="control-label">Điểm</label>
+                                                            <label class="required-field" class="control-label">Điểm</label>
                                                             <div class="controls">
                                                                 <select name="health_score" id="health_score" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
@@ -168,18 +169,7 @@
                                             <hr>
 
                                             <div class="row">
-                                                <div class="col-6">
-                                                    <label class="control-label">Người phỏng vấn</label>
-                                                    <div class="controls">
-                                                        <select name="interviewer_id" id="interviewer_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                            @foreach ($hr_admins as $hr_admin)
-                                                            <option value="{{$hr_admin->id}}" @if ($initial_interview && $hr_admin->id == $initial_interview->interviewer_id) selected="selected" @endif>{{$hr_admin->name}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-6">
+                                                <div class="col-12">
                                                     <div class="control-group">
                                                         <label class="required-field" class="control-label">Kết quả</label>
                                                         <div class="controls">

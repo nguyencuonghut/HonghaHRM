@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\InitialInterview;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
 
 class AdminInitialInterviewController extends Controller
 {
@@ -34,7 +35,6 @@ class AdminInitialInterviewController extends Controller
             'health_score' => 'required',
             'attitude_score' => 'required',
             'stability_score' => 'required',
-            'interviewer_id' => 'required',
             'result' => 'required',
         ];
         $messages = [
@@ -42,7 +42,6 @@ class AdminInitialInterviewController extends Controller
             'health_score.required' => 'Bạn phải chọn điểm sức khỏe',
             'attitude_score.required' => 'Bạn phải chọn điểm thái độ.',
             'stability_score.required' => 'Bạn phải chọn điểm ổn định công việc.',
-            'interviewer_id.required' => 'Bạn phải chọn người đánh giá.',
             'result.required' => 'Bạn phải chọn kết quả.',
         ];
 
@@ -53,7 +52,7 @@ class AdminInitialInterviewController extends Controller
         $initial_interview->health_score = $request->health_score;
         $initial_interview->attitude_score = $request->attitude_score;
         $initial_interview->stability_score = $request->stability_score;
-        $initial_interview->interviewer_id = $request->interviewer_id;
+        $initial_interview->interviewer_id = Auth::user()->id;
         $initial_interview->result = $request->result;
         if ($request->health_comment) {
             $initial_interview->health_comment = $request->health_comment;
@@ -97,7 +96,6 @@ class AdminInitialInterviewController extends Controller
             'health_score' => 'required',
             'attitude_score' => 'required',
             'stability_score' => 'required',
-            'interviewer_id' => 'required',
             'result' => 'required',
         ];
         $messages = [
@@ -105,7 +103,6 @@ class AdminInitialInterviewController extends Controller
             'health_score.required' => 'Bạn phải chọn điểm sức khỏe',
             'attitude_score.required' => 'Bạn phải chọn điểm thái độ.',
             'stability_score.required' => 'Bạn phải chọn điểm ổn định công việc.',
-            'interviewer_id.required' => 'Bạn phải chọn người đánh giá.',
             'result.required' => 'Bạn phải chọn kết quả.',
         ];
 
@@ -116,7 +113,7 @@ class AdminInitialInterviewController extends Controller
         $initial_interview->health_score = $request->health_score;
         $initial_interview->attitude_score = $request->attitude_score;
         $initial_interview->stability_score = $request->stability_score;
-        $initial_interview->interviewer_id = $request->interviewer_id;
+        $initial_interview->interviewer_id = Auth::user()->id;
         $initial_interview->result = $request->result;
         if ($request->health_comment) {
             $initial_interview->health_comment = $request->health_comment;

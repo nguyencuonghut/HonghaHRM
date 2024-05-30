@@ -5,11 +5,11 @@
     @foreach ($proposal->candidates as $candidate)
       @php
         $proposal_candidate = App\Models\ProposalCandidate::where('proposal_id', $proposal->id)->where('candidate_id', $candidate->id)->first();
-        $first_interview_invitation = App\Models\FirstInterviewInvitation::where('proposal_candidate_id', $proposal_candidate->id)->first();
+        $initial_interview = App\Models\InitialInterview::where('proposal_candidate_id', $proposal_candidate->id)->first();
         $first_interview_details = App\Models\FirstInterviewDetail::where('proposal_candidate_id', $proposal_candidate->id)->get();
       @endphp
-      @if ($first_interview_invitation)
-        @if ('Từ chối' != $first_interview_invitation->feedback)
+      @if ($initial_interview)
+        @if ('Đạt' == $initial_interview->result)
         <div class="card card-secondary">
             <div class="card-header">
                 {{$candidate->name}}
@@ -27,9 +27,9 @@
                             <th>Nội dung phỏng vấn</th>
                             <th>Nhận xét</th>
                             <th>Điểm</th>
-                            @can('create-first-interview-result')
+                            @canany(['create-first-interview-result', 'create-second-interview-invitation'])
                             <th>Thao tác</th>
-                            @endcan
+                            @endcanany
                         </tr>
                     </thead>
                     <tbody>
@@ -48,6 +48,8 @@
                             <td>{{$first_interview_detail->score}}</td>
                             @can('create-first-interview-result')
                             <td>{!! $action !!}</td>
+                            @else
+                            <td></td>
                             @endcan
 
                             <!-- Modals for edit first_interview_detail -->
@@ -57,7 +59,7 @@
                                 <div class="modal fade" tabindex="-1" id="edit_first_interview_detail{{$first_interview_detail->id}}">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                            <div class="modal-header">
+                                            <div class="modal-header">Nhân sự
                                                 <h4>Phỏng vấn lần 1: {{$candidate->name}}</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -128,10 +130,12 @@
                             <td colspan="3"><strong>Kết quả: </strong>  <span class="badge @if ("Đạt" == $first_interview_result->result) badge-success @else badge-danger @endif">{{$first_interview_result->result}}</span> - phỏng vấn bởi {{$first_interview_result->interviewer->name}}</td>
                             @can('create-first-interview-result')
                             <td>{!! $action !!}</td>
+                            @else
+                            <td></td>
                             @endcan
                             @elseif ($first_interview_details->count())
-                            <td colspan="3"><strong>Kết quả</strong></td>
                             @can('create-first-interview-result')
+                            <td colspan="3"><strong>Kết quả</strong></td>
                             <td>{!! $action !!}</td>
                             @endcan
                             @endif
@@ -151,18 +155,7 @@
                                             <div class="modal-body">
                                                 <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <label class="control-label">Người phỏng vấn</label>
-                                                        <div class="controls">
-                                                            <select name="interviewer_id" id="interviewer_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                @foreach ($manager_admins as $manager_admin)
-                                                                <option value="{{$manager_admin->id}}">{{$manager_admin->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <div class="control-group">
                                                             <div class="control-group">
                                                                 <label class="control-label">Kết quả</label>
@@ -205,18 +198,7 @@
                                             <div class="modal-body">
                                                 <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">
                                                 <div class="row">
-                                                    <div class="col-6">
-                                                        <label class="control-label">Người phỏng vấn</label>
-                                                        <div class="controls">
-                                                            <select name="interviewer_id" id="interviewer_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                @foreach ($manager_admins as $manager_admin)
-                                                                <option value="{{$manager_admin->id}}" @if ($first_interview_result && $manager_admin->id == $first_interview_result->interviewer_id) selected="selected"@endif>{{$manager_admin->name}}</option>
-                                                                @endforeach
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-6">
+                                                    <div class="col-12">
                                                         <div class="control-group">
                                                             <div class="control-group">
                                                                 <label class="control-label">Kết quả</label>
@@ -249,18 +231,17 @@
                           @endphp
                           @if ($first_interview_result)
                             @if ('Đạt' == $first_interview_result->result)
-                            <tr>
+                              <tr>
                                 @if ($second_interview_invitation)
                                     @php
                                     $action = '<a href="' . route('admin.recruitment.second_interview_invitation.add', $proposal_candidate->id). '" class="btn btn-success btn-sm"><i class="fas fa-paper-plane"></i></a>';
                                     $action .= '&nbsp';
                                     $action .='<a href="'. route('admin.recruitment.second_interview_invitation.feedback', $proposal_candidate->id) . '" class="btn btn-success btn-sm"><i class="fas fa-reply"></i></a>';
                                     @endphp
-                                <td colspan="3">
+                                  <td colspan="3">
                                     <strong>Mời phỏng vấn:</strong> <br>
                                     @if ($second_interview_invitation)
-                                        - {{date('d/m/Y H:i', strtotime($second_interview_invitation->interview_time))}}
-                                        , tại {{$second_interview_invitation->interview_location}}
+                                        - {{date('d/m/Y H:i', strtotime($second_interview_invitation->interview_time))}}, tại {{$second_interview_invitation->interview_location}}
                                         <br>
                                         @if ('Đồng ý' == $second_interview_invitation->feedback)
                                         -
@@ -281,21 +262,24 @@
                                         {{$second_interview_invitation->note}}
                                     @else
                                     @endif
-                                </td>
-                                @can('create-first-interview-result')
-                                <td>{!! $action !!}</td>
-                                @endcan
+                                  </td>
+                                  @can('create-second-interview-invitation')
+                                    <td>{!! $action !!}</td>
+                                  @else
+                                    <td></td>
+                                  @endcan
                                 @else
                                     @php
                                         $action = '<a href="' . route('admin.recruitment.second_interview_invitation.add', $proposal_candidate->id). '" class="btn btn-success btn-sm"><i class="fas fa-paper-plane"></i></a>';
                                     @endphp
-                                <td colspan="3"><strong>Mời phỏng vấn:</strong>
-                                </td>
-                                @can('create-first-interview-result')
-                                <td>{!! $action !!}</td>
-                                @endcan
+                                  @can('create-second-interview-invitation')
+                                  <td colspan="3">
+                                    <strong>Mời phỏng vấn:</strong>
+                                  </td>
+                                    <td>{!! $action !!}</td>
+                                  @endcan
                                 @endif
-                            </tr>
+                              </tr>
                             @endif
                           @endif
                         @else

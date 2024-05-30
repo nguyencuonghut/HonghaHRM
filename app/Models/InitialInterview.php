@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class InitialInterview extends Model
 {
@@ -11,14 +12,19 @@ class InitialInterview extends Model
 
     protected $fillable = [
                             'proposal_candidate_id',
-                            'reviewer_id',
                             'health_comment',
                             'health_score',
                             'attitude_comment',
                             'attitude_score',
                             'stability_comment',
+                            'interviewer_id',
                             'stability_score',
                             'total_score',
                             'result',
                         ];
+
+    public function interviewer(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class);
+    }
 }
