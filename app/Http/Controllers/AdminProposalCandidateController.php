@@ -60,7 +60,7 @@ class AdminProposalCandidateController extends Controller
             !file_exists($path) && mkdir($path, 0777, true);
 
             $file = $request->file('cv_file');
-            $name = str_replace(' ', '_', $file->getClientOriginalName());
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
             $file->move($path, $name);
 
             $proposal_candidate->cv_file = $path . '/' . $name;
@@ -122,7 +122,7 @@ class AdminProposalCandidateController extends Controller
             !file_exists($path) && mkdir($path, 0777, true);
 
             $file = $request->file('cv_file');
-            $name = str_replace(' ', '_', $file->getClientOriginalName());
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
             $file->move($path, $name);
 
             $proposal_candidate->cv_file = $path . '/' . $name;

@@ -78,7 +78,7 @@ class AdminUserController extends Controller
             !file_exists($path) && mkdir($path, 0777, true);
 
             $file = $request->file('img_path');
-            $name = str_replace(' ', '_', $file->getClientOriginalName());
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
             $file->move($path, $name);
 
             $user->img_path = $path . '/' . $name;
