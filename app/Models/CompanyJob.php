@@ -9,7 +9,7 @@ class CompanyJob extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'department_id', 'division_id'];
+    protected $fillable = ['name', 'department_id', 'division_id', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'];
 
     public function department()
     {

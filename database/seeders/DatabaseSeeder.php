@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             ProvincesTableSeeder::class,
             DistrictsTableSeeder::class,
             CommunesTableSeeder::class,
-            JobsTableSeeder::class,
+            CompanyJobsTableSeeder::class,
             RecruitmentMethodsTableSeeder::class,
             RecruitmentSocialMediaTableSeeder::class,
             CvReceiveMethodsTableSeeder::class,

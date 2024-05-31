@@ -169,6 +169,15 @@
               </li>
             </ul>
           </li>
+
+          <li class="nav-item">
+            <a href="{{route('admin.company_jobs.index')}}" class="nav-link {{ Request::is('admin/company_jobs*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-tag"></i>
+              <p>
+                Vị trí
+              </p>
+            </a>
+          </li>
           @endauth
         </ul>
       </nav>

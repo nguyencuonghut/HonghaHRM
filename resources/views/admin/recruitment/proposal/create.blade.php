@@ -184,6 +184,46 @@
                                             </div>
                                         </div>
 
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Lương vị trí</label>
+                                                    <div class="controls">
+                                                        <input type="number" class="form-control" name="position_salary" id="position_salary" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Lương năng lực max</label>
+                                                    <div class="controls">
+                                                        <input type="number" class="form-control" name="max_capacity_salary" id="max_capacity_salary" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Phụ cấp vị trí</label>
+                                                    <div class="controls">
+                                                        <input type="number" class="form-control" name="position_allowance" id="position_allowance" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Tiêu chuẩn tuyển dụng</label>
+                                                    <div class="custom-file text-left">
+                                                        <input type="file" name="recruitment_standard_file" accept="application/pdf" class="custom-file-input" id="recruitment_standard_file">
+                                                        <label class="custom-file-label" for="recruitment_standard_file">Chọn file</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -296,6 +336,12 @@
                     }
                 }
             });
+        });
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
     });
 </script>
