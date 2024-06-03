@@ -112,6 +112,12 @@ class AdminOfferController extends Controller
         $request->validate($rules,$messages);
 
         $offer = Offer::where('proposal_candidate_id', $proposal_candidate_id)->first();
+
+        // Check condition before update
+        if ($offer->result) {
+            Alert::toast('Offer đã được duyệt, bạn không có quyền sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $offer->proposal_candidate_id = $request->proposal_candidate_id;
         $offer->current_salary = $request->current_salary;
         $offer->desired_salary = $request->desired_salary;
@@ -135,6 +141,12 @@ class AdminOfferController extends Controller
     public function destroy($proposal_candidate_id)
     {
         $offer = Offer::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        // Check condition before destroy
+        if ($offer->result) {
+            Alert::toast('Offer đã được duyệt, bạn không có quyền xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $offer->destroy($offer->id);
         Alert::toast('Xóa đề xuất thành công!', 'success', 'top-right');
         return redirect()->back();
