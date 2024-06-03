@@ -126,8 +126,8 @@
                               }
                             @endphp
                             @if ($second_interview_result)
-                              @can('create-second-interview-result')
                                 <td colspan="3"><strong>Kết quả: </strong>  <span class="badge @if ("Đạt" == $second_interview_result->result) badge-success @else badge-danger @endif">{{$second_interview_result->result}}</span> - phỏng vấn bởi {{$second_interview_result->interviewer->name}}</td>
+                              @can('create-second-interview-result')
                                 <td>{!! $action !!}</td>
                               @endcan
                             @else
