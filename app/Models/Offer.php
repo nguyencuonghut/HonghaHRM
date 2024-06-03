@@ -12,7 +12,9 @@ class Offer extends Model
 
     protected $fillable = ['current_salary',
                            'desired_salary',
-                           'detail',
+                           'position_salary',
+                           'capacity_salary',
+                           'position_allowance',
                            'note',
                            'feedback',
                            'result',

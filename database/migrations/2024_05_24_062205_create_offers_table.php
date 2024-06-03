@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('current_salary');
             $table->bigInteger('desired_salary');
-            $table->text('detail')->nullable();
+            $table->bigInteger('position_salary');
+            $table->bigInteger('capacity_salary');
+            $table->bigInteger('position_allowance');
             $table->text('note')->nullable();
             $table->enum('feedback', ['Đồng ý', 'Từ chối'])->nullable();
             $table->enum('result', ['Ký HĐLĐ', 'Ký HĐTV', 'Ký HĐHV', 'Không đạt'])->nullable();

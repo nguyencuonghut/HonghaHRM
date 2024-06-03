@@ -30,17 +30,22 @@ class AdminOfferController extends Controller
      */
     public function store(Request $request)
     {
-
         $rules = [
             'proposal_candidate_id' => 'required',
             'current_salary' => 'required',
             'desired_salary' => 'required',
+            'position_salary' => 'required',
+            'capacity_salary' => 'required',
+            'position_allowance' => 'required',
             'feedback' => 'required',
         ];
         $messages = [
             'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
             'current_salary.required' => 'Bạn phải nhập lương hiện tại',
             'desired_salary.required' => 'Bạn phải nhập lương yêu cầu.',
+            'position_salary.required' => 'Bạn phải nhập lương vị trí.',
+            'capacity_salary.required' => 'Bạn phải nhập lương năng lực.',
+            'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
             'feedback.required' => 'Bạn phải nhập phản hồi.',
         ];
 
@@ -50,10 +55,10 @@ class AdminOfferController extends Controller
         $offer->proposal_candidate_id = $request->proposal_candidate_id;
         $offer->current_salary = $request->current_salary;
         $offer->desired_salary = $request->desired_salary;
+        $offer->position_salary = $request->position_salary;
+        $offer->capacity_salary = $request->capacity_salary;
+        $offer->position_allowance = $request->position_allowance;
         $offer->feedback = $request->feedback;
-        if ($request->detail) {
-            $offer->detail = $request->detail;
-        }
         if ($request->offer_note) {
             $offer->note = $request->offer_note;
         }
@@ -89,12 +94,18 @@ class AdminOfferController extends Controller
             'proposal_candidate_id' => 'required',
             'current_salary' => 'required',
             'desired_salary' => 'required',
+            'position_salary' => 'required',
+            'capacity_salary' => 'required',
+            'position_allowance' => 'required',
             'feedback' => 'required',
         ];
         $messages = [
             'proposal_candidate_id.required' => 'Số phiếu đề nghị tuyển dụng không hợp lệ.',
             'current_salary.required' => 'Bạn phải nhập lương hiện tại',
             'desired_salary.required' => 'Bạn phải nhập lương yêu cầu.',
+            'position_salary.required' => 'Bạn phải nhập lương vị trí.',
+            'capacity_salary.required' => 'Bạn phải nhập lương năng lực.',
+            'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
             'feedback.required' => 'Bạn phải nhập phản hồi.',
         ];
 
@@ -104,10 +115,10 @@ class AdminOfferController extends Controller
         $offer->proposal_candidate_id = $request->proposal_candidate_id;
         $offer->current_salary = $request->current_salary;
         $offer->desired_salary = $request->desired_salary;
+        $offer->position_salary = $request->position_salary;
+        $offer->capacity_salary = $request->capacity_salary;
+        $offer->position_allowance = $request->position_allowance;
         $offer->feedback = $request->feedback;
-        if ($request->detail) {
-            $offer->detail = $request->detail;
-        }
         if ($request->offer_note) {
             $offer->note = $request->offer_note;
         }
