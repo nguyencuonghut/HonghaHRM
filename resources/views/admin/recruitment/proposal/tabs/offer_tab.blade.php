@@ -69,7 +69,7 @@
                                 <span class="badge @if ("Đồng ý" == $offer->feedback) badge-success @else badge-danger @endif">{{$offer->feedback}}</span>
                             </td>
                             @if ($offer->result)
-                            <td>{{$offer->result}}, bởi {{$offer->approver->name}}</td>
+                            <td><span class="badge @if ("Không đạt" == $offer->result) badge-danger @else badge-success @endif">{{$offer->result}}</span> <br> bởi {{$offer->approver->name}}</td>
                             @else
                             <td></td>
                             @endif
@@ -211,6 +211,8 @@
                             <!-- /.modal -->
                           </tr>
                         @else
+                        <td></td>
+                        <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
