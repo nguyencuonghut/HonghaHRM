@@ -79,9 +79,17 @@
           </li>
           <li class="nav-item">
             <a href="{{route('admin.recruitment.candidates.index')}}" class="nav-link {{ Request::is('admin/recruitment.candidates*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon fas fa-user-check"></i>
               <p>
                 Ứng viên
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="{{route('admin.employees.index')}}" class="nav-link {{ Request::is('admin/employees*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-users"></i>
+              <p>
+                Hồ sơ nhân sự
               </p>
             </a>
           </li>

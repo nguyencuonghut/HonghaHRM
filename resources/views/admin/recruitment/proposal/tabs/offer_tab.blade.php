@@ -48,14 +48,14 @@
                                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                             $action_approve_offer = '<a href="#approve_offer{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approve_offer' . $proposal_candidate->id. '"><i class="fas fa-check"></i></a>';
+
+                            $action_create_employee = '<a href="#creat_employee{{' . $proposal_candidate->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#create_employee' . $proposal_candidate->id. '"><i class="fas fa-check"></i></a>';
                             $action = '';
                             if (Auth::user()->can('create-offer')) {
                                 $action = $action . $action_create_offer;
-
                             }
                             if (Auth::user()->can('approve-offer')) {
                                 $action = $action . $action_approve_offer;
-
                             }
                           @endphp
                           <tr>

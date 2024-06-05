@@ -30,6 +30,7 @@ use App\Http\Controllers\AdminSecondInterviewDetailController;
 use App\Http\Controllers\AdminSecondInterviewResultController;
 use App\Http\Controllers\AdminOfferController;
 use App\Http\Controllers\AdminCalendarController;
+use App\Http\Controllers\AdminEmployeeController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -137,6 +138,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/offer', AdminOfferController::class, ['names' => 'recruitment.offer']);
 
         Route::get('calendars', [AdminCalendarController::class, 'index'])->name('calendars.index');
+
+        Route::get('employees/data', [AdminEmployeeController::class, 'anyData'])->name('employees.data');
+        Route::resource('employees', AdminEmployeeController::class, ['names' => 'employees']);
     });
 });
 
