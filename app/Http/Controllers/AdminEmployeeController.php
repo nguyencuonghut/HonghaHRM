@@ -296,7 +296,7 @@ class AdminEmployeeController extends Controller
                     $email .= $employees->private_email;
                 }
                 if ($employees->company_email) {
-                    $email .= '<br>' . $employees->company_email;
+                    $email .= ',<br>' . ' ' . $employees->company_email;
                 }
                 return $email;
             })

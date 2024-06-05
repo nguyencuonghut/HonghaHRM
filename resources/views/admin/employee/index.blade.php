@@ -503,14 +503,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                  columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
 
             },
@@ -518,28 +518,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                  columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                  columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                  columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                  columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             }
         ],
