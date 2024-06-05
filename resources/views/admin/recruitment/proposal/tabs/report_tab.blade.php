@@ -57,7 +57,7 @@
                               </small>
                             </i>
                             <br>
-                            <i class="fas fa-dollar-sign"><small> {{number_format($offer->position_salary + $offer->capacity_salary + $offer->position_allowance, 0, '.', ',')}}<sup>đ</sup></small></i>
+                            <i class="fas fa-hand-holding-usd"><small> {{number_format($offer->position_salary + $offer->capacity_salary + $offer->position_allowance, 0, '.', ',')}}<sup>đ</sup></small></i>
                         </div>
                     </div>
                 @endif
