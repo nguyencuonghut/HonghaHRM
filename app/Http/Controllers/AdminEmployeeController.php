@@ -148,17 +148,122 @@ class AdminEmployeeController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(employee $employee)
+    public function edit($id)
     {
-        //
+        $communes = Commune::orderBy('name', 'asc')->get();
+        $districts = District::orderBy('name', 'asc')->get();
+        $provinces = Province::orderBy('name', 'asc')->get();
+        $educations = Education::orderBy('name', 'asc')->get();
+        $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
+        $employee = Employee::findOrFail($id);
+        return view('admin.employee.edit',
+                    [
+                        'employee' => $employee,
+                        'communes' => $communes,
+                        'districts' => $districts,
+                        'provinces' => $provinces,
+                        'educations' => $educations,
+                        'company_jobs' => $company_jobs,
+                    ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, employee $employee)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'code' => 'required|unique:employees,code,'.$id,
+            'name' => 'required',
+            'private_email' => 'unique:employees,private_email,'.$id,
+            'name' => 'required',
+            'phone' => 'required',
+            'relative_phone' => 'required',
+            'date_of_birth' => 'required',
+            'cccd' => 'required|unique:employees,cccd,'.$id,
+            'name' => 'required',
+            'issued_date' => 'required',
+            'issued_by' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'commune_id' => 'required',
+            'company_job_id' => 'required',
+            'addmore.*.education_id' => 'required',
+        ];
+        $messages = [
+            'code.required' => 'Bạn phải nhập mã.',
+            'code.unique' => 'Mã đã tồn tại.',
+            'name.required' => 'Bạn phải nhập tên.',
+            'private_email.unique' => 'Email cá nhân đã tồn tại.',
+            'phone.required' => 'Bạn phải nhập số điện thoại.',
+            'relative_phone.required' => 'Bạn phải nhập số điện thoại người thân.',
+            'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
+            'cccd.required' => 'Bạn phải nhập số CCCD.',
+            'cccd.unique' => 'Số CCCD đã tồn tại.',
+            'issued_date.required' => 'Bạn phải nhập ngày cấp.',
+            'issued_by.required' => 'Bạn phải nhập nơi cấp.',
+            'gender.required' => 'Bạn phải chọn giới tính.',
+            'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
+            'commune_id.required' => 'Bạn phải chọn Xã Phường.',
+            'company_job_id.required' => 'Bạn phải chọn vị trí.',
+            'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
+        ];
+        $request->validate($rules,$messages);
+
+        $employee = Employee::findOrFail($id);
+        $employee->code = $request->code;
+        $employee->name = $request->name;
+        if ($request->private_email) {
+            $employee->private_email = $request->private_email;
+        }
+        if ($request->company_email) {
+            $employee->company_email = $request->company_email;
+        }
+        $employee->phone = $request->phone;
+        if ($request->relative_phone) {
+            $employee->relative_phone = $request->relative_phone;
+        }
+        $employee->date_of_birth = Carbon::createFromFormat('d/m/Y', $request->date_of_birth);
+        if ($request->cccd) {
+            $employee->cccd = $request->cccd;
+        }
+        if ($request->issued_date) {
+            $employee->issued_date = Carbon::createFromFormat('d/m/Y', $request->issued_date);
+        }
+        if ($request->issued_by) {
+            $employee->issued_by = $request->issued_by;
+        }
+        $employee->gender = $request->gender;
+        $employee->address = $request->address;
+        $employee->commune_id = $request->commune_id;
+        if ($request->temp_address) {
+            $employee->temporary_address = $request->temp_address;
+        }
+        if ($request->temp_commune_id) {
+            $employee->temporary_commune_id = $request->temp_commune_id;
+        }
+        $employee->company_job_id = $request->company_job_id;
+        $employee->save();
+
+        //Delete all old EmployeeEducation
+        $old_employee_educations = EmployeeEducation::where('employee_id', $employee->id)->get();
+        foreach($old_employee_educations as $item) {
+            $item->destroy($item->id);
+        }
+
+        // Create EmployeeEducation
+        foreach ($request->addmore as $item) {
+            $employee_education = new EmployeeEducation();
+            $employee_education->employee_id = $employee->id;
+            $employee_education->education_id = $item['education_id'];
+            if ($item['major']) {
+                $employee_education->major = $item['major'];
+            }
+            $employee_education->save();
+        }
+
+        Alert::toast('Sửa nhân sự mới thành công!', 'success', 'top-right');
+        return redirect()->route('admin.employees.index');
     }
 
     /**
