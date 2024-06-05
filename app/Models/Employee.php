@@ -12,7 +12,9 @@ class Employee extends Model
     use HasFactory;
 
     protected $fillable = [
+        'code',
         'name',
+        'img_path',
         'private_email',
         'company_email',
         'phone',

@@ -63,7 +63,7 @@
                 </table>
 
                 <!-- Modals for create employee -->
-                <form class="form-horizontal" method="post" action="{{ route('admin.employees.store') }}" name="make_employee" id="make_employee" novalidate="novalidate">
+                <form class="form-horizontal" method="post" action="{{ route('admin.employees.store') }}" enctype="multipart/form-data" name="make_employee" id="make_employee" novalidate="novalidate">
                     {{ csrf_field() }}
                     <div class="modal fade" id="create_employee">
                         <div class="modal-dialog modal-lg">
@@ -245,6 +245,17 @@
                                                         <option value="{{$company_job->id}}">{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
                                                         @endforeach
                                                     </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">Ảnh</label>
+                                                <div class="custom-file text-left">
+                                                    <input type="file" name="img_path" accept="image/*" class="custom-file-input" id="img_path">
+                                                    <label class="custom-file-label" for="img_path">Chọn file</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -471,6 +482,11 @@
         //Initialize Select2 Elements
         $('.select2').select2({
          theme: 'bootstrap4'
+        });
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
 
         //Date picker

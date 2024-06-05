@@ -54,6 +54,7 @@ class AdminEmployeeController extends Controller
         $rules = [
             'code' => 'required|unique:employees',
             'name' => 'required',
+            'img_path' => 'required',
             'private_email' => 'unique:employees',
             'phone' => 'required',
             'relative_phone' => 'required',
@@ -71,6 +72,7 @@ class AdminEmployeeController extends Controller
             'code.required' => 'Bạn phải nhập mã.',
             'code.unique' => 'Mã đã tồn tại.',
             'name.required' => 'Bạn phải nhập tên.',
+            'img_path.required' => 'Bạn phải chọn ảnh.',
             'private_email.unique' => 'Email cá nhân đã tồn tại.',
             'phone.required' => 'Bạn phải nhập số điện thoại.',
             'relative_phone.required' => 'Bạn phải nhập số điện thoại người thân.',
@@ -90,6 +92,17 @@ class AdminEmployeeController extends Controller
         $employee = new Employee();
         $employee->code = $request->code;
         $employee->name = $request->name;
+        if ($request->hasFile('img_path')) {
+            $path = 'dist/employee_img';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('img_path');
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $employee->img_path = $path . '/' . $name;
+        }
         if ($request->private_email) {
             $employee->private_email = $request->private_email;
         }
@@ -213,6 +226,17 @@ class AdminEmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         $employee->code = $request->code;
         $employee->name = $request->name;
+        if ($request->hasFile('img_path')) {
+            $path = 'dist/employee_img';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('img_path');
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $employee->img_path = $path . '/' . $name;
+        }
         if ($request->private_email) {
             $employee->private_email = $request->private_email;
         }

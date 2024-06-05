@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name');
+            $table->string('img_path');
             $table->string('private_email')->nullable()->unique();
             $table->string('company_email')->nullable()->unique();
             $table->string('phone');

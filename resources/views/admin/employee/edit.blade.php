@@ -38,7 +38,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form class="form-horizontal" method="post" action="{{ route('admin.employees.update', $employee->id) }}" name="edit_employee" id="edit_employee" novalidate="novalidate">
+                        <form class="form-horizontal" method="post" action="{{ route('admin.employees.update', $employee->id) }}" enctype="multipart/form-data" name="edit_employee" id="edit_employee" novalidate="novalidate">
                             {{ csrf_field() }}
                             @method('PATCH')
                             <div class="card-body">
@@ -211,6 +211,18 @@
                                                     <option value="{{$company_job->id}}" @if ($company_job->id == $employee->company_job_id) selected @endif>{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="control-label">Ảnh</label>
+                                            <div class="custom-file text-left">
+                                                <input type="file" name="img_path" accept="image/*" class="custom-file-input" id="img_path">
+                                                <label class="custom-file-label" for="img_path">Chọn file</label>
                                             </div>
                                         </div>
                                     </div>
