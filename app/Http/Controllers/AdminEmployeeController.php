@@ -153,9 +153,10 @@ class AdminEmployeeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(employee $employee)
+    public function show($id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        return view('admin.employee.show', ['employee' => $employee]);
     }
 
     /**
