@@ -98,6 +98,11 @@ class AdminCompanyJobController extends Controller
      */
     public function edit($id)
     {
+        if (!Auth::user()->can('create-company-job')) {
+            Alert::toast('Bạn không có quyền sửa vị trí này!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $departments = Department::all();
         $divisions = Division::all();
         $company_job = CompanyJob::findOrFail($id);
@@ -163,6 +168,10 @@ class AdminCompanyJobController extends Controller
      */
     public function destroy($id)
     {
+        if (!Auth::user()->can('create-company-job')) {
+            Alert::toast('Bạn không có quyền xóa vị trí này!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $company_job = CompanyJob::findOrFail($id);
         $company_job->destroy($company_job->id);
         Alert::toast('Xóa vị trí thành công!', 'success', 'top-right');
