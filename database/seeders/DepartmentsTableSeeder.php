@@ -20,8 +20,8 @@ class DepartmentsTableSeeder extends Seeder
             0 =>
                 array (
                     'id' => 1,
-                    'code' => 'GĐ',
-                    'name' => 'Ban Giám Đốc',
+                    'code' => 'LĐ',
+                    'name' => 'Ban Lãnh Đạo',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -101,7 +101,7 @@ class DepartmentsTableSeeder extends Seeder
                 array (
                     'id' => 11,
                     'code' => 'CL',
-                    'name' => 'Phòng Chất Lượng',
+                    'name' => 'Phòng Quản Lý Chất Lượng',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -110,6 +110,30 @@ class DepartmentsTableSeeder extends Seeder
                     'id' => 12,
                     'code' => 'PT',
                     'name' => 'Phòng Trại',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            12 =>
+                array (
+                    'id' => 13,
+                    'code' => 'DA',
+                    'name' => 'Ban Dự Án',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            13 =>
+                array (
+                    'id' => 14,
+                    'code' => 'PC',
+                    'name' => 'Ban Pháp Chế',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            14 =>
+                array (
+                    'id' => 15,
+                    'code' => 'KT',
+                    'name' => 'Phòng Kỹ Thuật',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),

@@ -56,9 +56,9 @@ class DivisionsTableSeeder extends Seeder
             4 =>
                 array (
                     'id' => 5,
-                    'code' => 'CNKT',
-                    'name' => 'Công nhân kỹ thuật',
-                    'department_id' => 8,
+                    'code' => 'PTN',
+                    'name' => 'Phòng thí nghiệm',
+                    'department_id' => 11,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -104,6 +104,78 @@ class DivisionsTableSeeder extends Seeder
                     'code' => 'TTY',
                     'name' => 'Thuốc thú y',
                     'department_id' => 8,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            10 =>
+                array (
+                    'id' => 11,
+                    'code' => 'SXGSGC',
+                    'name' => 'SX gia súc gia cầm',
+                    'department_id' => 6,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            11 =>
+                array (
+                    'id' => 12,
+                    'code' => 'SXTS',
+                    'name' => 'SX thủy sản',
+                    'department_id' => 6,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            12 =>
+                array (
+                    'id' => 13,
+                    'code' => 'BH',
+                    'name' => 'Bán hàng',
+                    'department_id' => 4,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            13 =>
+                array (
+                    'id' => 14,
+                    'code' => 'CAN',
+                    'name' => 'Cân',
+                    'department_id' => 4,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            14 =>
+                array (
+                    'id' => 15,
+                    'code' => 'TV',
+                    'name' => 'Tạp vụ',
+                    'department_id' => 4,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            15 =>
+                array (
+                    'id' => 16,
+                    'code' => 'NA',
+                    'name' => 'Nấu ăn',
+                    'department_id' => 4,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            16 =>
+                array (
+                    'id' => 17,
+                    'code' => 'NL',
+                    'name' => 'Nguyên liệu',
+                    'department_id' => 7,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            18 =>
+                array (
+                    'id' => 19,
+                    'code' => 'TR',
+                    'name' => 'Trồng rau',
+                    'department_id' => 7,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
