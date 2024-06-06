@@ -96,7 +96,6 @@
 
 <script>
     var can_view_salary =  {{ Js::from($can_view_salary) }};
-    console.log(can_view_salary);
 
     $(function () {
       if (can_view_salary) {
