@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 class AuthServiceProvider extends ServiceProvider
 {
     public static $permissions = [
+        'create-admin' => ['Admin'],
         'create-propose' => ['Admin', 'Trưởng đơn vị'],
         'filter-candidate' => ['Admin', 'Nhân sự'],
         'initial-interview' => ['Admin', 'Nhân sự'],
