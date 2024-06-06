@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Offer;
+use App\Models\ProposalCandidate;
+use App\Models\RecruitmentProposal;
+use App\Models\CompanyJob;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
@@ -51,11 +54,19 @@ class AdminOfferController extends Controller
 
         $request->validate($rules,$messages);
 
+        $proposal_candidate = ProposalCandidate::findOrFail($request->proposal_candidate_id);
+        $proposal = RecruitmentProposal::findOrFail($proposal_candidate->proposal_id);
+        $company_job = CompanyJob::findOrFail($proposal->company_job_id);
+
         $offer = new Offer();
         $offer->proposal_candidate_id = $request->proposal_candidate_id;
         $offer->current_salary = $request->current_salary;
         $offer->desired_salary = $request->desired_salary;
         $offer->position_salary = $request->position_salary;
+        if ($company_job->max_capacity_salary < $request->capacity_salary) {
+            Alert::toast('Lương năng lực vượt quá giới hạn!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $offer->capacity_salary = $request->capacity_salary;
         $offer->position_allowance = $request->position_allowance;
         $offer->feedback = $request->feedback;
