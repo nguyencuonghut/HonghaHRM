@@ -48,8 +48,8 @@
             </a>
           </li>
 
-          <li class="nav-item">
-            <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link">
+          <li class="nav-item {{ Request::is('admin/recruitment*') ? 'menu-open' : '' }}">
+            <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link {{ Request::is('admin/recruitment*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-search-location"></i>
               <p>
                 Tuyển dụng
@@ -58,27 +58,27 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link {{ Request::is('admin/recruitment/proposals') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Yêu cầu</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Kế hoạch</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Thông báo</p>
                 </a>
               </li>
             </ul>
           </li>
           <li class="nav-item">
-            <a href="{{route('admin.recruitment.candidates.index')}}" class="nav-link {{ Request::is('admin/recruitment.candidates*') ? 'active' : '' }}">
+            <a href="{{route('admin.recruitment.candidates.index')}}" class="nav-link {{ Request::is('admin/recruitment/candidates*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-user-check"></i>
               <p>
                 Ứng viên
@@ -148,7 +148,7 @@
               </p>
             </a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item {{ (Request::is('admin/departments*') || Request::is('admin/divisions*') || Request::is('admin/positions*')) ? 'menu-open' : '' }}">
             <a href="#" class="nav-link {{ Request::is('admin/departments*') || Request::is('admin/divisions*') || Request::is('admin/positions*')? 'active' : '' }}">
               <i class="nav-icon fas fa-sitemap"></i>
               <p>
@@ -158,20 +158,20 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('admin.departments.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="{{route('admin.departments.index')}}" class="nav-link {{ Request::is('admin/departments*') ? 'active' : '' }}">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Phòng ban</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('admin.divisions.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="{{route('admin.divisions.index')}}" class="nav-link {{ Request::is('admin/divisions*') ? 'active' : '' }}">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Bộ phận</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('admin.positions.index')}}" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="{{route('admin.positions.index')}}" class="nav-link {{ Request::is('admin/positions*') ? 'active' : '' }}">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Chức vụ</p>
                 </a>
               </li>
