@@ -48,7 +48,7 @@
                             <td>{{$first_interview_detail->score}}</td>
                             @can('create-first-interview-result')
                             <td>{!! $action !!}</td>
-                            @else
+                            @elsecan('create-second-interview-invitation')
                             <td></td>
                             @endcan
 
@@ -59,7 +59,7 @@
                                 <div class="modal fade" tabindex="-1" id="edit_first_interview_detail{{$first_interview_detail->id}}">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
-                                            <div class="modal-header">Nhân sự
+                                            <div class="modal-header">
                                                 <h4>Phỏng vấn lần 1: {{$candidate->name}}</h4>
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -130,13 +130,15 @@
                             <td colspan="3"><strong>Kết quả: </strong>  <span class="badge @if ("Đạt" == $first_interview_result->result) badge-success @else badge-danger @endif">{{$first_interview_result->result}}</span> - phỏng vấn bởi {{$first_interview_result->interviewer->name}}</td>
                             @can('create-first-interview-result')
                             <td>{!! $action !!}</td>
-                            @else
+                            @elsecan('create-second-interview-invitation')
                             <td></td>
                             @endcan
                             @elseif ($first_interview_details->count())
-                            @can('create-first-interview-result')
                             <td colspan="3"><strong>Kết quả</strong></td>
+                            @can('create-first-interview-result')
                             <td>{!! $action !!}</td>
+                            @elsecan('create-second-interview-invitation')
+                            <td></td>
                             @endcan
                             @endif
 
@@ -264,19 +266,21 @@
                                     @endif
                                   </td>
                                   @can('create-second-interview-invitation')
-                                    <td>{!! $action !!}</td>
-                                  @else
-                                    <td></td>
+                                  <td>{!! $action !!}</td>
+                                  @elsecan('create-first-interview-result')
+                                  <td></td>
                                   @endcan
                                 @else
                                     @php
                                         $action = '<a href="' . route('admin.recruitment.second_interview_invitation.add', $proposal_candidate->id). '" class="btn btn-success btn-sm"><i class="fas fa-paper-plane"></i></a>';
                                     @endphp
-                                  @can('create-second-interview-invitation')
                                   <td colspan="3">
                                     <strong>Mời phỏng vấn:</strong>
                                   </td>
-                                    <td>{!! $action !!}</td>
+                                  @can('create-second-interview-invitation')
+                                  <td>{!! $action !!}</td>
+                                  @elsecan('create-first-interview-result')
+                                  <td></td>
                                   @endcan
                                 @endif
                               </tr>
