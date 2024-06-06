@@ -233,7 +233,7 @@
                                                 <div class="control-group">
                                                     <label class="required-field" class="control-label">Thuộc phòng</label>
                                                     <div class="controls">
-                                                        <select name="department_id" id="department_id" data-placeholder="Chọn bộ phận" class="form-control select2" style="width: 100%;">
+                                                        <select name="department_id" id="department_id" data-placeholder="Chọn phòng/ban" class="form-control select2" style="width: 100%;">
                                                             @foreach($departments as $key => $value)
                                                                 <option value="{{$key}}">{{$value}}</option>
                                                             @endforeach

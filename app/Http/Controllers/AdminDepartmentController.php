@@ -24,7 +24,7 @@ class AdminDepartmentController extends Controller
      */
     public function create()
     {
-        return "Thêm phòng/ban";
+        return view('admin.department.create');
     }
 
     /**
@@ -51,7 +51,7 @@ class AdminDepartmentController extends Controller
         $department->save();
 
         Alert::toast('Thêm phòng ban mới thành công!', 'success', 'top-right');
-        return redirect()->back();
+        return redirect()->route('admin.departments.index');
     }
 
     /**
@@ -65,25 +65,61 @@ class AdminDepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        $department = Department::findOrFail($id);
+
+        return view('admin.department.edit', ['department' => $department]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'code' => 'required|unique:departments,code,'.$id,
+            'name' => 'required|max:255',
+        ];
+        $messages = [
+            'code.required' => 'Bạn phải nhập mã.',
+            'code.unique' => 'Mã đã tồn tại.',
+            'name.required' => 'Bạn phải nhập tên.',
+            'name.max' => 'Tên dài quá 255 ký tự.',
+        ];
+        $request->validate($rules,$messages);
+
+        //Edit Department
+        $department = Department::findOrFail($id);
+        $department->name = $request->name;
+        $department->code = $request->code;
+        $department->save();
+
+        Alert::toast('Sửa phòng ban thành công!', 'success', 'top-right');
+        return redirect()->route('admin.departments.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $department = Department::findOrFail($id);
+
+        // Check condition before delete
+        if ($department->divisions->count()) {
+            Alert::toast('Phòng/ban đang chứa các bộ phận. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('admin.departments.index');
+        }
+        $company_jobs = CompanyJob::where('department_id', $department->id)->get();
+        if ($company_jobs->count()) {
+            Alert::toast('Phòng/ban đang chứa nhân viên. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('admin.departments.index');
+        }
+        $department->destroy($id);
+
+        Alert::toast('Xóa phòng ban thành công!', 'success', 'top-right');
+        return redirect()->route('admin.departments.index');
     }
 
     public function anyData()

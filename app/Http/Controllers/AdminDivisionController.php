@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanyJob;
+use App\Models\Department;
 use App\Models\Division;
 use Datatables;
 use Illuminate\Http\Request;
@@ -23,7 +24,8 @@ class AdminDivisionController extends Controller
      */
     public function create()
     {
-        //
+        $departments = Department::all();
+        return view ('admin.division.create', ['departments' => $departments]);
     }
 
     /**
@@ -53,7 +55,7 @@ class AdminDivisionController extends Controller
         $division->save();
 
         Alert::toast('Thêm bộ phận mới thành công!', 'success', 'top-right');
-        return redirect()->back();
+        return redirect()->route('admin.divisions.index');
     }
 
     /**
@@ -67,25 +69,58 @@ class AdminDivisionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Division $division)
+    public function edit($id)
     {
-        //
+        $departments = Department::all();
+        $division = Division::findOrFail($id);
+        return view ('admin.division.edit', ['departments' => $departments, 'division' => $division]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Division $division)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'code' => 'required|unique:divisions,code,'.$id,
+            'name' => 'required|max:255',
+            'department_id' => 'required',
+        ];
+        $messages = [
+            'code.required' => 'Bạn phải nhập mã.',
+            'code.unique' => 'Mã đã tồn tại.',
+            'name.required' => 'Bạn phải nhập tên.',
+            'name.max' => 'Tên dài quá 255 ký tự.',
+            'department_id.required' => 'Bạn chọn phòng.',
+        ];
+        $request->validate($rules,$messages);
+
+        //Edit Division
+        $division = Division::findOrFail($id);
+        $division->name = $request->name;
+        $division->code = $request->code;
+        $division->department_id = $request->department_id;
+        $division->save();
+
+        Alert::toast('Sửa bộ phận thành công!', 'success', 'top-right');
+        return redirect()->route('admin.divisions.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Division $division)
+    public function destroy($id)
     {
-        //
+        $division = Division::findOrFail($id);
+        // Check condition before delete
+        $company_jobs = CompanyJob::where('division_id', $division->id)->get();
+        if ($company_jobs->count()) {
+            Alert::toast('Bộ phận đang có chứa vị trí công việc. Không thể xóa!', 'error', 'top-right');
+            return redirect()->route('admin.divisions.index');
+        }
+        $division->destroy($id);
+        Alert::toast('Xóa phòng ban thành công!', 'success', 'top-right');
+        return redirect()->route('admin.departments.index');
     }
 
     public function anyData()
