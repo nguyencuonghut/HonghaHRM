@@ -6,6 +6,8 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <!-- Summernote -->
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
 @endpush
@@ -270,6 +272,15 @@
                                     </div>
                                 </div>
 
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="required-field" class="control-label">Kinh nghiệm</label>
+                                        <textarea id="experience" name="experience">
+                                            {{$employee->experience}}
+                                        </textarea>
+                                    </div>
+                                </div>
+
                                 <div class="control-group">
                                     <div class="controls">
                                         <input type="submit" value="Sửa" class="btn btn-success">
@@ -428,6 +439,8 @@
 <!-- Select2 -->
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+<!-- Summernote -->
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 
@@ -452,6 +465,20 @@
         $('#issued_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
+
+        // Summernote
+        $("#experience").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
+        $('#experience').summernote({
+            height: 90,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        })
 
         var i = 100;
         $("#add_education").click(function(){

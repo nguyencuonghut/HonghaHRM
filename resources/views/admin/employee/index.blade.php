@@ -9,6 +9,8 @@
   <!-- Select2 -->
   <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+  <!-- Summernote -->
+  <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
 @endpush
@@ -289,6 +291,14 @@
                                             </table>
                                         </div>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <label class="required-field" class="control-label">Kinh nghiệm</label>
+                                            <textarea id="experience" name="experience">
+                                            </textarea>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -466,6 +476,8 @@
 <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
 <!-- Select2 -->
 <script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+<!-- Summernote -->
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
@@ -496,6 +508,21 @@
         $('#issued_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
+
+        // Summernote
+        $("#experience").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
+        $('#experience').summernote({
+            height: 90,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        })
+
 
         var i = 0;
         $("#add_education").click(function(){

@@ -67,6 +67,7 @@ class AdminEmployeeController extends Controller
             'commune_id' => 'required',
             'company_job_id' => 'required',
             'addmore.*.education_id' => 'required',
+            'experience' => 'required',
         ];
         $messages = [
             'code.required' => 'Bạn phải nhập mã.',
@@ -86,6 +87,7 @@ class AdminEmployeeController extends Controller
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
+            'experience.required' => 'Bạn phải nhập kinh nghiệm.',
         ];
         $request->validate($rules,$messages);
 
@@ -133,6 +135,7 @@ class AdminEmployeeController extends Controller
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
         $employee->company_job_id = $request->company_job_id;
+        $employee->experience = $request->experience;
         $employee->save();
 
         // Create EmployeeEducation
@@ -203,6 +206,7 @@ class AdminEmployeeController extends Controller
             'commune_id' => 'required',
             'company_job_id' => 'required',
             'addmore.*.education_id' => 'required',
+            'experience' => 'required',
         ];
         $messages = [
             'code.required' => 'Bạn phải nhập mã.',
@@ -221,6 +225,7 @@ class AdminEmployeeController extends Controller
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
+            'experience.required' => 'Bạn phải nhập kinh nghiệm.',
         ];
         $request->validate($rules,$messages);
 
@@ -268,6 +273,7 @@ class AdminEmployeeController extends Controller
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
         $employee->company_job_id = $request->company_job_id;
+        $employee->experience = $request->experience;
         $employee->save();
 
         //Delete all old EmployeeEducation

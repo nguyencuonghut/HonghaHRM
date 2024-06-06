@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('temporary_address')->nullable();
             $table->foreignId('temporary_commune_id')->nullable()->constrained('communes');
             $table->foreignId('company_job_id')->constrained('company_jobs');
+            $table->text('experience');
             $table->timestamps();
         });
     }
