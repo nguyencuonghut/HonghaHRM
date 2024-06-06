@@ -45,7 +45,9 @@
                   <tr>
                     <th>STT</th>
                     <th>Mã</th>
-                    <th>Tên</th>
+                    <th>Phòng/ban</th>
+                    <th>Tổ/Bộ phận</th>
+                    <th>Vị trí</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
                   </thead>
@@ -94,14 +96,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
 
             },
@@ -109,28 +111,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2]
+                    columns: [0,1,2,3]
                 }
             }
         ],
@@ -140,6 +142,8 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
+            {data: 'divisions', name: 'divisions'},
+            {data: 'company_job_lists', name: 'company_job_lists'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#departments-table_wrapper .col-md-6:eq(0)');

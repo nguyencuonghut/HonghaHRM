@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyJob;
 use App\Models\Division;
 use Datatables;
 use Illuminate\Http\Request;
@@ -89,7 +90,7 @@ class AdminDivisionController extends Controller
 
     public function anyData()
     {
-        $divisions = Division::with('department')->select(['id', 'code', 'name', 'department_id'])->get();
+        $divisions = Division::with('department')->orderBy('department_id', 'asc')->select(['id', 'code', 'name', 'department_id'])->get();
         return Datatables::of($divisions)
             ->addIndexColumn()
             ->editColumn('code', function ($divisions) {
@@ -101,6 +102,20 @@ class AdminDivisionController extends Controller
             ->editColumn('department_id', function ($divisions) {
                 return $divisions->department->name;
             })
+            ->editColumn('company_job_lists', function ($divisions) {
+                $company_jobs = CompanyJob::where('division_id', $divisions->id)->orderBy('name')->get();
+                $i = 0;
+                $length = count($company_jobs);
+                $company_job_lists = '';
+                foreach ($company_jobs as $company_job) {
+                    if(++$i === $length) {
+                        $company_job_lists =  $company_job_lists . $company_job->name;
+                    } else {
+                        $company_job_lists = $company_job_lists . $company_job->name . '<br>';
+                    }
+                }
+                return $company_job_lists;
+            })
             ->addColumn('actions', function ($divisions) {
                 $action = '<a href="' . route("admin.divisions.edit", $divisions->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                            <form style="display:inline" action="'. route("admin.divisions.destroy", $divisions->id) . '" method="POST">
@@ -109,7 +124,7 @@ class AdminDivisionController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'company_job_lists'])
             ->make(true);
     }
 }

@@ -47,6 +47,7 @@
                     <th>Mã</th>
                     <th>Tên</th>
                     <th>Thuộc phòng ban</th>
+                    <th>Vị trí</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
                   </thead>
@@ -142,6 +143,7 @@
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'department_id', name: 'department_id'},
+            {data: 'company_job_lists', name: 'company_job_lists'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#divisions-table_wrapper .col-md-6:eq(0)');

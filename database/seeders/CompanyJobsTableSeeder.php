@@ -72,7 +72,7 @@ class CompanyJobsTableSeeder extends Seeder
             4 =>
                 array (
                     'id' => 5,
-                    'name' => 'Nhân viên kỹ thuật thị trường',
+                    'name' => 'Nhân viên KTTT heo',
                     'department_id' => 8,
                     'division_id' => 6,
                     'position_salary' => 7000000,
@@ -139,7 +139,7 @@ class CompanyJobsTableSeeder extends Seeder
                     'id' => 10,
                     'name' => 'Nhân viên Admin',
                     'department_id' => 3,
-                    'division_id' => null,
+                    'division_id' => 3,
                     'position_salary' => 9500000,
                     'max_capacity_salary' => 7500000,
                     'position_allowance' => 7500000,
@@ -321,7 +321,7 @@ class CompanyJobsTableSeeder extends Seeder
                     'id' => 25,
                     'name' => 'Nhân viên kế toán kho',
                     'department_id' => 4,
-                    'division_id' => 13,
+                    'division_id' => null,
                     'position_salary' => 0,
                     'max_capacity_salary' => 0,
                     'position_allowance' => 0,
@@ -371,7 +371,7 @@ class CompanyJobsTableSeeder extends Seeder
             28 =>
                 array (
                     'id' => 29,
-                    'name' => 'Nhân viên KTTT GSGC',
+                    'name' => 'Nhân viên KTTT gia cầm',
                     'department_id' => 8,
                     'division_id' => 6,
                     'position_salary' => 0,
@@ -384,7 +384,7 @@ class CompanyJobsTableSeeder extends Seeder
             29 =>
                 array (
                     'id' => 30,
-                    'name' => 'Nhân viên KTTT TS',
+                    'name' => 'Nhân viên KTTT thủy sản',
                     'department_id' => 8,
                     'division_id' => 6,
                     'position_salary' => 0,
@@ -437,8 +437,8 @@ class CompanyJobsTableSeeder extends Seeder
                 array (
                     'id' => 34,
                     'name' => 'Nhân viên cân',
-                    'department_id' => 14,
-                    'division_id' => 4,
+                    'department_id' => 4,
+                    'division_id' => 14,
                     'position_salary' => 0,
                     'max_capacity_salary' => 0,
                     'position_allowance' => 0,
@@ -542,7 +542,7 @@ class CompanyJobsTableSeeder extends Seeder
                     'id' => 42,
                     'name' => 'Nhân viên KCS',
                     'department_id' => 11,
-                    'division_id' => null,
+                    'division_id' => 17,
                     'position_salary' => 0,
                     'max_capacity_salary' => 0,
                     'position_allowance' => 0,
@@ -801,8 +801,8 @@ class CompanyJobsTableSeeder extends Seeder
                 array (
                     'id' => 62,
                     'name' => 'Phó ban tài chính',
-                    'department_id' => 1,
-                    'division_id' => null,
+                    'department_id' => 4,
+                    'division_id' => 23,
                     'position_salary' => 0,
                     'max_capacity_salary' => 0,
                     'position_allowance' => 0,
@@ -813,7 +813,7 @@ class CompanyJobsTableSeeder extends Seeder
             62 =>
                 array (
                     'id' => 63,
-                    'name' => 'Chuyên viên IT',
+                    'name' => 'Nhân viên kiểm soát',
                     'department_id' => 2,
                     'division_id' => null,
                     'position_salary' => 0,
@@ -829,6 +829,58 @@ class CompanyJobsTableSeeder extends Seeder
                     'name' => 'Quản lý trại',
                     'department_id' => 12,
                     'division_id' => null,
+                    'position_salary' => 0,
+                    'max_capacity_salary' => 0,
+                    'position_allowance' => 0,
+                    'recruitment_standard_file' => 'dist/recruitment_standard/gdkt_hn.pdf',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            64 =>
+                array (
+                    'id' => 65,
+                    'name' => 'Nhân viên kỹ thuật trại',
+                    'department_id' => 12,
+                    'division_id' => null,
+                    'position_salary' => 0,
+                    'max_capacity_salary' => 0,
+                    'position_allowance' => 0,
+                    'recruitment_standard_file' => 'dist/recruitment_standard/gdkt_hn.pdf',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            65 =>
+                array (
+                    'id' => 66,
+                    'name' => 'Nhân viên KCS',
+                    'department_id' => 11,
+                    'division_id' => 20,
+                    'position_salary' => 0,
+                    'max_capacity_salary' => 0,
+                    'position_allowance' => 0,
+                    'recruitment_standard_file' => 'dist/recruitment_standard/gdkt_hn.pdf',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+            ),
+            66 =>
+                array (
+                    'id' => 67,
+                    'name' => 'Nhân viên KCS',
+                    'department_id' => 11,
+                    'division_id' => 21,
+                    'position_salary' => 0,
+                    'max_capacity_salary' => 0,
+                    'position_allowance' => 0,
+                    'recruitment_standard_file' => 'dist/recruitment_standard/gdkt_hn.pdf',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+            ),
+            67 =>
+                array (
+                    'id' => 68,
+                    'name' => 'Nhân viên KCS',
+                    'department_id' => 11,
+                    'division_id' => 22,
                     'position_salary' => 0,
                     'max_capacity_salary' => 0,
                     'position_allowance' => 0,

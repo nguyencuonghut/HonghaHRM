@@ -129,7 +129,7 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 13,
                     'code' => 'BH',
-                    'name' => 'Bán hàng',
+                    'name' => 'Tổ bán hàng',
                     'department_id' => 4,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
@@ -138,7 +138,7 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 14,
                     'code' => 'CAN',
-                    'name' => 'Cân',
+                    'name' => 'Tổ cân',
                     'department_id' => 4,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
@@ -147,8 +147,8 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 15,
                     'code' => 'TV',
-                    'name' => 'Tạp vụ',
-                    'department_id' => 4,
+                    'name' => 'Tổ tạp vụ',
+                    'department_id' => 9,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -156,8 +156,8 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 16,
                     'code' => 'NA',
-                    'name' => 'Nấu ăn',
-                    'department_id' => 4,
+                    'name' => 'Tổ nấu ăn',
+                    'department_id' => 9,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -165,7 +165,7 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 17,
                     'code' => 'NL',
-                    'name' => 'Nguyên liệu',
+                    'name' => 'Tổ nguyên liệu',
                     'department_id' => 7,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
@@ -174,8 +174,44 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 19,
                     'code' => 'TR',
-                    'name' => 'Trồng rau',
-                    'department_id' => 7,
+                    'name' => 'Tổ trồng rau',
+                    'department_id' => 9,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            19 =>
+                array (
+                    'id' => 20,
+                    'code' => 'KCSNL',
+                    'name' => 'Tổ KCS nguyên liệu',
+                    'department_id' => 11,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            20 =>
+                array (
+                    'id' => 21,
+                    'code' => 'KCSTPTS',
+                    'name' => 'Tổ KCS thành phẩm thủy sản',
+                    'department_id' => 11,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            21 =>
+                array (
+                    'id' => 22,
+                    'code' => 'KCSTPGS',
+                    'name' => 'Tổ KCS thành phẩm gia súc',
+                    'department_id' => 11,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            22 =>
+                array (
+                    'id' => 23,
+                    'code' => 'BTC',
+                    'name' => 'Ban tài chính',
+                    'department_id' => 4,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
