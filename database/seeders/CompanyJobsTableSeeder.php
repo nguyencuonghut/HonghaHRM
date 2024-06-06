@@ -212,6 +212,19 @@ class CompanyJobsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            15 =>
+                array (
+                    'id' => 16,
+                    'name' => 'Phó ban bảo vệ',
+                    'department_id' => 9,
+                    'division_id' => 4,
+                    'position_salary' => 0,
+                    'max_capacity_salary' => 0,
+                    'position_allowance' => 0,
+                    'recruitment_standard_file' => 'dist/recruitment_standard/ct.pdf',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
             16 =>
                 array (
                     'id' => 17,

@@ -6,6 +6,7 @@ use App\Models\CompanyJob;
 use App\Models\Department;
 use App\Models\Division;
 use Datatables;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -16,7 +17,12 @@ class AdminCompanyJobController extends Controller
      */
     public function index()
     {
-        return view('admin.company_job.index');
+        if (Auth::user()->can('view-salary')) {
+            $can_view_salary = true;
+        } else {
+            $can_view_salary = false;
+        }
+        return view('admin.company_job.index', ['can_view_salary' => $can_view_salary]);
     }
 
     /**
@@ -201,7 +207,7 @@ class AdminCompanyJobController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'recruitment_standard_file', 'position_salary', 'max_capacity_salary', 'position_allowance'])
+            ->rawColumns(['actions', 'recruitment_standard_file', 'division', 'position_salary', 'max_capacity_salary', 'position_allowance'])
             ->make(true);
     }
 }

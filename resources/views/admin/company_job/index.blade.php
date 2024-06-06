@@ -39,7 +39,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                @can('create-admin')
+                @can('create-company-job')
                 <a href="{{ route('admin.company_jobs.create') }}" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 @endcan
                 <table id="company-jobs-table" class="table table-bordered table-striped">
@@ -49,9 +49,11 @@
                     <th>Vị trí công việc</th>
                     <th>Phòng ban</th>
                     <th>Bộ phận</th>
+                    @can('view-salary')
                     <th>Lương vị trí</th>
                     <th>Lương năng lực max</th>
                     <th>Phụ cấp vị trí</th>
+                    @endcan
                     <th>Tiêu chuẩn tuyển dụng</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
@@ -93,8 +95,73 @@
 
 
 <script>
+    var can_view_salary =  {{ Js::from($can_view_salary) }};
+    console.log(can_view_salary);
+
     $(function () {
-      $("#company-jobs-table").DataTable({
+      if (can_view_salary) {
+        $("#company-jobs-table").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        buttons: [
+            {
+                extend: 'copy',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'csv',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'excel',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'pdf',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'print',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            },
+            {
+                extend: 'colvis',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6]
+                }
+            }
+        ],
+        dom: 'Blfrtip',
+        ajax: ' {!! route('admin.company_jobs.data') !!}',
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'name', name: 'name'},
+            {data: 'department', name: 'department'},
+            {data: 'division', name: 'division'},
+            {data: 'position_salary', name: 'position_salary'},
+            {data: 'max_capacity_salary', name: 'max_capacity_salary'},
+            {data: 'position_allowance', name: 'position_allowance'},
+            {data: 'recruitment_standard_file', name: 'recruitment_standard_file'},
+            {data: 'actions', name: 'actions', orderable: false, searchable: false},
+        ]
+        }).buttons().container().appendTo('#company-jobs-table_wrapper .col-md-6:eq(0)');
+      } else {
+        $("#company-jobs-table").DataTable({
         "responsive": true, "lengthChange": false, "autoWidth": false,
         buttons: [
             {
@@ -148,13 +215,12 @@
             {data: 'name', name: 'name'},
             {data: 'department', name: 'department'},
             {data: 'division', name: 'division'},
-            {data: 'position_salary', name: 'position_salary'},
-            {data: 'max_capacity_salary', name: 'max_capacity_salary'},
-            {data: 'position_allowance', name: 'position_allowance'},
             {data: 'recruitment_standard_file', name: 'recruitment_standard_file'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
-       ]
-      }).buttons().container().appendTo('#company-jobs-table_wrapper .col-md-6:eq(0)');
+        ]
+        }).buttons().container().appendTo('#company-jobs-table_wrapper .col-md-6:eq(0)');
+      }
+
     });
   </script>
 @endpush
