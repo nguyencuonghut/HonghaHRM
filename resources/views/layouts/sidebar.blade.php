@@ -58,7 +58,7 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link {{ Request::is('admin/recruitment/proposals') ? 'active' : '' }}">
+                <a href="{{route('admin.recruitment.proposals.index')}}" class="nav-link {{ Request::is('admin/recruitment/proposals*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Yêu cầu</p>
                 </a>
