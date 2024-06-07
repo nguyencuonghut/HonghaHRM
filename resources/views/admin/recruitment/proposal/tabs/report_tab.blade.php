@@ -3,7 +3,12 @@
 <div class="tab-pane fade" id="custom-tabs-one-profile-8" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab-8">
     <h2>{{$proposal->company_job->name}}</h2>
 
-          <!-- Default box -->
+    @php
+        $proposal_candidate_ids = App\Models\ProposalCandidate::where('proposal_id', $proposal->id)->pluck('id')->toArray();
+        $offers = App\Models\Offer::whereIn('proposal_candidate_id', $proposal_candidate_ids)->where('result', '!=', null)->get();
+    @endphp
+    <!-- Default box -->
+    @if ($offers->count())
     <div class="card card-solid">
         <div class="card-body pb-0">
             <div class="row">
@@ -65,4 +70,5 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
