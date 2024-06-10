@@ -186,6 +186,15 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{route('admin.documents.index')}}" class="nav-link {{ Request::is('admin/documents*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-file-contract"></i>
+              <p>
+                Loại giấy tờ
+              </p>
+            </a>
+          </li>
           @endauth
         </ul>
       </nav>

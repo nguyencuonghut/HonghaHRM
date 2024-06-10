@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         'approve-offer' => ['Admin', 'Ban lãnh đạo'],
         'create-company-job' => ['Admin', 'Nhân sự'],
         'view-salary' => ['Admin', 'Nhân sự'],
+        'create-document' => ['Admin', 'Nhân sự'],
     ];
 
     /**

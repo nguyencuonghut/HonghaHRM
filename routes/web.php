@@ -31,6 +31,7 @@ use App\Http\Controllers\AdminSecondInterviewResultController;
 use App\Http\Controllers\AdminOfferController;
 use App\Http\Controllers\AdminCalendarController;
 use App\Http\Controllers\AdminEmployeeController;
+use App\Http\Controllers\AdminDocumentController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -143,6 +144,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('employees/create_from_candidate/{proposal_candidate_id}', [AdminEmployeeController::class, 'createFromCandidate'])->name('employees.create_from_candidate');
         Route::post('employees/store_from_candidate', [AdminEmployeeController::class, 'storeFromCandidate'])->name('employees.store_from_candidate');
         Route::resource('employees', AdminEmployeeController::class);
+
+        Route::get('documents/data', [AdminDocumentController::class, 'anyData'])->name('documents.data');
+        Route::resource('documents', AdminDocumentController::class);
     });
 });
 
