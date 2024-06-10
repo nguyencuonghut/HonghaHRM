@@ -121,7 +121,8 @@
                 <div class="card">
                     <div class="card-header p-2">
                       <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link active" href="#tab-family" data-toggle="tab">Gia đình</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#tab-document" data-toggle="tab">Giấy tờ cần ký</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tab-family" data-toggle="tab">Gia đình</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-contract" data-toggle="tab">Hợp đồng</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-working" data-toggle="tab">Công tác</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-productivity" data-toggle="tab">Hiệu suất</a></li>
@@ -132,33 +133,14 @@
                     </div><!-- /.card-header -->
                     <div class="card-body">
                       <div class="tab-content">
-                        <div class="active tab-pane" id="tab-family">
-                          Gia đình
-                        </div>
-
-                        <div class="tab-pane" id="tab-contract">
-                            Hợp đồng
-                        </div>
-
-                        <div class="tab-pane" id="tab-working">
-                            Công tác
-                        </div>
-
-                        <div class="tab-pane" id="tab-productivity">
-                            Hiệu suất
-                        </div>
-
-                        <div class="tab-pane" id="tab-training">
-                            Đào tạo
-                        </div>
-
-                        <div class="tab-pane" id="tab-insurance">
-                            Bảo hiểm
-                        </div>
-
-                        <div class="tab-pane" id="tab-salary">
-                            Lương
-                        </div>
+                        @include('admin.employee.tabs.document_tab')
+                        @include('admin.employee.tabs.family_tab')
+                        @include('admin.employee.tabs.contract_tab')
+                        @include('admin.employee.tabs.working_tab')
+                        @include('admin.employee.tabs.productivity_tab')
+                        @include('admin.employee.tabs.training_tab')
+                        @include('admin.employee.tabs.insurance_tab')
+                        @include('admin.employee.tabs.salary_tab')
                       </div>
                       <!-- /.tab-content -->
                     </div><!-- /.card-body -->
