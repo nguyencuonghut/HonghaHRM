@@ -140,7 +140,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('calendars', [AdminCalendarController::class, 'index'])->name('calendars.index');
 
         Route::get('employees/data', [AdminEmployeeController::class, 'anyData'])->name('employees.data');
-        Route::resource('employees', AdminEmployeeController::class, ['names' => 'employees']);
+        Route::get('employees/create_from_candidate/{proposal_candidate_id}', [AdminEmployeeController::class, 'createFromCandidate'])->name('employees.create_from_candidate');
+        Route::post('employees/store_from_candidate', [AdminEmployeeController::class, 'storeFromCandidate'])->name('employees.store_from_candidate');
+        Route::resource('employees', AdminEmployeeController::class);
     });
 });
 

@@ -8,7 +8,10 @@ use App\Models\Education;
 use App\Models\Commune;
 use App\Models\CompanyJob;
 use App\Models\District;
+use App\Models\ProposalCandidate;
 use App\Models\Province;
+use App\Models\RecruitmentCandidate;
+use App\Models\RecruitmentProposal;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
@@ -341,7 +344,11 @@ class AdminEmployeeController extends Controller
                 return $employees->cccd;
             })
             ->editColumn('temp_addr', function ($employees) {
-                return $employees->temporary_address . ', ' .  $employees->temporary_commune->name .', ' .  $employees->temporary_commune->district->name .', ' . $employees->temporary_commune->district->province->name;
+                if ($employees->temp_addr) {
+                    return $employees->temporary_address . ', ' .  $employees->temporary_commune->name .', ' .  $employees->temporary_commune->district->name .', ' . $employees->temporary_commune->district->province->name;
+                } else {
+                    return '-';
+                }
             })
             ->addColumn('actions', function ($employees) {
                 $action = '<a href="' . route("admin.employees.edit", $employees->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
@@ -353,5 +360,144 @@ class AdminEmployeeController extends Controller
             })
             ->rawColumns(['actions', 'name', 'email'])
             ->make(true);
+    }
+
+    public function createFromCandidate($proposal_candidate_id)
+    {
+        $proposal_candidate = ProposalCandidate::findOrFail($proposal_candidate_id);
+        $candidate = RecruitmentCandidate::findOrFail($proposal_candidate->candidate_id);
+        $proposal = RecruitmentProposal::findOrFail($proposal_candidate->proposal_id);
+        $communes = Commune::orderBy('name', 'asc')->get();
+        $districts = District::orderBy('name', 'asc')->get();
+        $provinces = Province::orderBy('name', 'asc')->get();
+        $educations = Education::orderBy('name', 'asc')->get();
+        $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
+
+        return view('admin.employee.create_from_candidate',
+                    [
+                        'communes' => $communes,
+                        'districts' => $districts,
+                        'provinces' => $provinces,
+                        'educations' => $educations,
+                        'company_jobs' => $company_jobs,
+                        'proposal_candidate' => $proposal_candidate,
+                        'candidate' => $candidate,
+                        'proposal' => $proposal
+                    ]);
+    }
+
+    public function storeFromCandidate(Request $request)
+    {
+        $rules = [
+            'code' => 'required|unique:employees',
+            'name' => 'required',
+            'img_path' => 'required',
+            'private_email' => 'unique:employees',
+            'phone' => 'required',
+            'relative_phone' => 'required',
+            'date_of_birth' => 'required',
+            'cccd' => 'required|unique:employees',
+            'issued_date' => 'required',
+            'issued_by' => 'required',
+            'gender' => 'required',
+            'address' => 'required',
+            'commune_id' => 'required',
+            'company_job_id' => 'required',
+            'addmore.*.education_name' => 'required',
+            'experience' => 'required',
+        ];
+        $messages = [
+            'code.required' => 'Bạn phải nhập mã.',
+            'code.unique' => 'Mã đã tồn tại.',
+            'name.required' => 'Bạn phải nhập tên.',
+            'img_path.required' => 'Bạn phải chọn ảnh.',
+            'private_email.unique' => 'Email cá nhân đã tồn tại.',
+            'phone.required' => 'Bạn phải nhập số điện thoại.',
+            'relative_phone.required' => 'Bạn phải nhập số điện thoại người thân.',
+            'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
+            'cccd.required' => 'Bạn phải nhập số CCCD.',
+            'cccd.unique' => 'Số CCCD đã tồn tại.',
+            'issued_date.required' => 'Bạn phải nhập ngày cấp.',
+            'issued_by.required' => 'Bạn phải nhập nơi cấp.',
+            'gender.required' => 'Bạn phải chọn giới tính.',
+            'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
+            'commune_id.required' => 'Bạn phải chọn Xã Phường.',
+            'company_job_id.required' => 'Bạn phải chọn vị trí.',
+            'addmore.*.education_name.required' => 'Bạn phải nhập tên trường.',
+            'experience.required' => 'Bạn phải nhập kinh nghiệm.',
+        ];
+        $request->validate($rules,$messages);
+
+        // Check if Employee is existed
+        $existed_employee = Employee::where('name', $request->name)
+                                    ->where('date_of_birth', Carbon::createFromFormat('d/m/Y', $request->date_of_birth))
+                                    ->where('commune_id', $request->commune_id)
+                                    ->get();
+        if ($existed_employee->count()) {
+            Alert::toast('Nhân sự đã tồn tại trên hệ thống! Không thể tạo mới!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
+        $employee = new Employee();
+        $employee->code = $request->code;
+        $employee->name = $request->name;
+        if ($request->hasFile('img_path')) {
+            $path = 'dist/employee_img';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('img_path');
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $employee->img_path = $path . '/' . $name;
+        }
+        if ($request->private_email) {
+            $employee->private_email = $request->private_email;
+        }
+        if ($request->company_email) {
+            $employee->company_email = $request->company_email;
+        }
+        $employee->phone = $request->phone;
+        if ($request->relative_phone) {
+            $employee->relative_phone = $request->relative_phone;
+        }
+        $employee->date_of_birth = Carbon::createFromFormat('d/m/Y', $request->date_of_birth);
+        if ($request->cccd) {
+            $employee->cccd = $request->cccd;
+        }
+        if ($request->issued_date) {
+            $employee->issued_date = Carbon::createFromFormat('d/m/Y', $request->issued_date);
+        }
+        if ($request->issued_by) {
+            $employee->issued_by = $request->issued_by;
+        }
+        $employee->gender = $request->gender;
+        $employee->address = $request->address;
+        $employee->commune_id = $request->commune_id;
+        if ($request->temp_address) {
+            $employee->temporary_address = $request->temp_address;
+        }
+        if ($request->temp_commune_id) {
+            $employee->temporary_commune_id = $request->temp_commune_id;
+        }
+        $employee->company_job_id = $request->company_job_id;
+        $employee->experience = $request->experience;
+        $employee->save();
+
+        // Create EmployeeEducation
+        foreach ($request->addmore as $item) {
+            $employee_education = new EmployeeEducation();
+            $employee_education->employee_id = $employee->id;
+            $education = Education::where('name', $item['education_name'])->first();
+            $employee_education->education_id = $education->id;
+            if ($item['major']) {
+                $employee_education->major = $item['major'];
+            }
+            $employee_education->save();
+        }
+
+        Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
+        return redirect()->route('admin.employees.show', $employee->id);
     }
 }

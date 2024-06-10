@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Sửa nhân sự' }}
+{{ 'Thêm nhân sự' }}
 @endsection
 
 @push('styles')
@@ -21,12 +21,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sửa thông tin</h1>
+            <h1 class="m-0">Thêm nhân sự</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('admin.employees.index') }}">Tất cả nhân sự</a></li>
-              <li class="breadcrumb-item active">Sửa</li>
+              <li class="breadcrumb-item active">Thêm</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -40,16 +40,15 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form class="form-horizontal" method="post" action="{{ route('admin.employees.update', $employee->id) }}" enctype="multipart/form-data" name="edit_employee" id="edit_employee" novalidate="novalidate">
+                        <form class="form-horizontal" method="post" action="{{ route('admin.employees.store_from_candidate') }}" enctype="multipart/form-data" name="create_employee" id="create_employee" novalidate="novalidate">
                             {{ csrf_field() }}
-                            @method('PATCH')
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Mã</label>
                                             <div class="controls">
-                                                <input type="number" class="form-control" name="code" id="name" required="" value="{{$employee->code}}">
+                                                <input type="number" class="form-control" name="code" id="name" required="" value="{{$candidate->code}}">
                                             </div>
                                         </div>
                                     </div>
@@ -57,7 +56,7 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Họ tên</label>
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="name" id="name" required="" value="{{$employee->name}}">
+                                                <input type="text" class="form-control" name="name" id="name" required="" readonly value="{{$candidate->name}}">
                                             </div>
                                         </div>
                                     </div>
@@ -65,7 +64,7 @@
                                         <div class="control-group">
                                             <label class="control-label">Email cá nhân</label>
                                             <div class="controls">
-                                                <input type="email" class="form-control" name="private_email" id="private_email" required="" value="{{$employee->private_email}}">
+                                                <input type="email" class="form-control" name="private_email" id="private_email" required="" readonly  value="{{$candidate->email}}">
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +74,7 @@
                                         <div class="control-group">
                                             <label class="control-label">Email công ty</label>
                                             <div class="controls">
-                                                <input type="email" class="form-control" name="company_email" id="company_email" required="" value="{{$employee->company_email}}">
+                                                <input type="email" class="form-control" name="company_email" id="company_email" required="">
                                             </div>
                                         </div>
                                     </div>
@@ -83,15 +82,15 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Số điện thoại</label>
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="phone" id="phone" required="" value="{{$employee->phone}}">
+                                                <input type="text" class="form-control" name="phone" id="phone" required="" readonly  value="{{$candidate->phone}}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="control-group">
-                                            <label class="control-label">Số điện thoại người thân</label>
+                                            <label class="required-field control-label">Số điện thoại người thân</label>
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="relative_phone" id="relative_phone" required="" value="{{$employee->relative_phone}}">
+                                                <input type="text" class="form-control" name="relative_phone" id="relative_phone" required="" value="{{$candidate->relative_phone}}">
                                             </div>
                                         </div>
                                     </div>
@@ -100,25 +99,22 @@
                                 <div class="row">
                                     <div class="col-4">
                                         <label class="required-field">Ngày sinh</label>
-                                        <div class="input-group date" id="date_of_birth" data-target-input="nearest">
-                                            <input type="text" name="date_of_birth" class="form-control datetimepicker-input" data-target="#date_of_birth" value="{{date('d/m/Y', strtotime($employee->date_of_birth))}}"/>
-                                            <div class="input-group-append" data-target="#date_of_birth" data-toggle="datetimepicker">
-                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                            </div>
+                                        <div class="controls">
+                                            <input type="text" class="form-control" name="date_of_birth" id="date_of_birth" required="" readonly value="{{date('d/m/Y', strtotime($candidate->date_of_birth))}}">
                                         </div>
                                     </div>
                                     <div class="col-4">
                                         <div class="control-group">
-                                            <label class="control-label">CCCD</label>
+                                            <label class="required-field control-label">CCCD</label>
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="cccd" id="cccd" required="" value="{{$employee->cccd}}">
+                                                <input type="text" class="form-control" name="cccd" id="cccd" required="" value="{{$candidate->cccd}}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-4">
-                                        <label class="control-label">Ngày cấp</label>
+                                        <label class="required-field control-label">Ngày cấp</label>
                                         <div class="input-group date" id="issued_date" data-target-input="nearest">
-                                            <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date" @if ($employee->issued_date) value="{{date('d/m/Y', strtotime($employee->issued_date))}}" @endif/>
+                                            <input type="text" name="issued_date" class="form-control datetimepicker-input" data-target="#issued_date" @if ($candidate->issued_date) value="{{date('d/m/Y', strtotime($candidate->issued_date))}}" @endif/>
                                             <div class="input-group-append" data-target="#issued_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>
@@ -129,9 +125,9 @@
                                 <div class="row">
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="control-label">Nơi cấp</label>
+                                            <label class="required-field control-label">Nơi cấp</label>
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="issued_by" id="issued_by" required="" value="{{$employee->issued_by}}">
+                                                <input type="text" class="form-control" name="issued_by" id="issued_by" required="" value="{{$candidate->issued_by}}">
                                             </div>
                                         </div>
                                     </div>
@@ -139,11 +135,7 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Giới tính</label>
                                             <div class="controls">
-                                                <select name="gender" id="gender" data-placeholder="Chọn giới tính" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    <option value="Nam" @if ('Nam' == $employee->gender) selected @endif>Nam</option>
-                                                    <option value="Nữ" @if ('Nữ' == $employee->gender) selected @endif>Nữ</option>
-                                                </select>
+                                                <input type="text" class="form-control" name="gender" id="gender" required="" readonly value="{{$candidate->gender}}">
                                             </div>
                                         </div>
                                     </div>
@@ -153,7 +145,7 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Số nhà thường trú</label>
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="address" id="address" required="" value="{{$employee->address}}">
+                                                <input type="text" class="form-control" name="address" id="address" required="" readonly value="{{$candidate->address}}">
                                             </div>
                                         </div>
                                     </div>
@@ -164,12 +156,8 @@
                                                 <i class="fas fa-plus"></i>
                                             </button>
                                             <div class="controls">
-                                                <select name="commune_id" id="commune_id" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    @foreach($communes as $commune)
-                                                        <option value="{{$commune->id}}" @if ($commune->id == $employee->commune_id) selected @endif>{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="hidden" name="commune_id" id="commune_id" value="{{$candidate->commune_id}}">
+                                                <input type="text" class="form-control" required="" readonly value="{{$candidate->commune->name}} - {{$candidate->commune->district->name}} - {{$candidate->commune->district->province->name}}">
                                             </div>
                                         </div>
                                     </div>
@@ -180,7 +168,7 @@
                                         <div class="control-group">
                                             <label class="control-label">Số nhà tạm trú</label>
                                             <div class="controls">
-                                                <input type="text" class="form-control" name="temp_address" id="temp_address" required="" value="{{$employee->temporary_address}}">
+                                                <input type="text" class="form-control" name="temp_address" id="temp_address" required="">
                                             </div>
                                         </div>
                                     </div>
@@ -194,7 +182,7 @@
                                                 <select name="temp_commune_id" id="temp_commune_id" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                     @foreach($communes as $commune)
-                                                    <option value="{{$commune->id}}" @if ($commune->id == $employee->temporary_commune_id) selected @endif>{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
+                                                    <option value="{{$commune->id}}">{{$commune->name}} - {{$commune->district->name}} - {{$commune->district->province->name}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
@@ -207,12 +195,8 @@
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Vị trí</label>
                                             <div class="controls">
-                                                <select name="company_job_id" id="company_job_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
-                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    @foreach ($company_jobs as $company_job)
-                                                    <option value="{{$company_job->id}}" @if ($company_job->id == $employee->company_job_id) selected @endif>{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
-                                                    @endforeach
-                                                </select>
+                                                <input type="hidden" name="company_job_id" id="company_job_id" value="{{$proposal->company_job_id}}">
+                                                <input type="text" class="form-control" required="" readonly value="{{$proposal->company_job->name}}">
                                             </div>
                                         </div>
                                     </div>
@@ -242,27 +226,20 @@
                                                     </button>
                                                 </th>
                                                 <th>Ngành</th>
-                                                <th style="width: 14%;"><button type="button" name="add_education" id="add_education" class="btn btn-success">Thêm</button></th>
                                             </tr>
                                             @php
                                                 $i = 0;
                                             @endphp
-                                            @foreach ($employee->educations as $employee_education)
+                                            @foreach ($candidate->educations as $education)
                                             <tr>
                                                 <td>
-                                                    <select name="addmore[{{$i}}][education_id]" class="form-control select2" style="width: 100%;">
-                                                        <option selected="selected" disabled>Chọn trường</option>
-                                                        @foreach($educations as $education)
-                                                            <option value="{{$education->id}}" @if ($education->id == $employee_education->id) selected @endif>{{$education->name}}</option>
-                                                        @endforeach
-                                                    </select>
+                                                    <input type="text" class="form-control" name="addmore[{{$i}}][education_name]" required="" readonly value="{{$education->name}}">
                                                 </td>
                                                 @php
-                                                    $my_employee_education = App\Models\EmployeeEducation::where('education_id', $employee_education->id)->where('employee_id', $employee->id)->first();
+                                                    $my_candidate_education = App\Models\CandidateEducation::where('education_id', $education->id)->where('candidate_id', $candidate->id)->first();
 
                                                 @endphp
-                                                <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" value="{{$my_employee_education->major}}"/></td>
-                                                <td><button type="button" class="btn btn-danger remove-tr">Xóa</button></td>
+                                                <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" readonly value="{{$my_candidate_education->major}}"/></td>
                                             </tr>
                                             @php
                                                 $i++;
@@ -275,15 +252,15 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <label class="required-field" class="control-label">Kinh nghiệm</label>
-                                        <textarea id="experience" name="experience">
-                                            {{$employee->experience}}
+                                        <textarea readonly id="experience" name="experience">
+                                            {{$candidate->experience}}
                                         </textarea>
                                     </div>
                                 </div>
 
                                 <div class="control-group">
                                     <div class="controls">
-                                        <input type="submit" value="Sửa" class="btn btn-success">
+                                        <input type="submit" value="Thêm" class="btn btn-success">
                                     </div>
                                 </div>
                             </div>
@@ -457,7 +434,6 @@
         $('.select2').select2({
         theme: 'bootstrap4'
         })
-
         // Add the following code if you want the name of the file appear on select
         $(".custom-file-input").on("change", function() {
             var fileName = $(this).val().split("\\").pop();
@@ -465,14 +441,12 @@
         });
 
         //Date picker
-        $('#date_of_birth').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
         $('#issued_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
 
         // Summernote
+        $("#experience").summernote("disable");
         $("#experience").on("summernote.enter", function(we, e) {
             $(this).summernote("pasteHTML", "<br><br>");
             e.preventDefault();
@@ -486,20 +460,6 @@
             ]
         })
 
-        var i = 100;
-        $("#add_education").click(function(){
-            ++i;
-            $("#dynamicTable").append('<tr><td><select name="addmore['+i+'][education_id]" class="form-control select2" style="width: 100%;"><option selected="selected" disabled>Chọn trường</option>@foreach($educations as $education)<option value="{{$education->id}}">{{$education->name}}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][major]" placeholder="Ngành" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-trash-alt"></i></button></td></tr>');
-
-            //Reinitialize Select2 Elements
-            $('.select2').select2({
-                theme: 'bootstrap4'
-            })
-        });
-
-        $(document).on('click', '.remove-tr', function(){
-            $(this).parents('tr').remove();
-        });
     })
 </script>
 @endpush
