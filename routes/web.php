@@ -33,6 +33,7 @@ use App\Http\Controllers\AdminCalendarController;
 use App\Http\Controllers\AdminEmployeeController;
 use App\Http\Controllers\AdminDocumentController;
 use App\Http\Controllers\AdminProposalCandidateDocumentController;
+use App\Http\Controllers\AdminEmployeeDocumentController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -146,10 +147,13 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('employees/store_from_candidate', [AdminEmployeeController::class, 'storeFromCandidate'])->name('employees.store_from_candidate');
         Route::resource('employees', AdminEmployeeController::class);
 
+        Route::resource('employees/document', AdminEmployeeDocumentController::class, ['names' => 'employees.document']);
+
         Route::get('documents/data', [AdminDocumentController::class, 'anyData'])->name('documents.data');
         Route::resource('documents', AdminDocumentController::class);
 
         Route::resource('recruitment/document', AdminProposalCandidateDocumentController::class, ['names' => 'recruitment.document']);
+
     });
 });
 

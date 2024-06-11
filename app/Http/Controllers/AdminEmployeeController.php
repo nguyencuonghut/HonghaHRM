@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\EmployeeEducation;
+use App\Models\EmployeeDocument;
 use App\Models\Education;
 use App\Models\Commune;
 use App\Models\CompanyJob;
 use App\Models\District;
+use App\Models\Document;
 use App\Models\ProposalCandidate;
 use App\Models\Province;
 use App\Models\RecruitmentCandidate;
@@ -162,7 +164,13 @@ class AdminEmployeeController extends Controller
     public function show($id)
     {
         $employee = Employee::findOrFail($id);
-        return view('admin.employee.show', ['employee' => $employee]);
+        $documents = Document::all();
+        $employee_documents = EmployeeDocument::where('employee_id', $employee->id)->get();
+        return view('admin.employee.show',
+                    ['employee' => $employee,
+                    'documents' => $documents,
+                    'employee_documents' => $employee_documents,
+                    ]);
     }
 
     /**
