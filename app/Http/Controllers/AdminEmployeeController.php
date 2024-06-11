@@ -426,17 +426,18 @@ class AdminEmployeeController extends Controller
             'addmore.*.education_name.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
         ];
-        $request->validate($rules,$messages);
 
         // Check if Employee is existed
         $existed_employee = Employee::where('name', $request->name)
-                                    ->where('date_of_birth', Carbon::createFromFormat('d/m/Y', $request->date_of_birth))
+                                    ->whereDate('date_of_birth', Carbon::createFromFormat('d/m/Y', $request->date_of_birth))
                                     ->where('commune_id', $request->commune_id)
-                                    ->get();
-        if ($existed_employee->count()) {
-            Alert::toast('Nhân sự đã tồn tại trên hệ thống! Không thể tạo mới!', 'error', 'top-right');
+                                    ->first();
+        if ($existed_employee) {
+            Alert::toast('Nhân sự đã có hồ sơ!', 'error', 'top-right');
             return redirect()->back();
         }
+
+        $request->validate($rules,$messages);
 
         $employee = new Employee();
         $employee->code = $request->code;
