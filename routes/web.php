@@ -32,6 +32,7 @@ use App\Http\Controllers\AdminOfferController;
 use App\Http\Controllers\AdminCalendarController;
 use App\Http\Controllers\AdminEmployeeController;
 use App\Http\Controllers\AdminDocumentController;
+use App\Http\Controllers\AdminProposalCandidateDocumentController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -147,6 +148,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('documents/data', [AdminDocumentController::class, 'anyData'])->name('documents.data');
         Route::resource('documents', AdminDocumentController::class);
+
+        Route::resource('recruitment/document', AdminProposalCandidateDocumentController::class, ['names' => 'recruitment.document']);
     });
 });
 

@@ -70,10 +70,14 @@
                           <li class="nav-item">
                             <a class="nav-link" id="custom-tabs-one-profile-tab-8" data-toggle="pill" href="#custom-tabs-one-profile-8" role="tab" aria-controls="custom-tabs-one-profile-8" aria-selected="false">Báo cáo</a>
                           </li>
+                          <li class="nav-item">
+                            <a class="nav-link" id="custom-tabs-one-profile-tab-9" data-toggle="pill" href="#custom-tabs-one-profile-9" role="tab" aria-controls="custom-tabs-one-profile-9" aria-selected="false">Giấy tờ cần ký</a>
+                          </li>
                         </ul>
                       </div>
                       <div class="card-body">
                         <div class="tab-content" id="custom-tabs-one-tabContent">
+                            @include('admin.recruitment.proposal.tabs.document_tab')
                             @include('admin.recruitment.proposal.tabs.report_tab')
                             @include('admin.recruitment.proposal.tabs.offer_tab')
                             @include('admin.recruitment.proposal.tabs.second_interview_tab')
