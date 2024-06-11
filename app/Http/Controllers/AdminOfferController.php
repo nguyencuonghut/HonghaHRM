@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use App\Models\ProposalCandidate;
+use App\Models\ProposalCandidateDocument;
 use App\Models\RecruitmentProposal;
 use App\Models\CompanyJob;
 use Illuminate\Http\Request;
@@ -181,7 +182,20 @@ class AdminOfferController extends Controller
         $offer->approver_id = Auth::user()->id;
         $offer->save();
 
-        Alert::toast('Duyệt đề xuất thành công!', 'success', 'top-right');
+        if ('Không đạt' == $offer->result) {
+            $proposal_candidate_documents = ProposalCandidateDocument::where('proposal_candidate_id', $request->proposal_candidate_id)->get();
+            if ($proposal_candidate_documents
+                && $proposal_candidate_documents->count()) {
+                // Destroy the proposal candidate documents
+                foreach ($proposal_candidate_documents as $proposal_candidate_document) {
+                    $proposal_candidate_document->destroy($proposal_candidate_document->id);
+                }
+                Alert::toast('Hủy hết trạng thái giấy tờ và duyệt đề xuất thành công!', 'success', 'top-right');
+            }
+        } else {
+            Alert::toast('Duyệt đề xuất thành công!', 'success', 'top-right');
+        }
+
         return redirect()->back();
     }
 }
