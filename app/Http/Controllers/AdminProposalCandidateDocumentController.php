@@ -44,10 +44,10 @@ class AdminProposalCandidateDocumentController extends Controller
         $request->validate($rules,$messages);
 
         // Check if proposal candidate document existed or not
-        $my_proposal_candidate_document = ProposalCandidateDocument::where('proposal_candidate_id', $request->proposal_candidate_id)
+        $my_proposal_candidate_documents = ProposalCandidateDocument::where('proposal_candidate_id', $request->proposal_candidate_id)
                                                                             ->where('document_id', $request->document_id)
                                                                             ->get();
-        if ($my_proposal_candidate_document) {
+        if ($my_proposal_candidate_documents->count()) {
             Alert::toast('Giấy tờ đã được khai báo!', 'error', 'top-right');
             return redirect()->back();
         }
