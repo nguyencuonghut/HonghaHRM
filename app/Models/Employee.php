@@ -47,8 +47,8 @@ class Employee extends Model
         return $this->belongsTo(CompanyJob::class);
     }
 
-    public function educations(): BelongsToMany
+    public function schools(): BelongsToMany
     {
-        return $this->belongsToMany(Education::class, 'employee_education', 'employee_id', 'education_id')->withTimestamps();;
+        return $this->belongsToMany(School::class, 'employee_school', 'employee_id', 'school_id')->withTimestamps();;
     }
 }

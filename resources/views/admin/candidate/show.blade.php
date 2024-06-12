@@ -82,19 +82,19 @@
                       <strong><i class="fas fa-graduation-cap mr-1"></i> Trình độ</strong>
                       <p class="text-muted">
                         @php
-                            $educations_info = '';
+                            $schools_info = '';
 
-                            foreach ($candidate->educations as $education) {
-                                $candidate_education = App\Models\CandidateEducation::where('candidate_id', $candidate->id)->where('education_id', $education->id)->first();
-                                if ($candidate_education->major) {
-                                    $educations_info = $educations_info . $education->name . ' - ' . $candidate_education->major . '<br>';
+                            foreach ($candidate->schools as $school) {
+                                $candidate_school = App\Models\CandidateSchool::where('candidate_id', $candidate->id)->where('school_id', $school->id)->first();
+                                if ($candidate_school->major) {
+                                    $schools_info = $schools_info . $school->name . ' - ' . $candidate_school->major . '<br>';
                                 } else {
-                                    $educations_info = $educations_info . $education->name;
+                                    $schools_info = $schools_info . $school->name;
                                 }
 
                             }
                         @endphp
-                        {!! $educations_info !!}
+                        {!! $schools_info !!}
                       </p>
 
                       <strong><i class="fas fa-suitcase mr-1"></i> Kinh nghiệm</strong>

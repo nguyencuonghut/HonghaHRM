@@ -221,7 +221,7 @@
                                             <tr>
                                                 <th class="required-field">
                                                     Trường
-                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_education">
+                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_school">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </th>
@@ -230,16 +230,15 @@
                                             @php
                                                 $i = 0;
                                             @endphp
-                                            @foreach ($candidate->educations as $education)
+                                            @foreach ($candidate->schools as $school)
                                             <tr>
                                                 <td>
-                                                    <input type="text" class="form-control" name="addmore[{{$i}}][education_name]" required="" readonly value="{{$education->name}}">
+                                                    <input type="text" class="form-control" name="addmore[{{$i}}][school_name]" required="" readonly value="{{$school->name}}">
                                                 </td>
                                                 @php
-                                                    $my_candidate_education = App\Models\CandidateEducation::where('education_id', $education->id)->where('candidate_id', $candidate->id)->first();
-
+                                                    $my_candidate_school = App\Models\CandidateSchool::where('school_id', $school->id)->where('candidate_id', $candidate->id)->first();
                                                 @endphp
-                                                <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" readonly value="{{$my_candidate_education->major}}"/></td>
+                                                <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" readonly value="{{$my_candidate_school->major}}"/></td>
                                             </tr>
                                             @php
                                                 $i++;
@@ -368,10 +367,10 @@
                         </form>
                         <!-- /.modal -->
 
-                        <!-- Modals for create education -->
-                        <form class="form-horizontal" method="post" action="{{ route('admin.educations.store') }}" name="create_education" id="create_education" novalidate="novalidate">
+                        <!-- Modals for create school -->
+                        <form class="form-horizontal" method="post" action="{{ route('admin.schools.store') }}" name="create_school" id="create_school" novalidate="novalidate">
                             {{ csrf_field() }}
-                            <div class="modal fade" id="make_education">
+                            <div class="modal fade" id="make_school">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">

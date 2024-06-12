@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ProposalCandidate;
 use App\Models\RecruitmentCandidate;
-use App\Models\CandidateEducation;
+use App\Models\CandidateSchool;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Auth;

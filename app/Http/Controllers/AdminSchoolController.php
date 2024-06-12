@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Education;
+use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use RealRashid\SweetAlert\Facades\Alert;
 
-class AdminEducationController extends Controller
+class AdminSchoolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -31,7 +31,7 @@ class AdminEducationController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'name' => 'required|unique:educations',
+            'name' => 'required|unique:schools',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
@@ -39,9 +39,9 @@ class AdminEducationController extends Controller
         ];
         $request->validate($rules,$messages);
 
-        $education = new Education();
-        $education->name = $request->name;
-        $education->save();
+        $school = new School();
+        $school->name = $request->name;
+        $school->save();
 
         Alert::toast('Thêm trường mới thành công!', 'success', 'top-right');
         return redirect()->back();

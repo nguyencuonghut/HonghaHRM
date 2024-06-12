@@ -367,7 +367,7 @@
                                 <tr>
                                     <th class="required-field" style="width: 50%;">
                                         Trường
-                                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_education">
+                                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_school">
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </th>
@@ -376,15 +376,15 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <select name="addmore[0][education_id]" class="form-control select2" style="width: 100%;">
+                                        <select name="addmore[0][school_id]" class="form-control select2" style="width: 100%;">
                                             <option selected="selected" disabled>Chọn trường</option>
-                                            @foreach($educations as $education)
-                                                <option value="{{$education->id}}">{{$education->name}}</option>
+                                            @foreach($schools as $school)
+                                                <option value="{{$school->id}}">{{$school->name}}</option>
                                             @endforeach
                                         </select>
                                     </td>
                                     <td><input type="text" name="addmore[0][major]" placeholder="Ngành" class="form-control" /></td>
-                                    <td><button type="button" name="add_education" id="add_education" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
+                                    <td><button type="button" name="add_school" id="add_school" class="btn btn-success"><i class="fas fa-plus"></i></button></td>
                                 </tr>
                             </table>
                         </div>

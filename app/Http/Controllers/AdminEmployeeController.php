@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Employee;
-use App\Models\EmployeeEducation;
+use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
-use App\Models\Education;
+use App\Models\School;
 use App\Models\Commune;
 use App\Models\CompanyJob;
 use App\Models\District;
@@ -33,14 +33,14 @@ class AdminEmployeeController extends Controller
         $communes = Commune::orderBy('name', 'asc')->get();
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
-        $educations = Education::orderBy('name', 'asc')->get();
+        $schools = School::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         return view('admin.employee.index',
                     [
                         'communes' => $communes,
                         'districts' => $districts,
                         'provinces' => $provinces,
-                        'educations' => $educations,
+                        'schools' => $schools,
                         'company_jobs' => $company_jobs,
                     ]);
     }
@@ -73,7 +73,7 @@ class AdminEmployeeController extends Controller
             'address' => 'required',
             'commune_id' => 'required',
             'company_job_id' => 'required',
-            'addmore.*.education_id' => 'required',
+            'addmore.*.school_id' => 'required',
             'experience' => 'required',
         ];
         $messages = [
@@ -93,7 +93,7 @@ class AdminEmployeeController extends Controller
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
-            'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
+            'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
         ];
         $request->validate($rules,$messages);
@@ -145,15 +145,15 @@ class AdminEmployeeController extends Controller
         $employee->experience = $request->experience;
         $employee->save();
 
-        // Create EmployeeEducation
+        // Create EmployeeSchool
         foreach ($request->addmore as $item) {
-            $employee_education = new EmployeeEducation();
-            $employee_education->employee_id = $employee->id;
-            $employee_education->education_id = $item['education_id'];
+            $employee_school = new EmployeeSchool();
+            $employee_school->employee_id = $employee->id;
+            $employee_school->school_id = $item['school_id'];
             if ($item['major']) {
-                $employee_education->major = $item['major'];
+                $employee_school->major = $item['major'];
             }
-            $employee_education->save();
+            $employee_school->save();
         }
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
@@ -188,7 +188,7 @@ class AdminEmployeeController extends Controller
         $communes = Commune::orderBy('name', 'asc')->get();
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
-        $educations = Education::orderBy('name', 'asc')->get();
+        $schools = School::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         $employee = Employee::findOrFail($id);
         return view('admin.employee.edit',
@@ -197,7 +197,7 @@ class AdminEmployeeController extends Controller
                         'communes' => $communes,
                         'districts' => $districts,
                         'provinces' => $provinces,
-                        'educations' => $educations,
+                        'schools' => $schools,
                         'company_jobs' => $company_jobs,
                     ]);
     }
@@ -223,7 +223,7 @@ class AdminEmployeeController extends Controller
             'address' => 'required',
             'commune_id' => 'required',
             'company_job_id' => 'required',
-            'addmore.*.education_id' => 'required',
+            'addmore.*.school_id' => 'required',
             'experience' => 'required',
         ];
         $messages = [
@@ -242,7 +242,7 @@ class AdminEmployeeController extends Controller
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
-            'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
+            'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
         ];
         $request->validate($rules,$messages);
@@ -294,21 +294,21 @@ class AdminEmployeeController extends Controller
         $employee->experience = $request->experience;
         $employee->save();
 
-        //Delete all old EmployeeEducation
-        $old_employee_educations = EmployeeEducation::where('employee_id', $employee->id)->get();
-        foreach($old_employee_educations as $item) {
+        //Delete all old EmployeeSchool
+        $old_employee_schools = EmployeeSchool::where('employee_id', $employee->id)->get();
+        foreach($old_employee_schools as $item) {
             $item->destroy($item->id);
         }
 
-        // Create EmployeeEducation
+        // Create EmployeeSchool
         foreach ($request->addmore as $item) {
-            $employee_education = new EmployeeEducation();
-            $employee_education->employee_id = $employee->id;
-            $employee_education->education_id = $item['education_id'];
+            $employee_school = new EmployeeSchool();
+            $employee_school->employee_id = $employee->id;
+            $employee_school->school_id = $item['school_id'];
             if ($item['major']) {
-                $employee_education->major = $item['major'];
+                $employee_school->major = $item['major'];
             }
-            $employee_education->save();
+            $employee_school->save();
         }
 
         Alert::toast('Sửa nhân sự mới thành công!', 'success', 'top-right');
@@ -345,7 +345,7 @@ class AdminEmployeeController extends Controller
                     $email .= $employees->private_email;
                 }
                 if ($employees->company_email) {
-                    $email .= ',<br>' . ' ' . $employees->company_email;
+                    $email .= '<br>' . ' ' . $employees->company_email;
                 }
                 return $email;
             })
@@ -385,7 +385,7 @@ class AdminEmployeeController extends Controller
         $communes = Commune::orderBy('name', 'asc')->get();
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
-        $educations = Education::orderBy('name', 'asc')->get();
+        $schools = School::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
 
         return view('admin.employee.create_from_candidate',
@@ -393,7 +393,7 @@ class AdminEmployeeController extends Controller
                         'communes' => $communes,
                         'districts' => $districts,
                         'provinces' => $provinces,
-                        'educations' => $educations,
+                        'schools' => $schools,
                         'company_jobs' => $company_jobs,
                         'proposal_candidate' => $proposal_candidate,
                         'candidate' => $candidate,
@@ -418,7 +418,7 @@ class AdminEmployeeController extends Controller
             'address' => 'required',
             'commune_id' => 'required',
             'company_job_id' => 'required',
-            'addmore.*.education_name' => 'required',
+            'addmore.*.school_name' => 'required',
             'experience' => 'required',
         ];
         $messages = [
@@ -438,7 +438,7 @@ class AdminEmployeeController extends Controller
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
-            'addmore.*.education_name.required' => 'Bạn phải nhập tên trường.',
+            'addmore.*.school_name.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
         ];
 
@@ -501,16 +501,16 @@ class AdminEmployeeController extends Controller
         $employee->experience = $request->experience;
         $employee->save();
 
-        // Create EmployeeEducation
+        // Create EmployeeSchool
         foreach ($request->addmore as $item) {
-            $employee_education = new EmployeeEducation();
-            $employee_education->employee_id = $employee->id;
-            $education = Education::where('name', $item['education_name'])->first();
-            $employee_education->education_id = $education->id;
+            $employee_school = new EmployeeSchool();
+            $employee_school->employee_id = $employee->id;
+            $school = School::where('name', $item['school_name'])->first();
+            $employee_school->school_id = $school->id;
             if ($item['major']) {
-                $employee_education->major = $item['major'];
+                $employee_school->major = $item['major'];
             }
-            $employee_education->save();
+            $employee_school->save();
         }
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');

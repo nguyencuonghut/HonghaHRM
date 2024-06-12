@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('candidate_education', function (Blueprint $table) {
+        Schema::create('candidate_school', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('education_id')->constrained('educations');
+            $table->foreignId('school_id')->constrained('schools');
             $table->foreignId('candidate_id')->constrained('recruitment_candidates');
             $table->string('major')->nullable();
             $table->timestamps();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('candidate_education');
+        Schema::dropIfExists('candidate_school');
     }
 };

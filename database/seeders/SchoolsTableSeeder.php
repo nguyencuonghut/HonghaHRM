@@ -7,16 +7,16 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
-class EducationsTableSeeder extends Seeder
+class SchoolsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('educations')->delete();
+        DB::table('schools')->delete();
 
-        DB::table('educations')->insert(array (
+        DB::table('schools')->insert(array (
             0 =>
                 array (
                     'id' => 1,

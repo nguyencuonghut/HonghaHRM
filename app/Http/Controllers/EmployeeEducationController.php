@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EmployeeEducation;
+use App\Models\EmployeeSchool;
 use Illuminate\Http\Request;
 
-class EmployeeEducationController extends Controller
+class EmployeeSchoolController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class EmployeeEducationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(EmployeeEducation $employeeEducation)
+    public function show(EmployeeSchool $employeeSchool)
     {
         //
     }
@@ -42,7 +42,7 @@ class EmployeeEducationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EmployeeEducation $employeeEducation)
+    public function edit(EmployeeSchool $employeeSchool)
     {
         //
     }
@@ -50,7 +50,7 @@ class EmployeeEducationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EmployeeEducation $employeeEducation)
+    public function update(Request $request, EmployeeSchool $employeeSchool)
     {
         //
     }
@@ -58,7 +58,7 @@ class EmployeeEducationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeEducation $employeeEducation)
+    public function destroy(EmployeeSchool $employeeSchool)
     {
         //
     }

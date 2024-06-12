@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\RecruitmentCandidate;
 use App\Models\RecruitmentProposal;
 use App\Models\ProposalCandidate;
-use App\Models\Education;
+use App\Models\School;
 use App\Models\Commune;
 use App\Models\District;
 use App\Models\Province;
-use App\Models\CandidateEducation;
+use App\Models\CandidateSchool;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
@@ -27,13 +27,13 @@ class AdminRecruitmentCandidateController extends Controller
         $communes = Commune::orderBy('name', 'asc')->get();
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
-        $educations = Education::orderBy('name', 'asc')->get();
+        $schools = School::orderBy('name', 'asc')->get();
         return view('admin.candidate.index',
                     [
                         'communes' => $communes,
                         'districts' => $districts,
                         'provinces' => $provinces,
-                        'educations' => $educations,
+                        'schools' => $schools,
                     ]);
     }
 
@@ -57,7 +57,7 @@ class AdminRecruitmentCandidateController extends Controller
             'gender' => 'required',
             'address' => 'required',
             'commune_id' => 'required',
-            'addmore.*.education_id' => 'required',
+            'addmore.*.school_id' => 'required',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
@@ -66,7 +66,7 @@ class AdminRecruitmentCandidateController extends Controller
             'gender.required' => 'Bạn phải chọn giới tính.',
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
-            'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
+            'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
         ];
         $request->validate($rules,$messages);
 
@@ -99,15 +99,15 @@ class AdminRecruitmentCandidateController extends Controller
         $candidate->creator_id = Auth::user()->id;
         $candidate->save();
 
-        // Create CandidateEducation
+        // Create CandidateSchool
         foreach ($request->addmore as $item) {
-            $candidate_education = new CandidateEducation();
-            $candidate_education->candidate_id = $candidate->id;
-            $candidate_education->education_id = $item['education_id'];
+            $candidate_school = new CandidateSchool();
+            $candidate_school->candidate_id = $candidate->id;
+            $candidate_school->school_id = $item['school_id'];
             if ($item['major']) {
-                $candidate_education->major = $item['major'];
+                $candidate_school->major = $item['major'];
             }
-            $candidate_education->save();
+            $candidate_school->save();
         }
 
         Alert::toast('Thêm ứng viên mới thành công!', 'success', 'top-right');
@@ -133,13 +133,13 @@ class AdminRecruitmentCandidateController extends Controller
         $communes = Commune::orderBy('name', 'asc')->get();
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
-        $educations = Education::orderBy('name', 'asc')->get();
+        $schools = School::orderBy('name', 'asc')->get();
         return view('admin.candidate.edit',
                     ['candidate' => $candidate,
                     'communes' => $communes,
                     'districts' => $districts,
                     'provinces' => $provinces,
-                    'educations' => $educations,
+                    'schools' => $schools,
                     ]);
     }
 
@@ -155,7 +155,7 @@ class AdminRecruitmentCandidateController extends Controller
             'gender' => 'required',
             'address' => 'required',
             'commune_id' => 'required',
-            'addmore.*.education_id' => 'required',
+            'addmore.*.school_id' => 'required',
         ];
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
@@ -164,7 +164,7 @@ class AdminRecruitmentCandidateController extends Controller
             'gender.required' => 'Bạn phải chọn giới tính.',
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
-            'addmore.*.education_id.required' => 'Bạn phải nhập tên trường.',
+            'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
         ];
         $request->validate($rules,$messages);
 
@@ -197,22 +197,22 @@ class AdminRecruitmentCandidateController extends Controller
         $candidate->creator_id = Auth::user()->id;
         $candidate->save();
 
-        //Delete all old CandidateEducation
-        $old_candidate_educations = CandidateEducation::where('candidate_id', $candidate->id)->get();
-        foreach($old_candidate_educations as $item) {
+        //Delete all old CandidateSchool
+        $old_candidate_schools = CandidateSchool::where('candidate_id', $candidate->id)->get();
+        foreach($old_candidate_schools as $item) {
             $item->destroy($item->id);
         }
 
-        // Create CandidateEducation
+        // Create CandidateSchool
         foreach ($request->addmore as $item) {
             //dd($item['major']);
-            $candidate_education = new CandidateEducation();
-            $candidate_education->candidate_id = $candidate->id;
-            $candidate_education->education_id = $item['education_id'];
+            $candidate_school = new CandidateSchool();
+            $candidate_school->candidate_id = $candidate->id;
+            $candidate_school->school_id = $item['school_id'];
             if ($item['major']) {
-                $candidate_education->major = $item['major'];
+                $candidate_school->major = $item['major'];
             }
-            $candidate_education->save();
+            $candidate_school->save();
         }
 
         Alert::toast('Sửa ứng viên thành công!', 'success', 'top-right');

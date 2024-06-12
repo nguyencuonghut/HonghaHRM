@@ -162,31 +162,30 @@
                                             <tr>
                                                 <th class="required-field">
                                                     Trường
-                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_education">
+                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_school">
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </th>
                                                 <th>Ngành</th>
-                                                <th style="width: 14%;"><button type="button" name="add_education" id="add_education" class="btn btn-success">Thêm</button></th>
+                                                <th style="width: 14%;"><button type="button" name="add_school" id="add_school" class="btn btn-success">Thêm</button></th>
                                             </tr>
                                             @php
                                                 $i = 0;
                                             @endphp
-                                            @foreach ($candidate->educations as $candidate_education)
+                                            @foreach ($candidate->schools as $item)
                                             <tr>
                                                 <td>
-                                                    <select name="addmore[{{$i}}][education_id]" class="form-control select2" style="width: 100%;">
+                                                    <select name="addmore[{{$i}}][school_id]" class="form-control select2" style="width: 100%;">
                                                         <option selected="selected" disabled>Chọn trường</option>
-                                                        @foreach($educations as $education)
-                                                            <option value="{{$education->id}}" @if ($education->id == $candidate_education->id) selected @endif>{{$education->name}}</option>
+                                                        @foreach($schools as $school)
+                                                            <option value="{{$school->id}}" @if ($school->id == $item->id) selected @endif>{{$school->name}}</option>
                                                         @endforeach
                                                     </select>
                                                 </td>
                                                 @php
-                                                    $my_candidate_education = App\Models\CandidateEducation::where('education_id', $candidate_education->id)->where('candidate_id', $candidate->id)->first();
-
+                                                    $my_candidate_school = App\Models\CandidateSchool::where('school_id', $item->id)->where('candidate_id', $candidate->id)->first();
                                                 @endphp
-                                                <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" value="{{$my_candidate_education->major}}"/></td>
+                                                <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" value="{{$my_candidate_school->major}}"/></td>
                                                 <td><button type="button" class="btn btn-danger remove-tr">Xóa</button></td>
                                             </tr>
                                             @php
@@ -325,10 +324,10 @@
                         </form>
                         <!-- /.modal -->
 
-                        <!-- Modals for create education -->
-                        <form class="form-horizontal" method="post" action="{{ route('admin.educations.store') }}" name="create_education" id="create_education" novalidate="novalidate">
+                        <!-- Modals for create school -->
+                        <form class="form-horizontal" method="post" action="{{ route('admin.schools.store') }}" name="create_school" id="create_school" novalidate="novalidate">
                             {{ csrf_field() }}
-                            <div class="modal fade" id="make_education">
+                            <div class="modal fade" id="make_school">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -401,9 +400,9 @@
         });
 
         var i = 100;
-        $("#add_education").click(function(){
+        $("#add_school").click(function(){
             ++i;
-            $("#dynamicTable").append('<tr><td><select name="addmore['+i+'][education_id]" class="form-control select2" style="width: 100%;"><option selected="selected" disabled>Chọn trường</option>@foreach($educations as $education)<option value="{{$education->id}}">{{$education->name}}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][major]" placeholder="Ngành" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-trash-alt"></i></button></td></tr>');
+            $("#dynamicTable").append('<tr><td><select name="addmore['+i+'][school_id]" class="form-control select2" style="width: 100%;"><option selected="selected" disabled>Chọn trường</option>@foreach($schools as $school)<option value="{{$school->id}}">{{$school->name}}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][major]" placeholder="Ngành" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-trash-alt"></i></button></td></tr>');
 
             //Reinitialize Select2 Elements
             $('.select2').select2({
