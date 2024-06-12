@@ -98,6 +98,21 @@
               <!-- /.modal -->
             </tr>
           @endforeach
+
+          @foreach ($proposal_candidate_documents as $proposal_candidate_document)
+            <tr>
+              @php
+                  $document = App\Models\Document::findOrFail($proposal_candidate_document->document_id);
+                  $proposal_candidate = App\Models\ProposalCandidate::findOrFail($proposal_candidate_document->proposal_candidate_id);
+                  $proposal = App\Models\RecruitmentProposal::findOrFail($proposal_candidate->id);
+              @endphp
+              <td>{!! $document->name !!}</td>
+              <td>
+                  <span class="badge @if ("Đã ký" == $proposal_candidate_document->status) badge-success @else badge-danger @endif">{{$proposal_candidate_document->status}}</span>
+              </td>
+              <td>{{$proposal->company_job->name}} - {{date('d/m/Y', strtotime($proposal->work_time))}}</td>
+            </tr>
+          @endforeach
         </tbody>
     </table>
 
