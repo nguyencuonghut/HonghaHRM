@@ -65,6 +65,19 @@
                       </p>
                       <hr>
 
+                      @if ($employee->private_email || $employee->company_email)
+                      <strong><i class="fas fa-envelope mr-1"></i> Email</strong>
+                      <p class="text-muted">
+                        @if($employee->private_email)
+                        - Cá nhân: {{$employee->private_email}} <br>
+                        @endif
+                        @if($employee->company_email)
+                        - Công ty: {{$employee->company_email}}
+                        @endif
+                      </p>
+                      <hr>
+                      @endif
+
                       <strong><i class="fas fa-calendar-alt mr-1"></i> Ngày sinh</strong>
                       <p class="text-muted">
                         {{date('d/m/Y', strtotime($employee->date_of_birth))}}
