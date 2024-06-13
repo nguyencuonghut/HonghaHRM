@@ -50,10 +50,7 @@
                     <th style="width: 12%;">Phòng ban</th>
                     <th>Số lượng</th>
                     <th>Lý do</th>
-                    <th>Yêu cầu</th>
-                    <th>Lương (VNĐ)</th>
                     <th>Thời gian</th>
-                    <th>Ghi chú</th>
                     <th>Người tạo</th>
                     <th>Người kiểm tra</th>
                     <th>Người duyệt</th>
@@ -106,14 +103,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
 
             },
@@ -121,28 +118,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7,8,9,10,11,12]
+                    columns: [0,1,2,3,4,5,6,7,8,9]
                 }
             }
         ],
@@ -154,10 +151,7 @@
             {data: 'department', name: 'department'},
             {data: 'quantity', name: 'quantity'},
             {data: 'reason', name: 'reason'},
-            {data: 'requirement', name: 'requirement'},
-            {data: 'salary', name: 'salary'},
             {data: 'work_time', name: 'work_time'},
-            {data: 'note', name: 'note'},
             {data: 'creator', name: 'creator'},
             {data: 'reviewer', name: 'reviewer'},
             {data: 'approver', name: 'approver'},

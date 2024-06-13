@@ -174,10 +174,10 @@ class AdminRecruitmentProposalController extends Controller
             })
             ->editColumn('department', function ($proposals) {
                 $department = '';
-                $department = $proposals->company_job->department->name;
-                if ($proposals->division_id) {
-                    $department = $department . $proposals->company_job->division->name;
+                if ($proposals->company_job->division_id) {
+                    $department = $department . $proposals->company_job->division->name . ' - ';
                 }
+                $department .= $proposals->company_job->department->name;
                 return $department;
             })
             ->editColumn('quantity', function ($proposals) {
@@ -186,17 +186,8 @@ class AdminRecruitmentProposalController extends Controller
             ->editColumn('reason', function ($proposals) {
                 return $proposals->reason;
             })
-            ->editColumn('requirement', function ($proposals) {
-                return $proposals->requirement;
-            })
-            ->editColumn('salary', function ($proposals) {
-                return number_format($proposals->salary, 0, '.', ',');
-            })
             ->editColumn('work_time', function ($proposals) {
                 return date('d/m/Y', strtotime($proposals->work_time));
-            })
-            ->editColumn('note', function ($proposals) {
-                return $proposals->note;
             })
             ->editColumn('creator', function ($proposals) {
                 return $proposals->creator->name;
