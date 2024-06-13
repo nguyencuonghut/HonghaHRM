@@ -15,7 +15,7 @@
         <thead>
           <tr>
             <th>Tên giấy tờ</th>
-            <th>Trạng thái</th>
+            <th>File</th>
             @can('create-document')
             <th>Thao tác</th>
             @endcan
@@ -38,15 +38,21 @@
                   }
               @endphp
               <td>{!! $document->name !!}</td>
-              <td>
-                  <span class="badge @if ("Đã ký" == $employee_document->status) badge-success @else badge-danger @endif">{{$employee_document->status}}</span>
-              </td>
+              @php
+                    $url = '';
+                    if ($employee_document->file_path) {
+                        $url .= '<a target="_blank" href="../../../' . $employee_document->file_path . '"><i class="far fa-file-pdf"></i></a>';
+                    } else {
+                        $url .= ' - ';
+                    }
+              @endphp
+              <td>{!! $url !!}</td>
               @can('create-document')
               <td>{!! $action !!}</td>
               @endcan
 
               <!-- Modals for edit employee document -->
-              <form class="form-horizontal" method="post" action="{{ route('admin.employees.document.update', $employee_document->id) }}" name="update_document" id="update_document" novalidate="novalidate">
+              <form class="form-horizontal" method="post" action="{{ route('admin.employees.document.update', $employee_document->id) }}" enctype="multipart/form-data" name="update_document" id="update_document" novalidate="novalidate">
                   @method('PATCH')
                   {{ csrf_field() }}
                   <div class="modal fade" tabindex="-1" id="edit_document{{$employee_document->id}}">
@@ -81,14 +87,13 @@
 
                                   <div class="row">
                                       <div class="col-12">
-                                          <label class="required-field" class="control-label">Trạng thái</label>
-                                          <div class="controls">
-                                              <select name="status" id="status" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                  <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                  <option value="Đã ký" @if ($employee_document && 'Đã ký' == $employee_document->status) selected="selected" @endif>Đã ký</option>
-                                                  <option value="Chưa ký" @if ($employee_document && 'Chưa ký' == $employee_document->status) selected="selected" @endif>Chưa ký</option>
-                                              </select>
-                                          </div>
+                                        <div class="control-group">
+                                            <label class="control-label">File (pdf)</label>
+                                            <div class="custom-file text-left">
+                                                <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
+                                                <label class="custom-file-label" for="img_path">Chọn file</label>
+                                            </div>
+                                        </div>
                                       </div>
                                   </div>
                               </div>
@@ -108,7 +113,7 @@
     </table>
 
     <!-- Modals for create employee document -->
-    <form class="form-horizontal" method="post" action="{{ route('admin.employees.document.store', $employee->id) }}" name="create_document" id="create_document" novalidate="novalidate">
+    <form class="form-horizontal" method="post" action="{{ route('admin.employees.document.store', $employee->id) }}" enctype="multipart/form-data" name="create_document" id="create_document" novalidate="novalidate">
         {{ csrf_field() }}
         <div class="modal fade" id="create_document{{$employee->id}}">
             <div class="modal-dialog modal-lg">
@@ -141,13 +146,12 @@
 
                         <div class="row">
                             <div class="col-12">
-                                <label class="required-field" class="control-label">Trạng thái</label>
-                                <div class="controls">
-                                    <select name="status" id="status" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                        <option value="Đã ký">Đã ký</option>
-                                        <option value="Chưa ký">Chưa ký</option>
-                                    </select>
+                                <div class="control-group">
+                                    <label class="control-label">File (pdf)</label>
+                                    <div class="custom-file text-left">
+                                        <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
+                                        <label class="custom-file-label" for="img_path">Chọn file</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -174,6 +178,12 @@
         $('.select2').select2({
         theme: 'bootstrap4'
         })
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
     })
 </script>
 @endpush

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->foreignId('document_id')->constrained('documents')->onDelete('cascade');
-            $table->enum('status', ['Đã ký', 'Chưa ký']);
+            $table->string('file_path')->nullable();
             $table->timestamps();
         });
     }

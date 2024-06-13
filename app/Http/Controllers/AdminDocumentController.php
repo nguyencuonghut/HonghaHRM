@@ -104,7 +104,7 @@ class AdminDocumentController extends Controller
 
     public function anyData()
     {
-        $documents = Document::select(['id', 'name'])->get();
+        $documents = Document::select(['id', 'name'])->orderBy('id', 'asc')->get();
         return Datatables::of($documents)
             ->addIndexColumn()
             ->editColumn('name', function ($documents) {

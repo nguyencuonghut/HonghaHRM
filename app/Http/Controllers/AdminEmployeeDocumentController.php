@@ -33,12 +33,10 @@ class AdminEmployeeDocumentController extends Controller
         $rules = [
             'employee_id' => 'required',
             'document_id' => 'required',
-            'status' => 'required',
         ];
         $messages = [
             'employee_id.required' => 'Số phiếu hồ sơ nhân sự không hợp lệ.',
             'document_id.required' => 'Bạn phải chọn tên giấy tờ',
-            'status.required' => 'Bạn phải chọn trạng thái.',
         ];
 
         $request->validate($rules,$messages);
@@ -56,7 +54,18 @@ class AdminEmployeeDocumentController extends Controller
         $employee_document = new EmployeeDocument();
         $employee_document->employee_id = $request->employee_id;
         $employee_document->document_id = $request->document_id;
-        $employee_document->status = $request->status;
+
+        if ($request->hasFile('file_path')) {
+            $path = 'dist/employee_document';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('file_path');
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $employee_document->file_path = $path . '/' . $name;
+        }
         $employee_document->save();
 
         Alert::toast('Tạo trạng thái giấy tờ thành công!', 'success', 'top-right');
@@ -87,12 +96,10 @@ class AdminEmployeeDocumentController extends Controller
         $rules = [
             'employee_id' => 'required',
             'document_id' => 'required',
-            'status' => 'required',
         ];
         $messages = [
             'employee_id.required' => 'Số phiếu hồ sơ nhân sự không hợp lệ.',
             'document_id.required' => 'Bạn phải chọn tên giấy tờ',
-            'status.required' => 'Bạn phải chọn trạng thái.',
         ];
 
         $request->validate($rules,$messages);
@@ -101,7 +108,18 @@ class AdminEmployeeDocumentController extends Controller
         $employee_document = EmployeeDocument::findOrFail($id);
         $employee_document->employee_id = $request->employee_id;
         $employee_document->document_id = $request->document_id;
-        $employee_document->status = $request->status;
+
+        if ($request->hasFile('file_path')) {
+            $path = 'dist/employee_document';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('file_path');
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $employee_document->file_path = $path . '/' . $name;
+        }
         $employee_document->save();
 
         Alert::toast('Sửa trạng thái giấy tờ thành công!', 'success', 'top-right');
