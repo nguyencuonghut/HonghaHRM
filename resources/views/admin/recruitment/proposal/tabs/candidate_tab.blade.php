@@ -362,17 +362,18 @@
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <label class="required-field" class="control-label">Trình độ</label>
+                            <label class="required-field" class="control-label">Học vấn</label>
                             <table class="table table-bordered" id="dynamicTable">
                                 <tr>
-                                    <th class="required-field" style="width: 50%;">
+                                    <th class="required-field" style="width: 40%;">
                                         Trường
                                         <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#make_school">
                                             <i class="fas fa-plus"></i>
                                         </button>
                                     </th>
+                                    <th class="required-field" style="width: 25%;">Trình độ</th>
                                     <th>Ngành</th>
-                                    <th style="width: 14%;">Thao tác</th>
+                                    <th>#</th>
                                 </tr>
                                 <tr>
                                     <td>
@@ -380,6 +381,14 @@
                                             <option selected="selected" disabled>Chọn trường</option>
                                             @foreach($schools as $school)
                                                 <option value="{{$school->id}}">{{$school->name}}</option>
+                                            @endforeach
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <select name="addmore[0][degree_id]" class="form-control select2" style="width: 100%;">
+                                            <option selected="selected" disabled>Chọn trình độ</option>
+                                            @foreach($degrees as $degree)
+                                                <option value="{{$degree->id}}">{{$degree->name}}</option>
                                             @endforeach
                                         </select>
                                     </td>

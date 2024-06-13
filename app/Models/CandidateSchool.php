@@ -14,6 +14,7 @@ class CandidateSchool extends Pivot
     protected $fillable = [
         'school_id',
         'candidate_id',
+        'degree_id',
         'major',
     ];
 }

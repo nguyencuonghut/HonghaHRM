@@ -79,15 +79,16 @@
                       </p>
                       <hr>
 
-                      <strong><i class="fas fa-graduation-cap mr-1"></i> Trình độ</strong>
+                      <strong><i class="fas fa-graduation-cap mr-1"></i> Học vấn</strong>
                       <p class="text-muted">
                         @php
                             $schools_info = '';
 
                             foreach ($candidate->schools as $school) {
                                 $candidate_school = App\Models\CandidateSchool::where('candidate_id', $candidate->id)->where('school_id', $school->id)->first();
+                                $degree = App\Models\Degree::findOrFail($candidate_school->degree_id);
                                 if ($candidate_school->major) {
-                                    $schools_info = $schools_info . $school->name . ' - ' . $candidate_school->major . '<br>';
+                                    $schools_info = $schools_info . $school->name . ' - ' . $degree->name . ' - ' . $candidate_school->major . '<br>';
                                 } else {
                                     $schools_info = $schools_info . $school->name;
                                 }

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_school', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('degree_id')->constrained('degrees')->onDelete('cascade');
             $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
             $table->foreignId('employee_id')->constrained('employees')->onDelete('cascade');
             $table->string('major')->nullable();

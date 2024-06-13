@@ -157,7 +157,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12">
-                                        <label class="required-field" class="control-label">Trình độ</label>
+                                        <label class="required-field" class="control-label">Học vấn</label>
                                         <table class="table table-bordered" id="dynamicTable">
                                             <tr>
                                                 <th class="required-field">
@@ -166,6 +166,7 @@
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </th>
+                                                <th>Trình độ</th>
                                                 <th>Ngành</th>
                                                 <th style="width: 14%;"><button type="button" name="add_school" id="add_school" class="btn btn-success">Thêm</button></th>
                                             </tr>
@@ -185,6 +186,14 @@
                                                 @php
                                                     $my_candidate_school = App\Models\CandidateSchool::where('school_id', $item->id)->where('candidate_id', $candidate->id)->first();
                                                 @endphp
+                                                <td>
+                                                    <select name="addmore[{{$i}}][degree_id]" class="form-control select2" style="width: 100%;">
+                                                        <option selected="selected" disabled>Chọn trình độ</option>
+                                                        @foreach($degrees as $degree)
+                                                            <option value="{{$degree->id}}" @if ($degree->id == $my_candidate_school->degree_id) selected @endif>{{$degree->name}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
                                                 <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" value="{{$my_candidate_school->major}}"/></td>
                                                 <td><button type="button" class="btn btn-danger remove-tr">Xóa</button></td>
                                             </tr>
@@ -402,7 +411,7 @@
         var i = 100;
         $("#add_school").click(function(){
             ++i;
-            $("#dynamicTable").append('<tr><td><select name="addmore['+i+'][school_id]" class="form-control select2" style="width: 100%;"><option selected="selected" disabled>Chọn trường</option>@foreach($schools as $school)<option value="{{$school->id}}">{{$school->name}}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][major]" placeholder="Ngành" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-trash-alt"></i></button></td></tr>');
+            $("#dynamicTable").append('<tr><td><select name="addmore['+i+'][school_id]" class="form-control select2" style="width: 100%;"><option selected="selected" disabled>Chọn trường</option>@foreach($schools as $school)<option value="{{$school->id}}">{{$school->name}}</option>@endforeach</select></td><td><select name="addmore['+i+'][degree_id]" class="form-control select2" style="width: 100%;"><option selected="selected" disabled>Chọn trình độ</option>@foreach($degrees as $degree)<option value="{{$degree->id}}">{{$degree->name}}</option>@endforeach</select></td><td><input type="text" name="addmore['+i+'][major]" placeholder="Ngành" class="form-control" /></td><td><button type="button" class="btn btn-danger remove-tr"><i class="fas fa-trash-alt"></i></button></td></tr>');
 
             //Reinitialize Select2 Elements
             $('.select2').select2({

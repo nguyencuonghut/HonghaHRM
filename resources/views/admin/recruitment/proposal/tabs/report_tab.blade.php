@@ -19,7 +19,7 @@
                 @endphp
                 @if($offer && $offer->result)
                     <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column mb-4">
-                        <div class="position-relative p-3 bg-gray" style="height: 170px">
+                        <div class="position-relative p-3 bg-gray" style="height: 180px">
                             <div class="ribbon-wrapper ribbon-lg">
                                 <div class="ribbon
                                     @if ('Không đạt' == $offer->result)
@@ -51,11 +51,11 @@
 
                                     foreach ($candidate->schools as $school) {
                                         $candidate_school = App\Models\CandidateSchool::where('candidate_id', $candidate->id)->where('school_id', $school->id)->first();
-
+                                        $degree = App\Models\Degree::findOrFail($candidate_school->degree_id);
                                         if ($candidate_school->major) {
-                                            $schools_info = $schools_info . $school->name . ' - ' . $candidate_school->major . '<br>';
+                                            $schools_info = $schools_info . $school->name . ' - ' . $degree->name . ' - ' . $candidate_school->major . '<br>';
                                         } else {
-                                            $schools_info = $schools_info . $school->name;
+                                            $schools_info = $schools_info . $degree->name . ' - ' . $school->name;
                                         }
                                     }
                                 @endphp

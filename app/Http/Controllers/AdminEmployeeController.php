@@ -6,6 +6,7 @@ use App\Models\Employee;
 use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
 use App\Models\School;
+use App\Models\Degree;
 use App\Models\Commune;
 use App\Models\CompanyJob;
 use App\Models\District;
@@ -34,6 +35,7 @@ class AdminEmployeeController extends Controller
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
+        $degrees = Degree::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         return view('admin.employee.index',
                     [
@@ -41,6 +43,7 @@ class AdminEmployeeController extends Controller
                         'districts' => $districts,
                         'provinces' => $provinces,
                         'schools' => $schools,
+                        'degrees' => $degrees,
                         'company_jobs' => $company_jobs,
                     ]);
     }
@@ -62,7 +65,6 @@ class AdminEmployeeController extends Controller
             'code' => 'required|unique:employees',
             'name' => 'required',
             'img_path' => 'required',
-            'private_email' => 'unique:employees',
             'phone' => 'required',
             'relative_phone' => 'required',
             'date_of_birth' => 'required',
@@ -81,7 +83,6 @@ class AdminEmployeeController extends Controller
             'code.unique' => 'Mã đã tồn tại.',
             'name.required' => 'Bạn phải nhập tên.',
             'img_path.required' => 'Bạn phải chọn ảnh.',
-            'private_email.unique' => 'Email cá nhân đã tồn tại.',
             'phone.required' => 'Bạn phải nhập số điện thoại.',
             'relative_phone.required' => 'Bạn phải nhập số điện thoại người thân.',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
@@ -149,6 +150,7 @@ class AdminEmployeeController extends Controller
         foreach ($request->addmore as $item) {
             $employee_school = new EmployeeSchool();
             $employee_school->employee_id = $employee->id;
+            $employee_school->degree_id = $item['degree_id'];
             $employee_school->school_id = $item['school_id'];
             if ($item['major']) {
                 $employee_school->major = $item['major'];
@@ -189,6 +191,7 @@ class AdminEmployeeController extends Controller
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
+        $degrees = Degree::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         $employee = Employee::findOrFail($id);
         return view('admin.employee.edit',
@@ -198,6 +201,7 @@ class AdminEmployeeController extends Controller
                         'districts' => $districts,
                         'provinces' => $provinces,
                         'schools' => $schools,
+                        'degrees' => $degrees,
                         'company_jobs' => $company_jobs,
                     ]);
     }
@@ -210,7 +214,6 @@ class AdminEmployeeController extends Controller
         $rules = [
             'code' => 'required|unique:employees,code,'.$id,
             'name' => 'required',
-            'private_email' => 'unique:employees,private_email,'.$id,
             'name' => 'required',
             'phone' => 'required',
             'relative_phone' => 'required',
@@ -230,7 +233,6 @@ class AdminEmployeeController extends Controller
             'code.required' => 'Bạn phải nhập mã.',
             'code.unique' => 'Mã đã tồn tại.',
             'name.required' => 'Bạn phải nhập tên.',
-            'private_email.unique' => 'Email cá nhân đã tồn tại.',
             'phone.required' => 'Bạn phải nhập số điện thoại.',
             'relative_phone.required' => 'Bạn phải nhập số điện thoại người thân.',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
@@ -304,6 +306,7 @@ class AdminEmployeeController extends Controller
         foreach ($request->addmore as $item) {
             $employee_school = new EmployeeSchool();
             $employee_school->employee_id = $employee->id;
+            $employee_school->degree_id = $item['degree_id'];
             $employee_school->school_id = $item['school_id'];
             if ($item['major']) {
                 $employee_school->major = $item['major'];
@@ -386,6 +389,7 @@ class AdminEmployeeController extends Controller
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
+        $degrees = Degree::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
 
         return view('admin.employee.create_from_candidate',
@@ -394,6 +398,7 @@ class AdminEmployeeController extends Controller
                         'districts' => $districts,
                         'provinces' => $provinces,
                         'schools' => $schools,
+                        'degrees' => $degrees,
                         'company_jobs' => $company_jobs,
                         'proposal_candidate' => $proposal_candidate,
                         'candidate' => $candidate,
@@ -407,7 +412,6 @@ class AdminEmployeeController extends Controller
             'code' => 'required|unique:employees',
             'name' => 'required',
             'img_path' => 'required',
-            'private_email' => 'unique:employees',
             'phone' => 'required',
             'relative_phone' => 'required',
             'date_of_birth' => 'required',
@@ -419,6 +423,7 @@ class AdminEmployeeController extends Controller
             'commune_id' => 'required',
             'company_job_id' => 'required',
             'addmore.*.school_name' => 'required',
+            'addmore.*.degree_name' => 'required',
             'experience' => 'required',
         ];
         $messages = [
@@ -426,7 +431,6 @@ class AdminEmployeeController extends Controller
             'code.unique' => 'Mã đã tồn tại.',
             'name.required' => 'Bạn phải nhập tên.',
             'img_path.required' => 'Bạn phải chọn ảnh.',
-            'private_email.unique' => 'Email cá nhân đã tồn tại.',
             'phone.required' => 'Bạn phải nhập số điện thoại.',
             'relative_phone.required' => 'Bạn phải nhập số điện thoại người thân.',
             'date_of_birth.required' => 'Bạn phải nhập ngày sinh.',
@@ -439,6 +443,7 @@ class AdminEmployeeController extends Controller
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.school_name.required' => 'Bạn phải nhập tên trường.',
+            'addmore.*.degree_name.required' => 'Bạn phải nhập trình độ.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
         ];
 
@@ -506,6 +511,8 @@ class AdminEmployeeController extends Controller
             $employee_school = new EmployeeSchool();
             $employee_school->employee_id = $employee->id;
             $school = School::where('name', $item['school_name'])->first();
+            $degree = Degree::where('name', $item['degree_name'])->first();
+            $employee_school->degree_id = $degree->id;
             $employee_school->school_id = $school->id;
             if ($item['major']) {
                 $employee_school->major = $item['major'];

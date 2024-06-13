@@ -10,6 +10,7 @@ use App\Models\Division;
 use App\Models\Document;
 use App\Models\CompanyJob;
 use App\Models\School;
+use App\Models\Degree;
 use App\Models\Province;
 use App\Models\RecruitmentProposal;
 use App\Models\RecruitmentMethod;
@@ -119,6 +120,7 @@ class AdminRecruitmentProposalController extends Controller
         $communes = Commune::orderBy('name' ,'asc')->get();
         $candidates = RecruitmentCandidate::orderBy('id', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
+        $degrees = Degree::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         $documents = Document::orderBy('name', 'asc')->get();
         return view('admin.recruitment.proposal.show',
@@ -131,6 +133,7 @@ class AdminRecruitmentProposalController extends Controller
                      'receive_methods' => $receive_methods,
                      'candidates' => $candidates,
                      'schools' => $schools,
+                     'degrees' => $degrees,
                      'company_jobs' => $company_jobs,
                      'documents' => $documents,
                     ]);

@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('candidate_school', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('school_id')->constrained('schools');
+            $table->foreignId('degree_id')->constrained('degrees')->onDelete('cascade');
+            $table->foreignId('school_id')->constrained('schools')->onDelete('cascade');
             $table->foreignId('candidate_id')->constrained('recruitment_candidates');
             $table->string('major')->nullable();
             $table->timestamps();

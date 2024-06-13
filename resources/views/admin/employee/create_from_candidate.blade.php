@@ -216,7 +216,7 @@
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <label class="required-field" class="control-label">Trình độ</label>
+                                        <label class="required-field" class="control-label">Học vấn</label>
                                         <table class="table table-bordered" id="dynamicTable">
                                             <tr>
                                                 <th class="required-field">
@@ -225,6 +225,7 @@
                                                         <i class="fas fa-plus"></i>
                                                     </button>
                                                 </th>
+                                                <th>Trình độ</th>
                                                 <th>Ngành</th>
                                             </tr>
                                             @php
@@ -237,7 +238,11 @@
                                                 </td>
                                                 @php
                                                     $my_candidate_school = App\Models\CandidateSchool::where('school_id', $school->id)->where('candidate_id', $candidate->id)->first();
+                                                    $degree = App\Models\Degree::findOrFail($my_candidate_school->degree_id);
                                                 @endphp
+                                                <td>
+                                                    <input type="text" class="form-control" name="addmore[{{$i}}][degree_name]" required="" readonly value="{{$degree->name}}">
+                                                </td>
                                                 <td><input type="text" name="addmore[{{$i}}][major]" placeholder="Ngành" class="form-control" readonly value="{{$my_candidate_school->major}}"/></td>
                                             </tr>
                                             @php

@@ -6,6 +6,7 @@ use App\Models\RecruitmentCandidate;
 use App\Models\RecruitmentProposal;
 use App\Models\ProposalCandidate;
 use App\Models\School;
+use App\Models\Degree;
 use App\Models\Commune;
 use App\Models\District;
 use App\Models\Province;
@@ -28,12 +29,14 @@ class AdminRecruitmentCandidateController extends Controller
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
+        $degrees = Degree::orderBy('name', 'asc')->get();
         return view('admin.candidate.index',
                     [
                         'communes' => $communes,
                         'districts' => $districts,
                         'provinces' => $provinces,
                         'schools' => $schools,
+                        'degrees' => $degrees,
                     ]);
     }
 
@@ -103,6 +106,7 @@ class AdminRecruitmentCandidateController extends Controller
         foreach ($request->addmore as $item) {
             $candidate_school = new CandidateSchool();
             $candidate_school->candidate_id = $candidate->id;
+            $candidate_school->degree_id = $item['degree_id'];
             $candidate_school->school_id = $item['school_id'];
             if ($item['major']) {
                 $candidate_school->major = $item['major'];
@@ -134,12 +138,14 @@ class AdminRecruitmentCandidateController extends Controller
         $districts = District::orderBy('name', 'asc')->get();
         $provinces = Province::orderBy('name', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
+        $degrees = Degree::orderBy('name', 'asc')->get();
         return view('admin.candidate.edit',
                     ['candidate' => $candidate,
                     'communes' => $communes,
                     'districts' => $districts,
                     'provinces' => $provinces,
                     'schools' => $schools,
+                    'degrees' => $degrees,
                     ]);
     }
 
@@ -208,6 +214,7 @@ class AdminRecruitmentCandidateController extends Controller
             //dd($item['major']);
             $candidate_school = new CandidateSchool();
             $candidate_school->candidate_id = $candidate->id;
+            $candidate_school->degree_id = $item['degree_id'];
             $candidate_school->school_id = $item['school_id'];
             if ($item['major']) {
                 $candidate_school->major = $item['major'];
@@ -222,9 +229,13 @@ class AdminRecruitmentCandidateController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Candidate $candidate)
+    public function destroy($id)
     {
-        //
+        $candidate = RecruitmentCandidate::findOrFail($id);
+        $candidate->destroy($id);
+
+        Alert::toast('Xóa ứng viên thành công!', 'success', 'top-right');
+        return redirect()->route('admin.recruitment.candidates.index');
     }
 
 

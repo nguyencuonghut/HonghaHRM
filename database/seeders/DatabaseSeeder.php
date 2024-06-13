@@ -30,6 +30,7 @@ class DatabaseSeeder extends Seeder
             RecruitmentSocialMediaTableSeeder::class,
             CvReceiveMethodsTableSeeder::class,
             SchoolsTableSeeder::class,
+            DegreesTableSeeder::class,
             DocumentsTableSeeder::class,
         ]);
     }

@@ -14,6 +14,7 @@ class EmployeeSchool extends Model
     protected $fillable = [
         'school_id',
         'employee_id',
+        'degree_id',
         'major',
     ];
 }
