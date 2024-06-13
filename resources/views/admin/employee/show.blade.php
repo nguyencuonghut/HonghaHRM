@@ -122,7 +122,7 @@
                 <div class="card">
                     <div class="card-header p-2">
                       <ul class="nav nav-pills">
-                        <li class="nav-item"><a class="nav-link active" href="#tab-document" data-toggle="tab">Giấy tờ cần ký</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="#tab-document" data-toggle="tab">Hồ sơ</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-family" data-toggle="tab">Gia đình</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-contract" data-toggle="tab">Hợp đồng</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-working" data-toggle="tab">Công tác</a></li>

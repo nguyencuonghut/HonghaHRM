@@ -53,7 +53,7 @@
                       <div class="modal-dialog modal-lg">
                           <div class="modal-content">
                               <div class="modal-header">
-                                  <h4>Giấy tờ cần ký của {{$employee->name}}</h4>
+                                  <h4>Hồ sơ của {{$employee->name}}</h4>
                                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                       <span aria-hidden="true">&times;</span>
                                   </button>
@@ -114,7 +114,7 @@
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4>Giấy tờ cần ký của {{$employee->name}}</h4>
+                        <h4>Hồ sơ của {{$employee->name}}</h4>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
