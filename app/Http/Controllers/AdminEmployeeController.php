@@ -13,7 +13,6 @@ use App\Models\District;
 use App\Models\Document;
 use App\Models\ProposalCandidate;
 use App\Models\ProposalCandidateEmployee;
-use App\Models\ProposalCandidateDocument;
 use App\Models\Province;
 use App\Models\RecruitmentCandidate;
 use App\Models\RecruitmentProposal;
@@ -173,12 +172,10 @@ class AdminEmployeeController extends Controller
 
 
         $proposal_candidate_ids = ProposalCandidateEmployee::where('employee_id', $employee->id)->pluck('proposal_candidate_id')->toArray();
-        $proposal_candidate_documents = ProposalCandidateDocument::whereIn('proposal_candidate_id', $proposal_candidate_ids)->get();
         return view('admin.employee.show',
                     ['employee' => $employee,
                     'documents' => $documents,
                     'employee_documents' => $employee_documents,
-                    'proposal_candidate_documents' => $proposal_candidate_documents,
                     ]);
     }
 

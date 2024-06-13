@@ -1,4 +1,10 @@
 <!-- Document Tab -->
+@push('styles')
+  <!-- Select2 -->
+  <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+@endpush
+
 <div class="active tab-pane" id="tab-document">
     @can('create-document')
     <a href="#create_document{{' . $employee->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_document{{$employee->id}}"><i class="fas fa-plus"></i></a>
@@ -98,28 +104,13 @@
               <!-- /.modal -->
             </tr>
           @endforeach
-
-          @foreach ($proposal_candidate_documents as $proposal_candidate_document)
-            <tr>
-              @php
-                  $document = App\Models\Document::findOrFail($proposal_candidate_document->document_id);
-                  $proposal_candidate = App\Models\ProposalCandidate::findOrFail($proposal_candidate_document->proposal_candidate_id);
-                  $proposal = App\Models\RecruitmentProposal::findOrFail($proposal_candidate->id);
-              @endphp
-              <td>{!! $document->name !!}</td>
-              <td>
-                  <span class="badge @if ("Đã ký" == $proposal_candidate_document->status) badge-success @else badge-danger @endif">{{$proposal_candidate_document->status}}</span>
-              </td>
-              <td>{{$proposal->company_job->name}} - {{date('d/m/Y', strtotime($proposal->work_time))}}</td>
-            </tr>
-          @endforeach
         </tbody>
     </table>
 
     <!-- Modals for create employee document -->
     <form class="form-horizontal" method="post" action="{{ route('admin.employees.document.store', $employee->id) }}" name="create_document" id="create_document" novalidate="novalidate">
         {{ csrf_field() }}
-        <div class="modal fade" tabindex="-1" id="create_document{{$employee->id}}">
+        <div class="modal fade" id="create_document{{$employee->id}}">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -172,6 +163,21 @@
     </form>
     <!-- /.modal -->
 </div>
+
+@push('scripts')
+<!-- Select2 -->
+<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+
+<script>
+    $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2({
+        theme: 'bootstrap4'
+        })
+    })
+</script>
+@endpush
+
 
 
 
