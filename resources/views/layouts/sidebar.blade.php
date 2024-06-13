@@ -70,20 +70,12 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{route('admin.recruitment.candidates.index')}}" class="nav-link {{ Request::is('admin/recruitment/candidates*') ? 'active' : '' }}"">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
-                  <p>Thông báo</p>
+                  <p>Ứng viên</p>
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('admin.recruitment.candidates.index')}}" class="nav-link {{ Request::is('admin/recruitment/candidates*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-check"></i>
-              <p>
-                Ứng viên
-              </p>
-            </a>
           </li>
           <li class="nav-item">
             <a href="{{route('admin.employees.index')}}" class="nav-link {{ Request::is('admin/employees*') ? 'active' : '' }}">
