@@ -58,7 +58,9 @@
                         <td>{{date('d/m/Y', strtotime($plan->work_deadline))}}</td>
                         <td>{{$plan->instructor}}</td>
                         <td>{!! $plan->work_result !!}</td>
+                        @can('create-probation')
                         <td>{!! $action_edit_plan !!}</td>
+                        @endcan
                     </tr>
                     @endforeach
                 </tbody>
