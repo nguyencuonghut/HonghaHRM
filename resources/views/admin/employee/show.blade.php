@@ -136,6 +136,7 @@
                     <div class="card-header p-2">
                       <ul class="nav nav-pills">
                         <li class="nav-item"><a class="nav-link active" href="#tab-document" data-toggle="tab">Hồ sơ</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#tab-probation" data-toggle="tab">Thử việc</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-family" data-toggle="tab">Gia đình</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-contract" data-toggle="tab">Hợp đồng</a></li>
                         <li class="nav-item"><a class="nav-link" href="#tab-working" data-toggle="tab">Công tác</a></li>
@@ -148,6 +149,7 @@
                     <div class="card-body">
                       <div class="tab-content">
                         @include('admin.employee.tabs.document_tab')
+                        @include('admin.employee.tabs.probation_tab')
                         @include('admin.employee.tabs.family_tab')
                         @include('admin.employee.tabs.contract_tab')
                         @include('admin.employee.tabs.working_tab')

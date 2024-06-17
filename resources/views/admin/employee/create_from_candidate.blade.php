@@ -43,6 +43,8 @@
                         <form class="form-horizontal" method="post" action="{{ route('admin.employees.store_from_candidate') }}" enctype="multipart/form-data" name="create_employee" id="create_employee" novalidate="novalidate">
                             {{ csrf_field() }}
                             <div class="card-body">
+                                <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">
+
                                 <div class="row">
                                     <div class="col-4">
                                         <div class="control-group">

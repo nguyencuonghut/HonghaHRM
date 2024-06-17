@@ -11,6 +11,7 @@ use App\Models\Commune;
 use App\Models\CompanyJob;
 use App\Models\District;
 use App\Models\Document;
+use App\Models\Probation;
 use App\Models\ProposalCandidate;
 use App\Models\ProposalCandidateEmployee;
 use App\Models\Province;
@@ -169,13 +170,13 @@ class AdminEmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         $documents = Document::all();
         $employee_documents = EmployeeDocument::where('employee_id', $employee->id)->get();
+        $probations = Probation::all();
 
-
-        $proposal_candidate_ids = ProposalCandidateEmployee::where('employee_id', $employee->id)->pluck('proposal_candidate_id')->toArray();
         return view('admin.employee.show',
                     ['employee' => $employee,
                     'documents' => $documents,
                     'employee_documents' => $employee_documents,
+                    'probations' => $probations
                     ]);
     }
 
@@ -406,6 +407,7 @@ class AdminEmployeeController extends Controller
     public function storeFromCandidate(Request $request)
     {
         $rules = [
+            'proposal_candidate_id' => 'required',
             'code' => 'required|unique:employees',
             'name' => 'required',
             'img_path' => 'required',
@@ -424,6 +426,7 @@ class AdminEmployeeController extends Controller
             'experience' => 'required',
         ];
         $messages = [
+            'proposal_candidate_id.required' => 'proposal_candidate_id không hợp lệ.',
             'code.required' => 'Bạn phải nhập mã.',
             'code.unique' => 'Mã đã tồn tại.',
             'name.required' => 'Bạn phải nhập tên.',
@@ -450,6 +453,12 @@ class AdminEmployeeController extends Controller
                                     ->where('commune_id', $request->commune_id)
                                     ->first();
         if ($existed_employee) {
+            // Create ProposalCandidateEmployee
+            $proposal_candidate_employee = new ProposalCandidateEmployee();
+            $proposal_candidate_employee->proposal_candidate_id = $request->proposal_candidate_id;
+            $proposal_candidate_employee->employee_id = $existed_employee->id;
+            $proposal_candidate_employee->save();
+
             Alert::toast('Nhân sự đã có hồ sơ!', 'error', 'top-right');
             return redirect()->back();
         }
@@ -516,6 +525,12 @@ class AdminEmployeeController extends Controller
             }
             $employee_school->save();
         }
+
+        // Create ProposalCandidateEmployee
+        $proposal_candidate_employee = new ProposalCandidateEmployee();
+        $proposal_candidate_employee->proposal_candidate_id = $request->proposal_candidate_id;
+        $proposal_candidate_employee->employee_id = $employee->id;
+        $proposal_candidate_employee->save();
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.employees.show', $employee->id);

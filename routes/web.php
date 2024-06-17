@@ -34,6 +34,8 @@ use App\Http\Controllers\AdminCalendarController;
 use App\Http\Controllers\AdminEmployeeController;
 use App\Http\Controllers\AdminDocumentController;
 use App\Http\Controllers\AdminEmployeeDocumentController;
+use App\Http\Controllers\AdminProbationController;
+use App\Http\Controllers\AdminPlanController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -152,6 +154,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('documents/data', [AdminDocumentController::class, 'anyData'])->name('documents.data');
         Route::resource('documents', AdminDocumentController::class);
+
+        Route::resource('probations', AdminProbationController::class);
+
+        Route::resource('plans', AdminPlanController::class);
     });
 });
 
