@@ -179,4 +179,29 @@ class AdminProbationController extends Controller
         Alert::toast('Kiểm tra kết quả thử việc thành công!', 'success', 'top-right');
         return redirect()->back();
     }
+
+    public function approve(Request $request, $id)
+    {
+        $rules = [
+            'approver_result' => 'required',
+        ];
+
+        $messages = [
+            'approver_result.required' => 'Bạn phải nhập kết quả.',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $probation = Probation::findOrFail($id);
+        $probation->approver_result = $request->approver_result;
+        if ($request->approver_comment) {
+            $probation->approver_comment = $request->approver_comment;
+        }
+        $probation->approve_time = Carbon::now();
+        $probation->approver_id = Auth::user()->id;
+        $probation->save();
+
+        Alert::toast('Duyệt kết quả thử việc thành công!', 'success', 'top-right');
+        return redirect()->back();
+    }
 }

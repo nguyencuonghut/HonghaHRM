@@ -139,6 +139,38 @@
                             <hr>
                             @endif
 
+                            @if ($probation->approver_result)
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Kết quả phê duyệt</strong><br>
+                                    @if ('Đồng ý' == $probation->approver_result)
+                                        <span class="badge badge-success">{{$probation->approver_result}}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{$probation->approver_result}}</span>
+                                    @endif
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Thời gian duyệt</strong><br>
+                                    {{date('d/m/Y H:i', strtotime($probation->approve_time))}}<br>
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Người phê duyệt</strong><br>
+                                    {{$probation->approver->name}} -
+                                    @if ($probation->approver_comment)
+                                        {!! preg_replace('/(<br>)+$/', '', $probation->approver_comment) !!}<br>
+                                    @endif
+                                </div>
+                            </div>
+                            <hr>
+                            @endif
+
                             @can('create-probation')
                             <a href="#create_plan{{' . $probation->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_plan{{$probation->id}}"><i class="fas fa-plus"></i></a>
                             <br>
@@ -184,13 +216,15 @@
                             </table>
 
                             @can('create-probation')
-                            <br>
-                            <a href="#evaluate_probation{{' . $probation->id . '}}" class="btn btn-primary" data-toggle="modal" data-target="#evaluate_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
+                            <a href="#evaluate_probation{{' . $probation->id . '}}" class="btn btn-primary mt-4" data-toggle="modal" data-target="#evaluate_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
                             @endcan
 
                             @can('review-probation')
-                            <br>
-                            <a href="#review_probation{{' . $probation->id . '}}" class="btn btn-primary" data-toggle="modal" data-target="#review_probation{{$probation->id}}"><i class="fas fa-check-double"></i></a>
+                            <a href="#review_probation{{' . $probation->id . '}}" class="btn btn-primary mt-4" data-toggle="modal" data-target="#review_probation{{$probation->id}}"><i class="fas fa-check-double"></i></a>
+                            @endcan
+
+                            @can('approve-probation')
+                            <a href="#approve_probation{{' . $probation->id . '}}" class="btn btn-success mt-4 float-right" data-toggle="modal" data-target="#approve_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
                             @endcan
 
                             <!-- Modals for create employee probation plan -->
@@ -365,6 +399,53 @@
                                 </div>
                             </form>
                             <!-- /.modal -->
+
+                            <!-- Modals for approve the probation-->
+                            <form class="form-horizontal" method="post" action="{{ route('admin.probations.approve', $probation->id) }}" name="approve_probation" id="approve_probation" novalidate="novalidate">
+                                {{ csrf_field() }}
+                                <div class="modal fade" id="approve_probation{{$probation->id}}">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4>Duyệt kết quả thử việc cho vị trí {{$proposal->company_job->name}}</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="control-group">
+                                                            <label class="required-field control-label">Kết quả duyệt</label>
+                                                            <div class="controls">
+                                                                <select name="approver_result" id="approver_result" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                    <option selected="selected" disabled>-- Chọn -- </option>
+                                                                    <option value='Đồng ý' @if ('Đồng ý' == $probation->approver_result) selected @endif>Đồng ý</option>
+                                                                    <option value='Từ chối' @if ('Từ chối' == $probation->approver_result) selected @endif>Từ chối</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <label class="control-label">Ghi chú</label>
+                                                        <textarea id="approver_comment" name="approver_comment">
+                                                        </textarea>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /.modal -->
                         </div>
                     </div>
                 </div>
@@ -396,6 +477,18 @@
             e.preventDefault();
         });
         $('#work_requirement').summernote({
+            height: 90,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        })
+        $("#approver_comment").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
+        $('#approver_comment').summernote({
             height: 90,
             toolbar: [
                 ['style', ['style']],

@@ -28,7 +28,7 @@ class Probation extends Model
         'approver_id',
         'approver_result',
         'approver_comment',
-        'approver_time',
+        'approve_time',
     ];
 
     public function plans(): HasMany
@@ -47,6 +47,11 @@ class Probation extends Model
     }
 
     public function result_reviewer(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
+    public function approver(): BelongsTo
     {
         return $this->belongsTo(Admin::class);
     }
