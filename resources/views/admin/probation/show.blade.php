@@ -110,6 +110,35 @@
                             <hr>
                             @endif
 
+                            @if ($probation->result_reviewer_status)
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Kết quả kiểm tra</strong><br>
+                                    @if ('Đồng ý' == $probation->result_reviewer_status)
+                                        <span class="badge badge-success">{{$probation->result_reviewer_status}}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{$probation->result_reviewer_status}}</span>
+                                    @endif
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Thời gian kiểm tra</strong><br>
+                                    {{date('d/m/Y H:i', strtotime($probation->result_review_time))}}<br>
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Người kiểm tra</strong><br>
+                                    {{$probation->result_reviewer->name}}<br>
+                                </div>
+                            </div>
+                            <hr>
+                            @endif
+
                             @can('create-probation')
                             <a href="#create_plan{{' . $probation->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_plan{{$probation->id}}"><i class="fas fa-plus"></i></a>
                             <br>
@@ -157,6 +186,11 @@
                             @can('create-probation')
                             <br>
                             <a href="#evaluate_probation{{' . $probation->id . '}}" class="btn btn-primary" data-toggle="modal" data-target="#evaluate_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
+                            @endcan
+
+                            @can('review-probation')
+                            <br>
+                            <a href="#review_probation{{' . $probation->id . '}}" class="btn btn-primary" data-toggle="modal" data-target="#review_probation{{$probation->id}}"><i class="fas fa-check-double"></i></a>
                             @endcan
 
                             <!-- Modals for create employee probation plan -->
@@ -276,6 +310,45 @@
                                                                     <option selected="selected" disabled>-- Chọn -- </option>
                                                                     <option value='Đạt' @if ('Đạt' == $probation->result_manager_status) selected @endif>Đạt</option>
                                                                     <option value='Không đạt' @if ('Không đạt' == $probation->result_manager_status) selected @endif>Không đạt</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /.modal -->
+
+                            <!-- Modals for review the probation-->
+                            <form class="form-horizontal" method="post" action="{{ route('admin.probations.review', $probation->id) }}" name="review_probation" id="review_probation" novalidate="novalidate">
+                                {{ csrf_field() }}
+                                <div class="modal fade" id="review_probation{{$probation->id}}">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4>Kiểm tra kết quả thử việc cho vị trí {{$proposal->company_job->name}}</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="control-group">
+                                                            <label class="required-field control-label">Kết quả kiểm tra</label>
+                                                            <div class="controls">
+                                                                <select name="result_reviewer_status" id="result_reviewer_status" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                    <option selected="selected" disabled>-- Chọn -- </option>
+                                                                    <option value='Đồng ý' @if ('Đồng ý' == $probation->result_reviewer_status) selected @endif>Đồng ý</option>
+                                                                    <option value='Từ chối' @if ('Từ chối' == $probation->result_reviewer_status) selected @endif>Từ chối</option>
                                                                 </select>
                                                             </div>
                                                         </div>

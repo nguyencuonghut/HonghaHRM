@@ -18,14 +18,13 @@ return new class extends Migration
             $table->foreignId('creator_id')->constrained('admins')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
-            $table->foreignId('plan_reviewer_id')->nullable()->constrained('admins')->onDelete('cascade');
-            $table->enum('plan_review_status', ['Đồng ý', 'Từ chối'])->nullable();
             $table->time('plan_review_time')->nullable();
             $table->enum('result_of_work', ['Hoàn thành', 'Không hoàn thành'])->nullable();
             $table->enum('result_of_attitude', ['Tốt', 'Khá', 'Trung bình', 'Kém'])->nullable();
             $table->enum('result_manager_status', ['Đồng ý', 'Từ chối'])->nullable();
             $table->enum('result_reviewer_status', ['Đồng ý', 'Từ chối'])->nullable();
             $table->time('result_review_time')->nullable();
+            $table->foreignId('result_reviewer_id')->nullable()->constrained('admins')->onDelete('cascade');
             $table->foreignId('approver_id')->nullable()->constrained('admins')->onDelete('cascade');
             $table->enum('approver_result', ['Đồng ý', 'Từ chối'])->nullable();
             $table->string('approver_comment')->nullable();

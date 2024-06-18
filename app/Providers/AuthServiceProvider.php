@@ -24,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         'view-salary' => ['Admin', 'Nhân sự'],
         'create-document' => ['Admin', 'Nhân sự'],
         'create-probation' => ['Admin', 'Trưởng đơn vị'],
+        'review-probation' => ['Admin', 'Nhân sự'],
     ];
 
     /**

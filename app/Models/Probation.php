@@ -17,7 +17,6 @@ class Probation extends Model
         'creator_id',
         'start_date',
         'end_date',
-        'plan_reviewer_id',
         'plan_review_status',
         'plan_review_time',
         'result_of_work',
@@ -25,6 +24,7 @@ class Probation extends Model
         'result_manager_status',
         'result_reviewer_status',
         'result_review_time',
+        'result_reviewer_id',
         'approver_id',
         'approver_result',
         'approver_comment',
@@ -42,6 +42,11 @@ class Probation extends Model
     }
 
     public function creator(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class);
+    }
+
+    public function result_reviewer(): BelongsTo
     {
         return $this->belongsTo(Admin::class);
     }

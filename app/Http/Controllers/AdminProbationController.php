@@ -157,4 +157,26 @@ class AdminProbationController extends Controller
         Alert::toast('Đánh giá kết quả thử việc thành công!', 'success', 'top-right');
         return redirect()->back();
     }
+
+    public function review(Request $request, $id)
+    {
+        $rules = [
+            'result_reviewer_status' => 'required'
+        ];
+
+        $messages = [
+            'result_reviewer_status.required' => 'Bạn phải nhập đánh giá.',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $probation = Probation::findOrFail($id);
+        $probation->result_reviewer_status = $request->result_reviewer_status;
+        $probation->result_review_time = Carbon::now();
+        $probation->result_reviewer_id = Auth::user()->id;
+        $probation->save();
+
+        Alert::toast('Kiểm tra kết quả thử việc thành công!', 'success', 'top-right');
+        return redirect()->back();
+    }
 }
