@@ -155,6 +155,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('documents/data', [AdminDocumentController::class, 'anyData'])->name('documents.data');
         Route::resource('documents', AdminDocumentController::class);
 
+        Route::post('probations/evaluate/{id}', [AdminProbationController::class, 'evaluate'])->name('probations.evaluate');
         Route::resource('probations', AdminProbationController::class);
 
         Route::resource('plans', AdminPlanController::class);

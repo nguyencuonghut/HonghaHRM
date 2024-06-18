@@ -131,4 +131,30 @@ class AdminProbationController extends Controller
         Alert::toast('Xóa kế hoạch thử việc thành công!', 'success', 'top-right');
         return redirect()->back();
     }
+
+    public function evaluate(Request $request, $id)
+    {
+        $rules = [
+            'result_of_work' => 'required',
+            'result_of_attitude' => 'required',
+            'result_manager_status' => 'required'
+        ];
+
+        $messages = [
+            'result_of_work.required' => 'Bạn phải nhập kết quả công việc.',
+            'result_of_attitude.required' => 'Bạn phải nhập ý thức, thái độ.',
+            'result_manager_status.required' => 'Bạn phải nhập đánh giá.',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $probation = Probation::findOrFail($id);
+        $probation->result_of_work = $request->result_of_work;
+        $probation->result_of_attitude = $request->result_of_attitude;
+        $probation->result_manager_status = $request->result_manager_status;
+        $probation->save();
+
+        Alert::toast('Đánh giá kết quả thử việc thành công!', 'success', 'top-right');
+        return redirect()->back();
+    }
 }

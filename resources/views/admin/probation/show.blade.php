@@ -3,6 +3,9 @@
 @endsection
 
 @push('styles')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 <!-- Summernote -->
 <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
   <!-- Tempusdominus Bootstrap 4 -->
@@ -65,6 +68,47 @@
                                 </div>
                             </div>
                             <hr>
+                            @if ($probation->result_of_attitude)
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Kết quả công việc</strong><br>
+                                    @if ('Hoàn thành' == $probation->result_of_work)
+                                        <span class="badge badge-success">{{$probation->result_of_work}}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{$probation->result_of_work}}</span>
+                                    @endif
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Ý thức thái độ</strong><br>
+                                    @if ('Tốt' == $probation->result_of_attitude)
+                                        <span class="badge badge-success">{{$probation->result_of_attitude}}</span>
+                                    @elseif ('Khá' == $probation->result_of_attitude)
+                                        <span class="badge badge-primary">{{$probation->result_of_attitude}}</span>
+                                    @elseif ('Trung bình' == $probation->result_of_attitude)
+                                        <span class="badge badge-warning">{{$probation->result_of_attitude}}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{$probation->result_of_attitude}}</span>
+                                    @endif
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>QL đánh giá</strong><br>
+                                    @if ('Đạt' == $probation->result_manager_status)
+                                        <span class="badge badge-success">{{$probation->result_manager_status}}</span>
+                                    @else
+                                        <span class="badge badge-danger">{{$probation->result_manager_status}}</span>
+                                    @endif
+                                  </address>
+                                </div>
+                            </div>
+                            <hr>
+                            @endif
 
                             @can('create-probation')
                             <a href="#create_plan{{' . $probation->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_plan{{$probation->id}}"><i class="fas fa-plus"></i></a>
@@ -90,7 +134,7 @@
                                     @endphp
                                     @foreach ($plans as $plan)
                                     @php
-                                        $action_edit_plan = '<a href="' . route("admin.plans.edit", $plan->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                        $action_edit_plan = '<a href="' . route("admin.plans.edit", $plan->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                                                 <form style="display:inline" action="'. route("admin.plans.destroy", $plan->id) . '" method="POST">
                                                 <input type="hidden" name="_method" value="DELETE">
                                                 <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -111,9 +155,8 @@
                             </table>
 
                             @can('create-probation')
-                            <a href="#evaluate_probation{{' . $probation->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#evaluate_probation{{$probation->id}}"><i class="fas fa-plus"></i></a>
                             <br>
-                            <br>
+                            <a href="#evaluate_probation{{' . $probation->id . '}}" class="btn btn-primary" data-toggle="modal" data-target="#evaluate_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
                             @endcan
 
                             <!-- Modals for create employee probation plan -->
@@ -180,6 +223,75 @@
                                 </div>
                             </form>
                             <!-- /.modal -->
+
+                            <!-- Modals for evaluate the probation-->
+                            <form class="form-horizontal" method="post" action="{{ route('admin.probations.evaluate', $probation->id) }}" name="evaluate_probation" id="evaluate_probation" novalidate="novalidate">
+                                {{ csrf_field() }}
+                                <div class="modal fade" id="evaluate_probation{{$probation->id}}">
+                                    <div class="modal-dialog modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4>Đánh giá thử việc cho vị trí {{$proposal->company_job->name}}</h4>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <div class="control-group">
+                                                            <label class="required-field control-label">Kết quả công việc</label>
+                                                            <div class="controls">
+                                                                <select name="result_of_work" id="result_of_work" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                    <option selected="selected" disabled>-- Chọn -- </option>
+                                                                    <option value='Hoàn thành' @if ('Hoàn thành' == $probation->result_of_work) selected @endif>Hoàn thành</option>
+                                                                    <option value='Không hoàn thành' @if ('Không hoàn thành' == $probation->result_of_work) selected @endif>Không hoàn thành</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-6">
+                                                        <div class="control-group">
+                                                            <label class="required-field control-label">Ý thức, thái độ</label>
+                                                            <div class="controls">
+                                                                <select name="result_of_attitude" id="result_of_attitude" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                    <option selected="selected" disabled>-- Chọn -- </option>
+                                                                    <option value='Tốt' @if ('Tốt' == $probation->result_of_attitude) selected @endif>Tốt</option>
+                                                                    <option value='Khá' @if ('Khá' == $probation->result_of_attitude) selected @endif>Khá</option>
+                                                                    <option value='Trung bình' @if ('Trung bình' == $probation->result_of_attitude) selected @endif>Trung bình</option>
+                                                                    <option value='Kém' @if ('Kém' == $probation->result_of_attitude) selected @endif>Kém</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="control-group">
+                                                            <label class="required-field control-label">Đánh giá</label>
+                                                            <div class="controls">
+                                                                <select name="result_manager_status" id="result_manager_status" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                                    <option selected="selected" disabled>-- Chọn -- </option>
+                                                                    <option value='Đạt' @if ('Đạt' == $probation->result_manager_status) selected @endif>Đạt</option>
+                                                                    <option value='Không đạt' @if ('Không đạt' == $probation->result_manager_status) selected @endif>Không đạt</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer justify-content-between">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                            <button type="submit" class="btn btn-primary">Lưu</button>
+                                            </div>
+                                        </div>
+                                        <!-- /.modal-content -->
+                                    </div>
+                                </div>
+                            </form>
+                            <!-- /.modal -->
                         </div>
                     </div>
                 </div>
@@ -190,6 +302,8 @@
 @endsection
 
 @push('scripts')
+<!-- Select2 -->
+<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
 <!-- Summernote -->
 <script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
@@ -198,6 +312,11 @@
 
 <script>
     $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2({
+        theme: 'bootstrap4'
+        })
+
         // Summernote
         $("#work_requirement").on("summernote.enter", function(we, e) {
             $(this).summernote("pasteHTML", "<br><br>");
