@@ -113,7 +113,7 @@ class AdminPlanController extends Controller
 
         $probation = Probation::findOrFail($plan->probation_id);
         Alert::toast('Sửa chi tiết thử việc thành công!', 'success', 'top-right');
-        return redirect()->route('admin.employees.show', $probation->employee->id);
+        return redirect()->route('admin.probations.show', $probation->id);
     }
 
     /**

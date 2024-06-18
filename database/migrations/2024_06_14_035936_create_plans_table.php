@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('work_requirement');
             $table->date('work_deadline');
             $table->string('instructor')->nullable();
-            $table->text('work_result')->nullable();;
+            $table->text('work_result')->nullable();
             $table->timestamps();
         });
     }

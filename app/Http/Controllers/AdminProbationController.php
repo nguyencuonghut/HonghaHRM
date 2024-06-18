@@ -72,9 +72,10 @@ class AdminProbationController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Probation $probation)
+    public function show($id)
     {
-        //
+        $probation = Probation::findOrFail($id);
+        return view('admin.probation.show', ['probation' => $probation]);
     }
 
     /**
@@ -88,16 +89,46 @@ class AdminProbationController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Probation $probation)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ];
+
+        $messages = [
+            'start_date.required' => 'Bạn phải nhập ngày bắt đầu.',
+            'end_date.required' => 'Bạn phải nhập ngày kết thúc.',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $probation = Probation::findOrFail($id);
+        $probation->start_date = Carbon::createFromFormat('d/m/Y', $request->start_date);
+        $probation->end_date = Carbon::createFromFormat('d/m/Y', $request->end_date);
+        $probation->creator_id = Auth::user()->id;
+        $probation->save();
+
+        Alert::toast('Sửa kế hoạch thử việc thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Probation $probation)
+    public function destroy($id)
     {
-        //
+        $probation = Probation::findOrFail($id);
+
+        // Delete all Plans
+        foreach ($probation->plans as $plan) {
+            $plan->destroy($plan->id);
+        }
+
+        // Delete probation
+        $probation->destroy($id);
+
+        Alert::toast('Xóa kế hoạch thử việc thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 }

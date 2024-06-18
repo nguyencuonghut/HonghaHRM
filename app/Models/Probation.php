@@ -40,4 +40,9 @@ class Probation extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
+    public function creator(): BelongsTo
+    {
+        return $this->belongsTo(Admin::class);
+    }
 }
