@@ -21,7 +21,7 @@
             @php
                 $proposal = App\Models\RecruitmentProposal::findOrFail($probation->proposal_id);
             @endphp
-            <h4 class="m-0">Kế hoạch thử việc {{$probation->employee->name}}, vị trí {{$proposal->company_job->name}}</h4>
+            <h4 class="m-0">Kế hoạch thử việc {{$probation->employee->name}}</h4>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -42,6 +42,30 @@
                     <div class="card">
                         <!-- /.card-header -->
                         <div class="card-body">
+                            <div class="row invoice-info">
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Vị trí</strong><br>
+                                    {{$proposal->company_job->name}} - {{$proposal->company_job->department->name}}<br>
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Thời gian</strong><br>
+                                    {{date('d/m/Y', strtotime($probation->start_date))}} - {{date('d/m/Y', strtotime($probation->end_date))}}<br>
+                                  </address>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-sm-4 invoice-col">
+                                  <address>
+                                    <strong>Người tạo</strong><br>
+                                    {{$probation->creator->name}}<br>
+                                  </address>
+                                </div>
+                            </div>
+                            <hr>
+
                             @can('create-probation')
                             <a href="#create_plan{{' . $probation->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_plan{{$probation->id}}"><i class="fas fa-plus"></i></a>
                             <br>
@@ -85,6 +109,12 @@
                                     @endforeach
                                 </tbody>
                             </table>
+
+                            @can('create-probation')
+                            <a href="#evaluate_probation{{' . $probation->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#evaluate_probation{{$probation->id}}"><i class="fas fa-plus"></i></a>
+                            <br>
+                            <br>
+                            @endcan
 
                             <!-- Modals for create employee probation plan -->
                             <form class="form-horizontal" method="post" action="{{ route('admin.plans.store') }}" name="create_plan" id="create_plan" novalidate="novalidate">
