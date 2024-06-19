@@ -162,9 +162,9 @@
                                 <div class="col-sm-4 invoice-col">
                                   <address>
                                     <strong>Người phê duyệt</strong><br>
-                                    {{$probation->approver->name}} -
+                                    {{$probation->approver->name}}
                                     @if ($probation->approver_comment)
-                                        {!! preg_replace('/(<br>)+$/', '', $probation->approver_comment) !!}<br>
+                                        - {!! preg_replace('/(<br>)+$/', '', $probation->approver_comment) !!}<br>
                                     @endif
                                 </div>
                             </div>
@@ -215,15 +215,18 @@
                                 </tbody>
                             </table>
 
-                            @can('create-probation')
+                            @if(Auth::user()->can('create-probation')
+                                && $probation->plans->count())
                             <a href="#evaluate_probation{{' . $probation->id . '}}" class="btn btn-primary mt-4" data-toggle="modal" data-target="#evaluate_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
-                            @endcan
+                            @endif
 
-                            @can('review-probation')
+                            @if(Auth::user()->can('review-probation')
+                                && $probation->result_manager_status)
                             <a href="#review_probation{{' . $probation->id . '}}" class="btn btn-primary mt-4" data-toggle="modal" data-target="#review_probation{{$probation->id}}"><i class="fas fa-check-double"></i></a>
                             @endcan
 
-                            @can('approve-probation')
+                            @if(Auth::user()->can('review-probation')
+                                && $probation->result_reviewer_status)
                             <a href="#approve_probation{{' . $probation->id . '}}" class="btn btn-success mt-4 float-right" data-toggle="modal" data-target="#approve_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
                             @endcan
 
