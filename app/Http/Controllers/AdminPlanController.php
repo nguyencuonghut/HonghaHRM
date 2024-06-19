@@ -77,6 +77,12 @@ class AdminPlanController extends Controller
     public function edit($id)
     {
         $plan = Plan::findOrFail($id);
+
+        // Check condition before edit
+        if ($plan->probation->result_manager_status) {
+            Alert::toast('Thử việc đã được QL đánh giá. Bạn không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         return view('admin.plan.edit', ['plan' => $plan]);
     }
 
@@ -100,6 +106,12 @@ class AdminPlanController extends Controller
         $request->validate($rules, $messages);
 
         $plan = Plan::findOrFail($id);
+        // Check condition before edit
+        if ($plan->probation->result_manager_status) {
+            Alert::toast('Thử việc đã được QL đánh giá. Bạn không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $plan->work_title = $request->work_title;
         $plan->work_requirement = $request->work_requirement;
         $plan->work_deadline = Carbon::createFromFormat('d/m/Y', $request->work_deadline);
@@ -122,6 +134,11 @@ class AdminPlanController extends Controller
     public function destroy($id)
     {
         $plan = Plan::findOrFail($id);
+        // Check condition before edit
+        if ($plan->probation->result_manager_status) {
+            Alert::toast('Thử việc đã được QL đánh giá. Bạn không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $plan->destroy($id);
 
         Alert::toast('Xóa chi tiết thử việc thành công!', 'success', 'top-right');

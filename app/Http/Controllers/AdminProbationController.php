@@ -86,6 +86,12 @@ class AdminProbationController extends Controller
     public function edit($id)
     {
         $probation = Probation::findOrFail($id);
+
+        // Check condition before editing
+        if ($probation->approver_result) {
+            Alert::toast('Thử việc đã được duyệt. Không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         return view('admin.probation.edit', ['probation' => $probation]);
     }
 
@@ -107,6 +113,12 @@ class AdminProbationController extends Controller
         $request->validate($rules, $messages);
 
         $probation = Probation::findOrFail($id);
+
+        // Check condition before updating
+        if ($probation->approver_result) {
+            Alert::toast('Thử việc đã được duyệt. Không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $probation->start_date = Carbon::createFromFormat('d/m/Y', $request->start_date);
         $probation->end_date = Carbon::createFromFormat('d/m/Y', $request->end_date);
         $probation->creator_id = Auth::user()->id;
@@ -122,6 +134,12 @@ class AdminProbationController extends Controller
     public function destroy($id)
     {
         $probation = Probation::findOrFail($id);
+
+        // Check condition before destroying
+        if ($probation->approver_result) {
+            Alert::toast('Thử việc đã được duyệt. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
 
         // Delete all Plans
         foreach ($probation->plans as $plan) {

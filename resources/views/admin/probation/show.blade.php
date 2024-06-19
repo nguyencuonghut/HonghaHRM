@@ -171,11 +171,12 @@
                             <hr>
                             @endif
 
-                            @can('create-probation')
+                            @if(Auth::user()->can('create-probation')
+                                && null == $probation->result_manager_status)
                             <a href="#create_plan{{' . $probation->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_plan{{$probation->id}}"><i class="fas fa-plus"></i></a>
                             <br>
                             <br>
-                            @endcan
+                            @endif
                             <table id="employees-table" class="table table-bordered table-striped">
                                 <thead>
                                 <tr>
@@ -184,9 +185,10 @@
                                     <th>Deadline</th>
                                     <th>Người hướng dẫn</th>
                                     <th>Kết quả</th>
-                                    @can('create-probation')
+                                    @if(Auth::user()->can('create-probation')
+                                        && null == $probation->result_manager_status)
                                     <th>Thao tác</th>
-                                    @endcan
+                                    @endif
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -207,9 +209,10 @@
                                         <td>{{date('d/m/Y', strtotime($plan->work_deadline))}}</td>
                                         <td>{{$plan->instructor}}</td>
                                         <td>{!! $plan->work_result !!}</td>
-                                        @can('create-probation')
+                                        @if(Auth::user()->can('create-probation')
+                                            && null == $probation->result_manager_status)
                                         <td>{!! $action_edit_plan !!}</td>
-                                        @endcan
+                                        @endif
                                     </tr>
                                     @endforeach
                                 </tbody>
