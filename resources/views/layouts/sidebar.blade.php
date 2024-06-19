@@ -86,6 +86,14 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="{{route('admin.probations.index')}}" class="nav-link {{ Request::is('admin/probations*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-user-check"></i>
+              <p>
+                Thử việc
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="{{route('admin.calendars.index')}}" class="nav-link {{ Request::is('admin/calendars*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-calendar-alt"></i>
               <p>

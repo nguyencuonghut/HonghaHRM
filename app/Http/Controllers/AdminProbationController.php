@@ -6,7 +6,9 @@ use App\Models\Probation;
 use Illuminate\Http\Request;
 use App\Models\ProposalCandidateEmployee;
 use App\Models\ProposalCandidate;
+use App\Models\RecruitmentProposal;
 use Carbon\Carbon;
+use Datatables;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,7 +19,7 @@ class AdminProbationController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.probation.index');
     }
 
     /**
@@ -203,5 +205,57 @@ class AdminProbationController extends Controller
 
         Alert::toast('Duyệt kết quả thử việc thành công!', 'success', 'top-right');
         return redirect()->back();
+    }
+
+    public function anyData()
+    {
+        $probations = Probation::with(['employee', 'creator', 'approver'])->orderBy('id', 'asc')->get();
+        return Datatables::of($probations)
+            ->addIndexColumn()
+            ->editColumn('employee_name', function ($probations) {
+                return $probations->employee->name;
+            })
+            ->editColumn('company_job', function ($probations) {
+                $proposal = RecruitmentProposal::findOrFail($probations->proposal_id);
+                return $proposal->company_job->name;
+            })
+            ->editColumn('time', function ($probations) {
+                $time = '';
+                $time = $time . date('d/m/Y', strtotime($probations->start_date)) . ' - ' . date('d/m/Y', strtotime($probations->end_date));
+
+                return '<a href="'.route('admin.probations.show', $probations->id).'">'.$time.'</a>';
+            })
+            ->editColumn('creator', function ($probations) {
+                if ($probations->result_manager_status) {
+                    if ('Đạt' == $probations->result_manager_status) {
+                        return $probations->creator->name . ' - ' . '<span class="badge badge-success">' . $probations->result_manager_status . '</span>';
+                    } else {
+                        return $probations->creator->name . ' - ' . '<span class="badge badge-danger">' . $probations->result_manager_status . '</span>';
+                    }
+                } else {
+                    return $probations->creator->name;
+                }
+            })
+            ->editColumn('approver', function ($probations) {
+                if ($probations->approver_id) {
+                    if ('Đạt' == $probations->approver_result) {
+                        return $probations->approver->name . ' - ' . '<span class="badge badge-success">' . $probations->approver_result . '</span>';
+                    } else {
+                        return $probations->approver->name . ' - ' . '<span class="badge badge-danger">' . $probations->approver_result . '</span>';
+                    }
+                } else {
+                    return '-';
+                }
+            })
+            ->addColumn('actions', function ($probations) {
+                $action = '<a href="' . route("admin.probations.edit", $probations->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                           <form style="display:inline" action="'. route("admin.probations.destroy", $probations->id) . '" method="POST">
+                    <input type="hidden" name="_method" value="DELETE">
+                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+                return $action;
+            })
+            ->rawColumns(['actions', 'creator', 'approver', 'time'])
+            ->make(true);
     }
 }
