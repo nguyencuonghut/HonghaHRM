@@ -31,6 +31,8 @@ return new class extends Migration
             $table->foreignId('temporary_commune_id')->nullable()->constrained('communes');
             $table->foreignId('company_job_id')->constrained('company_jobs');
             $table->text('experience');
+            $table->date('join_date');
+            $table->enum('marriage_status', ['Kết hôn', 'Độc thân']);
             $table->timestamps();
         });
     }

@@ -31,6 +31,8 @@ class Employee extends Model
         'temporary_commune_id',
         'company_job_id',
         'experience',
+        'join_date',
+        'marriage_status',
     ];
 
     public function commune(): BelongsTo

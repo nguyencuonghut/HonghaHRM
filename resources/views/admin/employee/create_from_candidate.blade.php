@@ -144,6 +144,29 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-6">
+                                        <label class="required-field">Ngày vào</label>
+                                        <div class="input-group date" id="join_date" data-target-input="nearest">
+                                            <input type="text" name="join_date" class="form-control datetimepicker-input" data-target="#join_date"/>
+                                            <div class="input-group-append" data-target="#join_date" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="control-label">Tình trạng hôn nhân</label>
+                                            <div class="controls">
+                                                <select name="marriage_status" id="marriage_status" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    <option value="Kết hôn">Kết hôn</option>
+                                                    <option value="Độc thân">Độc thân</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Số nhà thường trú</label>
                                             <div class="controls">
@@ -448,6 +471,9 @@
 
         //Date picker
         $('#issued_date').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#join_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
 

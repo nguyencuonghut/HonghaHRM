@@ -77,6 +77,8 @@ class AdminEmployeeController extends Controller
             'company_job_id' => 'required',
             'addmore.*.school_id' => 'required',
             'experience' => 'required',
+            'join_date' => 'required',
+            'marriage_status' => 'required',
         ];
         $messages = [
             'code.required' => 'Bạn phải nhập mã.',
@@ -96,6 +98,8 @@ class AdminEmployeeController extends Controller
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
+            'join_date.required' => 'Bạn phải nhập ngày vào.',
+            'marriage_status.required' => 'Bạn phải nhập tình trạng hôn nhân.',
         ];
         $request->validate($rules,$messages);
 
@@ -144,6 +148,8 @@ class AdminEmployeeController extends Controller
         }
         $employee->company_job_id = $request->company_job_id;
         $employee->experience = $request->experience;
+        $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
+        $employee->marriage_status = $request->marriage_status;
         $employee->save();
 
         // Create EmployeeSchool
@@ -226,6 +232,8 @@ class AdminEmployeeController extends Controller
             'company_job_id' => 'required',
             'addmore.*.school_id' => 'required',
             'experience' => 'required',
+            'join_date' => 'required',
+            'marriage_status' => 'required',
         ];
         $messages = [
             'code.required' => 'Bạn phải nhập mã.',
@@ -244,6 +252,8 @@ class AdminEmployeeController extends Controller
             'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
+            'join_date.required' => 'Bạn phải nhập ngày vào.',
+            'marriage_status.required' => 'Bạn phải nhập tình trạng hôn nhân.',
         ];
         $request->validate($rules,$messages);
 
@@ -292,6 +302,8 @@ class AdminEmployeeController extends Controller
         }
         $employee->company_job_id = $request->company_job_id;
         $employee->experience = $request->experience;
+        $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
+        $employee->marriage_status = $request->marriage_status;
         $employee->save();
 
         //Delete all old EmployeeSchool
@@ -424,6 +436,8 @@ class AdminEmployeeController extends Controller
             'addmore.*.school_name' => 'required',
             'addmore.*.degree_name' => 'required',
             'experience' => 'required',
+            'join_date' => 'required',
+            'marriage_status' => 'required',
         ];
         $messages = [
             'proposal_candidate_id.required' => 'proposal_candidate_id không hợp lệ.',
@@ -445,6 +459,8 @@ class AdminEmployeeController extends Controller
             'addmore.*.school_name.required' => 'Bạn phải nhập tên trường.',
             'addmore.*.degree_name.required' => 'Bạn phải nhập trình độ.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
+            'join_date.required' => 'Bạn phải nhập ngày vào.',
+            'marriage_status.required' => 'Bạn phải nhập tình trạng hôn nhân.',
         ];
 
         // Check if Employee is existed
@@ -510,6 +526,8 @@ class AdminEmployeeController extends Controller
         }
         $employee->company_job_id = $request->company_job_id;
         $employee->experience = $request->experience;
+        $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
+        $employee->marriage_status = $request->marriage_status;
         $employee->save();
 
         // Create EmployeeSchool
