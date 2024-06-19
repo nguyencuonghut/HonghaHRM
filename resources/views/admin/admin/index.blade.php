@@ -50,7 +50,7 @@
                     <th>Email</th>
                     <th>Phòng/ban</th>
                     <th>Vai trò</th>
-                    <th style="width: 12%;">Thao tác</th>
+                    <th>Thao tác</th>
                   </tr>
                   </thead>
                 </table>
