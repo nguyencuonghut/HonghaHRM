@@ -29,7 +29,7 @@
               @php
                   $probation = App\Models\Probation::findOrFail($probation->id);
                   $proposal = App\Models\RecruitmentProposal::findOrFail($probation->proposal_id);
-                  $action_edit_probation = '<a href="#edit_probation{{' . $probation->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_probation' . $probation->id. '"><i class="fas fa-edit"></i></a>
+                  $action_edit_probation = '<a href="#edit_probation{{' . $probation->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_probation' . $probation->id. '"><i class="fas fa-edit"></i></a>
                           <form style="display:inline" action="'. route("admin.probations.destroy", $probation->id) . '" method="POST">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

@@ -83,9 +83,10 @@ class AdminProbationController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Probation $probation)
+    public function edit($id)
     {
-        //
+        $probation = Probation::findOrFail($id);
+        return view('admin.probation.edit', ['probation' => $probation]);
     }
 
     /**
@@ -238,7 +239,7 @@ class AdminProbationController extends Controller
             })
             ->editColumn('approver', function ($probations) {
                 if ($probations->approver_id) {
-                    if ('Đạt' == $probations->approver_result) {
+                    if ('Đồng ý' == $probations->approver_result) {
                         return $probations->approver->name . ' - ' . '<span class="badge badge-success">' . $probations->approver_result . '</span>';
                     } else {
                         return $probations->approver->name . ' - ' . '<span class="badge badge-danger">' . $probations->approver_result . '</span>';
