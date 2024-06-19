@@ -66,7 +66,7 @@ class AdminAdminController extends Controller
 
     public function anyData()
     {
-        $admins = Admin::with('role')->select(['id', 'name', 'email', 'role_id'])->get();
+        $admins = Admin::with(['role', 'departments'])->select(['id', 'name', 'email', 'role_id'])->get();
         return Datatables::of($admins)
             ->addIndexColumn()
             ->editColumn('name', function ($admins) {
@@ -78,6 +78,13 @@ class AdminAdminController extends Controller
             ->editColumn('role', function ($admins) {
                 return $admins->role->name;
             })
+            ->editColumn('departments', function ($admins) {
+                $departments = '';
+                foreach ($admins->departments as $department) {
+                    $departments .= $department->name . '<br>';
+                }
+                return $departments;
+            })
             ->addColumn('actions', function ($admins) {
                 $action = '<a href="' . route("admin.admins.edit", $admins->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                            <form style="display:inline" action="'. route("admin.admins.destroy", $admins->id) . '" method="POST">
@@ -86,7 +93,7 @@ class AdminAdminController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions'])
+            ->rawColumns(['actions', 'departments'])
             ->make(true);
     }
 

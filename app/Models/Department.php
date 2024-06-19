@@ -39,4 +39,9 @@ class Department extends Model
     {
         return $this->hasMany(CompanyJob::class);
     }
+
+    public function admins(): BelongsToMany
+    {
+        return $this->belongsToMany(Admin::class, 'admin_department')->withTimestamps();;
+    }
 }

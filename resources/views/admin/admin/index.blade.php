@@ -48,6 +48,7 @@
                     <th>STT</th>
                     <th>Họ tên</th>
                     <th>Email</th>
+                    <th>Phòng/ban</th>
                     <th>Vai trò</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
@@ -143,6 +144,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
             {data: 'email', name: 'email'},
+            {data: 'departments', name: 'departments'},
             {data: 'role', name: 'role'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]

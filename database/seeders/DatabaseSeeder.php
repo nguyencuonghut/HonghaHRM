@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             AdminsTableSeeder::class,
             UsersTableSeeder::class,
             UserDepartmentTableSeeder::class,
+            AdminDepartmentTableSeeder::class,
             UserDivisionTableSeeder::class,
             PositionsTableSeeder::class,
             UserPositionTableSeeder::class,
