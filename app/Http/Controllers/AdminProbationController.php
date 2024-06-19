@@ -52,7 +52,8 @@ class AdminProbationController extends Controller
         // Get the last proposal_id
         $last_proposal_candidate_employee = ProposalCandidateEmployee::where('employee_id', $request->employee_id)
                                                                         ->orderBy('id', 'desc')->latest()->first();
-        if ($last_proposal_candidate_employee->count()) {
+        if ($last_proposal_candidate_employee
+            && $last_proposal_candidate_employee->count()) {
             $last_proposal_candidate = ProposalCandidate::findOrFail($last_proposal_candidate_employee->proposal_candidate_id);
         } else {
             Alert::toast('Không tìm thấy đề xuất tuyển dụng cho kế hoạch thử việc!', 'error', 'top-right');
