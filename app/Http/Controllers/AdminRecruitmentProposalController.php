@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\AdminDepartment;
 use App\Models\Commune;
 use App\Models\Department;
 use App\Models\District;
@@ -48,13 +49,19 @@ class AdminRecruitmentProposalController extends Controller
             Alert::toast('Bạn không có quyền thêm đề xuất!', 'error', 'top-right');
             return redirect()->route('admin.recruitment.proposals.index');
         }
-        $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         $departments = Department::all()->pluck('name', 'id');
-        $divisions = Division::all()->pluck('name', 'id');
+        if ('Admin' == Auth::user()->role->name) {
+            // Fetch all company_jobs for Admin
+            $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
+        } else {
+            // Only fetch the Admin's department
+            $department_ids = [];
+            $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $company_jobs = CompanyJob::whereIn('department_id', $department_ids)->orderBy('name', 'asc')->get();
+        }
         return view('admin.recruitment.proposal.create',
                     ['company_jobs' => $company_jobs,
                     'departments' => $departments,
-                    'divisions' => $divisions,
                     ]);
     }
 
