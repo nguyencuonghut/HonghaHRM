@@ -173,7 +173,23 @@ class AdminRecruitmentProposalController extends Controller
 
     public function anyData()
     {
-        $proposals = RecruitmentProposal::with(['company_job', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
+        if ('Admin' == Auth::user()->role->name
+            || 'Ban lãnh đạo' == Auth::user()->role->name
+            || 'Nhân sự' == Auth::user()->role->name) {
+            $proposals = RecruitmentProposal::with(['company_job', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
+
+        } else {
+            // Only fetch the Proposal according to Admin's department
+            $department_ids = [];
+            $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $company_job_ids = [];
+            $company_job_ids = CompanyJob::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $proposals = RecruitmentProposal::with(['company_job', 'creator', 'reviewer', 'approver'])
+                                                ->whereIn('company_job_id', $company_job_ids)
+                                                ->orderBy('id', 'desc')
+                                                ->get();
+        }
+        //$proposals = RecruitmentProposal::with(['company_job', 'creator', 'reviewer', 'approver'])->orderBy('id', 'desc')->get();
         return Datatables::of($proposals)
             ->addIndexColumn()
             ->editColumn('company_job', function ($proposals) {
