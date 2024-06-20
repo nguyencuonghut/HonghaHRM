@@ -162,6 +162,11 @@
                         <div class="col-12">
                             <div class="control-group">
                                 <label class="required-field" class="control-label">Cách thức tuyển</label>
+                                @can('create-recruitment-method')
+                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_method">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                @endcan
                                 <div class="controls">
                                     <select name="method_id[]" id="method_id[]" data-placeholder="Chọn" class="form-control select2" multiple="multiple" style="width: 100%;">
                                         @foreach($methods as $method)
@@ -194,6 +199,40 @@
     </div>
 </form>
 
+<!-- Modal to create RecruitmentMethod -->
+<form class="form-horizontal" method="post" action="{{ route('admin.recruitment.methods.store') }}" name="create_method" id="create_method" novalidate="novalidate">
+    {{ csrf_field() }}
+    <div class="modal fade" id="add_method">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Thêm cách thức tuyển</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="control-group">
+                                <label class="required-field" class="control-label">Tên</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" name="name" id="name" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+  </form>
+  <!-- /.modal -->
 
 @if ($proposal->plan)
 <!-- Modals for plan approve -->

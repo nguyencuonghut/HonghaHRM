@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RecruitmentMethod;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminRecruitmentMethodController extends Controller
 {
@@ -28,7 +29,22 @@ class AdminRecruitmentMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+        ];
+
+        $messages = [
+            'name.required' => 'Bạn phải nhập tên',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $recruitment_method = new RecruitmentMethod();
+        $recruitment_method->name = $request->name;
+        $recruitment_method->save();
+
+        Alert::toast('Thêm cách thử tuyển mới thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**

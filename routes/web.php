@@ -17,6 +17,7 @@ use App\Http\Controllers\AdminCompanyJobController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRecruitmentProposalController;
 use App\Http\Controllers\AdminRecruitmentPlanController;
+use App\Http\Controllers\AdminRecruitmentMethodController;
 use App\Http\Controllers\AdminRecruitmentAnnouncementController;
 use App\Http\Controllers\AdminRecruitmentCandidateController;
 use App\Http\Controllers\AdminProposalCandidateController;
@@ -110,6 +111,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::post('recruitment/plans/approve/{proposal_id}', [AdminRecruitmentPlanController::class, 'approve'])->name('recruitment.plans.approve');
         Route::resource('recruitment/plans', AdminRecruitmentPlanController::class, ['names' => 'recruitment.plans']);
+
+        Route::resource('recruitment/methods', AdminRecruitmentMethodController::class, ['names' => 'recruitment.methods']);
 
         Route::resource('recruitment/announcements', AdminRecruitmentAnnouncementController::class, ['names' => 'recruitment.announcements']);
 
