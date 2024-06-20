@@ -45,9 +45,11 @@
                                 <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Vị trí</label>
+                                        @can('create-company-job')
                                         <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_job">
                                             <i class="fas fa-plus"></i>
                                         </button>
+                                        @endcan
                                         <div class="controls">
                                             <select name="company_job_id" id="company_job_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
                                                 <option value="-- Chọn vị trí --" disabled="disabled" selected="selected">-- Chọn vị trí --</option>
