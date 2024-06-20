@@ -154,7 +154,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="control-label">Tình trạng hôn nhân</label>
+                                            <label class="required-field control-label">Tình trạng hôn nhân</label>
                                             <div class="controls">
                                                 <select name="marriage_status" id="marriage_status" data-placeholder="Chọn địa chỉ" class="form-control select2" style="width: 100%;">
                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
