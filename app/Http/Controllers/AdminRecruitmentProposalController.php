@@ -175,9 +175,18 @@ class AdminRecruitmentProposalController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(RecruitmentProposal $recruitmentProposal)
+    public function destroy($id)
     {
-        //
+        $proposal = RecruitmentProposal::findOrFail($id);
+        if ($proposal->approver_result) {
+            // Cannot delete
+            Alert::toast('Đề xuất đã duyệt. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        } else {
+            $proposal->destroy($id);
+            Alert::toast('Xóa đề xuất tuyển dụng thành công!', 'success', 'top-right');
+            return redirect()->back();
+        }
     }
 
 
