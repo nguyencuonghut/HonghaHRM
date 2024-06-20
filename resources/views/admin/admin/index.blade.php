@@ -99,14 +99,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
 
             },
@@ -114,28 +114,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4]
+                    columns: [0,1,2,3,4,5]
                 }
             }
         ],
