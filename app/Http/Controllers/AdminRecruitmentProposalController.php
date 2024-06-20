@@ -119,6 +119,16 @@ class AdminRecruitmentProposalController extends Controller
     public function show($id)
     {
         $proposal = RecruitmentProposal::findOrFail($id);
+        // Check authorization
+        $job_department_id = $proposal->company_job->department_id;
+        $admin_department_ids = [];
+        $admin_department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+        if ('Trưởng đơn vị' == Auth::user()->role->name
+            && !in_array($job_department_id, $admin_department_ids)) {
+            Alert::toast('Bạn không có quyền xem đề xuất tuyển dụng này!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $methods = RecruitmentMethod::orderBy('name' ,'asc')->get();
         $receive_methods = CvReceiveMethod::orderBy('name' ,'asc')->get();
         $social_media = RecruitmentSocialMedia::all()->pluck('name', 'id');
