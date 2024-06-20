@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminDepartment;
 use App\Models\Employee;
 use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
@@ -343,7 +344,14 @@ class AdminEmployeeController extends Controller
 
     public function anyData()
     {
-        $employees = Employee::with(['commune', 'company_job'])->orderBy('name', 'desc')->get();
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            // Only fetch the Employee according to Admin's Department
+            $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $company_job_ids = CompanyJob::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employees = Employee::with(['commune', 'company_job'])->whereIn('company_job_id', $company_job_ids)->orderBy('name', 'desc')->get();
+        } else {
+            $employees = Employee::with(['commune', 'company_job'])->orderBy('name', 'desc')->get();
+        }
         return Datatables::of($employees)
             ->addIndexColumn()
             ->editColumn('code', function ($employees) {
