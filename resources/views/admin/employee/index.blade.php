@@ -46,8 +46,10 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
+                @can('create-employee')
                 <a href="{{ route('admin.employees.create') }}" data-toggle="modal" data-target="#create_employee" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 <br>
+                @endcan
                 <table id="employees-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
