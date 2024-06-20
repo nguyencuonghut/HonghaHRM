@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\RecruitmentSocialMedia;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminRecruitmentSocialMediaController extends Controller
 {
@@ -28,7 +29,22 @@ class AdminRecruitmentSocialMediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'name' => 'required',
+        ];
+
+        $messages = [
+            'name.required' => 'Bạn phải nhập tên',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $recruitment_social_media = new RecruitmentSocialMedia();
+        $recruitment_social_media->name = $request->name;
+        $recruitment_social_media->save();
+
+        Alert::toast('Thêm kênh đăng tin mới thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**

@@ -18,6 +18,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\AdminRecruitmentProposalController;
 use App\Http\Controllers\AdminRecruitmentPlanController;
 use App\Http\Controllers\AdminRecruitmentMethodController;
+use App\Http\Controllers\AdminRecruitmentSocialMediaController;
 use App\Http\Controllers\AdminRecruitmentAnnouncementController;
 use App\Http\Controllers\AdminRecruitmentCandidateController;
 use App\Http\Controllers\AdminProposalCandidateController;
@@ -113,6 +114,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('recruitment/plans', AdminRecruitmentPlanController::class, ['names' => 'recruitment.plans']);
 
         Route::resource('recruitment/methods', AdminRecruitmentMethodController::class, ['names' => 'recruitment.methods']);
+
+        Route::resource('recruitment/social_medias', AdminRecruitmentSocialMediaController::class, ['names' => 'recruitment.social_medias']);
 
         Route::resource('recruitment/announcements', AdminRecruitmentAnnouncementController::class, ['names' => 'recruitment.announcements']);
 

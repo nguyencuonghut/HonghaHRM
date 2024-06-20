@@ -53,6 +53,11 @@
                         <div class="col-12">
                             <div class="control-group">
                                 <label class="required-field" class="control-label">Kênh đã đăng</label>
+                                @can('create-recruitment-social-media')
+                                <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_media">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                                @endcan
                                 <div class="controls">
                                     <select name="social_media_id[]" id="social_media_id[]" data-placeholder="Chọn" class="form-control select2" multiple="multiple" style="width: 100%;">
                                         @foreach($social_media as $key => $value)
@@ -73,4 +78,40 @@
         </div>
     </div>
 </form>
+
+
+<!-- Modal to create RecruitmentSocialMedia -->
+<form class="form-horizontal" method="post" action="{{ route('admin.recruitment.social_medias.store') }}" name="create_media" id="create_media" novalidate="novalidate">
+    {{ csrf_field() }}
+    <div class="modal fade" id="add_media">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Thêm cách thức tuyển</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="control-group">
+                                <label class="required-field" class="control-label">Tên</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" name="name" id="name" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+  </form>
+  <!-- /.modal -->
 
