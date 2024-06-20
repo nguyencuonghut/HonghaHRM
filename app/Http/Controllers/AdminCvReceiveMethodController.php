@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ReceiveMethod;
+use App\Models\CvReceiveMethod;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
-class AdminReceiveMethodController extends Controller
+class AdminCvReceiveMethodController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -28,7 +29,23 @@ class AdminReceiveMethodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $rules = [
+            'name' => 'required',
+        ];
+
+        $messages = [
+            'name.required' => 'Bạn phải nhập tên',
+        ];
+
+        $request->validate($rules, $messages);
+
+        $cv_receive_method = new CvReceiveMethod();
+        $cv_receive_method->name = $request->name;
+        $cv_receive_method->save();
+
+        Alert::toast('Thêm nguồn tin mới thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 
     /**

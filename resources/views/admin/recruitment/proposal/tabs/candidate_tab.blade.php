@@ -103,6 +103,11 @@
                                             <div class="col-6">
                                                 <div class="control-group">
                                                     <label class="required-field" class="control-label">Nguồn tin</label>
+                                                    @can('create-cv-receive-method')
+                                                    <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_cv_receive_method">
+                                                        <i class="fas fa-plus"></i>
+                                                    </button>
+                                                    @endcan
                                                     <div class="controls">
                                                         <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                             <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
@@ -147,7 +152,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- Modals for create proposal_candidate -->
 <form class="form-horizontal" method="post" enctype="multipart/form-data" action="{{ route('admin.recruitment.proposal_candidates.store') }}" name="create_proposal_candidate" id="create_proposal_candidate" novalidate="novalidate">
@@ -196,6 +200,11 @@
                     <div class="col-6">
                         <div class="control-group">
                             <label class="required-field" class="control-label">Nguồn tin</label>
+                            @can('create-cv-receive-method')
+                            <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#add_cv_receive_method">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                            @endcan
                             <div class="controls">
                                 <select name="cv_receive_method_id" id="cv_receive_method_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
@@ -425,6 +434,42 @@
     </div>
 </form>
 
+
+
+<!-- Modal to create CvReceiveMethod -->
+<form class="form-horizontal" method="post" action="{{ route('admin.cv_receive_methods.store') }}" name="create_cv_receive_method" id="create_cv_receive_method" novalidate="novalidate">
+    {{ csrf_field() }}
+    <div class="modal fade" id="add_cv_receive_method">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Thêm nguồn tin</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="control-group">
+                                <label class="required-field" class="control-label">Tên</label>
+                                <div class="controls">
+                                    <input type="text" class="form-control" name="name" id="name" required="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+    </div>
+</form>
+<!-- /.modal -->
 
 <!-- Modals for create commune -->
 <form class="form-horizontal" method="post" action="{{ route('admin.communes.store') }}" name="create_commune" id="create_commune" novalidate="novalidate">

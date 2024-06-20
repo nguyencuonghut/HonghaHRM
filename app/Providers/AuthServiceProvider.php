@@ -14,6 +14,7 @@ class AuthServiceProvider extends ServiceProvider
         'create-company-job' => ['Admin', 'Nhân sự'],
         'create-recruitment-method' => ['Admin', 'Nhân sự'],
         'create-recruitment-social-media' => ['Admin', 'Nhân sự'],
+        'create-cv-receive-method' => ['Admin', 'Nhân sự'],
         'create-propose' => ['Admin', 'Trưởng đơn vị'],
         'filter-candidate' => ['Admin', 'Nhân sự'],
         'initial-interview' => ['Admin', 'Nhân sự'],
