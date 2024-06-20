@@ -50,6 +50,7 @@
                     <th>Email</th>
                     <th>Phòng/ban</th>
                     <th>Vai trò</th>
+                    <th>Trạng thái</th>
                     <th>Thao tác</th>
                   </tr>
                   </thead>
@@ -98,14 +99,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
 
             },
@@ -113,28 +114,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             }
         ],
@@ -146,6 +147,7 @@
             {data: 'email', name: 'email'},
             {data: 'departments', name: 'departments'},
             {data: 'role', name: 'role'},
+            {data: 'status', name: 'status'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#admins-table_wrapper .col-md-6:eq(0)');

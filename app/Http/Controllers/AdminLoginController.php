@@ -46,9 +46,15 @@ class AdminLoginController extends Controller
         $credentials = $request->validate($rules,$messages);
 
         if (Auth::guard('admin')->attempt($credentials)) {
-            $request->session()->regenerate();
+            //Prevent disable Admins from logging
+            if("Khóa" == Auth::guard('admin')->user()->status){
+                Auth::logout();
+                return redirect('/admin/login')->withErrors('Tài khoản của bạn đã bị khóa!');
+            }else{
+                $request->session()->regenerate();
 
-            return redirect()->route('admin.home');
+                return redirect()->route('admin.home');
+            }
         }
 
         return back()->withErrors([

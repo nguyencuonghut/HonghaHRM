@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->foreignId('role_id')->constrained('roles');
+            $table->enum('status', ['Mở', 'Khóa'])->default('Mở');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -143,15 +143,16 @@ class AdminAdminController extends Controller
 
         //Edit Admin
         $admin = Admin::findOrFail($id);
+        $old_mail = $admin->email;
         if ($request->email != $admin->email) {
             // Create new passoword
             $password = Str::random(8);
             $admin->password = Hash::make($password);
-            $old_mail = $admin->email;
         }
         $admin->name = $request->name;
         $admin->email = $request->email;
         $admin->role_id = $request->role_id;
+        $admin->status = $request->status;
         $admin->save();
 
         // Delete all old pivot items
@@ -172,14 +173,19 @@ class AdminAdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        // Disable admin
+        $admin = Admin::findOrFail($id);
+        $admin->status = "Khóa";
+        $admin->save();
+        Alert::toast('Khóa tài khoản thành công!', 'success', 'top-right');
+        return redirect()->route('admin.admins.index');
     }
 
     public function anyData()
     {
-        $admins = Admin::with(['role', 'departments'])->select(['id', 'name', 'email', 'role_id'])->get();
+        $admins = Admin::with(['role', 'departments'])->select(['id', 'name', 'email', 'role_id', 'status'])->get();
         return Datatables::of($admins)
             ->addIndexColumn()
             ->editColumn('name', function ($admins) {
@@ -198,6 +204,13 @@ class AdminAdminController extends Controller
                 }
                 return $departments;
             })
+            ->editColumn('status', function ($admins) {
+                if ('Mở' == $admins->status) {
+                    return '<span class="badge badge-success">' . $admins->status . '</span>';
+                } else {
+                    return '<span class="badge badge-danger">' . $admins->status . '</span>';
+                }
+            })
             ->addColumn('actions', function ($admins) {
                 $action = '<a href="' . route("admin.admins.edit", $admins->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
                            <form style="display:inline" action="'. route("admin.admins.destroy", $admins->id) . '" method="POST">
@@ -206,7 +219,7 @@ class AdminAdminController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'departments'])
+            ->rawColumns(['actions', 'departments', 'status'])
             ->make(true);
     }
 

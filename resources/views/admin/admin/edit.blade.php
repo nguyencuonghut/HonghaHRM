@@ -87,10 +87,24 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="control-group">
+                                        <label class="required-field" class="control-label">Trạng thái</label>
+                                        <div class="controls">
+                                            <select name="status" id="status" data-placeholder="Chọn trạng thái" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                <option value="Mở" @if ('Mở' == $admin->status) selected @endif>Mở</option>
+                                                <option value="Khóa" @if ('Khóa' == $admin->status) selected @endif>Khóa</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="submit" value="Thêm" class="btn btn-success">
+                                    <input type="submit" value="Lưu" class="btn btn-success">
                                 </div>
                             </div>
                         <div>
