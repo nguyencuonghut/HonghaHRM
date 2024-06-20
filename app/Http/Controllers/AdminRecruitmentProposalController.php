@@ -159,17 +159,91 @@ class AdminRecruitmentProposalController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(RecruitmentProposal $recruitmentProposal)
+    public function edit($id)
     {
-        //
+        $proposal = RecruitmentProposal::findOrFail($id);
+        // Check authorization
+        if (!Auth::user()->can('create-propose')) {
+            Alert::toast('Bạn không có quyền sửa đề xuất tuyển dụng này!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
+        // Check the status
+        if ($proposal->reviewer_result) {
+            Alert::toast('Đề xuất đã duyệt. Không thế sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
+        if ('Admin' == Auth::user()->role->name) {
+            // Fetch all company_jobs for Admin
+            $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
+        } else {
+            // Only fetch the Admin's department
+            $department_ids = [];
+            $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $company_jobs = CompanyJob::whereIn('department_id', $department_ids)->orderBy('name', 'asc')->get();
+        }
+
+        $job_department_id = $proposal->company_job->department_id;
+        $admin_department_ids = [];
+        $admin_department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+        if ('Trưởng đơn vị' == Auth::user()->role->name
+            && !in_array($job_department_id, $admin_department_ids)) {
+            Alert::toast('Bạn không có quyền sửa đề xuất tuyển dụng này!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
+        $departments = Department::all()->pluck('name', 'id');
+        return view('admin.recruitment.proposal.edit',
+                    [
+                        'proposal' => $proposal,
+                        'company_jobs' => $company_jobs,
+                        'departments' => $departments,
+                    ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, RecruitmentProposal $recruitmentProposal)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'company_job_id' => 'required',
+            'quantity' => 'required',
+            'reason' => 'required',
+            'requirement' => 'required',
+            'work_time' => 'required',
+        ];
+        $messages = [
+            'company_job_id.required' => 'Bạn phải chọn vị trí.',
+            'quantity.required' => 'Bạn phải nhập số lượng.',
+            'reason.required' => 'Bạn phải nhập lý do.',
+            'requirement.required' => 'Bạn phải nhập yêu cầu.',
+            'work_time.required' => 'Bạn phải nhập thời gian.',
+        ];
+        $request->validate($rules,$messages);
+
+        //Update RecruitmentProposal
+        $proposal = RecruitmentProposal::findOrFail($id);
+        $proposal->company_job_id   = $request->company_job_id;
+        $proposal->quantity         = $request->quantity;
+        $proposal->reason           = $request->reason;
+        $proposal->requirement      = $request->requirement;
+        $proposal->salary           = $request->salary;
+        $proposal->work_time        = Carbon::createFromFormat('d/m/Y', $request->work_time);
+        $proposal->note             = $request->note;
+        $proposal->creator_id       = Auth::user()->id;
+        $proposal->status           = 'Mở';
+        $proposal->save();
+
+        //Send notification to reviewer
+        $reviewers = Admin::where('role_id', 4)->get(); //4: Nhân sự
+        foreach ($reviewers as $reviewer) {
+            Notification::route('mail' , $reviewer->email)->notify(new RecruitmentProposalCreated($proposal->id));
+        }
+
+        Alert::toast('Sửa yêu cầu tuyển dụng mới thành công!', 'success', 'top-right');
+        return redirect()->route('admin.recruitment.proposals.index');
     }
 
     /**
