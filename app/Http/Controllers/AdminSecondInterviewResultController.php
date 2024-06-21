@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Offer;
 use App\Models\SecondInterviewResult;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -83,6 +84,13 @@ class AdminSecondInterviewResultController extends Controller
 
         $request->validate($rules,$messages);
 
+        // Do not allow to update when Offer committed.
+        $offer = Offer::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        if ($offer) {
+            Alert::toast('Đã có kết quả offer. Không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
         $second_interview_result->proposal_candidate_id = $request->proposal_candidate_id;
         $second_interview_result->interviewer_id = Auth::user()->id;
@@ -98,6 +106,13 @@ class AdminSecondInterviewResultController extends Controller
      */
     public function destroy($proposal_candidate_id)
     {
+        // Do not allow to delete when Offer committed.
+        $offer = Offer::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        if ($offer) {
+            Alert::toast('Đã có kết quả offer. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
         $second_interview_result->destroy($second_interview_result->id);
         Alert::toast('Xóa kết quả thành công!', 'success', 'top-right');
