@@ -380,7 +380,7 @@ class AdminEmployeeController extends Controller
                 return $employees->cccd;
             })
             ->editColumn('temp_addr', function ($employees) {
-                if ($employees->temp_addr) {
+                if ($employees->temporary_address) {
                     return $employees->temporary_address . ', ' .  $employees->temporary_commune->name .', ' .  $employees->temporary_commune->district->name .', ' . $employees->temporary_commune->district->province->name;
                 } else {
                     return '-';
