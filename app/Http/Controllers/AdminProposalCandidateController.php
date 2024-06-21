@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProposalCandidate;
+use App\Models\ProposalCandidateFilter;
 use App\Models\RecruitmentCandidate;
 use App\Models\CandidateSchool;
 use Illuminate\Http\Request;
@@ -114,6 +115,13 @@ class AdminProposalCandidateController extends Controller
         $request->validate($rules,$messages);
 
         $proposal_candidate = ProposalCandidate::findOrFail($id);
+        // Do not allow to edit when Candidate is filtered
+        $proposal_candidate_filter = ProposalCandidateFilter::where('proposal_candidate_id', $proposal_candidate->id)->first();
+        if ($proposal_candidate_filter
+            && $proposal_candidate_filter->result) {
+            Alert::toast('Ứng viên đã lọc hồ sơ. Không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $proposal_candidate->proposal_id = $request->proposal_id;
         $proposal_candidate->candidate_id = $request->candidate_id;
         if ($request->hasFile('cv_file')) {
@@ -146,6 +154,13 @@ class AdminProposalCandidateController extends Controller
     public function destroy(string $id)
     {
         $proposal_candidate = ProposalCandidate::findOrFail($id);
+        // Do not allow to destroy when Candidate is filtered
+        $proposal_candidate_filter = ProposalCandidateFilter::where('proposal_candidate_id', $proposal_candidate->id)->first();
+        if ($proposal_candidate_filter
+            && $proposal_candidate_filter->result) {
+            Alert::toast('Ứng viên đã lọc hồ sơ. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $proposal_candidate->destroy($id);
         Alert::toast('Xóa ứng viên thành công!', 'success', 'top-right');
         return redirect()->back();
