@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FirstInterviewResult;
+use App\Models\SecondInterviewResult;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
@@ -83,6 +84,13 @@ class AdminFirstInterviewResultController extends Controller
 
         $request->validate($rules,$messages);
 
+        // Do not allow to update when SecondInterviewResult committed.
+        $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        if ($second_interview_result) {
+            Alert::toast('Đã có kết quả PV lần 2. Không thể sửa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
         $first_interview_result->proposal_candidate_id = $request->proposal_candidate_id;
         $first_interview_result->interviewer_id = Auth::user()->id;
@@ -98,6 +106,13 @@ class AdminFirstInterviewResultController extends Controller
      */
     public function destroy($proposal_candidate_id)
     {
+        // Do not allow to delete when SecondInterviewResult committed.
+        $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
+        if ($second_interview_result) {
+            Alert::toast('Đã có kết quả PV lần 2. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $proposal_candidate_id)->first();
         $first_interview_result->destroy($first_interview_result->id);
         Alert::toast('Xóa kết quả thành công!', 'success', 'top-right');
