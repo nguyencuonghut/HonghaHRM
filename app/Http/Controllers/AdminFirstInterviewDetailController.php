@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\FirstInterviewDetail;
+use App\Models\FirstInterviewResult;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -92,6 +93,13 @@ class AdminFirstInterviewDetailController extends Controller
 
         $request->validate($rules,$messages);
 
+        // Do not allow to update if FirstInterview has result
+        $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $request->proposal_candidate_id)->first();
+        if ($first_interview_result) {
+            Alert::toast('Kết quả PV lần 1 đã duyệt. Không sửa được!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $first_interview_detail = FirstInterviewDetail::findOrFail($id);
         $first_interview_detail->proposal_candidate_id = $request->proposal_candidate_id;
         $first_interview_detail->content = $request->content;
@@ -109,6 +117,13 @@ class AdminFirstInterviewDetailController extends Controller
     public function destroy($id)
     {
         $first_interview_detail = FirstInterviewDetail::findOrFail($id);
+        // Do not allow to update if FirstInterview has result
+        $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $first_interview_detail->proposal_candidate_id)->first();
+        if ($first_interview_result) {
+            Alert::toast('Kết quả PV lần 1 đã duyệt. Không xóa được!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $first_interview_detail->destroy($id);
         Alert::toast('Xóa kết quả thành công!', 'success', 'top-right');
         return redirect()->back();
