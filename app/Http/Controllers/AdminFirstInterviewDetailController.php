@@ -117,7 +117,7 @@ class AdminFirstInterviewDetailController extends Controller
     public function destroy($id)
     {
         $first_interview_detail = FirstInterviewDetail::findOrFail($id);
-        // Do not allow to update if FirstInterview has result
+        // Do not allow to delete if FirstInterview has result
         $first_interview_result = FirstInterviewResult::where('proposal_candidate_id', $first_interview_detail->proposal_candidate_id)->first();
         if ($first_interview_result) {
             Alert::toast('Kết quả PV lần 1 đã duyệt. Không xóa được!', 'error', 'top-right');

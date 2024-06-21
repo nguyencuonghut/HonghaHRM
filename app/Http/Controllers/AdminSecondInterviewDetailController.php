@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SecondInterviewDetail;
+use App\Models\SecondInterviewResult;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -91,6 +92,13 @@ class AdminSecondInterviewDetailController extends Controller
 
         $request->validate($rules,$messages);
 
+        // Do not allow to update if SecondInterview has result
+        $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $request->proposal_candidate_id)->first();
+        if ($second_interview_result) {
+            Alert::toast('Kết quả PV lần 2 đã duyệt. Không xóa được!', 'error', 'top-right');
+            return redirect()->back();
+        }
+
         $second_interview_detail = SecondInterviewDetail::findOrFail($id);
         $second_interview_detail->proposal_candidate_id = $request->proposal_candidate_id;
         $second_interview_detail->content = $request->content;
@@ -108,6 +116,12 @@ class AdminSecondInterviewDetailController extends Controller
     public function destroy($id)
     {
         $second_interview_detail = SecondInterviewDetail::findOrFail($id);
+        // Do not allow to delete when SecondInterviewResult committed.
+        $second_interview_result = SecondInterviewResult::where('proposal_candidate_id', $second_interview_detail->proposal_candidate_id)->first();
+        if ($second_interview_result) {
+            Alert::toast('Đã có kết quả PV lần 2. Không thể xóa!', 'error', 'top-right');
+            return redirect()->back();
+        }
         $second_interview_detail->destroy($id);
         Alert::toast('Xóa kết quả thành công!', 'success', 'top-right');
         return redirect()->back();
