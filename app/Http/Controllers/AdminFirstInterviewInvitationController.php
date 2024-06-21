@@ -82,7 +82,9 @@ class AdminFirstInterviewInvitationController extends Controller
         // Send email notification to Candidate
         $proposal_candidate = ProposalCandidate::findOrFail($request->proposal_candidate_id);
         $candidate = RecruitmentCandidate::findOrFail($proposal_candidate->candidate_id);
-        Notification::route('mail' , $candidate->email)->notify(new FirstInterviewInvitationCreated($proposal_candidate->id));
+        if ($candidate->email) {
+            Notification::route('mail' , $candidate->email)->notify(new FirstInterviewInvitationCreated($proposal_candidate->id));
+        }
 
         Alert::toast('Gửi lời mời thành công!', 'success', 'top-right');
         return redirect()->route('admin.recruitment.proposals.show', $proposal_candidate->proposal_id);
