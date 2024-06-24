@@ -265,21 +265,6 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="control-group">
-                                                <label class="required-field" class="control-label">Vị trí</label>
-                                                <div class="controls">
-                                                    <select name="company_job_id" id="company_job_id" data-placeholder="Chọn vị trí" class="form-control select2" style="width: 100%;">
-                                                        <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                        @foreach ($company_jobs as $company_job)
-                                                        <option value="{{$company_job->id}}">{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="control-group">
                                                 <label class="required-field" class="control-label">Ảnh</label>
                                                 <div class="custom-file text-left">
                                                     <input type="file" name="img_path" accept="image/*" class="custom-file-input" id="img_path">

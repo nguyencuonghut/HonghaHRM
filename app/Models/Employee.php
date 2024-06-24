@@ -29,7 +29,6 @@ class Employee extends Model
         'commune_id',
         'temporary_address',
         'temporary_commune_id',
-        'company_job_id',
         'experience',
         'join_date',
         'marriage_status',
@@ -43,11 +42,6 @@ class Employee extends Model
     public function temporary_commune(): BelongsTo
     {
         return $this->belongsTo(Commune::class);
-    }
-
-    public function company_job(): BelongsTo
-    {
-        return $this->belongsTo(CompanyJob::class);
     }
 
     public function schools(): BelongsToMany

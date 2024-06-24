@@ -4,9 +4,27 @@
         <div class="user-block">
           <img class="img-circle img-bordered-sm" src="{{asset($employee->img_path)}}" alt="user image">
           <span class="username">
-            <a href="#">{{$employee->company_job->department->code}} {{$employee->code}} - {{$employee->name}}</a>
+            <a href="#">{{$employee->code}} - {{$employee->name}}</a>
           </span>
-          <span class="description">{{$employee->company_job->name}} - {{$employee->company_job->department->name}}</span>
+          @php
+            $employee_works = App\Models\EmployeeWork::where('employee_id', $employee->id)->where('status', 'On')->get();
+            $employee_work_str = '';
+            $i = 0;
+            $length = count($employee_works);
+            if ($length) {
+                foreach ($employee_works as $employee_work) {
+                    $company_job = App\Models\CompanyJob::findOrFail($employee_work->company_job_id);
+                    if(++$i === $length) {
+                        $employee_work_str .= $company_job->name . ' - ' . $company_job->department->name;
+                    } else {
+                        $employee_work_str .= $company_job->name . ' - ' . $company_job->department->name . ' | ';
+                    }
+                }
+            } else {
+                $employee_work_str .= '!! Chưa tạo QT công tác !!';
+            }
+          @endphp
+          <span class="description">{{$employee_work_str}}</span>
         </div>
         <!-- /.user-block -->
         <div class="row invoice-info">

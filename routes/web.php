@@ -37,6 +37,7 @@ use App\Http\Controllers\AdminCalendarController;
 use App\Http\Controllers\AdminEmployeeController;
 use App\Http\Controllers\AdminDocumentController;
 use App\Http\Controllers\AdminEmployeeDocumentController;
+use App\Http\Controllers\AdminEmployeeWorkController;
 use App\Http\Controllers\AdminProbationController;
 use App\Http\Controllers\AdminPlanController;
 use App\Http\Controllers\UserHomeController;
@@ -169,6 +170,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('probations/review/{id}', [AdminProbationController::class, 'review'])->name('probations.review');
         Route::post('probations/evaluate/{id}', [AdminProbationController::class, 'evaluate'])->name('probations.evaluate');
         Route::resource('probations', AdminProbationController::class);
+
+        Route::resource('workings', AdminEmployeeWorkController::class);
+
 
         Route::resource('plans', AdminPlanController::class);
     });

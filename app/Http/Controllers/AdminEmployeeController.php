@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminDepartment;
 use App\Models\Employee;
+use App\Models\EmployeeWork;
 use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
 use App\Models\School;
@@ -37,7 +38,6 @@ class AdminEmployeeController extends Controller
         $provinces = Province::orderBy('name', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
         $degrees = Degree::orderBy('name', 'asc')->get();
-        $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         return view('admin.employee.index',
                     [
                         'communes' => $communes,
@@ -45,7 +45,6 @@ class AdminEmployeeController extends Controller
                         'provinces' => $provinces,
                         'schools' => $schools,
                         'degrees' => $degrees,
-                        'company_jobs' => $company_jobs,
                     ]);
     }
 
@@ -75,7 +74,6 @@ class AdminEmployeeController extends Controller
             'gender' => 'required',
             'address' => 'required',
             'commune_id' => 'required',
-            'company_job_id' => 'required',
             'addmore.*.school_id' => 'required',
             'experience' => 'required',
             'join_date' => 'required',
@@ -96,7 +94,6 @@ class AdminEmployeeController extends Controller
             'gender.required' => 'Bạn phải chọn giới tính.',
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
-            'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
             'join_date.required' => 'Bạn phải nhập ngày vào.',
@@ -147,7 +144,6 @@ class AdminEmployeeController extends Controller
         if ($request->temp_commune_id) {
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
-        $employee->company_job_id = $request->company_job_id;
         $employee->experience = $request->experience;
         $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
         $employee->marriage_status = $request->marriage_status;
@@ -166,7 +162,7 @@ class AdminEmployeeController extends Controller
         }
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
-        return redirect()->back();
+        return redirect()->route('admin.employees.show', $employee->id);
     }
 
     /**
@@ -177,13 +173,17 @@ class AdminEmployeeController extends Controller
         $employee = Employee::findOrFail($id);
         $documents = Document::all();
         $employee_documents = EmployeeDocument::where('employee_id', $employee->id)->get();
+        $employee_works = EmployeeWork::where('employee_id', $employee->id)->get();
+        $company_jobs = CompanyJob::all();
         $probations = Probation::all();
 
         return view('admin.employee.show',
                     ['employee' => $employee,
                     'documents' => $documents,
                     'employee_documents' => $employee_documents,
-                    'probations' => $probations
+                    'probations' => $probations,
+                    'employee_works' => $employee_works,
+                    'company_jobs' => $company_jobs,
                     ]);
     }
 
@@ -197,8 +197,8 @@ class AdminEmployeeController extends Controller
         $provinces = Province::orderBy('name', 'asc')->get();
         $schools = School::orderBy('name', 'asc')->get();
         $degrees = Degree::orderBy('name', 'asc')->get();
-        $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         $employee = Employee::findOrFail($id);
+
         return view('admin.employee.edit',
                     [
                         'employee' => $employee,
@@ -207,7 +207,6 @@ class AdminEmployeeController extends Controller
                         'provinces' => $provinces,
                         'schools' => $schools,
                         'degrees' => $degrees,
-                        'company_jobs' => $company_jobs,
                     ]);
     }
 
@@ -230,7 +229,6 @@ class AdminEmployeeController extends Controller
             'gender' => 'required',
             'address' => 'required',
             'commune_id' => 'required',
-            'company_job_id' => 'required',
             'addmore.*.school_id' => 'required',
             'experience' => 'required',
             'join_date' => 'required',
@@ -250,7 +248,6 @@ class AdminEmployeeController extends Controller
             'gender.required' => 'Bạn phải chọn giới tính.',
             'address.required' => 'Bạn phải nhập số nhà, thôn, xóm.',
             'commune_id.required' => 'Bạn phải chọn Xã Phường.',
-            'company_job_id.required' => 'Bạn phải chọn vị trí.',
             'addmore.*.school_id.required' => 'Bạn phải nhập tên trường.',
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
             'join_date.required' => 'Bạn phải nhập ngày vào.',
@@ -301,7 +298,6 @@ class AdminEmployeeController extends Controller
         if ($request->temp_commune_id) {
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
-        $employee->company_job_id = $request->company_job_id;
         $employee->experience = $request->experience;
         $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
         $employee->marriage_status = $request->marriage_status;
@@ -348,14 +344,15 @@ class AdminEmployeeController extends Controller
             // Only fetch the Employee according to Admin's Department
             $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
             $company_job_ids = CompanyJob::whereIn('department_id', $department_ids)->pluck('id')->toArray();
-            $employees = Employee::with(['commune', 'company_job'])->whereIn('company_job_id', $company_job_ids)->orderBy('name', 'desc')->get();
+            $employee_ids = EmployeeWork::whereIn('company_job_id', $company_job_ids)->pluck('employee_id')->toArray();
+            $employees = Employee::with(['commune'])->whereIn('id', $employee_ids)->orderBy('name', 'desc')->get();
         } else {
-            $employees = Employee::with(['commune', 'company_job'])->orderBy('name', 'desc')->get();
+            $employees = Employee::with(['commune'])->orderBy('name', 'desc')->get();
         }
         return Datatables::of($employees)
             ->addIndexColumn()
             ->editColumn('code', function ($employees) {
-                return $employees->company_job->department->code . $employees->code;
+                return $employees->code;
             })
             ->editColumn('name', function ($employees) {
                 return '<a href="'.route('admin.employees.show', $employees->id).'">'.$employees->name.'</a>';
@@ -532,11 +529,18 @@ class AdminEmployeeController extends Controller
         if ($request->temp_commune_id) {
             $employee->temporary_commune_id = $request->temp_commune_id;
         }
-        $employee->company_job_id = $request->company_job_id;
         $employee->experience = $request->experience;
         $employee->join_date = Carbon::createFromFormat('d/m/Y', $request->join_date);
         $employee->marriage_status = $request->marriage_status;
         $employee->save();
+
+        // Create EmployeeWork
+        $employee_work = new EmployeeWork();
+        $employee_work->employee_id = $employee->id;
+        $employee_work->company_job_id = $request->company_job_id;
+        $employee_work->status = 'Bắt đầu';
+        $employee_work->start_date = Carbon::today()->toDateString();
+        $employee_work->save();
 
         // Create EmployeeSchool
         foreach ($request->addmore as $item) {
