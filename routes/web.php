@@ -171,6 +171,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('probations/evaluate/{id}', [AdminProbationController::class, 'evaluate'])->name('probations.evaluate');
         Route::resource('probations', AdminProbationController::class);
 
+        Route::post('workings/off/{id}', [AdminEmployeeWorkController::class, 'off'])->name('workings.off');
         Route::resource('workings', AdminEmployeeWorkController::class);
 
 

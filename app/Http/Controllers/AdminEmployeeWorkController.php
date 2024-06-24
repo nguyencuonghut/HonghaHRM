@@ -114,4 +114,26 @@ class AdminEmployeeWorkController extends Controller
         Alert::toast('Xóa quá trình làm việc mới thành công!', 'success', 'top-right');
         return redirect()->back();
     }
+
+    public function off(Request $request, $id)
+    {
+        $rules = [
+            'e_date' => 'required',
+        ];
+
+        $messages = [
+            'e_date.required' => 'Bạn phải nhập ngày kết thúc.',
+        ];
+
+        $request->validate($rules, $messages);
+
+        // Off the EmployeeWork
+        $employee_work = EmployeeWork::findOrFail($id);
+        $employee_work->status = 'Off';
+        $employee_work->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
+        $employee_work->save();
+
+        Alert::toast('Cập nhật thành công!', 'success', 'top-right');
+        return redirect()->back();
+    }
 }

@@ -15,9 +15,9 @@
                 <thead>
                   <tr>
                     <th>Vị trí</th>
-                    <th>Trạng thái</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
+                    <th>Trạng thái</th>
                     @can('create-working')
                     <th>Thao tác</th>
                     @endcan
@@ -29,6 +29,7 @@
                       @php
                           $company_job = App\Models\CompanyJob::findOrFail($employee_work->company_job_id);
                           $action_edit_working = '<a href="#edit_working{{' . $employee_work->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_working' . $employee_work->id. '"><i class="fas fa-edit"></i></a>
+                                  <a href="#off_working{{' . $employee_work->id . '}}" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#off_working' . $employee_work->id. '"><i class="fas fa-power-off"></i></a>
                                   <form style="display:inline" action="'. route("admin.workings.destroy", $employee_work->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -40,7 +41,6 @@
                           }
                       @endphp
                       <td>{!! $company_job->name !!}</td>
-                      <td>{{$employee_work->status}}</td>
                       <td>{{date('d/m/Y', strtotime($employee_work->start_date))}}</td>
                       <td>
                         @if ($employee_work->end_date)
@@ -49,9 +49,51 @@
                         -
                         @endif
                       </td>
+                      <td>
+                        <span class="badge @if ("On" == $employee_work->status) badge-success @else badge-danger @endif">
+                            {{$employee_work->status}}
+                        </span>
+                      </td>
                       @can('create-working')
                       <td>{!! $action !!}</td>
                       @endcan
+
+                      <!-- Modals for off employee working -->
+                      <form class="form-horizontal" method="post" action="{{ route('admin.workings.off', $employee_work->id) }}" name="off_working" id="off_working" novalidate="novalidate">
+                        {{ csrf_field() }}
+                        <div class="modal fade" tabindex="-1" id="off_working{{$employee_work->id}}">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4>Hồ sơ của {{$employee->name}}</h4>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                          <div class="col-12">
+                                              <label class="required-field">Thời gian kết thúc</label>
+                                              <div class="input-group date" id="e_date" data-target-input="nearest">
+                                                  <input type="text" name="e_date" class="form-control datetimepicker-input" data-target="#e_date"/>
+                                                  <div class="input-group-append" data-target="#e_date" data-toggle="datetimepicker">
+                                                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                      </div>
+                                    </div>
+                                    <div class="modal-footer justify-content-between">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                                        <button type="submit" class="btn btn-primary">Lưu</button>
+                                    </div>
+                                </div>
+                                <!-- /.modal-content -->
+                            </div>
+                        </div>
+                    </form>
+                    <!-- /.modal -->
+
 
                       <!-- Modals for edit employee working -->
                       <form class="form-horizontal" method="post" action="{{ route('admin.workings.update', $employee_work->id) }}" name="update_working" id="update_working" novalidate="novalidate">
@@ -178,6 +220,9 @@
     $(function () {
         //Date picker
         $('#s_date').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#e_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
     });
