@@ -40,7 +40,17 @@
                               $action = $action . $action_edit_working;
                           }
                       @endphp
-                      <td>{!! $company_job->name !!}</td>
+                      <td>
+                        @php
+                            $company_job_str = '';
+                            if ($company_job->division_id) {
+                                $company_job_str .= $company_job->name . ' - '. $company_job->division->name . ' - ' . $company_job->department->name;
+                            } else {
+                                $company_job_str .= $company_job->name . ' - ' . $company_job->department->name;
+                            }
+                        @endphp
+                        {!! $company_job_str !!}
+                      </td>
                       <td>{{date('d/m/Y', strtotime($employee_work->start_date))}}</td>
                       <td>
                         @if ($employee_work->end_date)
