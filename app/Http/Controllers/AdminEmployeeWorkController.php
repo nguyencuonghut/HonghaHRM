@@ -6,6 +6,7 @@ use App\Models\CompanyJob;
 use App\Models\EmployeeWork;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Datatables;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminEmployeeWorkController extends Controller
@@ -15,7 +16,7 @@ class AdminEmployeeWorkController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.working.index');
     }
 
     /**
@@ -144,5 +145,42 @@ class AdminEmployeeWorkController extends Controller
 
         Alert::toast('Cập nhật thành công!', 'success', 'top-right');
         return redirect()->route('admin.employees.show', $employee_work->employee_id);
+    }
+
+    public function anyData()
+    {
+        $employee_works = EmployeeWork::orderBy('employee_id', 'asc')->get();
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('employee_name', function ($employee_works) {
+                return '<a href=' . route("admin.employees.show", $employee_works->employee_id) . '>' . $employee_works->employee->name . '</a>' ;
+            })
+            ->editColumn('company_job', function ($employee_works) {
+                if ($employee_works->company_job->division_id) {
+                    return $employee_works->company_job->name . ' - ' . $employee_works->company_job->division->name .  '- ' . $employee_works->company_job->department->name;
+
+                } else {
+                    return $employee_works->company_job->name . ' - ' . $employee_works->company_job->department->name;
+                }
+            })
+            ->editColumn('start_date', function ($employee_works) {
+                return date('d/m/Y', strtotime($employee_works->start_date));
+            })
+            ->editColumn('end_date', function ($employee_works) {
+                if ($employee_works->end_date) {
+                    return date('d/m/Y', strtotime($employee_works->end_date));
+                } else {
+                    return '-';
+                }
+            })
+            ->editColumn('status', function ($employee_works) {
+                if ('On' == $employee_works->status) {
+                    return '<span class="badge badge-success">' . $employee_works->status . '</span>';
+                } else {
+                    return '<span class="badge badge-danger">' . $employee_works->status . '</span>';
+                }
+            })
+            ->rawColumns(['employee_name', 'status'])
+            ->make(true);
     }
 }
