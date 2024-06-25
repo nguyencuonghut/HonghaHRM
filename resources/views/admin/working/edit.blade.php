@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Sửa QT làm việc' }}
+{{ 'Sửa QT công tác' }}
 @endsection
 
 @push('styles')
@@ -18,11 +18,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Sửa QT làm việc</h1>
+            <h1 class="m-0">Sửa QT công tác</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.workings.index') }}">Tất cả QT làm việc</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.hr.workings.index') }}">Tất cả QT công tác</a></li>
               <li class="breadcrumb-item active">Sửa</li>
             </ol>
           </div><!-- /.col -->
@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                    <form class="form-horizontal" method="post" action="{{ route('admin.workings.update', $employee_work->id) }}" name="update_working" id="update_working" novalidate="novalidate">
+                    <form class="form-horizontal" method="post" action="{{ route('admin.hr.workings.update', $employee_work->id) }}" name="update_working" id="update_working" novalidate="novalidate">
                         {{ csrf_field() }}
                         @method('PATCH')
                         <!-- /.card-header -->

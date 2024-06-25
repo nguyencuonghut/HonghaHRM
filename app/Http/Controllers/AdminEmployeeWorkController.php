@@ -55,7 +55,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->status = 'On';
         $employee_work->save();
 
-        Alert::toast('Thêm quá trình làm việc mới thành công!', 'success', 'top-right');
+        Alert::toast('Thêm quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->back();
     }
 
@@ -103,7 +103,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
         $employee_work->save();
 
-        Alert::toast('Sửa quá trình làm việc mới thành công!', 'success', 'top-right');
+        Alert::toast('Sửa quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.hr.employees.show', $employee_work->employee_id);
     }
 
@@ -115,7 +115,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work = EmployeeWork::findOrFail($id);
         $employee_work->destroy($id);
 
-        Alert::toast('Xóa quá trình làm việc mới thành công!', 'success', 'top-right');
+        Alert::toast('Xóa quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->back();
     }
 

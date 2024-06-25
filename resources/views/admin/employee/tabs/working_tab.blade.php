@@ -2,7 +2,7 @@
 <div class="tab-pane" id="tab-working">
     <div class="card card-secondary">
         <div class="card-header">
-            Quá trình làm việc
+            Quá trình công tác
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -28,9 +28,9 @@
                     <tr>
                       @php
                           $company_job = App\Models\CompanyJob::findOrFail($employee_work->company_job_id);
-                          $action_edit_working = '<a href="' . route("admin.workings.edit", $employee_work->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
-                                  <a href="'.route("admin.workings.getOff", $employee_work->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
-                                  <form style="display:inline" action="'. route("admin.workings.destroy", $employee_work->id) . '" method="POST">
+                          $action_edit_working = '<a href="' . route("admin.hr.workings.edit", $employee_work->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                  <a href="'.route("admin.hr.workings.getOff", $employee_work->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
+                                  <form style="display:inline" action="'. route("admin.hr.workings.destroy", $employee_work->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                   <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
@@ -73,7 +73,7 @@
             </table>
 
             <!-- Modals for create employee working -->
-            <form class="form-horizontal" method="post" action="{{ route('admin.workings.store') }}" name="create_working" id="create_working" novalidate="novalidate">
+            <form class="form-horizontal" method="post" action="{{ route('admin.hr.workings.store') }}" name="create_working" id="create_working" novalidate="novalidate">
                 {{ csrf_field() }}
                 <div class="modal fade" id="create_working{{$employee->id}}">
                     <div class="modal-dialog modal-lg">

@@ -171,10 +171,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('hr/probations/evaluate/{id}', [AdminProbationController::class, 'evaluate'])->name('hr.probations.evaluate');
         Route::resource('hr/probations', AdminProbationController::class, ['names' => 'hr.probations']);
 
-        Route::get('workings/data', [AdminEmployeeWorkController::class, 'anyData'])->name('workings.data');
-        Route::post('workings/off/{id}', [AdminEmployeeWorkController::class, 'off'])->name('workings.off');
-        Route::get('workings/off/{id}', [AdminEmployeeWorkController::class, 'getOff'])->name('workings.getOff');
-        Route::resource('workings', AdminEmployeeWorkController::class);
+        Route::get('hr/workings/data', [AdminEmployeeWorkController::class, 'anyData'])->name('hr.workings.data');
+        Route::post('hr/workings/off/{id}', [AdminEmployeeWorkController::class, 'off'])->name('hr.workings.off');
+        Route::get('hr/workings/off/{id}', [AdminEmployeeWorkController::class, 'getOff'])->name('hr.workings.getOff');
+        Route::resource('hr/workings', AdminEmployeeWorkController::class, ['names' => 'hr.workings']);
 
 
         Route::resource('plans', AdminPlanController::class);

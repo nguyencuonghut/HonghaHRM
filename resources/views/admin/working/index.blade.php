@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Tất cả QT làm việc' }}
+{{ 'Tất cả QT công tác' }}
 @endsection
 @push('styles')
   <!-- DataTables -->
@@ -17,12 +17,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tất cả QT làm việc</h1>
+          <h1 class="m-0">Tất cả QT công tác</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.home') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">QT làm việc</li>
+            <li class="breadcrumb-item active">QT công tác</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -136,7 +136,7 @@
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('admin.workings.data') !!}',
+        ajax: ' {!! route('admin.hr.workings.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'employee_name', name: 'employee_name'},
