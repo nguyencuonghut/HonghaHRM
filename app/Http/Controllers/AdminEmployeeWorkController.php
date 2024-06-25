@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanyJob;
 use App\Models\EmployeeWork;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -22,7 +23,8 @@ class AdminEmployeeWorkController extends Controller
      */
     public function create()
     {
-        //
+        $company_jobs = CompanyJob::all();
+        return view('admin.working.create', ['company_jobs' => $company_jobs]);
     }
 
     /**
@@ -69,7 +71,12 @@ class AdminEmployeeWorkController extends Controller
      */
     public function edit($id)
     {
-        //
+        $employee_work = EmployeeWork::findOrFail($id);
+        $company_jobs = CompanyJob::all();
+        return view('admin.working.edit', [
+            'employee_work' => $employee_work,
+            'company_jobs' => $company_jobs
+        ]);
     }
 
     /**
@@ -78,13 +85,11 @@ class AdminEmployeeWorkController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'employee_id' => 'required',
             'company_job_id' => 'required',
             's_date' => 'required',
         ];
 
         $messages = [
-            'employee_id.required' => 'Số Id nhân sự chưa có.',
             'company_job_id.required' => 'Bạn cần chọn Vị trí.',
             's_date.required' => 'Bạn cần nhập ngày bắt đầu.',
         ];
@@ -93,14 +98,12 @@ class AdminEmployeeWorkController extends Controller
 
         // Edit EmployeeWork
         $employee_work = EmployeeWork::findOrFail($id);
-        $employee_work->employee_id = $request->employee_id;
         $employee_work->company_job_id = $request->company_job_id;
         $employee_work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
-        $employee_work->status = 'On';
         $employee_work->save();
 
         Alert::toast('Sửa quá trình làm việc mới thành công!', 'success', 'top-right');
-        return redirect()->back();
+        return redirect()->route('admin.employees.show', $employee_work->employee_id);
     }
 
     /**
@@ -113,6 +116,12 @@ class AdminEmployeeWorkController extends Controller
 
         Alert::toast('Xóa quá trình làm việc mới thành công!', 'success', 'top-right');
         return redirect()->back();
+    }
+
+    public function getOff($id)
+    {
+        $employee_work = EmployeeWork::findOrFail($id);
+        return view('admin.working.off', ['employee_work' => $employee_work]);
     }
 
     public function off(Request $request, $id)
@@ -134,6 +143,6 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->save();
 
         Alert::toast('Cập nhật thành công!', 'success', 'top-right');
-        return redirect()->back();
+        return redirect()->route('admin.employees.show', $employee_work->employee_id);
     }
 }

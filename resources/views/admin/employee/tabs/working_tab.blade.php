@@ -28,8 +28,8 @@
                     <tr>
                       @php
                           $company_job = App\Models\CompanyJob::findOrFail($employee_work->company_job_id);
-                          $action_edit_working = '<a href="#edit_working{{' . $employee_work->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_working' . $employee_work->id. '"><i class="fas fa-edit"></i></a>
-                                  <a href="#off_working{{' . $employee_work->id . '}}" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#off_working' . $employee_work->id. '"><i class="fas fa-power-off"></i></a>
+                          $action_edit_working = '<a href="' . route("admin.workings.edit", $employee_work->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                  <a href="'.route("admin.workings.getOff", $employee_work->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
                                   <form style="display:inline" action="'. route("admin.workings.destroy", $employee_work->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -57,100 +57,6 @@
                       @can('create-working')
                       <td>{!! $action !!}</td>
                       @endcan
-
-                      <!-- Modals for off employee working -->
-                      <form class="form-horizontal" method="post" action="{{ route('admin.workings.off', $employee_work->id) }}" name="off_working" id="off_working" novalidate="novalidate">
-                        {{ csrf_field() }}
-                        <div class="modal fade" tabindex="-1" id="off_working{{$employee_work->id}}">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4>Hồ sơ của {{$employee->name}}</h4>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                          <div class="col-12">
-                                              <label class="required-field">Thời gian kết thúc</label>
-                                              <div class="input-group date" id="e_date" data-target-input="nearest">
-                                                  <input type="text" name="e_date" class="form-control datetimepicker-input" data-target="#e_date"/>
-                                                  <div class="input-group-append" data-target="#e_date" data-toggle="datetimepicker">
-                                                      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                      </div>
-                                    </div>
-                                    <div class="modal-footer justify-content-between">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                        <button type="submit" class="btn btn-primary">Lưu</button>
-                                    </div>
-                                </div>
-                                <!-- /.modal-content -->
-                            </div>
-                        </div>
-                    </form>
-                    <!-- /.modal -->
-
-
-                      <!-- Modals for edit employee working -->
-                      <form class="form-horizontal" method="post" action="{{ route('admin.workings.update', $employee_work->id) }}" name="update_working" id="update_working" novalidate="novalidate">
-                          @method('PATCH')
-                          {{ csrf_field() }}
-                          <div class="modal fade" tabindex="-1" id="edit_working{{$employee_work->id}}">
-                              <div class="modal-dialog modal-lg">
-                                  <div class="modal-content">
-                                      <div class="modal-header">
-                                          <h4>Hồ sơ của {{$employee->name}}</h4>
-                                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                              <span aria-hidden="true">&times;</span>
-                                          </button>
-                                      </div>
-                                      <div class="modal-body">
-                                          <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
-
-                                          <div class="row">
-                                              <div class="col-12">
-                                                  <div class="control-group">
-                                                      <div class="control-group">
-                                                          <label class="required-field" class="control-label">Vị trí</label>
-                                                          <div class="controls">
-                                                              <select name="company_job_id" id="company_job_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                                  <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                                  @foreach ($company_jobs as $company_job)
-                                                                      <option value="{{$company_job->id}}" @if ($employee_work && $company_job->id == $employee_work->company_job_id) selected="selected" @endif>{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
-                                                                  @endforeach
-                                                              </select>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              </div>
-                                          </div>
-
-                                          <div class="row">
-                                            <div class="col-12">
-                                                <label class="required-field">Thời gian bắt đầu</label>
-                                                <div class="input-group date" id="s_date" data-target-input="nearest">
-                                                    <input type="text" name="s_date" class="form-control datetimepicker-input" value="{{date('d/m/YYY', strtotime($employee_work->start_date))}}" data-target="#s_date"/>
-                                                    <div class="input-group-append" data-target="#s_date" data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                      </div>
-                                      <div class="modal-footer justify-content-between">
-                                          <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
-                                          <button type="submit" class="btn btn-primary">Lưu</button>
-                                      </div>
-                                  </div>
-                                  <!-- /.modal-content -->
-                              </div>
-                          </div>
-                      </form>
-                      <!-- /.modal -->
                     </tr>
                   @endforeach
                 </tbody>
@@ -220,9 +126,6 @@
     $(function () {
         //Date picker
         $('#s_date').datetimepicker({
-            format: 'DD/MM/YYYY'
-        });
-        $('#e_date').datetimepicker({
             format: 'DD/MM/YYYY'
         });
     });
