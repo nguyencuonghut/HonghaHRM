@@ -30,7 +30,7 @@
                   $probation = App\Models\Probation::findOrFail($probation->id);
                   $proposal = App\Models\RecruitmentProposal::findOrFail($probation->proposal_id);
                   $action_edit_probation = '<a href="#edit_probation{{' . $probation->id . '}}" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#edit_probation' . $probation->id. '"><i class="fas fa-edit"></i></a>
-                          <form style="display:inline" action="'. route("admin.probations.destroy", $probation->id) . '" method="POST">
+                          <form style="display:inline" action="'. route("admin.hr.probations.destroy", $probation->id) . '" method="POST">
                           <input type="hidden" name="_method" value="DELETE">
                           <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                           <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
@@ -43,7 +43,7 @@
               <td>{{ $proposal->company_job->name }} - {{$proposal->company_job->department->name}}</td>
               <td>
                 @php
-                    $url = '<a href="'.route('admin.probations.show', $probation->id).'">'.date('d/m/Y', strtotime($probation->start_date)). ' - ' . date('d/m/Y', strtotime($probation->end_date)) . '</a>';
+                    $url = '<a href="'.route('admin.hr.probations.show', $probation->id).'">'.date('d/m/Y', strtotime($probation->start_date)). ' - ' . date('d/m/Y', strtotime($probation->end_date)) . '</a>';
                 @endphp
                 {!! $url !!}
               </td>
@@ -53,7 +53,7 @@
               @endcan
 
               <!-- Modals for edit employee probation -->
-              <form class="form-horizontal" method="post" action="{{ route('admin.probations.update', $probation->id) }}" name="update_probation" id="update_probation" novalidate="novalidate">
+              <form class="form-horizontal" method="post" action="{{ route('admin.hr.probations.update', $probation->id) }}" name="update_probation" id="update_probation" novalidate="novalidate">
                   @method('PATCH')
                   {{ csrf_field() }}
                   <div class="modal fade" tabindex="-1" id="edit_probation{{$probation->id}}">
@@ -107,7 +107,7 @@
     </table>
 
     <!-- Modals for create employee probation -->
-    <form class="form-horizontal" method="post" action="{{ route('admin.probations.store', $employee->id) }}" name="create_probation" id="create_probation" novalidate="novalidate">
+    <form class="form-horizontal" method="post" action="{{ route('admin.hr.probations.store', $employee->id) }}" name="create_probation" id="create_probation" novalidate="novalidate">
         {{ csrf_field() }}
         <div class="modal fade" id="create_probation{{$employee->id}}">
             <div class="modal-dialog modal-lg">

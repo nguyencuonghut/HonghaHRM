@@ -162,7 +162,7 @@ class AdminEmployeeController extends Controller
         }
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
-        return redirect()->route('admin.employees.show', $employee->id);
+        return redirect()->route('admin.hr.employees.show', $employee->id);
     }
 
     /**
@@ -322,7 +322,7 @@ class AdminEmployeeController extends Controller
         }
 
         Alert::toast('Sửa nhân sự mới thành công!', 'success', 'top-right');
-        return redirect()->route('admin.employees.index');
+        return redirect()->route('admin.hr.employees.index');
     }
 
     /**
@@ -355,7 +355,7 @@ class AdminEmployeeController extends Controller
                 return $employees->code;
             })
             ->editColumn('name', function ($employees) {
-                return '<a href="'.route('admin.employees.show', $employees->id).'">'.$employees->name.'</a>';
+                return '<a href="'.route('admin.hr.employees.show', $employees->id).'">'.$employees->name.'</a>';
             })
             ->editColumn('email', function ($employees) {
                 $email = '';
@@ -384,8 +384,8 @@ class AdminEmployeeController extends Controller
                 }
             })
             ->addColumn('actions', function ($employees) {
-                $action = '<a href="' . route("admin.employees.edit", $employees->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                           <form style="display:inline" action="'. route("admin.employees.destroy", $employees->id) . '" method="POST">
+                $action = '<a href="' . route("admin.hr.employees.edit", $employees->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                           <form style="display:inline" action="'. route("admin.hr.employees.destroy", $employees->id) . '" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
@@ -563,6 +563,6 @@ class AdminEmployeeController extends Controller
         $proposal_candidate_employee->save();
 
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
-        return redirect()->route('admin.employees.show', $employee->id);
+        return redirect()->route('admin.hr.employees.show', $employee->id);
     }
 }

@@ -104,7 +104,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->save();
 
         Alert::toast('Sửa quá trình làm việc mới thành công!', 'success', 'top-right');
-        return redirect()->route('admin.employees.show', $employee_work->employee_id);
+        return redirect()->route('admin.hr.employees.show', $employee_work->employee_id);
     }
 
     /**
@@ -144,7 +144,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->save();
 
         Alert::toast('Cập nhật thành công!', 'success', 'top-right');
-        return redirect()->route('admin.employees.show', $employee_work->employee_id);
+        return redirect()->route('admin.hr.employees.show', $employee_work->employee_id);
     }
 
     public function anyData()
@@ -153,7 +153,7 @@ class AdminEmployeeWorkController extends Controller
         return Datatables::of($employee_works)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($employee_works) {
-                return '<a href=' . route("admin.employees.show", $employee_works->employee_id) . '>' . $employee_works->employee->name . '</a>' ;
+                return '<a href=' . route("admin.hr.employees.show", $employee_works->employee_id) . '>' . $employee_works->employee->name . '</a>' ;
             })
             ->editColumn('company_job', function ($employee_works) {
                 if ($employee_works->company_job->division_id) {

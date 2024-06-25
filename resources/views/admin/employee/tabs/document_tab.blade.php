@@ -33,7 +33,7 @@
                       @php
                           $document = App\Models\Document::findOrFail($employee_document->document_id);
                           $action_edit_document = '<a href="#edit_document{{' . $employee_document->id . '}}" class="btn btn-success btn-sm" data-toggle="modal" data-target="#edit_document' . $employee_document->id. '"><i class="fas fa-edit"></i></a>
-                                  <form style="display:inline" action="'. route("admin.employees.document.destroy", $employee_document->id) . '" method="POST">
+                                  <form style="display:inline" action="'. route("admin.hr.employees.document.destroy", $employee_document->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                                   <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
@@ -58,7 +58,7 @@
                       @endcan
 
                       <!-- Modals for edit employee document -->
-                      <form class="form-horizontal" method="post" action="{{ route('admin.employees.document.update', $employee_document->id) }}" enctype="multipart/form-data" name="update_document" id="update_document" novalidate="novalidate">
+                      <form class="form-horizontal" method="post" action="{{ route('admin.hr.employees.document.update', $employee_document->id) }}" enctype="multipart/form-data" name="update_document" id="update_document" novalidate="novalidate">
                           @method('PATCH')
                           {{ csrf_field() }}
                           <div class="modal fade" tabindex="-1" id="edit_document{{$employee_document->id}}">
@@ -119,7 +119,7 @@
             </table>
 
             <!-- Modals for create employee document -->
-            <form class="form-horizontal" method="post" action="{{ route('admin.employees.document.store', $employee->id) }}" enctype="multipart/form-data" name="create_document" id="create_document" novalidate="novalidate">
+            <form class="form-horizontal" method="post" action="{{ route('admin.hr.employees.document.store', $employee->id) }}" enctype="multipart/form-data" name="create_document" id="create_document" novalidate="novalidate">
                 {{ csrf_field() }}
                 <div class="modal fade" id="create_document{{$employee->id}}">
                     <div class="modal-dialog modal-lg">

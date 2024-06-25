@@ -49,7 +49,7 @@
                                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                             $action_approve_offer = '<a href="#approve_offer{{' . $proposal_candidate->id . '}}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#approve_offer' . $proposal_candidate->id. '"><i class="fas fa-check"></i></a>';
 
-                            $action_create_employee = '<a href="' . route("admin.employees.create_from_candidate", $proposal_candidate->id) . '" class="btn btn-success btn-sm"' . $proposal_candidate->id. '"><i class="fas fa-user-plus"></i></a>';
+                            $action_create_employee = '<a href="' . route("admin.hr.employees.create_from_candidate", $proposal_candidate->id) . '" class="btn btn-success btn-sm"' . $proposal_candidate->id. '"><i class="fas fa-user-plus"></i></a>';
                             $action = '';
                             if (Auth::user()->can('create-offer')) {
                                 $action = $action . $action_create_offer;

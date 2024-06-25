@@ -77,21 +77,28 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a href="{{route('admin.employees.index')}}" class="nav-link {{ Request::is('admin/employees*') ? 'active' : '' }}">
+          <li class="nav-item {{ Request::is('admin/hr*') ? 'menu-open' : '' }}">
+            <a href="{{route('admin.hr.employees.index')}}" class="nav-link {{ Request::is('admin/hr*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-users"></i>
               <p>
                 Hồ sơ nhân sự
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-          </li>
-          <li class="nav-item">
-            <a href="{{route('admin.probations.index')}}" class="nav-link {{ Request::is('admin/probations*') ? 'active' : '' }}">
-              <i class="nav-icon fas fa-user-check"></i>
-              <p>
-                Thử việc
-              </p>
-            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.hr.employees.index')}}" class="nav-link {{ Request::is('admin/hr/employees*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Hồ sơ cá nhân</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.hr.probations.index')}}" class="nav-link {{ Request::is('admin/hr/probations*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Thử việc</p>
+                </a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item">
             <a href="{{route('admin.calendars.index')}}" class="nav-link {{ Request::is('admin/calendars*') ? 'active' : '' }}">

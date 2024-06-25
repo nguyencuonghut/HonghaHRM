@@ -20,7 +20,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.probations.index') }}">Tất cả kế hoạch thử việc</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.hr.probations.index') }}">Tất cả kế hoạch thử việc</a></li>
               <li class="breadcrumb-item active">Sửa</li>
             </ol>
           </div><!-- /.col -->
@@ -35,7 +35,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form class="form-horizontal" method="post" action="{{ route('admin.probations.update', $probation->id) }}" name="edit_probation" id="edit_probation" novalidate="novalidate">
+                        <form class="form-horizontal" method="post" action="{{ route('admin.hr.probations.update', $probation->id) }}" name="edit_probation" id="edit_probation" novalidate="novalidate">
                             {{ csrf_field() }}
                             @method('PATCH')
                             <div class="card-body">

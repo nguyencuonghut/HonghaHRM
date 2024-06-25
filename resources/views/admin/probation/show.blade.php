@@ -28,7 +28,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.probations.index') }}">Tất cả kế hoạch thử việc</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.hr.probations.index') }}">Tất cả kế hoạch thử việc</a></li>
               <li class="breadcrumb-item active">Chi tiết</li>
             </ol>
           </div><!-- /.col -->
@@ -299,7 +299,7 @@
                             <!-- /.modal -->
 
                             <!-- Modals for evaluate the probation-->
-                            <form class="form-horizontal" method="post" action="{{ route('admin.probations.evaluate', $probation->id) }}" name="evaluate_probation" id="evaluate_probation" novalidate="novalidate">
+                            <form class="form-horizontal" method="post" action="{{ route('admin.hr.probations.evaluate', $probation->id) }}" name="evaluate_probation" id="evaluate_probation" novalidate="novalidate">
                                 {{ csrf_field() }}
                                 <div class="modal fade" id="evaluate_probation{{$probation->id}}">
                                     <div class="modal-dialog modal-lg">
@@ -368,7 +368,7 @@
                             <!-- /.modal -->
 
                             <!-- Modals for review the probation-->
-                            <form class="form-horizontal" method="post" action="{{ route('admin.probations.review', $probation->id) }}" name="review_probation" id="review_probation" novalidate="novalidate">
+                            <form class="form-horizontal" method="post" action="{{ route('admin.hr.probations.review', $probation->id) }}" name="review_probation" id="review_probation" novalidate="novalidate">
                                 {{ csrf_field() }}
                                 <div class="modal fade" id="review_probation{{$probation->id}}">
                                     <div class="modal-dialog modal-lg">
@@ -407,7 +407,7 @@
                             <!-- /.modal -->
 
                             <!-- Modals for approve the probation-->
-                            <form class="form-horizontal" method="post" action="{{ route('admin.probations.approve', $probation->id) }}" name="approve_probation" id="approve_probation" novalidate="novalidate">
+                            <form class="form-horizontal" method="post" action="{{ route('admin.hr.probations.approve', $probation->id) }}" name="approve_probation" id="approve_probation" novalidate="novalidate">
                                 {{ csrf_field() }}
                                 <div class="modal fade" id="approve_probation{{$probation->id}}">
                                     <div class="modal-dialog modal-lg">

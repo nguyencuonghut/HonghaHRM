@@ -15,7 +15,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.employees.index') }}">Tất cả nhân sự</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.hr.employees.index') }}">Tất cả nhân sự</a></li>
               <li class="breadcrumb-item active">Chi tiết</li>
             </ol>
           </div><!-- /.col -->

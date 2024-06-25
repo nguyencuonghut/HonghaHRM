@@ -47,7 +47,7 @@
               <!-- /.card-header -->
               <div class="card-body">
                 @can('create-employee')
-                <a href="{{ route('admin.employees.create') }}" data-toggle="modal" data-target="#create_employee" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
+                <a href="{{ route('admin.hr.employees.create') }}" data-toggle="modal" data-target="#create_employee" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
                 <br>
                 @endcan
                 <table id="employees-table" class="table table-bordered table-striped">
@@ -67,7 +67,7 @@
                 </table>
 
                 <!-- Modals for create employee -->
-                <form class="form-horizontal" method="post" action="{{ route('admin.employees.store') }}" enctype="multipart/form-data" name="make_employee" id="make_employee" novalidate="novalidate">
+                <form class="form-horizontal" method="post" action="{{ route('admin.hr.employees.store') }}" enctype="multipart/form-data" name="make_employee" id="make_employee" novalidate="novalidate">
                     {{ csrf_field() }}
                     <div class="modal fade" id="create_employee">
                         <div class="modal-dialog modal-lg">
@@ -610,7 +610,7 @@
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('admin.employees.data') !!}',
+        ajax: ' {!! route('admin.hr.employees.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'code', name: 'code'},

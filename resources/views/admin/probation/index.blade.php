@@ -137,7 +137,7 @@
             }
         ],
         dom: 'Blfrtip',
-        ajax: ' {!! route('admin.probations.data') !!}',
+        ajax: ' {!! route('admin.hr.probations.data') !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'employee_name', name: 'employee_name'},

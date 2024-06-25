@@ -243,7 +243,7 @@ class AdminProbationController extends Controller
                 $time = '';
                 $time = $time . date('d/m/Y', strtotime($probations->start_date)) . ' - ' . date('d/m/Y', strtotime($probations->end_date));
 
-                return '<a href="'.route('admin.probations.show', $probations->id).'">'.$time.'</a>';
+                return '<a href="'.route('admin.hr.probations.show', $probations->id).'">'.$time.'</a>';
             })
             ->editColumn('creator', function ($probations) {
                 if ($probations->result_manager_status) {
@@ -268,8 +268,8 @@ class AdminProbationController extends Controller
                 }
             })
             ->addColumn('actions', function ($probations) {
-                $action = '<a href="' . route("admin.probations.edit", $probations->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                           <form style="display:inline" action="'. route("admin.probations.destroy", $probations->id) . '" method="POST">
+                $action = '<a href="' . route("admin.hr.probations.edit", $probations->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                           <form style="display:inline" action="'. route("admin.hr.probations.destroy", $probations->id) . '" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';

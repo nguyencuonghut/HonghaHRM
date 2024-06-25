@@ -25,7 +25,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.employees.index') }}">Tất cả nhân sự</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.hr.employees.index') }}">Tất cả nhân sự</a></li>
               <li class="breadcrumb-item active">Thêm</li>
             </ol>
           </div><!-- /.col -->
@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <form class="form-horizontal" method="post" action="{{ route('admin.employees.store_from_candidate') }}" enctype="multipart/form-data" name="create_employee" id="create_employee" novalidate="novalidate">
+                        <form class="form-horizontal" method="post" action="{{ route('admin.hr.employees.store_from_candidate') }}" enctype="multipart/form-data" name="create_employee" id="create_employee" novalidate="novalidate">
                             {{ csrf_field() }}
                             <div class="card-body">
                                 <input type="hidden" name="proposal_candidate_id" id="proposal_candidate_id" value="{{$proposal_candidate->id}}">

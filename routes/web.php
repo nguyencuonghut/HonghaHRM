@@ -155,21 +155,21 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('calendars', [AdminCalendarController::class, 'index'])->name('calendars.index');
 
-        Route::get('employees/data', [AdminEmployeeController::class, 'anyData'])->name('employees.data');
-        Route::get('employees/create_from_candidate/{proposal_candidate_id}', [AdminEmployeeController::class, 'createFromCandidate'])->name('employees.create_from_candidate');
-        Route::post('employees/store_from_candidate', [AdminEmployeeController::class, 'storeFromCandidate'])->name('employees.store_from_candidate');
-        Route::resource('employees', AdminEmployeeController::class);
+        Route::get('hr/employees/data', [AdminEmployeeController::class, 'anyData'])->name('hr.employees.data');
+        Route::get('hr/employees/create_from_candidate/{proposal_candidate_id}', [AdminEmployeeController::class, 'createFromCandidate'])->name('hr.employees.create_from_candidate');
+        Route::post('hr/employees/store_from_candidate', [AdminEmployeeController::class, 'storeFromCandidate'])->name('hr.employees.store_from_candidate');
+        Route::resource('hr/employees', AdminEmployeeController::class, ['names' => 'hr.employees']);
 
-        Route::resource('employees/document', AdminEmployeeDocumentController::class, ['names' => 'employees.document']);
+        Route::resource('hr/employees/document', AdminEmployeeDocumentController::class, ['names' => 'hr.employees.document']);
 
         Route::get('documents/data', [AdminDocumentController::class, 'anyData'])->name('documents.data');
         Route::resource('documents', AdminDocumentController::class);
 
-        Route::get('probations/data', [AdminProbationController::class, 'anyData'])->name('probations.data');
-        Route::post('probations/approve/{id}', [AdminProbationController::class, 'approve'])->name('probations.approve');
-        Route::post('probations/review/{id}', [AdminProbationController::class, 'review'])->name('probations.review');
-        Route::post('probations/evaluate/{id}', [AdminProbationController::class, 'evaluate'])->name('probations.evaluate');
-        Route::resource('probations', AdminProbationController::class);
+        Route::get('hr/probations/data', [AdminProbationController::class, 'anyData'])->name('hr.probations.data');
+        Route::post('hr/probations/approve/{id}', [AdminProbationController::class, 'approve'])->name('hr.probations.approve');
+        Route::post('hr/probations/review/{id}', [AdminProbationController::class, 'review'])->name('hr.probations.review');
+        Route::post('hr/probations/evaluate/{id}', [AdminProbationController::class, 'evaluate'])->name('hr.probations.evaluate');
+        Route::resource('hr/probations', AdminProbationController::class, ['names' => 'hr.probations']);
 
         Route::get('workings/data', [AdminEmployeeWorkController::class, 'anyData'])->name('workings.data');
         Route::post('workings/off/{id}', [AdminEmployeeWorkController::class, 'off'])->name('workings.off');
