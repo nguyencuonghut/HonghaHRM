@@ -48,8 +48,16 @@
               <div class="card-body">
                 @can('create-employee')
                 <a href="{{ route('admin.hr.employees.create') }}" data-toggle="modal" data-target="#create_employee" class="btn btn-success"><i class="fas fa-plus"></i> Thêm</a>
-                <br>
                 @endcan
+                <div class="btn-group float-right">
+                    &nbsp;
+                    <a href="{{route('admin.hr.employees.gallery')}}" class="btn btn-info {{Route::is('admin.hr.employees.gallery') ? 'active' : ''}}">
+                        <i class="fas fa-th"></i>
+                    </a>
+                    <a href="{{route('admin.hr.employees.index')}}" class="btn btn-info {{Route::is('admin.hr.employees.index') ? 'active' : ''}}">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                </div>
                 <table id="employees-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>

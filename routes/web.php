@@ -155,6 +155,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('calendars', [AdminCalendarController::class, 'index'])->name('calendars.index');
 
+        Route::get('hr/employees/gallery', [AdminEmployeeController::class, 'gallery'])->name('hr.employees.gallery');
         Route::get('hr/employees/data', [AdminEmployeeController::class, 'anyData'])->name('hr.employees.data');
         Route::get('hr/employees/create_from_candidate/{proposal_candidate_id}', [AdminEmployeeController::class, 'createFromCandidate'])->name('hr.employees.create_from_candidate');
         Route::post('hr/employees/store_from_candidate', [AdminEmployeeController::class, 'storeFromCandidate'])->name('hr.employees.store_from_candidate');

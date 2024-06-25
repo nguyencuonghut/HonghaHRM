@@ -565,4 +565,41 @@ class AdminEmployeeController extends Controller
         Alert::toast('Thêm nhân sự mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.hr.employees.show', $employee->id);
     }
+
+    public function gallery(Request $request)
+    {
+        $search =  $request->input('search');
+        if ($search != ""){
+            $employees = Employee::with('commune')->where(function ($query) use ($search){
+                $query->where('name', 'like', '%'.$search.'%')
+                    ->orWhere('company_email', 'like', '%'.$search.'%')
+                    ->orWhere('date_of_birth', 'like', '%'.$search.'%')
+                    ->orWhere('cccd', 'like', '%'.$search.'%')
+                    ->orWhere('phone', 'like', '%'.$search.'%')
+                    ->orWhere('code', 'like', '%'.$search.'%')
+                    ->orWhereHas('commune' ,function($q) use ($search) {
+                        $q->where('name', 'like', '%'.$search.'%');
+                    });
+            })
+            ->paginate(9);
+        } else {
+            $employees = Employee::orderBy('name', 'asc')->paginate(9);
+        }
+
+        $communes = Commune::orderBy('name', 'asc')->get();
+        $districts = District::orderBy('name', 'asc')->get();
+        $provinces = Province::orderBy('name', 'asc')->get();
+        $schools = School::orderBy('name', 'asc')->get();
+        $degrees = Degree::orderBy('name', 'asc')->get();
+
+        return view('admin.employee.gallery',
+                    [
+                        'employees' => $employees,
+                        'communes' => $communes,
+                        'districts' => $districts,
+                        'provinces' => $provinces,
+                        'schools' => $schools,
+                        'degrees' => $degrees,
+                    ]);
+    }
 }
