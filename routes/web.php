@@ -40,6 +40,7 @@ use App\Http\Controllers\AdminEmployeeDocumentController;
 use App\Http\Controllers\AdminEmployeeWorkController;
 use App\Http\Controllers\AdminProbationController;
 use App\Http\Controllers\AdminPlanController;
+use App\Http\Controllers\AdminOrgController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -177,6 +178,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('hr/workings/off/{id}', [AdminEmployeeWorkController::class, 'getOff'])->name('hr.workings.getOff');
         Route::resource('hr/workings', AdminEmployeeWorkController::class, ['names' => 'hr.workings']);
 
+        Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
+        Route::get('hr/orgs', [AdminOrgController::class, 'index'])->name('hr.orgs.index');
 
         Route::resource('plans', AdminPlanController::class);
     });
