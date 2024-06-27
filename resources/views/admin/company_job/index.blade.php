@@ -49,6 +49,7 @@
                     <th>Vị trí công việc</th>
                     <th>Phòng ban</th>
                     <th>Bộ phận</th>
+                    <th>Chức vụ</th>
                     @can('view-salary')
                     <th>Lương vị trí</th>
                     <th>Lương năng lực max</th>
@@ -152,6 +153,7 @@
             {data: 'name', name: 'name'},
             {data: 'department', name: 'department'},
             {data: 'division', name: 'division'},
+            {data: 'position', name: 'position'},
             {data: 'position_salary', name: 'position_salary'},
             {data: 'max_capacity_salary', name: 'max_capacity_salary'},
             {data: 'position_allowance', name: 'position_allowance'},
@@ -214,6 +216,7 @@
             {data: 'name', name: 'name'},
             {data: 'department', name: 'department'},
             {data: 'division', name: 'division'},
+            {data: 'position', name: 'position'},
             {data: 'recruitment_standard_file', name: 'recruitment_standard_file'},
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
         ]

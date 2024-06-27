@@ -92,18 +92,28 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Lương vị trí</label>
+                                        <label class="required-field" class="control-label">Chức vụ</label>
                                         <div class="controls">
-                                            <input type="number" class="form-control" name="position_salary" id="position_salary" required="" value="{{$company_job->position_salary}}">
+                                            <select name="position_id" id="position_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                @foreach($positions as $position)
+                                                    <option value="{{$position->id}}"
+                                                        @if($position->id == $company_job->position_id)
+                                                            selected="selected"
+                                                        @endif>
+                                                        {{$position->name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Lương năng lực max</label>
+                                        <label class="required-field" class="control-label">Lương vị trí</label>
                                         <div class="controls">
-                                            <input type="number" class="form-control" name="max_capacity_salary" id="max_capacity_salary" required="" value="{{$company_job->max_capacity_salary}}">
+                                            <input type="number" class="form-control" name="position_salary" id="position_salary" required="" value="{{$company_job->position_salary}}">
                                         </div>
                                     </div>
                                 </div>
@@ -112,14 +122,25 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
+                                        <label class="required-field" class="control-label">Lương năng lực max</label>
+                                        <div class="controls">
+                                            <input type="number" class="form-control" name="max_capacity_salary" id="max_capacity_salary" required="" value="{{$company_job->max_capacity_salary}}">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-6">
+                                    <div class="control-group">
                                         <label class="required-field" class="control-label">Phụ cấp vị trí</label>
                                         <div class="controls">
                                             <input type="number" class="form-control" name="position_allowance" id="position_allowance" required="" value="{{$company_job->position_allowance}}">
                                         </div>
                                     </div>
                                 </div>
+                            </div>
 
-                                <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Tiêu chuẩn tuyển dụng</label>
                                         <div class="custom-file text-left">
@@ -133,7 +154,7 @@
                             <br>
                             <div class="control-group">
                                 <div class="controls">
-                                    <input type="submit" value="Thêm" class="btn btn-success">
+                                    <input type="submit" value="Lưu" class="btn btn-success">
                                 </div>
                             </div>
                         <div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompanyJob;
 use App\Models\Department;
 use App\Models\Division;
+use App\Models\Position;
 use Datatables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -32,7 +33,13 @@ class AdminCompanyJobController extends Controller
     {
         $departments = Department::all()->pluck('name', 'id');
         $divisions = Division::all()->pluck('name', 'id');
-        return view('admin.company_job.create', ['departments' => $departments, 'divisions' => $divisions]);
+        $positions = Position::all()->pluck('name', 'id');
+        return view('admin.company_job.create',
+                    [
+                        'departments' => $departments,
+                        'divisions' => $divisions,
+                        'positions' => $positions,
+                    ]);
     }
 
     /**
@@ -43,6 +50,7 @@ class AdminCompanyJobController extends Controller
         $rules = [
             'name' => 'required',
             'sel_department' => 'required',
+            'position_id' => 'required',
             'position_salary' => 'required',
             'max_capacity_salary' => 'required',
             'position_allowance' => 'required',
@@ -51,6 +59,7 @@ class AdminCompanyJobController extends Controller
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
             'sel_department.required' => 'Bạn phải chọn phòng ban.',
+            'position_id.required' => 'Bạn phải chọn chức vụ',
             'position_salary.required' => 'Bạn phải nhập lương vị trí.',
             'max_capacity_salary.required' => 'Bạn phải nhập lương năng lực max.',
             'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
@@ -61,6 +70,7 @@ class AdminCompanyJobController extends Controller
         $company_job = new CompanyJob();
         $company_job->name = $request->name;
         $company_job->department_id = $request->sel_department;
+        $company_job->position_id = $request->position_id;
         if ($request->sel_division) {
             $company_job->division_id = $request->sel_division;
         }
@@ -105,10 +115,12 @@ class AdminCompanyJobController extends Controller
 
         $departments = Department::all();
         $divisions = Division::all();
+        $positions = Position::all();
         $company_job = CompanyJob::findOrFail($id);
         return view('admin.company_job.edit',
                     ['departments' => $departments,
                     'divisions' => $divisions,
+                    'positions' => $positions,
                     'company_job' => $company_job
                     ]);
     }
@@ -121,6 +133,7 @@ class AdminCompanyJobController extends Controller
         $rules = [
             'name' => 'required',
             'sel_department' => 'required',
+            'position_id' => 'required',
             'position_salary' => 'required',
             'max_capacity_salary' => 'required',
             'position_allowance' => 'required',
@@ -128,6 +141,7 @@ class AdminCompanyJobController extends Controller
         $messages = [
             'name.required' => 'Bạn phải nhập tên.',
             'sel_department.required' => 'Bạn phải chọn phòng ban.',
+            'position_id.required' => 'Bạn phải chọn chức vụ',
             'position_salary.required' => 'Bạn phải nhập lương vị trí.',
             'max_capacity_salary.required' => 'Bạn phải nhập lương năng lực max.',
             'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
@@ -137,6 +151,7 @@ class AdminCompanyJobController extends Controller
         $company_job = CompanyJob::findOrFail($id);
         $company_job->name = $request->name;
         $company_job->department_id = $request->sel_department;
+        $company_job->position_id = $request->position_id;
         if ($request->sel_division) {
             $company_job->division_id = $request->sel_division;
         } else {
@@ -180,7 +195,7 @@ class AdminCompanyJobController extends Controller
 
     public function anyData()
     {
-        $company_jobs = CompanyJob::with(['department', 'division'])->select(['id', 'name', 'department_id', 'division_id', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'])->get();
+        $company_jobs = CompanyJob::with(['department', 'division', 'position'])->select(['id', 'name', 'department_id', 'position_id', 'division_id', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'])->get();
         return Datatables::of($company_jobs)
             ->addIndexColumn()
             ->editColumn('name', function ($company_jobs) {
@@ -188,6 +203,9 @@ class AdminCompanyJobController extends Controller
             })
             ->editColumn('department', function ($company_jobs) {
                 return $company_jobs->department->name;
+            })
+            ->editColumn('position', function ($company_jobs) {
+                return $company_jobs->position->name;
             })
             ->editColumn('division', function ($company_jobs) {
                 if ($company_jobs->division_id) {

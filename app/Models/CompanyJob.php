@@ -9,7 +9,16 @@ class CompanyJob extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'department_id', 'division_id', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'];
+    protected $fillable = [
+        'name',
+        'department_id',
+        'division_id',
+        'position_id',
+        'position_salary',
+        'max_capacity_salary',
+        'position_allowance',
+        'recruitment_standard_file'
+    ];
 
     public function department()
     {
@@ -19,6 +28,11 @@ class CompanyJob extends Model
     public function division()
     {
         return $this->belongsTo(Division::class);
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class);
     }
 
     public function proposals()
