@@ -179,6 +179,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::resource('hr/workings', AdminEmployeeWorkController::class, ['names' => 'hr.workings']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
+        Route::get('hr/orgs/{department_id}', [AdminOrgController::class, 'show'])->name('hr.orgs.show');
         Route::get('hr/orgs', [AdminOrgController::class, 'index'])->name('hr.orgs.index');
 
         Route::resource('plans', AdminPlanController::class);
