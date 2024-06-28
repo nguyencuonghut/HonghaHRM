@@ -68,7 +68,7 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Sơ đồ tổ chức phòng KSNB</h1>
+          <h1 class="m-0">Sơ đồ tổ chức {{$department->name}}</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
@@ -89,7 +89,7 @@
         <div class="col-12">
             <div class="card">
               <div class="card-header">
-                Sơ đồ phòng KSNB
+                Sơ đồ {{$department->name}}
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -112,11 +112,12 @@
 <script src="{{ asset('plugins/orgchart/js/html2canvas.js') }}"></script>
 <script type="text/javascript">
 $(function() {
-    var gdk_employees =  {{ Js::from($gdk_employees) }};
-    var gd_employees =  {{ Js::from($gd_employees) }};
-    var tp_employees =  {{ Js::from($tp_employees) }};
-    var tn_employees =  {{ Js::from($tn_employees) }};
-    var nv_employees =  {{ Js::from($nv_employees) }};
+    var gdk_employees =  {{ Js::from($gdk_employees) }}; // Giám đốc khối
+    var gd_employees =  {{ Js::from($gd_employees) }}; // Giám đốc
+    var tp_employees =  {{ Js::from($tp_employees) }}; // Trưởng phòng
+    var pp_employees =  {{ Js::from($pp_employees) }}; // Phó phòng
+    var tn_employees =  {{ Js::from($tn_employees) }}; // Trưởng nhóm
+    var nv_employees =  {{ Js::from($nv_employees) }}; // Nhân viên
 
     var datasource = {
       'id': gdk_employees[0].img_path, 'name': gdk_employees[0].name, 'title': 'Giám đốc khối',

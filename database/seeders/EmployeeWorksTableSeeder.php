@@ -327,6 +327,94 @@ class EmployeeWorksTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            28 =>
+                array (
+                    'id' => 29,
+                    'employee_id' => 18,
+                    'company_job_id' => 15,
+                    'status' => 'On',
+                    'start_date' => '2003-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            29 =>
+                array (
+                    'id' => 30,
+                    'employee_id' => 19,
+                    'company_job_id' => 57,
+                    'status' => 'Off',
+                    'start_date' => '2015-01-01',
+                    'end_date' => '2020-01-01',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            30 =>
+                array (
+                    'id' => 31,
+                    'employee_id' => 19,
+                    'company_job_id' => 71,
+                    'status' => 'On',
+                    'start_date' => '2020-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            31 =>
+                array (
+                    'id' => 32,
+                    'employee_id' => 20,
+                    'company_job_id' => 72,
+                    'status' => 'On',
+                    'start_date' => '2015-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            32 =>
+                array (
+                    'id' => 33,
+                    'employee_id' => 21,
+                    'company_job_id' => 17,
+                    'status' => 'On',
+                    'start_date' => '2018-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            33 =>
+                array (
+                    'id' => 34,
+                    'employee_id' => 22,
+                    'company_job_id' => 21,
+                    'status' => 'On',
+                    'start_date' => '2019-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            34 =>
+                array (
+                    'id' => 35,
+                    'employee_id' => 23,
+                    'company_job_id' => 75,
+                    'status' => 'On',
+                    'start_date' => '2022-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            35 =>
+                array (
+                    'id' => 36,
+                    'employee_id' => 23,
+                    'company_job_id' => 63,
+                    'status' => 'Off',
+                    'start_date' => '2015-01-01',
+                    'end_date' => '2022-01-01',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

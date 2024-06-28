@@ -170,6 +170,60 @@ class EmployeeSchoolsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            17 =>
+                array (
+                    'id' => 18,
+                    'degree_id' => 1,
+                    'school_id' => 3,
+                    'employee_id' => 18,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            18 =>
+                array (
+                    'id' => 19,
+                    'degree_id' => 1,
+                    'school_id' => 4,
+                    'employee_id' => 19,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            19 =>
+                array (
+                    'id' => 20,
+                    'degree_id' => 1,
+                    'school_id' => 6,
+                    'employee_id' => 20,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            20 =>
+                array (
+                    'id' => 21,
+                    'degree_id' => 2,
+                    'school_id' => 8,
+                    'employee_id' => 21,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            21 =>
+                array (
+                    'id' => 22,
+                    'degree_id' => 1,
+                    'school_id' => 3,
+                    'employee_id' => 22,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            22 =>
+                array (
+                    'id' => 23,
+                    'degree_id' => 1,
+                    'school_id' => 5,
+                    'employee_id' => 23,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

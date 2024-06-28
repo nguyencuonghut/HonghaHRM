@@ -167,8 +167,25 @@
               </p>
             </a>
           </li>
-          <li class="nav-item {{ (Request::is('admin/departments*') || Request::is('admin/divisions*') || Request::is('admin/positions*')) ? 'menu-open' : '' }}">
-            <a href="#" class="nav-link {{ Request::is('admin/departments*') || Request::is('admin/divisions*') || Request::is('admin/positions*')? 'active' : '' }}">
+          <li class="nav-item
+                    {{
+                    (Request::is('admin/departments*')
+                    || Request::is('admin/divisions*')
+                    || Request::is('admin/positions*')
+                    || Request::is('admin/department_managers*')
+                    || Request::is('admin/division_managers*'))
+                    ? 'menu-open' : ''
+                    }}"
+          >
+            <a href="#" class="nav-link
+                    {{
+                    Request::is('admin/departments*')
+                    || Request::is('admin/divisions*')
+                    || Request::is('admin/positions*')
+                    || Request::is('admin/department_managers*')
+                    || Request::is('admin/division_managers*')
+                    ? 'active' : ''
+                    }}">
               <i class="nav-icon fas fa-sitemap"></i>
               <p>
                 Tổ chức
@@ -192,6 +209,18 @@
                 <a href="{{route('admin.positions.index')}}" class="nav-link {{ Request::is('admin/positions*') ? 'active' : '' }}">
                   &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Chức vụ</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.department_managers.index')}}" class="nav-link {{ Request::is('admin/department_managers*') ? 'active' : '' }}">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý phòng/ban</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.division_managers.index')}}" class="nav-link {{ Request::is('admin/division_managers*') ? 'active' : '' }}">
+                  &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Quản lý tổ/nhóm</p>
                 </a>
               </li>
             </ul>

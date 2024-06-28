@@ -41,6 +41,8 @@ use App\Http\Controllers\AdminEmployeeWorkController;
 use App\Http\Controllers\AdminProbationController;
 use App\Http\Controllers\AdminPlanController;
 use App\Http\Controllers\AdminOrgController;
+use App\Http\Controllers\AdminDepartmentManagerController;
+use App\Http\Controllers\AdminDivisionManagerController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -183,6 +185,12 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('hr/orgs', [AdminOrgController::class, 'index'])->name('hr.orgs.index');
 
         Route::resource('plans', AdminPlanController::class);
+
+        Route::get('department_managers/data', [AdminDepartmentManagerController::class, 'anyData'])->name('department_managers.data');
+        Route::resource('department_managers', AdminDepartmentManagerController::class);
+
+        Route::get('division_managers/data', [AdminDivisionManagerController::class, 'anyData'])->name('division_managers.data');
+        Route::resource('division_managers', AdminDivisionManagerController::class);
     });
 });
 
