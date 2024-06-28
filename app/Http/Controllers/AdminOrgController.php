@@ -19,23 +19,23 @@ class AdminOrgController extends Controller
     {
         // Lấy các Nhân viên có chức vụ là Giám Đốc Khối
         $company_job_gdk_ids = CompanyJob::where('department_id', $department_id)->where('position_id', 2)->pluck('id')->toArray();
-        $employee_gdk_ids = EmployeeWork::whereIn('company_job_id', $company_job_gdk_ids)->pluck('employee_id')->toArray();
+        $employee_gdk_ids = EmployeeWork::whereIn('company_job_id', $company_job_gdk_ids)->where('status', 'On')->pluck('employee_id')->toArray();
         $gdk_employees = Employee::whereIn('id', $employee_gdk_ids)->get();
         // Lấy các Nhân viên có chức vụ là Giám đốc
         $company_job_gd_ids = CompanyJob::where('department_id', $department_id)->where('position_id', 3)->pluck('id')->toArray();
-        $employee_gd_ids = EmployeeWork::whereIn('company_job_id', $company_job_gd_ids)->pluck('employee_id')->toArray();
+        $employee_gd_ids = EmployeeWork::whereIn('company_job_id', $company_job_gd_ids)->where('status', 'On')->pluck('employee_id')->toArray();
         $gd_employees = Employee::whereIn('id', $employee_gd_ids)->get();
         // Lấy các Nhân viên có chức vụ là Trưởng phòng
         $company_job_tp_ids = CompanyJob::where('department_id', $department_id)->where('position_id', 5)->pluck('id')->toArray();
-        $employee_tp_ids = EmployeeWork::whereIn('company_job_id', $company_job_tp_ids)->pluck('employee_id')->toArray();
+        $employee_tp_ids = EmployeeWork::whereIn('company_job_id', $company_job_tp_ids)->where('status', 'On')->pluck('employee_id')->toArray();
         $tp_employees = Employee::whereIn('id', $employee_tp_ids)->get();
         // Lấy các Nhân viên có chức vụ là Trưởng nhóm
         $company_job_tn_ids = CompanyJob::where('department_id', $department_id)->where('position_id', 8)->pluck('id')->toArray();
-        $employee_tn_ids = EmployeeWork::whereIn('company_job_id', $company_job_tn_ids)->pluck('employee_id')->toArray();
+        $employee_tn_ids = EmployeeWork::whereIn('company_job_id', $company_job_tn_ids)->where('status', 'On')->pluck('employee_id')->toArray();
         $tn_employees = Employee::whereIn('id', $employee_tn_ids)->get();
         // Lấy các Nhân viên có chức vụ là Nhân viên
         $company_job_nv_ids = CompanyJob::where('department_id', $department_id)->where('position_id', 13)->pluck('id')->toArray();
-        $employee_nv_ids = EmployeeWork::whereIn('company_job_id', $company_job_nv_ids)->pluck('employee_id')->toArray();
+        $employee_nv_ids = EmployeeWork::whereIn('company_job_id', $company_job_nv_ids)->where('status', 'On')->pluck('employee_id')->toArray();
         $nv_employees = Employee::whereIn('id', $employee_nv_ids)->get();
 
         return view('admin.org.show',
