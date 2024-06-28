@@ -57,7 +57,7 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 5,
                     'code' => 'PTN',
-                    'name' => 'Phòng thí nghiệm',
+                    'name' => 'Phòng phân tích',
                     'department_id' => 11,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
@@ -212,6 +212,24 @@ class DivisionsTableSeeder extends Seeder
                     'code' => 'BTC',
                     'name' => 'Ban tài chính',
                     'department_id' => 4,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            23 =>
+                array (
+                    'id' => 24,
+                    'code' => 'IT',
+                    'name' => 'Bộ phận IT',
+                    'department_id' => 2,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            24 =>
+                array (
+                    'id' => 25,
+                    'code' => 'NKS',
+                    'name' => 'Nhóm kiểm soát',
+                    'department_id' => 2,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
