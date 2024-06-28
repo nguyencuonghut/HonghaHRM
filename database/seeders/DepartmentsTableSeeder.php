@@ -69,7 +69,7 @@ class DepartmentsTableSeeder extends Seeder
                 array (
                     'id' => 7,
                     'code' => 'KH',
-                    'name' => 'Phòng Kho',
+                    'name' => 'Bộ phận Kho',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
