@@ -78,10 +78,11 @@ class AdminOrgController extends Controller
                         $nv_employees = Employee::whereIn('id', $employee_nv_ids)->get();
 
                         foreach ($nv_employees as $item) {
+                            $my_employee_work = EmployeeWork::where('employee_id', $item->id)->where('status', 'On')->first();
                             $child = [
                                 'id' => $item->img_path,
                                 'name' => $item->name,
-                                'title' => 'Nhân viên' . ' ' . $division_manager->division->name,
+                                'title' => $my_employee_work->company_job->name,
                             ];
                             array_push($datasource['children'][0]['children'][$key]['children'], $child);
                         }
@@ -91,10 +92,11 @@ class AdminOrgController extends Controller
                         $remain_employee_nv_ids = EmployeeWork::whereIn('company_job_id', $remain_company_job_nv_ids)->where('status', 'On')->pluck('employee_id')->toArray();
                         $remain_nv_employees = Employee::whereIn('id', $remain_employee_nv_ids)->get();
                         foreach ($remain_nv_employees as $item) {
+                            $my_employee_work = EmployeeWork::where('employee_id', $item->id)->where('status', 'On')->first();
                             $child = [
                                 'id' => $item->img_path,
                                 'name' => $item->name,
-                                'title' => 'Nhân viên',
+                                'title' => $my_employee_work->company_job->name,
                             ];
                             array_push($datasource['children'], $child);
                         }
@@ -116,10 +118,11 @@ class AdminOrgController extends Controller
                         $nv_employees = Employee::whereIn('id', $employee_nv_ids)->get();
 
                         foreach ($nv_employees as $item) {
+                            $my_employee_work = EmployeeWork::where('employee_id', $item->id)->where('status', 'On')->first();
                             $child = [
                                 'id' => $item->img_path,
                                 'name' => $item->name,
-                                'title' => 'Nhân viên' . ' ' . $division_manager->division->name,
+                                'title' => $my_employee_work->company_job->name,
                             ];
                             array_push($datasource['children'][$key]['children'], $child);
                         }
@@ -130,10 +133,11 @@ class AdminOrgController extends Controller
                         $remain_employee_nv_ids = EmployeeWork::whereIn('company_job_id', $remain_company_job_nv_ids)->where('status', 'On')->pluck('employee_id')->toArray();
                         $remain_nv_employees = Employee::whereIn('id', $remain_employee_nv_ids)->get();
                         foreach ($remain_nv_employees as $item) {
+                            $my_employee_work = EmployeeWork::where('employee_id', $item->id)->where('status', 'On')->first();
                             $child = [
                                 'id' => $item->img_path,
                                 'name' => $item->name,
-                                'title' => 'Nhân viên',
+                                'title' => $my_employee_work->company_job->name,
                             ];
                             array_push($datasource['children'], $child);
                         }
