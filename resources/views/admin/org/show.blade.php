@@ -13,12 +13,12 @@
       height: unset;
       text-align: left;
       line-height: 40px;
-      width: 200px;
+      width: 230px;
     }
     .orgchart .node .content {
       text-align: left;
       padding: 0 5px;
-      width: 200px;
+      width: 230px;
     }
     .orgchart .node .content .symbol {
       color: #aaa;
@@ -87,16 +87,19 @@
       <!-- Small boxes (Stat box) -->
       <div class="row">
         <div class="col-12">
+            @if ($department_manager_employee)
             <div class="card">
               <div class="card-header">
                 Sơ đồ {{$department->name}}
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <div id="chart-container">
-                </div>
+                    <div id="chart-container"></div>
               </div>
             </div>
+            @else
+            Phòng/ban chưa có quản lý
+            @endif
         </div>
       </div>
       <!-- /.row (main row) -->
@@ -112,27 +115,7 @@
 <script src="{{ asset('plugins/orgchart/js/html2canvas.js') }}"></script>
 <script type="text/javascript">
 $(function() {
-    var gdk_employees =  {{ Js::from($gdk_employees) }}; // Giám đốc khối
-    var gd_employees =  {{ Js::from($gd_employees) }}; // Giám đốc
-    var tp_employees =  {{ Js::from($tp_employees) }}; // Trưởng phòng
-    var pp_employees =  {{ Js::from($pp_employees) }}; // Phó phòng
-    var tn_employees =  {{ Js::from($tn_employees) }}; // Trưởng nhóm
-    var nv_employees =  {{ Js::from($nv_employees) }}; // Nhân viên
-
-    var datasource = {
-      'id': gdk_employees[0].img_path, 'name': gdk_employees[0].name, 'title': 'Giám đốc khối',
-      'children': []
-    }
-    var tp = {'id': tp_employees[0].img_path, 'name': tp_employees[0].name, 'title': 'Trưởng phòng', 'children': []};
-    var tn = {'id': tn_employees[0].img_path, 'name': tn_employees[0].name, 'title': 'Trưởng nhóm', 'children': []};
-    var nv = {'id': tn_employees[0].img_path, 'name': tn_employees[0].name, 'title': 'Trưởng nhóm', 'children': []};
-    datasource.children.push(tp); // Thêm trưởng phòng
-    datasource.children[0].children.push(tn); // Thêm trưởng nhóm
-    // Thêm nhân viên
-    for (let i = 0; i < nv_employees.length; i++) {
-        var nv = {'id': nv_employees[i].img_path, 'name': nv_employees[i].name, 'title': 'Nhân viên'};
-        datasource.children[0].children[0].children.push(nv);
-    }
+    var datasource = {{ Js::from($datasource) }};
 
     $('#chart-container').orgchart({
       'exportButton': true,

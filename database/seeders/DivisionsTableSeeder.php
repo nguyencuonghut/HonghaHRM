@@ -228,7 +228,7 @@ class DivisionsTableSeeder extends Seeder
                 array (
                     'id' => 25,
                     'code' => 'NKS',
-                    'name' => 'Nhóm kiểm soát',
+                    'name' => 'Tổ kiểm soát',
                     'department_id' => 2,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),

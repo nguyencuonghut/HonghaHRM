@@ -415,6 +415,28 @@ class EmployeeWorksTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            36 =>
+                array (
+                    'id' => 37,
+                    'employee_id' => 24,
+                    'company_job_id' => 44,
+                    'status' => 'On',
+                    'start_date' => '2016-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
+            37 =>
+                array (
+                    'id' => 38,
+                    'employee_id' => 7,
+                    'company_job_id' => 85,
+                    'status' => 'On',
+                    'start_date' => '2024-01-01',
+                    'end_date' => null,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }

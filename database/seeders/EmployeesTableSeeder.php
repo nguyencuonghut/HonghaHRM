@@ -592,6 +592,31 @@ class EmployeesTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            23 =>
+                array (
+                    'id' => 24,
+                    'code' => '594',
+                    'name' => 'Phạm Thị Thơm',
+                    'img_path' => 'dist/employee_img/thompt.jpeg',
+                    'private_email' => null,
+                    'company_email' => 'phamthithom@honghafeed.com.vn',
+                    'phone' => '0999999976',
+                    'relative_phone' => '0999999976',
+                    'date_of_birth' => '1993-01-01',
+                    'cccd' => '0999999976',
+                    'issued_date' => '1993-01-01',
+                    'issued_by' => 'công an tỉnh Hà Nam',
+                    'gender' => 'Nữ',
+                    'address' => 'số 1',
+                    'commune_id' => 1,
+                    'temporary_address' => null,
+                    'temporary_commune_id' => null,
+                    'experience' => '10 năm',
+                    'join_date' => '2016-01-01',
+                    'marriage_status' => 'Kết hôn',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }
