@@ -233,7 +233,8 @@ class AdminProbationController extends Controller
         return Datatables::of($probations)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($probations) {
-                return $probations->employee->name;
+                return '<a href="' . route("admin.hr.employees.show", $probations->employee_id) . '">' . $probations->employee->name . '</a>';
+
             })
             ->editColumn('company_job', function ($probations) {
                 $proposal = RecruitmentProposal::findOrFail($probations->proposal_id);
@@ -275,7 +276,7 @@ class AdminProbationController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'creator', 'approver', 'time'])
+            ->rawColumns(['actions', 'employee_name', 'creator', 'approver', 'time'])
             ->make(true);
     }
 }
