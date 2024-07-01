@@ -18,6 +18,7 @@
             <th>Vị trí</th>
             <th>Thời gian thử việc</th>
             <th>Người tạo</th>
+            <th>Kết quả</th>
             @can('create-probation')
             <th>Thao tác</th>
             @endcan
@@ -48,6 +49,19 @@
                 {!! $url !!}
               </td>
               <td>{{ $probation->creator->name }}</td>
+              <td>
+                @if($probation->result_manager_status
+                    && $probation->approver_result)
+                    @if('Đạt' == $probation->result_manager_status)
+                    <span class="badge badge-success">{{ $probation->result_manager_status }}</span>
+                    @else
+                    <span class="badge badge-danger">{{ $probation->result_manager_status }}</span>
+                    @endif
+
+                @else
+                -
+                @endif
+              </td>
               @can('create-probation')
               <td>{!! $action !!}</td>
               @endcan
