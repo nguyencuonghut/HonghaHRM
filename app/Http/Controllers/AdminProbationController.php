@@ -219,7 +219,7 @@ class AdminProbationController extends Controller
         if ($request->approver_comment) {
             $probation->approver_comment = $request->approver_comment;
         }
-        $probation->approve_time = Carbon::now();
+        $probation->approver_time = Carbon::now();
         $probation->approver_id = Auth::user()->id;
         $probation->save();
 

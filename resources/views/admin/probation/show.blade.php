@@ -155,7 +155,7 @@
                                 <div class="col-sm-4 invoice-col">
                                   <address>
                                     <strong>Thời gian duyệt</strong><br>
-                                    {{date('d/m/Y H:i', strtotime($probation->approve_time))}}<br>
+                                    {{date('d/m/Y H:i', strtotime($probation->approver_time))}}<br>
                                   </address>
                                 </div>
                                 <!-- /.col -->
@@ -228,7 +228,7 @@
                             <a href="#review_probation{{' . $probation->id . '}}" class="btn btn-primary mt-4" data-toggle="modal" data-target="#review_probation{{$probation->id}}"><i class="fas fa-check-double"></i></a>
                             @endcan
 
-                            @if(Auth::user()->can('review-probation')
+                            @if(Auth::user()->can('approve-probation')
                                 && $probation->result_reviewer_status)
                             <a href="#approve_probation{{' . $probation->id . '}}" class="btn btn-success mt-4 float-right" data-toggle="modal" data-target="#approve_probation{{$probation->id}}"><i class="fas fa-check"></i></a>
                             @endcan

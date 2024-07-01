@@ -28,7 +28,7 @@ class Probation extends Model
         'approver_id',
         'approver_result',
         'approver_comment',
-        'approve_time',
+        'approver_time',
     ];
 
     public function plans(): HasMany
