@@ -22,6 +22,49 @@ class AdminOrgController extends Controller
     public function show($department_id)
     {
         $department = Department::findOrFail($department_id);
+        $department_manager = DepartmentManager::where('department_id', $department_id)->first();
+        if ($department_manager) {
+            $department_manager_employee = Employee::findOrFail($department_manager->manager_id);
+        } else {
+            $department_manager_employee = null;
+        }
+
+        $datasource = [];
+        $datasource = $this->createDataSource($department_id);
+
+        return view('admin.org.show',
+                    [
+                        'department' => $department,
+                        'department_manager_employee' => $department_manager_employee,
+                        'datasource' => $datasource,
+                    ]);
+    }
+
+
+    public function anyData()
+    {
+        $employee_works = EmployeeWork::with(['employee', 'company_job'])->where('status', 'On')->get();
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('department', function ($employee_works) {
+                return '<a href="' . route("admin.hr.orgs.show", $employee_works->company_job->department_id) .'">' . $employee_works->company_job->department->name . '</a>';
+            })
+            ->editColumn('division', function ($employee_works) {
+                if ($employee_works->company_job->division_id) {
+                    return $employee_works->company_job->division->name;
+                } else {
+                    return '-';
+                }
+            })
+            ->editColumn('employee', function ($employee_works) {
+                return '<a href=' . route("admin.hr.employees.show", $employee_works->employee_id) .'>' . $employee_works->employee->name . ' - ' . $employee_works->company_job->name . '</a>';
+            })
+            ->rawColumns(['department', 'employee'])
+            ->make(true);
+    }
+
+    private function createDataSource($department_id)
+    {
         $datasource = [];
         // Tạo root node (trưởng phòng) datasource cho OrgChart
         $department_manager = DepartmentManager::where('department_id', $department_id)->first();
@@ -145,34 +188,7 @@ class AdminOrgController extends Controller
                 }
             }
         }
-        return view('admin.org.show',
-                    [
-                        'department' => $department,
-                        'department_manager_employee' => $department_manager_employee,
-                        'datasource' => $datasource,
-                    ]);
-    }
 
-
-    public function anyData()
-    {
-        $employee_works = EmployeeWork::with(['employee', 'company_job'])->where('status', 'On')->get();
-        return Datatables::of($employee_works)
-            ->addIndexColumn()
-            ->editColumn('department', function ($employee_works) {
-                return '<a href="' . route("admin.hr.orgs.show", $employee_works->company_job->department_id) .'">' . $employee_works->company_job->department->name . '</a>';
-            })
-            ->editColumn('division', function ($employee_works) {
-                if ($employee_works->company_job->division_id) {
-                    return $employee_works->company_job->division->name;
-                } else {
-                    return '-';
-                }
-            })
-            ->editColumn('employee', function ($employee_works) {
-                return '<a href=' . route("admin.hr.employees.show", $employee_works->employee_id) .'>' . $employee_works->employee->name . ' - ' . $employee_works->company_job->name . '</a>';
-            })
-            ->rawColumns(['department', 'employee'])
-            ->make(true);
+        return $datasource;
     }
 }
