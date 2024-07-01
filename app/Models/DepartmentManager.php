@@ -10,6 +10,7 @@ class DepartmentManager extends Model
 {
     use HasFactory;
 
+    protected $table = 'department_managers';
     protected $fillable = ['department_id', 'manager_id'];
 
     public function department(): BelongsTo

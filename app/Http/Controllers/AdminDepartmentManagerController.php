@@ -1,10 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\CompanyJob;
+use App\Models\Department;
 use App\Models\DepartmentManager;
+use App\Models\EmployeeWork;
+use App\Models\Employee;
 use Illuminate\Http\Request;
 use Datatables;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminDepartmentManagerController extends Controller
 {
@@ -21,7 +25,17 @@ class AdminDepartmentManagerController extends Controller
      */
     public function create()
     {
-        //
+        $departments = Department::orderBy('name', 'asc')->get();
+
+        $manager_position_ids = [2,3,4,5,7]; //GĐK, GĐ, PGĐ, TP, PP
+        $manager_company_job_ids = CompanyJob::whereIn('position_id', $manager_position_ids)->pluck('id')->toArray();
+        $manager_employee_ids = EmployeeWork::whereIn('company_job_id', $manager_company_job_ids)->pluck('employee_id')->toArray();
+        $managers = Employee::whereIn('id', $manager_employee_ids)->orderBy('name', 'asc')->get();
+        return view('admin.department_manager.create',
+                    [
+                        'departments' => $departments,
+                        'managers' => $managers,
+                    ]);
     }
 
     /**
@@ -29,7 +43,24 @@ class AdminDepartmentManagerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'department_id' => 'required|unique:department_managers',
+            'manager_id' => 'required',
+        ];
+        $messages = [
+            'department_id.required' => 'Bạn phải chọn phòng/ban.',
+            'department_id.unique' => 'Phòng/ban đã có quản lý.',
+            'manager_id.required' => 'Bạn phải chọn người quản lý.',
+        ];
+        $request->validate($rules, $messages);
+
+        $department_manager = new DepartmentManager();
+        $department_manager->department_id = $request->department_id;
+        $department_manager->manager_id = $request->manager_id;
+        $department_manager->save();
+
+        Alert::toast('Thêm quản lý phòng ban mới thành công!', 'success', 'top-right');
+        return redirect()->route('admin.department_managers.index');
     }
 
     /**
@@ -43,25 +74,59 @@ class AdminDepartmentManagerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(DepartmentManager $departmentManager)
+    public function edit($id)
     {
-        //
+        $department_manager = DepartmentManager::findOrFail($id);
+
+        $departments = Department::orderBy('name', 'asc')->get();
+        $manager_position_ids = [2,3,4,5,7]; //GĐK, GĐ, PGĐ, TP, PP
+        $manager_company_job_ids = CompanyJob::whereIn('position_id', $manager_position_ids)->pluck('id')->toArray();
+        $manager_employee_ids = EmployeeWork::whereIn('company_job_id', $manager_company_job_ids)->pluck('employee_id')->toArray();
+        $managers = Employee::whereIn('id', $manager_employee_ids)->orderBy('name', 'asc')->get();
+        return view('admin.department_manager.edit',
+                    [
+                        'department_manager' => $department_manager,
+                        'departments' => $departments,
+                        'managers' => $managers,
+
+                    ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, DepartmentManager $departmentManager)
+    public function update(Request $request, $id)
     {
-        //
+        $rules = [
+            'department_id' => 'required|unique:department_managers,department_id,'.$id,
+            'manager_id' => 'required',
+        ];
+        $messages = [
+            'department_id.required' => 'Bạn phải chọn phòng/ban.',
+            'department_id.unique' => 'Phòng/ban đã có quản lý.',
+            'manager_id.required' => 'Bạn phải chọn người quản lý.',
+        ];
+        $request->validate($rules, $messages);
+
+        $department_manager = DepartmentManager::findOrFail($id);
+        $department_manager->department_id = $request->department_id;
+        $department_manager->manager_id = $request->manager_id;
+        $department_manager->save();
+
+        Alert::toast('Sửa quản lý phòng ban thành công!', 'success', 'top-right');
+        return redirect()->route('admin.department_managers.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(DepartmentManager $departmentManager)
+    public function destroy($id)
     {
-        //
+        $department_manager = DepartmentManager::findOrFail($id);
+        $department_manager->destroy($id);
+
+        Alert::toast('Xóa quản lý phòng ban thành công!', 'success', 'top-right');
+        return redirect()->route('admin.department_managers.index');
     }
 
     public function anyData()
@@ -70,7 +135,7 @@ class AdminDepartmentManagerController extends Controller
         return Datatables::of($department_managers)
             ->addIndexColumn()
             ->editColumn('department', function ($department_managers) {
-                return '<a href="' . route("admin.departments.show", $department_managers->department_id) . '">' . $department_managers->department->name . '</a>';
+                return '<a href="' . route("admin.hr.orgs.show", $department_managers->department_id) . '">' . $department_managers->department->name . '</a>';
 
             })
             ->editColumn('manager', function ($department_managers) {
