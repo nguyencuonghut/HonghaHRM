@@ -102,6 +102,7 @@ class AdminOrgController extends Controller
             $group_manager_ids = DivisionManager::whereIn('division_id', $division_ids)->pluck('manager_id')->toArray(); // Lấy các manager ids là quản lý các tổ/nhóm
             $group_manager_employees = Employee::whereIn('id', $group_manager_ids)->get();
 
+            // Trường hợp có trưởng nhóm/tổ trưởng
             if ($group_manager_employees->count()) {
                 // Trường hợp có phó phòng
                 if ($pp_employees->count()) {
@@ -184,6 +185,51 @@ class AdminOrgController extends Controller
                             ];
                             array_push($datasource['children'], $child);
                         }
+                    }
+                }
+            } else { // Trường hợp KHÔNG trưởng nhóm/tổ trưởng
+                // Trường hợp có phó phòng
+                if ($pp_employees->count()) {
+                    // Lấy các Employee có chức vụ là nhân viên mà Không thuộc tổ/nhóm
+                    $remain_company_job_nv_ids = CompanyJob::where('department_id', $department_id)->where('division_id', null)->where('position_id', 13)->pluck('id')->toArray();
+                    $remain_employee_nv_ids = EmployeeWork::whereIn('company_job_id', $remain_company_job_nv_ids)->where('status', 'On')->pluck('employee_id')->toArray();
+                    $remain_nv_employees = Employee::whereIn('id', $remain_employee_nv_ids)->get();
+                    foreach ($remain_nv_employees as $item) {
+                        $my_employee_work = EmployeeWork::where('employee_id', $item->id)->where('status', 'On')->first();
+                        $child = [
+                            'id' => $item->img_path,
+                            'name' => $item->name,
+                            'title' => $my_employee_work->company_job->name,
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+                    }
+
+                    // Lấy các Employee có chức vụ là nhân viên mà thuộc tổ/nhóm (nhưng chưa chỉ định trưởng nhóm/tổ trưởng)
+                    $remain_company_job_nv_ids = CompanyJob::where('department_id', $department_id)->whereIn('division_id', $division_ids)->where('position_id', 13)->pluck('id')->toArray();
+                    $remain_employee_nv_ids = EmployeeWork::whereIn('company_job_id', $remain_company_job_nv_ids)->where('status', 'On')->pluck('employee_id')->toArray();
+                    $remain_nv_employees = Employee::whereIn('id', $remain_employee_nv_ids)->get();
+                    foreach ($remain_nv_employees as $item) {
+                        $my_employee_work = EmployeeWork::where('employee_id', $item->id)->where('status', 'On')->first();
+                        $child = [
+                            'id' => $item->img_path,
+                            'name' => $item->name,
+                            'title' => $my_employee_work->company_job->name,
+                        ];
+                        array_push($datasource['children'][0]['children'], $child);
+                    }
+                } else { // Không có phó phòng
+                    // Lấy các Employee có chức vụ là nhân viên mà Không thuộc tổ/nhóm
+                    $remain_company_job_nv_ids = CompanyJob::where('department_id', $department_id)->where('position_id', 13)->pluck('id')->toArray();
+                    $remain_employee_nv_ids = EmployeeWork::whereIn('company_job_id', $remain_company_job_nv_ids)->where('status', 'On')->pluck('employee_id')->toArray();
+                    $remain_nv_employees = Employee::whereIn('id', $remain_employee_nv_ids)->get();
+                    foreach ($remain_nv_employees as $item) {
+                        $my_employee_work = EmployeeWork::where('employee_id', $item->id)->where('status', 'On')->first();
+                        $child = [
+                            'id' => $item->img_path,
+                            'name' => $item->name,
+                            'title' => $my_employee_work->company_job->name,
+                        ];
+                        array_push($datasource['children'], $child);
                     }
                 }
             }

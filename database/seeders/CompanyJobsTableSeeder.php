@@ -1207,6 +1207,20 @@ class CompanyJobsTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
+            85 =>
+                array (
+                    'id' => 86,
+                    'name' => 'Phó phòng hành chính nhân sự',
+                    'department_id' => 9,
+                    'division_id' => null,
+                    'position_id' => 7,
+                    'position_salary' => 0,
+                    'max_capacity_salary' => 0,
+                    'position_allowance' => 0,
+                    'recruitment_standard_file' => 'dist/recruitment_standard/gdkt_hn.pdf',
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ),
         ));
     }
 }
