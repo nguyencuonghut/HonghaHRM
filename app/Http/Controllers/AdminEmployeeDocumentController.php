@@ -549,7 +549,7 @@ class AdminEmployeeDocumentController extends Controller
 
         //Save to file
         $writer = new Xlsx($spreadsheet);
-        $file_name = 'Mẫu HĐTV' . '.xlsx';
+        $file_name = 'HĐTV-' . $employee->code . '-' . $employee->name . '.xlsx';
         $writer->save($file_name);
 
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
