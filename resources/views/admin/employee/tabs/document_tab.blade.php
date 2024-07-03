@@ -201,6 +201,16 @@
                         </form>
                       </td>
                     </tr>
+                    <tr>
+                      <td>Hợp đồng lao động</td>
+                      <td>
+
+                        <form class="form-horizontal" method="post" action="{{ route('admin.hr.employees.document.makeSampleHdld', $employee->id) }}" name="make_sample_hdld" id="make_sample_hdld" novalidate="novalidate">
+                            {{ csrf_field() }}
+                            <button type="submit" class="btn btn-success btn-xs"><i class="fas fa-cloud-download-alt"></i></button>
+                        </form>
+                      </td>
+                    </tr>
                 </tbody>
             </table>
         </div>

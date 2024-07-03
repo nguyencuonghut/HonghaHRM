@@ -164,6 +164,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('hr/employees/store_from_candidate', [AdminEmployeeController::class, 'storeFromCandidate'])->name('hr.employees.store_from_candidate');
         Route::resource('hr/employees', AdminEmployeeController::class, ['names' => 'hr.employees']);
 
+        Route::post('hr/employees/document/makeSampleHdld/{employee_id}', [AdminEmployeeDocumentController::class, 'makeSampleHdld'])->name('hr.employees.document.makeSampleHdld');
         Route::post('hr/employees/document/makeSampleHdtv/{employee_id}', [AdminEmployeeDocumentController::class, 'makeSampleHdtv'])->name('hr.employees.document.makeSampleHdtv');
         Route::resource('hr/employees/document', AdminEmployeeDocumentController::class, ['names' => 'hr.employees.document']);
 
