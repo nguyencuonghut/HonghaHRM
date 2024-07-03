@@ -43,6 +43,7 @@ use App\Http\Controllers\AdminPlanController;
 use App\Http\Controllers\AdminOrgController;
 use App\Http\Controllers\AdminDepartmentManagerController;
 use App\Http\Controllers\AdminDivisionManagerController;
+use App\Http\Controllers\AdminEmployeeRelativeController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -170,6 +171,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('documents/data', [AdminDocumentController::class, 'anyData'])->name('documents.data');
         Route::resource('documents', AdminDocumentController::class);
+
+        Route::resource('hr/employees/relative', AdminEmployeeRelativeController::class, ['names' => 'hr.employees.relative']);
 
         Route::get('hr/probations/data', [AdminProbationController::class, 'anyData'])->name('hr.probations.data');
         Route::post('hr/probations/approve/{id}', [AdminProbationController::class, 'approve'])->name('hr.probations.approve');

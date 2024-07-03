@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
+use App\Models\EmployeeRelative;
 use App\Models\School;
 use App\Models\Degree;
 use App\Models\Commune;
@@ -176,6 +177,7 @@ class AdminEmployeeController extends Controller
         $employee_works = EmployeeWork::where('employee_id', $employee->id)->get();
         $company_jobs = CompanyJob::all();
         $probations = Probation::all();
+        $employee_relatives = EmployeeRelative::where('employee_id', $employee->id)->get();
 
         return view('admin.employee.show',
                     ['employee' => $employee,
@@ -184,6 +186,7 @@ class AdminEmployeeController extends Controller
                     'probations' => $probations,
                     'employee_works' => $employee_works,
                     'company_jobs' => $company_jobs,
+                    'employee_relatives' => $employee_relatives,
                     ]);
     }
 

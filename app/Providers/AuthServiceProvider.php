@@ -33,6 +33,7 @@ class AuthServiceProvider extends ServiceProvider
         'review-probation' => ['Admin', 'Nhân sự'],
         'approve-probation' => ['Admin', 'Ban lãnh đạo'],
         'create-manager' => ['Admin', 'Nhân sự'],
+        'create-relative' => ['Admin', 'Nhân sự'],
     ];
 
     /**
