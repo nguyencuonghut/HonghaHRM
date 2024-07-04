@@ -141,13 +141,13 @@
           url: "{{ route('admin.reports.kidData') }}",
         },
         columns: [
-            {data: 'id', name: 'id'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
             {data: 'type', name: 'type'},
             {data: 'year_of_birth', name: 'year_of_birth'},
             {data: 'employee', name: 'employee'},
         ]
-        });
+        }).buttons().container().appendTo('#employees-table_wrapper .col-md-6:eq(0)');
     });
   </script>
 @endpush

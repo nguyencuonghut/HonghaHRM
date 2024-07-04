@@ -142,7 +142,7 @@
           url: "{{ route('admin.reports.situationData') }}",
         },
         columns: [
-            {data: 'id', name: 'id'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'name', name: 'name'},
             {data: 'type', name: 'type'},
             {data: 'year_of_birth', name: 'year_of_birth'},
