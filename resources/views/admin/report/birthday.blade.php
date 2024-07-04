@@ -175,7 +175,7 @@
             }
         },
         columns: [
-            {data: 'id', name: 'id'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'company_email', name: 'company_email'},
             {data: 'gender', name: 'gender'},
