@@ -43,11 +43,21 @@
               <!-- /.card-header -->
               <div class="card-body">
                     <div class="control-group mb-3">
-                        <label class="control-label">Lọc giới tính</label>
+                        <label class="control-label">Lọc theo tháng</label>
                         <div class="controls">
-                            <select name="gender" id="gender" data-placeholder="Chọn" class="form-control select2" style="width: 20%;">
-                                <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
+                            <select name="month" id="month" data-placeholder="Chọn" class="form-control select2" style="width: 20%;">
+                                <option value="1" @if(1 == Carbon\Carbon::now()->month) selected="selected" @endif>1</option>
+                                <option value="2" @if(2 == Carbon\Carbon::now()->month) selected="selected" @endif>2</option>
+                                <option value="3" @if(3 == Carbon\Carbon::now()->month) selected="selected" @endif>3</option>
+                                <option value="4" @if(4 == Carbon\Carbon::now()->month) selected="selected" @endif>4</option>
+                                <option value="5" @if(5 == Carbon\Carbon::now()->month) selected="selected" @endif>5</option>
+                                <option value="6" @if(6 == Carbon\Carbon::now()->month) selected="selected" @endif>6</option>
+                                <option value="7" @if(7 == Carbon\Carbon::now()->month) selected="selected" @endif>7</option>
+                                <option value="8" @if(8 == Carbon\Carbon::now()->month) selected="selected" @endif>8</option>
+                                <option value="9" @if(9 == Carbon\Carbon::now()->month) selected="selected" @endif>9</option>
+                                <option value="10" @if(10 == Carbon\Carbon::now()->month) selected="selected" @endif>10</option>
+                                <option value="11" @if(11== Carbon\Carbon::now()->month) selected="selected" @endif>11</option>
+                                <option value="12" @if(12 == Carbon\Carbon::now()->month) selected="selected" @endif>12</option>
                             </select>
                         </div>
                     </div>
@@ -109,59 +119,58 @@
 
       // Datatables
       var table = $('#employees-table').DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
         processing: true,
         serverSide: true,
         buttons: [
-                {
-                    extend: 'copy',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4]
-                    }
-                },
-                {
-                    extend: 'csv',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4]
-                    }
-
-                },
-                {
-                    extend: 'excel',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4]
-                    }
-                },
-                {
-                    extend: 'pdf',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4]
-                    }
-                },
-                {
-                    extend: 'print',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4]
-                    }
-                },
-                {
-                    extend: 'colvis',
-                    footer: true,
-                    exportOptions: {
-                        columns: [0,1,2,3,4]
-                    }
+            {
+                extend: 'copy',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
                 }
-            ],
-            dom: 'Blfrtip',
+            },
+            {
+                extend: 'csv',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+
+            },
+            {
+                extend: 'excel',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            },
+            {
+                extend: 'pdf',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            },
+            {
+                extend: 'print',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            },
+            {
+                extend: 'colvis',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            }
+        ],
+        dom: 'Blfrtip',
         ajax: {
           url: "{{ route('admin.reports.birthday') }}",
           data: function (d) {
-                d.gender = $('#gender').val(),
+                d.month = $('#month').val(),
                 d.search = $('input[type="search"]').val()
             }
         },
@@ -172,11 +181,11 @@
             {data: 'gender', name: 'gender'},
             {data: 'date_of_birth', name: 'date_of_birth'},
         ]
-        }).buttons().container().appendTo('#employees-table_wrapper .col-md-6:eq(0)');
+        });
 
-    $('#gender').change(function(){
-        table.draw();
-    });
+        $('#month').change(function(){
+            table.draw();
+        });
     });
   </script>
 @endpush
