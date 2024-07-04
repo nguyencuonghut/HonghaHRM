@@ -157,6 +157,12 @@
                   <p>Hoàn cảnh</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('admin.reports.kid_policy')}}" class="nav-link {{ Request::is('admin/reports/kid_policy') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Chế độ 1/6</p>
+                </a>
+              </li>
             </ul>
           </li>
 

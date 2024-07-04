@@ -1,10 +1,7 @@
 @section('title')
-{{ 'Sinh nhật' }}
+{{ 'Thiếu nhi' }}
 @endsection
 @push('styles')
-  <!-- Select2 -->
-  <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
   <!-- DataTables -->
   <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
   <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
@@ -20,12 +17,12 @@
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1 class="m-0">Tất cả sinh nhật</h1>
+          <h1 class="m-0">Tất cả thiếu nhi</h1>
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
             <li class="breadcrumb-item"><a href="{{ route('admin.dashboards.dashboard_1') }}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Sinh nhật</li>
+            <li class="breadcrumb-item active">Thiếu nhi</li>
           </ol>
         </div><!-- /.col -->
       </div><!-- /.row -->
@@ -42,33 +39,14 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                    <div class="control-group mb-3">
-                        <label class="control-label">Lọc theo tháng</label>
-                        <div class="controls">
-                            <select name="month" id="month" data-placeholder="Chọn" class="form-control select2" style="width: 20%;">
-                                <option value="1" @if(1 == Carbon\Carbon::now()->month) selected="selected" @endif>1</option>
-                                <option value="2" @if(2 == Carbon\Carbon::now()->month) selected="selected" @endif>2</option>
-                                <option value="3" @if(3 == Carbon\Carbon::now()->month) selected="selected" @endif>3</option>
-                                <option value="4" @if(4 == Carbon\Carbon::now()->month) selected="selected" @endif>4</option>
-                                <option value="5" @if(5 == Carbon\Carbon::now()->month) selected="selected" @endif>5</option>
-                                <option value="6" @if(6 == Carbon\Carbon::now()->month) selected="selected" @endif>6</option>
-                                <option value="7" @if(7 == Carbon\Carbon::now()->month) selected="selected" @endif>7</option>
-                                <option value="8" @if(8 == Carbon\Carbon::now()->month) selected="selected" @endif>8</option>
-                                <option value="9" @if(9 == Carbon\Carbon::now()->month) selected="selected" @endif>9</option>
-                                <option value="10" @if(10 == Carbon\Carbon::now()->month) selected="selected" @endif>10</option>
-                                <option value="11" @if(11== Carbon\Carbon::now()->month) selected="selected" @endif>11</option>
-                                <option value="12" @if(12 == Carbon\Carbon::now()->month) selected="selected" @endif>12</option>
-                            </select>
-                        </div>
-                    </div>
                 <table id="employees-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
                     <th>STT</th>
-                    <th>Họ tên</th>
-                    <th>Email công ty</th>
-                    <th>Giới tính</th>
-                    <th>Ngày sinh</th>
+                    <th>Tên</th>
+                    <th>Quan hệ</th>
+                    <th>Năm sinh</th>
+                    <th>Tên bố/mẹ</th>
                   </tr>
                   </thead>
                 </table>
@@ -85,9 +63,6 @@
 @endsection
 
 @push('scripts')
-<!-- Select2 -->
-<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
-
 <!-- DataTables  & Plugins -->
 <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
@@ -112,11 +87,6 @@
 
 <script>
     $(function () {
-        //Initialize Select2 Elements
-        $('.select2').select2({
-        theme: 'bootstrap4'
-        })
-
       // Datatables
       var table = $('#employees-table').DataTable({
         processing: true,
@@ -168,23 +138,15 @@
         ],
         dom: 'Blfrtip',
         ajax: {
-          url: "{{ route('admin.reports.birthday') }}",
-          data: function (d) {
-                d.month = $('#month').val(),
-                d.search = $('input[type="search"]').val()
-            }
+          url: "{{ route('admin.reports.kidData') }}",
         },
         columns: [
             {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
-            {data: 'company_email', name: 'company_email'},
-            {data: 'gender', name: 'gender'},
-            {data: 'date_of_birth', name: 'date_of_birth'},
+            {data: 'type', name: 'type'},
+            {data: 'year_of_birth', name: 'year_of_birth'},
+            {data: 'employee', name: 'employee'},
         ]
-        });
-
-        $('#month').change(function(){
-            table.draw();
         });
     });
   </script>

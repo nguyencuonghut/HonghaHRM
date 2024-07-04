@@ -7,6 +7,7 @@ use App\Models\EmployeeWork;
 use App\Models\EmployeeRelative;
 use Illuminate\Http\Request;
 use Datatables;
+use Carbon\Carbon;
 
 class AdminReportController extends Controller
 {
@@ -81,8 +82,32 @@ class AdminReportController extends Controller
 
     public function kid_policy()
     {
-        dd("Kid policy report");
+        return view('admin.report.kid_policy');
+    }
 
+    public function kidData()
+    {
+
+        $employee_relatives = EmployeeRelative::whereIn('type', ['Con trai', 'Con gái'])
+                                        ->where('year_of_birth', '>=', Carbon::now()->year - 15)
+                                        ->orderBy('employee_id', 'asc')
+                                        ->get();
+        return Datatables::of($employee_relatives)
+            ->addIndexColumn()
+            ->editColumn('name', function ($employee_relatives) {
+                return $employee_relatives->name;
+            })
+            ->editColumn('type', function ($employee_relatives) {
+                return $employee_relatives->type;
+            })
+            ->editColumn('year_of_birth', function ($employee_relatives) {
+                return $employee_relatives->year_of_birth;
+            })
+            ->editColumn('employee', function ($employee_relatives) {
+                return '<a href="'.route("admin.hr.employees.show", $employee_relatives->employee_id).'">'.$employee_relatives->employee->name.'</a>';
+            })
+            ->rawColumns(['employee'])
+            ->make(true);
     }
 
     public function seniority()
