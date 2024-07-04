@@ -76,6 +76,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('dashboards/dashboard_1', [AdminDashboardController::class, 'dashboard_1'])->name('dashboards.dashboard_1');
         Route::get('dashboards/dashboard_2', [AdminDashboardController::class, 'dashboard_2'])->name('dashboards.dashboard_2');
 
+        Route::get('reports/birthdayData', [AdminReportController::class, 'birthdayData'])->name('reports.birthdayData');
         Route::get('reports/birthday', [AdminReportController::class, 'birthday'])->name('reports.birthday');
         Route::get('reports/situation', [AdminReportController::class, 'situation'])->name('reports.situation');
         Route::get('reports/kid_policy', [AdminReportController::class, 'kid_policy'])->name('reports.kid_policy');
