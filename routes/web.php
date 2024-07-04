@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminHomeController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminAdminController;
@@ -72,7 +72,7 @@ Route::post('/admin/reset-password', [AdminLoginController::class, 'submitResetP
 
 Route::name('admin.')->prefix('admin')->group(function() {
     Route::group(['middleware'=>'auth:admin'], function() {
-        Route::get('/', [AdminHomeController::class, 'index'])->name('home');
+        Route::get('dashboards/dashboard_1', [AdminDashboardController::class, 'dashboard_1'])->name('dashboards.dashboard_1');
 
         Route::get('departments/get-division/{department_id}', [AdminDepartmentController::class, 'getDivision'])->name('departments.getDivision');
         Route::get('departments/data', [AdminDepartmentController::class, 'anyData'])->name('departments.data');

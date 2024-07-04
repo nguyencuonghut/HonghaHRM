@@ -11,11 +11,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Admin Dashboard</h1>
+            <h1 class="m-0">Admin Dashboard 1</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item active">Admin Dashboard</li>
+              <li class="breadcrumb-item active">Admin Dashboard 1</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -32,14 +32,14 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{$departments->count()}}</h3>
 
-                <p>Tổng số tender</p>
+                <p>Tổng số phòng/ban</p>
               </div>
               <div class="icon">
-                <i class="ion ion-ios-copy"></i>
+                <i class="fas fa-sitemap"></i>
               </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('admin.hr.orgs.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -47,14 +47,29 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53</h3>
+                <h3>{{$employees->count()}}</h3>
 
-                <p>Tender hoàn thành</p>
+                <p>Tổng số nhân sự</p>
               </div>
               <div class="icon">
-                <i class="ion ion-checkmark-circled"></i>
+                <i class="fas fa-users"></i>
               </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('admin.hr.employees.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h3>{{$recruitment_proposals->count()}}</h3>
+
+                <p>Tổng số yêu cầu tuyển dụng</p>
+              </div>
+              <div class="icon">
+                <i class="fas fa-search-location"></i>
+              </div>
+              <a href="{{route('admin.recruitment.proposals.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
@@ -62,29 +77,14 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{$probations->count()}}</h3>
 
-                <p>Tender đang diễn ra</p>
+                <p>Tổng số thử việc</p>
               </div>
               <div class="icon">
-                <i class="ion ion-load-a"></i>
+                <i class="fas fa-user-check"></i>
               </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
-
-                <p>Số nhà cung cấp</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="{{route('admin.hr.probations.index')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
