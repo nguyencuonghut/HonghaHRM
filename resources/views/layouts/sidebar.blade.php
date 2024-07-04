@@ -36,6 +36,12 @@
                   <p>Dashboard 1</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('admin.dashboards.dashboard_2')}}" class="nav-link {{ Request::is('admin/dashboards/dashboard_2*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Dashboard 2</p>
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -129,6 +135,31 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item {{ Request::is('admin/reports*') ? 'menu-open' : '' }}">
+            <a href="{{route('admin.reports.birthday')}}" class="nav-link {{ Request::is('admin/reports*') ? 'active' : '' }}">
+              <i class="nav-icon fas fa-chart-line"></i>
+              <p>
+                Báo cáo
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{route('admin.reports.birthday')}}" class="nav-link {{ Request::is('admin/reports/birthday') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Sinh nhật</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.reports.situation')}}" class="nav-link {{ Request::is('admin/reports/situation') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Hoàn cảnh</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
           @else
           <li class="nav-item">
             <a href="{{route('user.home')}}" class="nav-link {{ Request::is('/') ? 'active' : '' }}">

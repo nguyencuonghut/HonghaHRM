@@ -44,6 +44,7 @@ use App\Http\Controllers\AdminOrgController;
 use App\Http\Controllers\AdminDepartmentManagerController;
 use App\Http\Controllers\AdminDivisionManagerController;
 use App\Http\Controllers\AdminEmployeeRelativeController;
+use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -73,6 +74,12 @@ Route::post('/admin/reset-password', [AdminLoginController::class, 'submitResetP
 Route::name('admin.')->prefix('admin')->group(function() {
     Route::group(['middleware'=>'auth:admin'], function() {
         Route::get('dashboards/dashboard_1', [AdminDashboardController::class, 'dashboard_1'])->name('dashboards.dashboard_1');
+        Route::get('dashboards/dashboard_2', [AdminDashboardController::class, 'dashboard_2'])->name('dashboards.dashboard_2');
+
+        Route::get('reports/birthday', [AdminReportController::class, 'birthday'])->name('reports.birthday');
+        Route::get('reports/situation', [AdminReportController::class, 'situation'])->name('reports.situation');
+        Route::get('reports/kid_policy', [AdminReportController::class, 'kid_policy'])->name('reports.kid_policy');
+        Route::get('reports/seniority', [AdminReportController::class, 'seniority'])->name('reports.seniority');
 
         Route::get('departments/get-division/{department_id}', [AdminDepartmentController::class, 'getDivision'])->name('departments.getDivision');
         Route::get('departments/data', [AdminDepartmentController::class, 'anyData'])->name('departments.data');
