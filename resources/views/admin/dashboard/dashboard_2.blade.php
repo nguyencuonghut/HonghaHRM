@@ -37,7 +37,7 @@
                 <p>Sinh nhật trong tháng</p>
               </div>
               <div class="icon">
-                <i class="fas fa-sitemap"></i>
+                <i class="fas fa-birthday-cake"></i>
               </div>
               <a href="{{route('admin.reports.birthday')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -52,7 +52,7 @@
                 <p>Gia đình hoàn cảnh</p>
               </div>
               <div class="icon">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-hand-holding-heart"></i>
               </div>
               <a href="{{route('admin.reports.situation')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -67,7 +67,7 @@
                 <p>Chế độ 1/6</p>
               </div>
               <div class="icon">
-                <i class="fas fa-search-location"></i>
+                <i class="fas fa-baby"></i>
               </div>
               <a href="{{route('admin.reports.kid_policy')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>
@@ -82,7 +82,7 @@
                 <p>Thâm niên > 5 năm</p>
               </div>
               <div class="icon">
-                <i class="fas fa-user-check"></i>
+                <i class="fas fa-award"></i>
               </div>
               <a href="{{route('admin.reports.seniority')}}" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
             </div>

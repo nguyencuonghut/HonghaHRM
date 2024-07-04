@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\EmployeeWork;
+use App\Models\EmployeeRelative;
 use Illuminate\Http\Request;
 use Datatables;
 
@@ -54,8 +55,28 @@ class AdminReportController extends Controller
 
     public function situation()
     {
-        dd("Situation report");
+        return view('admin.report.situation');
+    }
 
+    public function situationData()
+    {
+        $employee_relatives = EmployeeRelative::where('situation', '!=', null)->orderBy('employee_id', 'asc')->get();
+        return Datatables::of($employee_relatives)
+            ->addIndexColumn()
+            ->editColumn('name', function ($employee_relatives) {
+                return $employee_relatives->name;
+            })
+            ->editColumn('type', function ($employee_relatives) {
+                return $employee_relatives->type;
+            })
+            ->editColumn('year_of_birth', function ($employee_relatives) {
+                return $employee_relatives->year_of_birth;
+            })
+            ->editColumn('employee', function ($employee_relatives) {
+                return '<a href="'.route("admin.hr.employees.show", $employee_relatives->employee_id).'">'.$employee_relatives->employee->name.'</a>';
+            })
+            ->rawColumns(['employee'])
+            ->make(true);
     }
 
     public function kid_policy()
