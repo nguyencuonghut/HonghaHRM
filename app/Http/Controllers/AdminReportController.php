@@ -111,8 +111,67 @@ class AdminReportController extends Controller
             ->make(true);
     }
 
-    public function seniority()
+    public function seniority(Request $request)
     {
+        if ($request->ajax()) {
+            $employees = Employee::select('*');
+
+            return Datatables::of($employees)
+                ->addIndexColumn()
+                ->editColumn('name', function ($employees) {
+                    return '<a href="' . route("admin.hr.employees.show", $employees->id) . '">' . $employees->name . '</a>';
+
+                })
+                ->editColumn('department', function ($employees) {
+                    $employee_works = EmployeeWork::where('employee_id', $employees->id)->where('status', 'On')->get();
+                    $employee_department_str = '';
+                    $i = 0;
+                    $length = count($employee_works);
+                    if ($length) {
+                        foreach ($employee_works as $employee_work) {
+                            if(++$i === $length) {
+                                $employee_department_str .= $employee_work->company_job->department->name;
+                                if ($employee_work->company_job->division_id) {
+                                    $employee_department_str .= ' - ' . $employee_work->company_job->division->name;
+                                }
+                            } else {
+                                $employee_department_str .= $employee_work->company_job->department->name;
+
+                                if ($employee_work->company_job->division_id) {
+                                    $employee_department_str .= ' - ' . $employee_work->company_job->division->name;
+                                }
+                                $employee_department_str .= ' | ';
+                            }
+                        }
+                    } else {
+                        $employee_department_str .= '!! Chưa gán vị trí công việc !!';
+                    }
+
+                    return $employee_department_str;
+                })
+                ->editColumn('join_date', function ($employees) {
+                    return date('d/m/Y', strtotime($employees->join_date));
+                })
+                ->editColumn('seniority', function ($employees) {
+                    return Carbon::parse($employees->join_date)->diffInYears(Carbon::now());
+                })
+                ->filter(function ($instance) use ($request) {
+                    if ($request->get('year')
+                        && 'Tất cả' != $request->get('year')) {
+                        $instance->whereYear('join_date', Carbon::now()->year - $request->get('year'));
+                    }
+                    if (!empty($request->get('search'))) {
+                            $instance->where(function($w) use($request){
+                            $search = $request->get('search');
+                            $w->orWhere('name', 'LIKE', "%$search%")
+                            ->orWhere('join_date', 'LIKE', "%$search%");
+                        });
+                    }
+                })
+                ->rawColumns(['name'])
+                ->make(true);
+        }
+
         return view('admin.report.seniority');
     }
 

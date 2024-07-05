@@ -39,6 +39,20 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
+                <div class="control-group">
+                    <label class="control-label">Lọc theo năm</label>
+                    <div class="controls">
+                        <select name="year" id="year" data-placeholder="Chọn" class="form-control select2" style="width: 20%;">
+                            <option value="Tất cả" selected="selected">Tất cả</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                            <option value="30">30</option>
+                        </select>
+                    </div>
+                </div>
                 <table id="employees-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -89,6 +103,7 @@
     $(function () {
       // Datatables
       var table = $('#employees-table').DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
         processing: true,
         serverSide: true,
         buttons: [
@@ -138,15 +153,23 @@
         ],
         dom: 'Blfrtip',
         ajax: {
-          url: "{{ route('admin.reports.seniorityData') }}",
+          url: "{{ route('admin.reports.seniority') }}",
+          data: function (d) {
+                d.year = $('#year').val(),
+                d.search = $('input[type="search"]').val()
+            }
         },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'id', name: 'id'},
             {data: 'name', name: 'name'},
-            {data: 'department', name: 'department'},
+            {data: 'department', name: 'department', orderable: false, searchable: false},
             {data: 'join_date', name: 'join_date'},
-            {data: 'seniority', name: 'seniority'},
+            {data: 'seniority', name: 'seniority', orderable: false, searchable: false},
         ]
+        });
+
+        $('#year').change(function(){
+            table.draw();
         });
     });
   </script>
