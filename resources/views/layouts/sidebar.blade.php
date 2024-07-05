@@ -163,6 +163,12 @@
                   <p>Chế độ 1/6</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('admin.reports.seniority')}}" class="nav-link {{ Request::is('admin/reports/seniority') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Thâm niên</p>
+                </a>
+              </li>
             </ul>
           </li>
 
