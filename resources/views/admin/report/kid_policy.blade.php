@@ -89,6 +89,7 @@
     $(function () {
       // Datatables
       var table = $('#employees-table').DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
         processing: true,
         serverSide: true,
         buttons: [

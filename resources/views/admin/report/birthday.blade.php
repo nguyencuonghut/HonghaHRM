@@ -42,7 +42,7 @@
             <div class="card">
               <!-- /.card-header -->
               <div class="card-body">
-                    <div class="control-group mb-3">
+                    <div class="control-group">
                         <label class="control-label">Lọc theo tháng</label>
                         <div class="controls">
                             <select name="month" id="month" data-placeholder="Chọn" class="form-control select2" style="width: 20%;">
@@ -119,6 +119,7 @@
 
       // Datatables
       var table = $('#employees-table').DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
         processing: true,
         serverSide: true,
         buttons: [
