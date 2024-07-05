@@ -45,6 +45,7 @@ use App\Http\Controllers\AdminDepartmentManagerController;
 use App\Http\Controllers\AdminDivisionManagerController;
 use App\Http\Controllers\AdminEmployeeRelativeController;
 use App\Http\Controllers\AdminReportController;
+use App\Http\Controllers\AdminEmployeeContractController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -193,6 +194,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('hr/workings/off/{id}', [AdminEmployeeWorkController::class, 'off'])->name('hr.workings.off');
         Route::get('hr/workings/off/{id}', [AdminEmployeeWorkController::class, 'getOff'])->name('hr.workings.getOff');
         Route::resource('hr/workings', AdminEmployeeWorkController::class, ['names' => 'hr.workings']);
+
+        Route::resource('hr/contracts', AdminEmployeeContractController::class, ['names' => 'hr.contracts']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
         Route::get('hr/orgs/{department_id}', [AdminOrgController::class, 'show'])->name('hr.orgs.show');

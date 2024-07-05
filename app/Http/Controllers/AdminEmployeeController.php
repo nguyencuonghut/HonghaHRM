@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminDepartment;
 use App\Models\Employee;
+use App\Models\EmployeeContract;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
@@ -12,6 +13,7 @@ use App\Models\School;
 use App\Models\Degree;
 use App\Models\Commune;
 use App\Models\CompanyJob;
+use App\Models\ContractType;
 use App\Models\District;
 use App\Models\Document;
 use App\Models\Probation;
@@ -178,6 +180,8 @@ class AdminEmployeeController extends Controller
         $company_jobs = CompanyJob::all();
         $probations = Probation::all();
         $employee_relatives = EmployeeRelative::where('employee_id', $employee->id)->get();
+        $employee_contracts = EmployeeContract::where('employee_id', $employee->id)->get();
+        $contract_types = ContractType::all();
 
         return view('admin.employee.show',
                     ['employee' => $employee,
@@ -187,6 +191,8 @@ class AdminEmployeeController extends Controller
                     'employee_works' => $employee_works,
                     'company_jobs' => $company_jobs,
                     'employee_relatives' => $employee_relatives,
+                    'employee_contracts' => $employee_contracts,
+                    'contract_types' => $contract_types,
                     ]);
     }
 

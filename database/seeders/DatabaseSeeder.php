@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
             EmployeeWorksTableSeeder::class,
             DepartmentManagersTableSeeder::class,
             DivisionManagersTableSeeder::class,
+            ContractTypesTableSeeder::class,
         ]);
     }
 }
