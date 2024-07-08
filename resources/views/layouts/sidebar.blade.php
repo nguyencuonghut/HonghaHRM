@@ -114,6 +114,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('admin.hr.contracts.index')}}" class="nav-link {{ Request::is('admin/hr/contracts*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Hợp đồng</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('admin.hr.workings.index')}}" class="nav-link {{ Request::is('admin/hr/workings*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>QT công tác</p>

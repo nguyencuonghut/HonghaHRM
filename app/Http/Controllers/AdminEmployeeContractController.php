@@ -17,7 +17,7 @@ class AdminEmployeeContractController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.contract.index');
     }
 
     /**
@@ -132,5 +132,45 @@ class AdminEmployeeContractController extends Controller
 
         Alert::toast('Xóa hợp đồng thành công!', 'success', 'top-right');
         return redirect()->back();
+    }
+
+    public function anyData()
+    {
+        $employee_contracts = EmployeeContract::orderBy('employee_id', 'asc')->get();
+        return Datatables::of($employee_contracts)
+            ->addIndexColumn()
+            ->editColumn('employee_name', function ($employee_contracts) {
+                return '<a href=' . route("admin.hr.employees.show", $employee_contracts->employee_id) . '>' . $employee_contracts->employee->name . '</a>' ;
+            })
+            ->editColumn('company_job', function ($employee_contracts) {
+                if ($employee_contracts->company_job->division_id) {
+                    return $employee_contracts->company_job->name . ' - ' . $employee_contracts->company_job->division->name .  '- ' . $employee_contracts->company_job->department->name;
+
+                } else {
+                    return $employee_contracts->company_job->name . ' - ' . $employee_contracts->company_job->department->name;
+                }
+            })
+            ->editColumn('contract', function ($employee_contracts) {
+                return $employee_contracts->contract_type->name;
+            })
+            ->editColumn('start_date', function ($employee_contracts) {
+                return date('d/m/Y', strtotime($employee_contracts->start_date));
+            })
+            ->editColumn('end_date', function ($employee_contracts) {
+                if ($employee_contracts->end_date) {
+                    return date('d/m/Y', strtotime($employee_contracts->end_date));
+                } else {
+                    return '-';
+                }
+            })
+            ->editColumn('status', function ($employee_contracts) {
+                if ('On' == $employee_contracts->status) {
+                    return '<span class="badge badge-success">' . $employee_contracts->status . '</span>';
+                } else {
+                    return '<span class="badge badge-danger">' . $employee_contracts->status . '</span>';
+                }
+            })
+            ->rawColumns(['employee_name', 'status'])
+            ->make(true);
     }
 }

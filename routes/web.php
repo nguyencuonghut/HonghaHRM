@@ -195,6 +195,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('hr/workings/off/{id}', [AdminEmployeeWorkController::class, 'getOff'])->name('hr.workings.getOff');
         Route::resource('hr/workings', AdminEmployeeWorkController::class, ['names' => 'hr.workings']);
 
+        Route::get('hr/contracts/data', [AdminEmployeeContractController::class, 'anyData'])->name('hr.contracts.data');
         Route::resource('hr/contracts', AdminEmployeeContractController::class, ['names' => 'hr.contracts']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
