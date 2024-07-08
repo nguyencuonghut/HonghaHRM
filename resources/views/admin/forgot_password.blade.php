@@ -18,7 +18,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{route('admin.dashboards.dashboard_1')}}" class="h1" style="color:red;">HONGHAFEED</a>
+    <a href="{{route('admin.home')}}" class="h1" style="color:red;">HONGHAFEED</a>
 </div>
   <!-- /.login-logo -->
   <div class="card">

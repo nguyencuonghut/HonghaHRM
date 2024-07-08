@@ -2,12 +2,12 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     @auth('admin')
-    <a href="{{route('admin.dashboards.dashboard_1')}}" class="brand-link">
+    <a href="{{route('admin.home')}}" class="brand-link">
       <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text">{{Auth::user()->name}}</span>
     </a>
     @else
-    <a href="{{route('user.dashboards.dashboard_1')}}" class="brand-link">
+    <a href="{{route('user.home')}}" class="brand-link">
       <img src="{{ asset('images/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text">{{Auth::user()->name}}</span>
     </a>
@@ -21,30 +21,14 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           @auth('admin')
-          <li class="nav-item {{ Request::is('admin/dashboards*') ? 'menu-open' : '' }}">
-            <a href="{{route('admin.dashboards.dashboard_1')}}" class="nav-link {{ Request::is('admin/dashboards*') ? 'active' : '' }}">
+          <li class="nav-item">
+            <a href="{{route('admin.home')}}" class="nav-link {{ Request::is('admin') ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="{{route('admin.dashboards.dashboard_1')}}" class="nav-link {{ Request::is('admin/dashboards/dashboard_1*') ? 'active' : '' }}">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard 1</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('admin.dashboards.dashboard_2')}}" class="nav-link {{ Request::is('admin/dashboards/dashboard_2*') ? 'active' : '' }}">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard 2</p>
-                </a>
-              </li>
-            </ul>
           </li>
-
           <li class="nav-item">
             <a href="#" class="nav-link {{ Request::is('admin/profile*') ? 'active' : '' }}">
               <i class="nav-icon fas fa-id-card"></i>

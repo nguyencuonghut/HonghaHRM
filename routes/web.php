@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminHomeController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminRoleController;
 use App\Http\Controllers\AdminAdminController;
@@ -74,8 +74,7 @@ Route::post('/admin/reset-password', [AdminLoginController::class, 'submitResetP
 
 Route::name('admin.')->prefix('admin')->group(function() {
     Route::group(['middleware'=>'auth:admin'], function() {
-        Route::get('dashboards/dashboard_1', [AdminDashboardController::class, 'dashboard_1'])->name('dashboards.dashboard_1');
-        Route::get('dashboards/dashboard_2', [AdminDashboardController::class, 'dashboard_2'])->name('dashboards.dashboard_2');
+        Route::get('/', [AdminHomeController::class, 'index'])->name('home');
 
         Route::get('reports/birthday', [AdminReportController::class, 'birthday'])->name('reports.birthday');
         Route::get('reports/situationData', [AdminReportController::class, 'situationData'])->name('reports.situationData');

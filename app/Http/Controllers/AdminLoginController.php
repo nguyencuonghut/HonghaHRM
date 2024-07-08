@@ -53,7 +53,7 @@ class AdminLoginController extends Controller
             }else{
                 $request->session()->regenerate();
 
-                return redirect()->route('admin.dashboards.dashboard_1');
+                return redirect()->route('admin.home');
             }
         }
 
