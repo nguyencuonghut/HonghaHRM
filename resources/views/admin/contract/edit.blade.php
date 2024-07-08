@@ -36,7 +36,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                    <form class="form-horizontal" method="post" action="{{ route('admin.hr.contracts.update', $employee_contract->id) }}" name="update_contract" id="update_contract" novalidate="novalidate">
+                    <form class="form-horizontal" method="post" action="{{ route('admin.hr.contracts.update', $employee_contract->id) }}" enctype="multipart/form-data" name="update_contract" id="update_contract" novalidate="novalidate">
                         {{ csrf_field() }}
                         @method('PATCH')
                         <!-- /.card-header -->
@@ -95,6 +95,18 @@
                                 </div>
                             </div>
 
+                            <div class="row">
+                                <div class="col-12">
+                                  <div class="control-group">
+                                      <label class="control-label">File (pdf)</label>
+                                      <div class="custom-file text-left">
+                                          <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
+                                          <label class="custom-file-label" for="img_path">Chọn file</label>
+                                      </div>
+                                  </div>
+                                </div>
+                            </div>
+
                             <br>
                             <div class="control-group">
                                 <div class="controls">
@@ -131,6 +143,12 @@
         });
         $('#e_date').datetimepicker({
             format: 'DD/MM/YYYY'
+        });
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
     })
 </script>

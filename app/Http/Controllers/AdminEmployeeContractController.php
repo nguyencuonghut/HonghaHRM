@@ -58,6 +58,19 @@ class AdminEmployeeContractController extends Controller
         if ($request->contract_e_date) {
             $employee_contract->end_date = Carbon::createFromFormat('d/m/Y', $request->contract_e_date);
         }
+
+        if ($request->hasFile('file_path')) {
+            $path = 'dist/employee_contract';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('file_path');
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $employee_contract->file_path = $path . '/' . $name;
+        }
+
         $employee_contract->status = 'On';
         $employee_contract->save();
 
@@ -115,6 +128,19 @@ class AdminEmployeeContractController extends Controller
         if ($request->e_date) {
             $employee_contract->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
         }
+
+        if ($request->hasFile('file_path')) {
+            $path = 'dist/employee_contract';
+
+            !file_exists($path) && mkdir($path, 0777, true);
+
+            $file = $request->file('file_path');
+            $name = time() . rand(1,100) . '_' . str_replace(' ', '_', $file->getClientOriginalName());
+            $file->move($path, $name);
+
+            $employee_contract->file_path = $path . '/' . $name;
+        }
+
         $employee_contract->status = 'On';
         $employee_contract->save();
 
@@ -170,7 +196,17 @@ class AdminEmployeeContractController extends Controller
                     return '<span class="badge badge-danger">' . $employee_contracts->status . '</span>';
                 }
             })
-            ->rawColumns(['employee_name', 'status'])
+            ->editColumn('file', function ($employee_contracts) {
+                $url = '';
+                if ($employee_contracts->file_path) {
+                    $url .= '<a target="_blank" href="../../../' . $employee_contracts->file_path . '"><i class="far fa-file-pdf"></i></a>';
+                    return $url;
+                } else {
+                    return $url;
+                }
+
+            })
+            ->rawColumns(['employee_name', 'status', 'file'])
             ->make(true);
     }
 

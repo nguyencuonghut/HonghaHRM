@@ -25,6 +25,7 @@
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                     <th>Trạng thái</th>
+                    <th>File</th>
                     @can('create-contract')
                     <th style="width:12%;">Thao tác</th>
                     @endcan
@@ -72,6 +73,13 @@
                             {{$employee_contract->status}}
                         </span>
                       </td>
+                      @php
+                            $url = '';
+                            if ($employee_contract->file_path) {
+                                $url .= '<a target="_blank" href="../../../' . $employee_contract->file_path . '"><i class="far fa-file-pdf"></i></a>';
+                            }
+                      @endphp
+                      <td>{!! $url !!}</td>
                       @can('create-contract')
                       <td>{!! $action !!}</td>
                       @endcan
@@ -81,7 +89,7 @@
             </table>
 
             <!-- Modals for create employee contract -->
-            <form class="form-horizontal" method="post" action="{{ route('admin.hr.contracts.store') }}" name="create_contract" id="create_contract" novalidate="novalidate">
+            <form class="form-horizontal" method="post" action="{{ route('admin.hr.contracts.store') }}" enctype="multipart/form-data" name="create_contract" id="create_contract" novalidate="novalidate">
                 {{ csrf_field() }}
                 <div class="modal fade" id="create_contract{{$employee->id}}">
                     <div class="modal-dialog modal-lg">
@@ -95,7 +103,7 @@
                             <div class="modal-body">
                                 <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="control-group">
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Vị trí</label>
@@ -110,10 +118,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
-                                <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="control-group">
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Loại HĐ</label>
@@ -150,6 +156,17 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <label class="control-label">File (pdf)</label>
+                                            <div class="custom-file text-left">
+                                                <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
+                                                <label class="custom-file-label" for="img_path">Chọn file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
@@ -182,6 +199,12 @@
         });
         $('#contract_e_date').datetimepicker({
             format: 'DD/MM/YYYY'
+        });
+
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
         });
     });
 </script>

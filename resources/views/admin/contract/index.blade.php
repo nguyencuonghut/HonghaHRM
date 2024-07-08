@@ -49,6 +49,7 @@
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                     <th>Trạng thái</th>
+                    <th>File</th>
                   </tr>
                   </thead>
                 </table>
@@ -146,6 +147,7 @@
             {data: 'start_date', name: 'start_date'},
             {data: 'end_date', name: 'end_date'},
             {data: 'status', name: 'status'},
+            {data: 'file', name: 'file'},
        ]
       }).buttons().container().appendTo('#contracts-table_wrapper .col-md-6:eq(0)');
     });

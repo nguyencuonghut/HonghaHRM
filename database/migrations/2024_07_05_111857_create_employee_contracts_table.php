@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees');
             $table->foreignId('company_job_id')->constrained('company_jobs');
             $table->foreignId('contract_type_id')->constrained('contract_types');
+            $table->string('file_path')->nullable();
             $table->enum('status', ['On', 'Off']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
