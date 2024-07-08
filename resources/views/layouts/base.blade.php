@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Honghafeed | @yield('title')</title>
+  <title>@yield('title')</title>
 
   <link rel="shortcut icon" href="{{ asset('favico.png') }}" />
   <!-- Google Font: Source Sans Pro -->
