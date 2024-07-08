@@ -26,7 +26,7 @@
                     <th>Ngày kết thúc</th>
                     <th>Trạng thái</th>
                     @can('create-contract')
-                    <th>Thao tác</th>
+                    <th style="width:12%;">Thao tác</th>
                     @endcan
                   </tr>
                 </thead>
@@ -36,6 +36,7 @@
                       @php
                           $company_job = App\Models\CompanyJob::findOrFail($employee_contract->company_job_id);
                           $action_edit_contracts = '<a href="' . route("admin.hr.contracts.edit", $employee_contract->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                                    <a href="'.route("admin.hr.contracts.getOff", $employee_contract->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
                                   <form style="display:inline" action="'. route("admin.hr.contracts.destroy", $employee_contract->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>

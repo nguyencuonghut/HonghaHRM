@@ -173,4 +173,33 @@ class AdminEmployeeContractController extends Controller
             ->rawColumns(['employee_name', 'status'])
             ->make(true);
     }
+
+
+    public function getOff($id)
+    {
+        $employee_contract = EmployeeContract::findOrFail($id);
+        return view('admin.contract.off', ['employee_contract' => $employee_contract]);
+    }
+
+    public function off(Request $request, $id)
+    {
+        $rules = [
+            'e_date' => 'required',
+        ];
+
+        $messages = [
+            'e_date.required' => 'Bạn phải nhập ngày kết thúc.',
+        ];
+
+        $request->validate($rules, $messages);
+
+        // Off the EmployeeContract
+        $employee_contract = EmployeeContract::findOrFail($id);
+        $employee_contract->status = 'Off';
+        $employee_contract->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
+        $employee_contract->save();
+
+        Alert::toast('Cập nhật thành công!', 'success', 'top-right');
+        return redirect()->route('admin.hr.employees.show', $employee_contract->employee_id);
+    }
 }
