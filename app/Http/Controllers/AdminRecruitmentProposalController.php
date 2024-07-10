@@ -52,7 +52,8 @@ class AdminRecruitmentProposalController extends Controller
         }
         $departments = Department::all()->pluck('name', 'id');
         $positions = Position::all()->pluck('name', 'id');
-        if ('Admin' == Auth::user()->role->name) {
+        if ('Admin' == Auth::user()->role->name
+        || 'Ban lãnh đạo' == Auth::user()->role->name) {
             // Fetch all company_jobs for Admin
             $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
         } else {
@@ -103,7 +104,17 @@ class AdminRecruitmentProposalController extends Controller
             $proposal->note = $request->note;
         }
         $proposal->creator_id     = Auth::user()->id;
-        $proposal->status = 'Mở';
+        // Trường hợp người tạo là Ban lãnh đạo, không cần review và phê duyệt nữa
+        if ('Ban lãnh đạo' == Auth::user()->role->name) {
+            $proposal->reviewer_id      = Auth::user()->id;
+            $proposal->reviewer_result  = 'Đồng ý';
+            $proposal->approver_id      = Auth::user()->id;
+            $proposal->approver_result  = 'Đồng ý';
+            $proposal->status = 'Đã duyệt';
+
+        } else {
+            $proposal->status = 'Mở';
+        }
         $proposal->save();
 
         //Send notification to reviewer
@@ -138,7 +149,7 @@ class AdminRecruitmentProposalController extends Controller
         $provinces = Province::orderBy('name' ,'asc')->get();
         $districts = District::orderBy('name' ,'asc')->get();
         $communes = Commune::orderBy('name' ,'asc')->get();
-        $candidates = RecruitmentCandidate::orderBy('id', 'asc')->get();
+        $candidates = RecruitmentCandidate::orderBy('id', 'desc')->get();
         $schools = School::orderBy('name', 'asc')->get();
         $degrees = Degree::orderBy('name', 'asc')->get();
         $company_jobs = CompanyJob::orderBy('name', 'asc')->get();

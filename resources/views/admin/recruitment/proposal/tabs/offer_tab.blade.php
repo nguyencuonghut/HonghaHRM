@@ -271,7 +271,7 @@
                                 <div class="col-6">
                                     <label class="required-field" class="control-label">Lương bảo hiểm</label>
                                     <div class="controls">
-                                        <input type="number" class="form-control" name="insurance_salary" id="insurance_salary" required="" readonly @if ($offer) value="{{$offer->insurance_salary}}" @else value="{{$proposal->company_job->insurance_salary}}" @endif>
+                                        <input type="number" class="form-control" name="insurance_salary" id="insurance_salary" required="" @if ($offer) value="{{$offer->insurance_salary}}" @else value="{{$proposal->company_job->insurance_salary}}" @endif>
                                     </div>
                                 </div>
                                 <div class="col-6">
