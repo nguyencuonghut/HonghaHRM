@@ -46,6 +46,7 @@ use App\Http\Controllers\AdminDivisionManagerController;
 use App\Http\Controllers\AdminEmployeeRelativeController;
 use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminEmployeeContractController;
+use App\Http\Controllers\AdminEmployeeKpiController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -198,6 +199,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('hr/contracts/off/{id}', [AdminEmployeeContractController::class, 'off'])->name('hr.contracts.off');
         Route::get('hr/contracts/off/{id}', [AdminEmployeeContractController::class, 'getOff'])->name('hr.contracts.getOff');
         Route::resource('hr/contracts', AdminEmployeeContractController::class, ['names' => 'hr.contracts']);
+
+        Route::get('hr/kpis/data', [AdminEmployeeKpiController::class, 'anyData'])->name('hr.kpis.data');
+        Route::get('hr/kpis/employeeData/{employee_id}', [AdminEmployeeKpiController::class, 'employeeData'])->name('hr.kpis.employeeData');
+        Route::resource('hr/kpis', AdminEmployeeKpiController::class, ['names' => 'hr.kpis']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
         Route::get('hr/orgs/{department_id}', [AdminOrgController::class, 'show'])->name('hr.orgs.show');

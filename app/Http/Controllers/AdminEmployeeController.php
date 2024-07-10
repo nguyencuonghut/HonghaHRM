@@ -9,6 +9,7 @@ use App\Models\EmployeeWork;
 use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
 use App\Models\EmployeeRelative;
+use App\Models\EmployeeKpi;
 use App\Models\School;
 use App\Models\Degree;
 use App\Models\Commune;
@@ -182,6 +183,7 @@ class AdminEmployeeController extends Controller
         $employee_relatives = EmployeeRelative::where('employee_id', $employee->id)->get();
         $employee_contracts = EmployeeContract::where('employee_id', $employee->id)->get();
         $contract_types = ContractType::all();
+        $employee_kpis = EmployeeKpi::where('employee_id', $employee->id)->get();
 
         return view('admin.employee.show',
                     ['employee' => $employee,
@@ -193,6 +195,7 @@ class AdminEmployeeController extends Controller
                     'employee_relatives' => $employee_relatives,
                     'employee_contracts' => $employee_contracts,
                     'contract_types' => $contract_types,
+                    'employee_kpis' => $employee_kpis,
                     ]);
     }
 
