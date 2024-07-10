@@ -42,7 +42,7 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-6">
+                                <div class="col-12">
                                     <div class="control-group">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Vị trí</label>
@@ -53,6 +53,18 @@
                                                         <option value="{{$company_job->id}}" @if ($employee_contract && $company_job->id == $employee_contract->company_job_id) selected="selected" @endif>{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
                                                     @endforeach
                                                 </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Số HĐ</label>
+                                            <div class="controls">
+                                                <input class="form-control" type="text" name="code" id="code" value="{{$employee_contract->code}}">
                                             </div>
                                         </div>
                                     </div>

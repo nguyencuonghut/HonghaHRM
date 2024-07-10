@@ -45,6 +45,7 @@
                     <th>STT</th>
                     <th>Nhân viên</th>
                     <th>Vị trí</th>
+                    <th>Số HĐ</th>
                     <th>Hợp đồng</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
@@ -97,14 +98,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
 
             },
@@ -112,28 +113,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             }
         ],
@@ -143,6 +144,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'employee_name', name: 'employee_name'},
             {data: 'company_job', name: 'company_job'},
+            {data: 'code', name: 'code'},
             {data: 'contract', name: 'contract'},
             {data: 'start_date', name: 'start_date'},
             {data: 'end_date', name: 'end_date'},

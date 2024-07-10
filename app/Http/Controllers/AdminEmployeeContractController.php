@@ -34,6 +34,7 @@ class AdminEmployeeContractController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'code' => 'required|unique:employee_contracts',
             'employee_id' => 'required',
             'contract_company_job_id' => 'required',
             'contract_type_id' => 'required',
@@ -41,6 +42,8 @@ class AdminEmployeeContractController extends Controller
         ];
 
         $messages = [
+            'code.required' => 'Bạn phải nhập số hợp đồng.',
+            'code.unique' => 'Số hợp đồng đã tồn tại.',
             'employee_id.required' => 'Số Id nhân sự chưa có.',
             'contract_company_job_id.required' => 'Bạn cần chọn Vị trí.',
             'contract_type_id.required' => 'Bạn cần chọn loại hợp đồng.',
@@ -51,6 +54,7 @@ class AdminEmployeeContractController extends Controller
 
         // Create new EmployeeContract
         $employee_contract = new EmployeeContract();
+        $employee_contract->code = $request->code;
         $employee_contract->employee_id = $request->employee_id;
         $employee_contract->company_job_id = $request->contract_company_job_id;
         $employee_contract->contract_type_id = $request->contract_type_id;
@@ -107,12 +111,15 @@ class AdminEmployeeContractController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
+            'code' => 'required|unique:employee_contracts,code,'.$id,
             'company_job_id' => 'required',
             'contract_type_id' => 'required',
             's_date' => 'required',
         ];
 
         $messages = [
+            'code.required' => 'Bạn phải nhập số hợp đồng.',
+            'code.unique' => 'Số hợp đồng đã tồn tại.',
             'company_job_id.required' => 'Bạn cần chọn Vị trí.',
             'contract_type_id.required' => 'Bạn cần chọn loại hợp đồng.',
             's_date.required' => 'Bạn cần nhập ngày bắt đầu.',
@@ -122,6 +129,7 @@ class AdminEmployeeContractController extends Controller
 
         // Create new EmployeeContract
         $employee_contract = EmployeeContract::findOrFail($id);
+        $employee_contract->code = $request->code;
         $employee_contract->company_job_id = $request->company_job_id;
         $employee_contract->contract_type_id = $request->contract_type_id;
         $employee_contract->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
@@ -165,6 +173,9 @@ class AdminEmployeeContractController extends Controller
         $employee_contracts = EmployeeContract::orderBy('employee_id', 'asc')->get();
         return Datatables::of($employee_contracts)
             ->addIndexColumn()
+            ->editColumn('code', function ($employee_contracts) {
+                return $employee_contracts->code;
+            })
             ->editColumn('employee_name', function ($employee_contracts) {
                 return '<a href=' . route("admin.hr.employees.show", $employee_contracts->employee_id) . '>' . $employee_contracts->employee->name . '</a>' ;
             })

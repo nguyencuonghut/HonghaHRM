@@ -20,6 +20,7 @@
             <table id="employee-contracts-table" class="table table-bordered table-striped">
                 <thead>
                   <tr>
+                    <th>Số HĐ</th>
                     <th>Hợp đồng</th>
                     <th>Vị trí</th>
                     <th>Ngày bắt đầu</th>
@@ -34,6 +35,7 @@
                 <tbody>
                     @foreach ($employee_contracts as $employee_contract)
                     <tr>
+                        <td>{{$employee_contract->code}}</td>
                       @php
                           $company_job = App\Models\CompanyJob::findOrFail($employee_contract->company_job_id);
                           $action_edit_contracts = '<a href="' . route("admin.hr.contracts.edit", $employee_contract->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
@@ -103,7 +105,7 @@
                             <div class="modal-body">
                                 <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div class="control-group">
                                             <div class="control-group">
                                                 <label class="required-field" class="control-label">Vị trí</label>
@@ -118,7 +120,19 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
 
+                                <div class="row">
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">Số HĐ</label>
+                                                <div class="controls">
+                                                    <input class="form-control" type="text" name="code" id="code">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="col-6">
                                         <div class="control-group">
                                             <div class="control-group">

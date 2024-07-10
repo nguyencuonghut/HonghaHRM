@@ -13,7 +13,7 @@ class EmployeeContract extends Model
 
     protected $table = "employee_contracts";
 
-    protected $fillable = ['employee_id', 'company_job_id', 'contract_type_id', 'file_path', 'status', 'start_date', 'end_date'];
+    protected $fillable = ['code', 'employee_id', 'company_job_id', 'contract_type_id', 'file_path', 'status', 'start_date', 'end_date'];
 
     public function employee(): BelongsTo
     {
