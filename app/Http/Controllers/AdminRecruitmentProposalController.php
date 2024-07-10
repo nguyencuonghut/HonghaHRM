@@ -13,6 +13,7 @@ use App\Models\CompanyJob;
 use App\Models\School;
 use App\Models\Degree;
 use App\Models\Province;
+use App\Models\Position;
 use App\Models\RecruitmentProposal;
 use App\Models\RecruitmentMethod;
 use App\Models\RecruitmentSocialMedia;
@@ -50,6 +51,7 @@ class AdminRecruitmentProposalController extends Controller
             return redirect()->route('admin.recruitment.proposals.index');
         }
         $departments = Department::all()->pluck('name', 'id');
+        $positions = Position::all()->pluck('name', 'id');
         if ('Admin' == Auth::user()->role->name) {
             // Fetch all company_jobs for Admin
             $company_jobs = CompanyJob::orderBy('name', 'asc')->get();
@@ -62,6 +64,7 @@ class AdminRecruitmentProposalController extends Controller
         return view('admin.recruitment.proposal.create',
                     ['company_jobs' => $company_jobs,
                     'departments' => $departments,
+                    'positions' => $positions,
                     ]);
     }
 

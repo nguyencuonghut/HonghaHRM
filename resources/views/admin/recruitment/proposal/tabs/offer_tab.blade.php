@@ -29,6 +29,7 @@
                             <th>Lương hiện tại</th>
                             <th>Lương mong muốn</th>
                             <th>Lương vị trí</th>
+                            <th>Lương bảo hiểm</th>
                             <th>Lương năng lực</th>
                             <th>Phụ cấp vị trí</th>
                             <th>Ghi chú</th>
@@ -64,6 +65,7 @@
                           <tr>
                             <td>{{number_format($offer->current_salary, 0, '.', ',')}}<sup>đ</sup></td>
                             <td>{{number_format($offer->desired_salary, 0, '.', ',')}}<sup>đ</sup></td>
+                            <td>{{number_format($offer->insurance_salary, 0, '.', ',')}}<sup>đ</sup></td>
                             <td>{{number_format($offer->position_salary, 0, '.', ',')}}<sup>đ</sup></td>
                             <td>{{number_format($offer->capacity_salary, 0, '.', ',')}}<sup>đ</sup></td>
                             <td>{{number_format($offer->position_allowance, 0, '.', ',')}}<sup>đ</sup></td>
@@ -112,26 +114,35 @@
 
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <label class="required-field" class="control-label">Lương vị trí</label>
+                                                        <label class="required-field" class="control-label">Lương bảo hiểm</label>
                                                         <div class="controls">
-                                                            <input type="number" class="form-control" name="position_salary" id="position_salary" required="" readonly @if ($offer) value="{{$offer->position_salary}}" @else value="{{$proposal->company_job->position_salary}}" @endif>
+                                                            <input type="number" class="form-control" name="insurance_salary" id="insurance_salary" required="" @if ($offer) value="{{$offer->insurance_salary}}" @else value="{{$proposal->company_job->insurance_salary}}" @endif>
                                                         </div>
                                                     </div>
                                                     <div class="col-6">
-                                                        <label class="required-field" class="control-label">Lương năng lực</label>
+                                                        <label class="required-field" class="control-label">Lương vị trí</label>
                                                         <div class="controls">
-                                                            <input type="number" class="form-control" name="capacity_salary" id="capacity_salary" required="" @if ($offer) value="{{$offer->capacity_salary}}" @else value="{{$proposal->company_job->max_capacity_salary}}" @endif>
+                                                            <input type="number" class="form-control" name="position_salary" id="position_salary" required="" readonly @if ($offer) value="{{$offer->position_salary}}" @else value="{{$proposal->company_job->position_salary}}" @endif>
                                                         </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="row">
                                                     <div class="col-6">
+                                                        <label class="required-field" class="control-label">Lương năng lực</label>
+                                                        <div class="controls">
+                                                            <input type="number" class="form-control" name="capacity_salary" id="capacity_salary" required="" @if ($offer) value="{{$offer->capacity_salary}}" @else value="{{$proposal->company_job->max_capacity_salary}}" @endif>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-6">
                                                         <label class="required-field" class="control-label">Phụ cấp vị trí</label>
                                                         <div class="controls">
                                                             <input type="number" class="form-control" name="position_allowance" id="position_allowance" required="" readonly @if ($offer) value="{{$offer->position_allowance}}" @else value="{{$proposal->company_job->position_allowance}}" @endif>
                                                         </div>
                                                     </div>
+                                                </div>
+
+                                                <div class="row">
                                                     <div class="col-6">
                                                         <div class="control-group">
                                                             <div class="control-group">
@@ -146,10 +157,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-12">
+                                                    <div class="col-6">
                                                         <label class="control-label">Ghi chú</label>
                                                         <div class="controls">
                                                             <input type="text" class="form-control" name="offer_note" id="offer_note" required="" @if ($offer) value="{{$offer->note}}" @endif>
@@ -261,26 +269,35 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <label class="required-field" class="control-label">Lương vị trí</label>
+                                    <label class="required-field" class="control-label">Lương bảo hiểm</label>
                                     <div class="controls">
-                                        <input type="number" class="form-control" name="position_salary" id="position_salary" required="" readonly @if ($offer) value="{{$offer->position_salary}}" @else value="{{$proposal->company_job->position_salary}}" @endif>
+                                        <input type="number" class="form-control" name="insurance_salary" id="insurance_salary" required="" readonly @if ($offer) value="{{$offer->insurance_salary}}" @else value="{{$proposal->company_job->insurance_salary}}" @endif>
                                     </div>
                                 </div>
                                 <div class="col-6">
-                                    <label class="required-field" class="control-label">Lương năng lực</label>
+                                    <label class="required-field" class="control-label">Lương vị trí</label>
                                     <div class="controls">
-                                        <input type="number" class="form-control" name="capacity_salary" id="capacity_salary" required="" @if ($offer) value="{{$offer->capacity_salary}}" @else value="{{$proposal->company_job->max_capacity_salary}}" @endif>
+                                        <input type="number" class="form-control" name="position_salary" id="position_salary" required="" readonly @if ($offer) value="{{$offer->position_salary}}" @else value="{{$proposal->company_job->position_salary}}" @endif>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-6">
+                                    <label class="required-field" class="control-label">Lương năng lực</label>
+                                    <div class="controls">
+                                        <input type="number" class="form-control" name="capacity_salary" id="capacity_salary" required="" @if ($offer) value="{{$offer->capacity_salary}}" @else value="{{$proposal->company_job->max_capacity_salary}}" @endif>
+                                    </div>
+                                </div>
+                                <div class="col-6">
                                     <label class="required-field" class="control-label">Phụ cấp vị trí</label>
                                     <div class="controls">
                                         <input type="number" class="form-control" name="position_allowance" id="position_allowance" required="" readonly @if ($offer) value="{{$offer->position_allowance}}" @else value="{{$proposal->company_job->position_allowance}}" @endif>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
                                         <div class="control-group">
@@ -295,10 +312,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <label class="control-label">Ghi chú</label>
                                     <div class="controls">
                                         <input type="text" class="form-control" name="offer_note" id="offer_note" required="" @if ($offer) value="{{$offer->note}}" @endif>

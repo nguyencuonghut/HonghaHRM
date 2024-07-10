@@ -51,11 +51,12 @@
                     <th>Bộ phận</th>
                     <th>Chức vụ</th>
                     @can('view-salary')
+                    <th>Lương bảo hiểm</th>
                     <th>Lương vị trí</th>
                     <th>Lương năng lực max</th>
                     <th>Phụ cấp vị trí</th>
                     @endcan
-                    <th>Tiêu chuẩn tuyển dụng</th>
+                    <th>Tiêu chuẩn</th>
                     <th style="width: 12%;">Thao tác</th>
                   </tr>
                   </thead>
@@ -107,42 +108,42 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7,8]
                 }
             }
         ],
@@ -154,6 +155,7 @@
             {data: 'department', name: 'department'},
             {data: 'division', name: 'division'},
             {data: 'position', name: 'position'},
+            {data: 'insurance_salary', name: 'insurance_salary'},
             {data: 'position_salary', name: 'position_salary'},
             {data: 'max_capacity_salary', name: 'max_capacity_salary'},
             {data: 'position_allowance', name: 'position_allowance'},
@@ -169,14 +171,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
 
             },
@@ -184,28 +186,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3]
+                    columns: [0,1,2,3,4]
                 }
             }
         ],

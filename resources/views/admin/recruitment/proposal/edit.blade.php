@@ -154,11 +154,24 @@
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
-                                            <div class="col-12">
+                                            <div class="col-6">
                                                 <div class="control-group">
                                                     <label class="required-field" class="control-label">Tên</label>
                                                     <div class="controls">
                                                         <input type="text" class="form-control" name="name" id="name" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="control-group">
+                                                    <label class="required-field" class="control-label">Chức vụ</label>
+                                                    <div class="controls">
+                                                        <select name="position_id" id="position_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                            <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                            @foreach($positions as $key => $value)
+                                                                <option value="{{$key}}">{{$value}}</option>
+                                                            @endforeach
+                                                        </select>
                                                     </div>
                                                 </div>
                                             </div>
@@ -194,18 +207,17 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="control-group">
-                                                    <label class="required-field" class="control-label">Lương vị trí</label>
+                                                    <label class="required-field" class="control-label">Lương bảo hiểm</label>
                                                     <div class="controls">
-                                                        <input type="number" class="form-control" name="position_salary" id="position_salary" required="">
+                                                        <input type="number" class="form-control" name="insurance_salary" id="insurance_salary" required="">
                                                     </div>
                                                 </div>
                                             </div>
-
                                             <div class="col-6">
                                                 <div class="control-group">
-                                                    <label class="required-field" class="control-label">Lương năng lực max</label>
+                                                    <label class="required-field" class="control-label">Lương vị trí</label>
                                                     <div class="controls">
-                                                        <input type="number" class="form-control" name="max_capacity_salary" id="max_capacity_salary" required="">
+                                                        <input type="number" class="form-control" name="position_salary" id="position_salary" required="">
                                                     </div>
                                                 </div>
                                             </div>
@@ -214,14 +226,25 @@
                                         <div class="row">
                                             <div class="col-6">
                                                 <div class="control-group">
+                                                    <label class="required-field" class="control-label">Lương năng lực max</label>
+                                                    <div class="controls">
+                                                        <input type="number" class="form-control" name="max_capacity_salary" id="max_capacity_salary" required="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="control-group">
                                                     <label class="required-field" class="control-label">Phụ cấp vị trí</label>
                                                     <div class="controls">
                                                         <input type="number" class="form-control" name="position_allowance" id="position_allowance" required="">
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
-                                            <div class="col-6">
+
+                                        <div class="row">
+                                            <div class="col-12">
                                                 <div class="control-group">
                                                     <label class="required-field" class="control-label">Tiêu chuẩn tuyển dụng</label>
                                                     <div class="custom-file text-left">

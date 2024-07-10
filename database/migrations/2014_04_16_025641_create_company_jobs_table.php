@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('department_id')->constrained('departments');
             $table->foreignId('division_id')->nullable()->constrained('divisions');
             $table->foreignId('position_id')->constrained('positions');
+            $table->bigInteger('insurance_salary');
             $table->bigInteger('position_salary');
             $table->bigInteger('max_capacity_salary');
             $table->bigInteger('position_allowance');

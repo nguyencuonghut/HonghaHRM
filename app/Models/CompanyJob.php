@@ -14,6 +14,7 @@ class CompanyJob extends Model
         'department_id',
         'division_id',
         'position_id',
+        'insurance_salary',
         'position_salary',
         'max_capacity_salary',
         'position_allowance',

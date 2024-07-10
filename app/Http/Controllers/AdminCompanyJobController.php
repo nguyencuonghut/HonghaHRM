@@ -51,6 +51,7 @@ class AdminCompanyJobController extends Controller
             'name' => 'required',
             'sel_department' => 'required',
             'position_id' => 'required',
+            'insurance_salary' => 'required',
             'position_salary' => 'required',
             'max_capacity_salary' => 'required',
             'position_allowance' => 'required',
@@ -60,6 +61,7 @@ class AdminCompanyJobController extends Controller
             'name.required' => 'Bạn phải nhập tên.',
             'sel_department.required' => 'Bạn phải chọn phòng ban.',
             'position_id.required' => 'Bạn phải chọn chức vụ',
+            'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
             'position_salary.required' => 'Bạn phải nhập lương vị trí.',
             'max_capacity_salary.required' => 'Bạn phải nhập lương năng lực max.',
             'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
@@ -74,6 +76,7 @@ class AdminCompanyJobController extends Controller
         if ($request->sel_division) {
             $company_job->division_id = $request->sel_division;
         }
+        $company_job->insurance_salary = $request->insurance_salary;
         $company_job->position_salary = $request->position_salary;
         $company_job->max_capacity_salary = $request->max_capacity_salary;
         $company_job->position_allowance = $request->position_allowance;
@@ -134,6 +137,7 @@ class AdminCompanyJobController extends Controller
             'name' => 'required',
             'sel_department' => 'required',
             'position_id' => 'required',
+            'insurance_salary' => 'required',
             'position_salary' => 'required',
             'max_capacity_salary' => 'required',
             'position_allowance' => 'required',
@@ -142,6 +146,7 @@ class AdminCompanyJobController extends Controller
             'name.required' => 'Bạn phải nhập tên.',
             'sel_department.required' => 'Bạn phải chọn phòng ban.',
             'position_id.required' => 'Bạn phải chọn chức vụ',
+            'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
             'position_salary.required' => 'Bạn phải nhập lương vị trí.',
             'max_capacity_salary.required' => 'Bạn phải nhập lương năng lực max.',
             'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
@@ -157,6 +162,7 @@ class AdminCompanyJobController extends Controller
         } else {
             $company_job->division_id = null;
         }
+        $company_job->insurance_salary = $request->insurance_salary;
         $company_job->position_salary = $request->position_salary;
         $company_job->max_capacity_salary = $request->max_capacity_salary;
         $company_job->position_allowance = $request->position_allowance;
@@ -195,7 +201,7 @@ class AdminCompanyJobController extends Controller
 
     public function anyData()
     {
-        $company_jobs = CompanyJob::with(['department', 'division', 'position'])->select(['id', 'name', 'department_id', 'position_id', 'division_id', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'])->get();
+        $company_jobs = CompanyJob::with(['department', 'division', 'position'])->select(['id', 'name', 'department_id', 'position_id', 'division_id', 'insurance_salary', 'position_salary', 'max_capacity_salary', 'position_allowance', 'recruitment_standard_file'])->get();
         return Datatables::of($company_jobs)
             ->addIndexColumn()
             ->editColumn('name', function ($company_jobs) {
@@ -213,6 +219,9 @@ class AdminCompanyJobController extends Controller
                 } else {
                     return '-';
                 }
+            })
+            ->editColumn('insurance_salary', function ($company_jobs) {
+                return number_format($company_jobs->insurance_salary, 0, '.', ',') . '<sup>đ</sup>';
             })
             ->editColumn('position_salary', function ($company_jobs) {
                 return number_format($company_jobs->position_salary, 0, '.', ',') . '<sup>đ</sup>';
@@ -234,7 +243,7 @@ class AdminCompanyJobController extends Controller
                     <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
                 return $action;
             })
-            ->rawColumns(['actions', 'recruitment_standard_file', 'division', 'position_salary', 'max_capacity_salary', 'position_allowance'])
+            ->rawColumns(['actions', 'recruitment_standard_file', 'division', 'insurance_salary','position_salary', 'max_capacity_salary', 'position_allowance'])
             ->make(true);
     }
 }

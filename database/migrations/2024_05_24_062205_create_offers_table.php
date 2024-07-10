@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('current_salary');
             $table->bigInteger('desired_salary');
+            $table->bigInteger('insurance_salary');
             $table->bigInteger('position_salary');
             $table->bigInteger('capacity_salary');
             $table->bigInteger('position_allowance');

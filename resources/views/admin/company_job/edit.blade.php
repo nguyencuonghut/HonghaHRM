@@ -40,11 +40,29 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Tên</label>
                                         <div class="controls">
                                             <input type="text" class="form-control" name="name" id="name" required="" value="{{$company_job->name}}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <label class="required-field" class="control-label">Chức vụ</label>
+                                        <div class="controls">
+                                            <select name="position_id" id="position_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                @foreach($positions as $position)
+                                                    <option value="{{$position->id}}"
+                                                        @if($position->id == $company_job->position_id)
+                                                            selected="selected"
+                                                        @endif>
+                                                        {{$position->name}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>
@@ -92,23 +110,12 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Chức vụ</label>
+                                        <label class="required-field" class="control-label">Lương bảo hiểm</label>
                                         <div class="controls">
-                                            <select name="position_id" id="position_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
-                                                <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                @foreach($positions as $position)
-                                                    <option value="{{$position->id}}"
-                                                        @if($position->id == $company_job->position_id)
-                                                            selected="selected"
-                                                        @endif>
-                                                        {{$position->name}}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                            <input type="number" class="form-control" name="insurance_salary" id="insurance_salary" required="" value="{{$company_job->insurance_salary}}">
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Lương vị trí</label>
@@ -142,7 +149,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Tiêu chuẩn tuyển dụng</label>
+                                        <label class="control-label">Tiêu chuẩn tuyển dụng</label>
                                         <div class="custom-file text-left">
                                             <input type="file" name="recruitment_standard_file" accept="application/pdf" class="custom-file-input" id="recruitment_standard_file">
                                             <label class="custom-file-label" for="recruitment_standard_file">Chọn file</label>
