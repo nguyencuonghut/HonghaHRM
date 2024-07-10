@@ -118,7 +118,7 @@ class AdminEmployeeKpiController extends Controller
 
     public function employeeData($employee_id)
     {
-        $employee_kpis = EmployeeKpi::where('employee_id', $employee_id)->get();
+        $employee_kpis = EmployeeKpi::where('employee_id', $employee_id)->orderBy('id', 'desc')->get();
         return Datatables::of($employee_kpis)
             ->addIndexColumn()
             ->editColumn('year', function ($employee_kpis) {

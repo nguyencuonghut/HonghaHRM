@@ -23,6 +23,7 @@
             <table id="employee-kpis-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th>STT</th>
                         <th>Năm</th>
                         <th>Tháng</th>
                         <th>Điểm</th>
@@ -185,6 +186,7 @@
         dom: 'Blfrtip',
         ajax: ' {!! route('admin.hr.kpis.employeeData', $employee->id) !!}',
         columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
             {data: 'year', name: 'year'},
             {data: 'month', name: 'month'},
             {data: 'score', name: 'score'},
