@@ -17,9 +17,10 @@
         <!-- /.card-header -->
         <div class="card-body">
             @can('create-productivity')
-            <a href="#create_kpi{{' . $employee->id . '}}" class="btn btn-success" data-toggle="modal" data-target="#create_kpi{{$employee->id}}"><i class="fas fa-plus"></i></a>
+            <a href="#create_kpi{{' . $employee->id . '}}" class="btn btn-success mb-2" data-toggle="modal" data-target="#create_kpi{{$employee->id}}"><i class="fas fa-plus"></i></a>
             @endcan
-
+            <br>
+            <h4>Trung bình năm {{Carbon\Carbon::now()->year}}: <strong>{{number_format($this_year_kpi_average, 2, '.', ',')}} </strong></h4>
             <table id="employee-kpis-table" class="table table-bordered table-striped">
                 <thead>
                     <tr>

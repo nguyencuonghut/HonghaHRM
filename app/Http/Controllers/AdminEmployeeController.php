@@ -185,6 +185,19 @@ class AdminEmployeeController extends Controller
         $contract_types = ContractType::all();
         $employee_kpis = EmployeeKpi::where('employee_id', $employee->id)->get();
 
+
+        $this_year_total_kpi = 0;
+        $this_year_my_kpis = EmployeeKpi::where('employee_id', $employee->id)->where('year', Carbon::now()->year)->get();
+        foreach ($this_year_my_kpis as $this_year_my_kpi) {
+            $this_year_total_kpi += $this_year_my_kpi->score;
+        }
+        if ($this_year_my_kpis->count()) {
+            $this_year_kpi_average = $this_year_total_kpi/$this_year_my_kpis->count();
+        } else {
+            $this_year_kpi_average = 0;
+        }
+
+
         return view('admin.employee.show',
                     ['employee' => $employee,
                     'documents' => $documents,
@@ -196,6 +209,7 @@ class AdminEmployeeController extends Controller
                     'employee_contracts' => $employee_contracts,
                     'contract_types' => $contract_types,
                     'employee_kpis' => $employee_kpis,
+                    'this_year_kpi_average' => $this_year_kpi_average,
                     ]);
     }
 
