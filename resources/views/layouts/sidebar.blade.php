@@ -122,6 +122,18 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('admin.hr.rewards.index')}}" class="nav-link {{ Request::is('admin/hr/rewards*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Khen thưởng</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.hr.disciplines.index')}}" class="nav-link {{ Request::is('admin/hr/disciplines*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Kỷ luật</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('admin.hr.orgs.index')}}" class="nav-link {{ Request::is('admin/hr/orgs*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Sơ đồ tổ chức</p>

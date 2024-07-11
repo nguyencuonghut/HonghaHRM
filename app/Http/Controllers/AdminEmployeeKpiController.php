@@ -100,7 +100,7 @@ class AdminEmployeeKpiController extends Controller
         $employee_kpi->score = $request->score;
         $employee_kpi->save();
 
-        Alert::toast('Lưu KPI mới thành công!', 'success', 'top-right');
+        Alert::toast('Lưu KPI thành công!', 'success', 'top-right');
         return redirect()->route('admin.hr.employees.show', $employee_kpi->employee_id);
     }
 

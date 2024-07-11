@@ -35,6 +35,7 @@ class AuthServiceProvider extends ServiceProvider
         'create-manager' => ['Admin', 'Nhân sự'],
         'create-relative' => ['Admin', 'Nhân sự'],
         'create-productivity' => ['Admin', 'Nhân sự'],
+        'create-reward-discipline' => ['Admin', 'Nhân sự'],
     ];
 
     /**

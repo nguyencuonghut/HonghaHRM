@@ -39,6 +39,7 @@
                             <li class="nav-item"><a class="nav-link" href="#tab-contract" data-toggle="tab">Hợp đồng</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-working" data-toggle="tab">Công tác</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-productivity" data-toggle="tab">Hiệu suất</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-reward-discipline" data-toggle="tab">Khen thưởng - Kỷ luật</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-training" data-toggle="tab">Đào tạo</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-insurance" data-toggle="tab">Bảo hiểm</a></li>
                             @can('view-salary')
@@ -56,6 +57,7 @@
                           @include('admin.employee.tabs.contract_tab')
                           @include('admin.employee.tabs.working_tab')
                           @include('admin.employee.tabs.productivity_tab')
+                          @include('admin.employee.tabs.reward_discipline_tab')
                           @include('admin.employee.tabs.training_tab')
                           @include('admin.employee.tabs.insurance_tab')
                           @can('view-salary')
