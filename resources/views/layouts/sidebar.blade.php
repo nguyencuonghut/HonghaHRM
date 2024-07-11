@@ -116,6 +116,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('admin.hr.year_reviews.index')}}" class="nav-link {{ Request::is('admin/hr/year_reviews*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Đánh giá năm</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('admin.hr.orgs.index')}}" class="nav-link {{ Request::is('admin/hr/orgs*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Sơ đồ tổ chức</p>

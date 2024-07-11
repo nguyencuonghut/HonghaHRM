@@ -47,6 +47,7 @@ use App\Http\Controllers\AdminEmployeeRelativeController;
 use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminEmployeeContractController;
 use App\Http\Controllers\AdminEmployeeKpiController;
+use App\Http\Controllers\AdminEmployeeYearReviewController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -203,6 +204,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('hr/kpis/data', [AdminEmployeeKpiController::class, 'anyData'])->name('hr.kpis.data');
         Route::get('hr/kpis/employeeData/{employee_id}', [AdminEmployeeKpiController::class, 'employeeData'])->name('hr.kpis.employeeData');
         Route::resource('hr/kpis', AdminEmployeeKpiController::class, ['names' => 'hr.kpis']);
+
+        Route::get('hr/year_reviews/data', [AdminEmployeeYearReviewController::class, 'anyData'])->name('hr.year_reviews.data');
+        Route::get('hr/year_reviews/employeeData/{employee_id}', [AdminEmployeeYearReviewController::class, 'employeeData'])->name('hr.year_reviews.employeeData');
+        Route::resource('hr/year_reviews', AdminEmployeeYearReviewController::class, ['names' => 'hr.year_reviews']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
         Route::get('hr/orgs/{department_id}', [AdminOrgController::class, 'show'])->name('hr.orgs.show');

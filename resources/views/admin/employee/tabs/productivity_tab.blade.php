@@ -7,9 +7,12 @@
 <!-- Select2 -->
 <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+<!-- Summernote -->
+<link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
 @endpush
 
 <div class="tab-pane" id="tab-productivity">
+    <!-- KPI table -->
     <div class="card card-secondary">
         <div class="card-header">
             KPI
@@ -83,6 +86,95 @@
                                           <label class="required-field" class="control-label">Điểm</label>
                                           <input class="form-control" type="number" name="score" id="score">
                                       </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary">Lưu</button>
+                            </div>
+                        </div>
+                        <!-- /.modal-content -->
+                    </div>
+                </div>
+            </form>
+            <!-- /.modal -->
+        </div>
+    </div>
+
+    <!-- Đánh giá cuối năm -->
+    <div class="card card-secondary">
+        <div class="card-header">
+            Đánh giá cuối năm
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            @can('create-productivity')
+            <a href="#create_year_review{{' . $employee->id . '}}" class="btn btn-success mb-2" data-toggle="modal" data-target="#create_year_review{{$employee->id}}"><i class="fas fa-plus"></i></a>
+            @endcan
+            <table id="employee-year-review-table" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Năm</th>
+                        <th>KPI trung bình</th>
+                        <th>Kết quả</th>
+                        <th>Chi tiết</th>
+                        @can('create-productivity')
+                        <th>Thao tác</th>
+                        @endcan
+                    </tr>
+                </thead>
+            </table>
+
+            <!-- Modals for create employee year review -->
+            <form class="form-horizontal" method="post" action="{{ route('admin.hr.year_reviews.store', $employee->id) }}" name="create_year_review" id="create_year_review" novalidate="novalidate">
+                {{ csrf_field() }}
+                <div class="modal fade" id="create_year_review{{$employee->id}}">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4>Đánh giá cuối năm của {{$employee->name}}</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
+                                <div class="row">
+                                    <div class="col-4">
+                                      <div class="control-group">
+                                          <label class="required-field" class="control-label">Năm</label>
+                                          <input class="form-control" type="number" name="year" id="year" value="{{Carbon\Carbon::now()->year}}">
+                                      </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">KPI trung bình</label>
+                                            <input class="form-control" type="number" name="kpi_average" id="kpi_average" step="any">
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                      <div class="control-group">
+                                            <label class="required-field" class="control-label">Kết quả</label>
+                                            <div class="controls">
+                                                <select name="result" id="result" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    <option value="Xuất sắc">Xuất sắc</option>
+                                                    <option value="Tốt">Tốt</option>
+                                                    <option value="Đạt">Đạt</option>
+                                                    <option value="Cải thiện">Cải thiện</option>
+                                                </select>
+                                            </div>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label class="control-label">Chi tiết</label>
+                                        <textarea id="detail" name="detail">
+                                        </textarea>
                                     </div>
                                 </div>
                             </div>
@@ -194,6 +286,79 @@
             {data: 'actions', name: 'actions', orderable: false, searchable: false},
        ]
       }).buttons().container().appendTo('#employee-kpis-table_wrapper .col-md-6:eq(0)');
+
+      $("#employee-year-review-table").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        buttons: [
+            {
+                extend: 'copy',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            },
+            {
+                extend: 'csv',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+
+            },
+            {
+                extend: 'excel',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            },
+            {
+                extend: 'pdf',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            },
+            {
+                extend: 'print',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            },
+            {
+                extend: 'colvis',
+                footer: true,
+                exportOptions: {
+                    columns: [0,1,2,3,4]
+                }
+            }
+        ],
+        dom: 'Blfrtip',
+        ajax: ' {!! route('admin.hr.year_reviews.employeeData', $employee->id) !!}',
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'year', name: 'year'},
+            {data: 'kpi_average', name: 'kpi_average'},
+            {data: 'result', name: 'result'},
+            {data: 'detail', name: 'detail'},
+            {data: 'actions', name: 'actions', orderable: false, searchable: false},
+       ]
+      }).buttons().container().appendTo('#employee-year-review-table_wrapper .col-md-6:eq(0)');
+
+      // Summernote
+        $("#detail").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
+        $('#detail').summernote({
+            height: 90,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        })
     });
   </script>
 @endpush

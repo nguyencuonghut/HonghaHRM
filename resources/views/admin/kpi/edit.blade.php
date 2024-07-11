@@ -20,7 +20,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.hr.contracts.index') }}">Tất cả KPI</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.hr.kpis.index') }}">Tất cả KPI</a></li>
               <li class="breadcrumb-item active">Sửa</li>
             </ol>
           </div><!-- /.col -->
