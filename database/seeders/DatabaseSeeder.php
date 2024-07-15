@@ -35,10 +35,11 @@ class DatabaseSeeder extends Seeder
             DocumentsTableSeeder::class,
             EmployeesTableSeeder::class,
             EmployeeSchoolsTableSeeder::class,
-            EmployeeWorksTableSeeder::class,
+            //EmployeeWorksTableSeeder::class,
             DepartmentManagersTableSeeder::class,
             DivisionManagersTableSeeder::class,
             ContractTypesTableSeeder::class,
+            EmployeeContractsTableSeeder::class,
         ]);
     }
 }
