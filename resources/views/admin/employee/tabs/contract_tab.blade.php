@@ -28,7 +28,7 @@
                     <th>Trạng thái</th>
                     <th>File</th>
                     @can('create-contract')
-                    <th style="width:12%;">Thao tác</th>
+                    <th style="width:14%;">Thao tác</th>
                     @endcan
                   </tr>
                 </thead>
@@ -40,6 +40,7 @@
                           $company_job = App\Models\CompanyJob::findOrFail($employee_contract->company_job_id);
                           $action_edit_contracts = '<a href="' . route("admin.hr.contracts.edit", $employee_contract->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
                                                     <a href="'.route("admin.hr.contracts.getOff", $employee_contract->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
+                                                    <a href="'.route("admin.hr.appendixs.getAdd", $employee_contract->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-code-branch"></i></a>
                                   <form style="display:inline" action="'. route("admin.hr.contracts.destroy", $employee_contract->id) . '" method="POST">
                                   <input type="hidden" name="_method" value="DELETE">
                                   <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -195,6 +196,61 @@
                 </div>
             </form>
             <!-- /.modal -->
+        </div>
+    </div>
+
+    <div class="card card-secondary">
+        <div class="card-header">
+            Phụ lục
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+            <table id="employee-appendixs-table" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                      <th>Số HĐ</th>
+                      <th>Số phụ lục</th>
+                      <th>Mô tả</th>
+                      <th>Lý do</th>
+                      <th>File</th>
+                      @can('create-appendix')
+                      <th style="width:12%;">Thao tác</th>
+                      @endcan
+                    </tr>
+                  </thead>
+                  <tbody>
+                      @foreach ($employee_appendixs as $employee_appendix)
+                      <tr>
+                          <td>{{$employee_appendix->employee_contract->code}}</td>
+                          <td>{{$employee_appendix->code}}</td>
+                          <td>{!! $employee_appendix->description !!}</td>
+                          <td>{{$employee_appendix->reason}}</td>
+                        @php
+                            $action_edit_appendixs = '<a href="' . route("admin.hr.appendixs.edit", $employee_appendix->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                    <form style="display:inline" action="'. route("admin.hr.appendixs.destroy", $employee_appendix->id) . '" method="POST">
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                    <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
+
+                            $action = '';
+                            if (Auth::user()->can('create-appendix')) {
+                                $action = $action . $action_edit_appendixs;
+                            }
+                        @endphp
+                        @php
+                              $url = '';
+                              if ($employee_appendix->file_path) {
+                                  $url .= '<a target="_blank" href="../../../' . $employee_appendix->file_path . '"><i class="far fa-file-pdf"></i></a>';
+                              }
+                        @endphp
+                        <td>{!! $url !!}</td>
+                        @can('create-appendix')
+                        <td>{!! $action !!}</td>
+                        @endcan
+                      </tr>
+                    @endforeach
+                  </tbody>
+            </table>
         </div>
     </div>
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminDepartment;
 use App\Models\Employee;
+use App\Models\EmployeeAppendix;
 use App\Models\EmployeeContract;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeSchool;
@@ -182,6 +183,7 @@ class AdminEmployeeController extends Controller
         $probations = Probation::all();
         $employee_relatives = EmployeeRelative::where('employee_id', $employee->id)->get();
         $employee_contracts = EmployeeContract::where('employee_id', $employee->id)->get();
+        $employee_appendixs = EmployeeAppendix::where('employee_id', $employee->id)->get();
         $contract_types = ContractType::all();
         $employee_kpis = EmployeeKpi::where('employee_id', $employee->id)->get();
 
@@ -210,6 +212,7 @@ class AdminEmployeeController extends Controller
                     'contract_types' => $contract_types,
                     'employee_kpis' => $employee_kpis,
                     'this_year_kpi_average' => $this_year_kpi_average,
+                    'employee_appendixs' => $employee_appendixs,
                     ]);
     }
 
@@ -389,7 +392,11 @@ class AdminEmployeeController extends Controller
                     $email .= $employees->private_email;
                 }
                 if ($employees->company_email) {
-                    $email .= '<br>' . ' ' . $employees->company_email;
+                    if ($employees->private_email) {
+                        $email .= '<br>' . ' ' . $employees->company_email;
+                    } else {
+                        $email .= $employees->company_email;
+                    }
                 }
                 return $email;
             })

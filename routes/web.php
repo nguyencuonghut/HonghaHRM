@@ -50,6 +50,7 @@ use App\Http\Controllers\AdminEmployeeKpiController;
 use App\Http\Controllers\AdminEmployeeYearReviewController;
 use App\Http\Controllers\AdminEmployeeRewardController;
 use App\Http\Controllers\AdminEmployeeDisciplineController;
+use App\Http\Controllers\AdminEmployeeAppendixController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -202,6 +203,11 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::post('hr/contracts/off/{id}', [AdminEmployeeContractController::class, 'off'])->name('hr.contracts.off');
         Route::get('hr/contracts/off/{id}', [AdminEmployeeContractController::class, 'getOff'])->name('hr.contracts.getOff');
         Route::resource('hr/contracts', AdminEmployeeContractController::class, ['names' => 'hr.contracts']);
+
+        Route::get('hr/appendixs/data', [AdminEmployeeAppendixController::class, 'anyData'])->name('hr.appendixs.data');
+        Route::post('hr/appendixs/add/{contract_id}', [AdminEmployeeAppendixController::class, 'add'])->name('hr.appendixs.add');
+        Route::get('hr/appendixs/add/{contract_id}', [AdminEmployeeAppendixController::class, 'getAdd'])->name('hr.appendixs.getAdd');
+        Route::resource('hr/appendixs', AdminEmployeeAppendixController::class, ['names' => 'hr.appendixs']);
 
         Route::get('hr/kpis/data', [AdminEmployeeKpiController::class, 'anyData'])->name('hr.kpis.data');
         Route::get('hr/kpis/employeeData/{employee_id}', [AdminEmployeeKpiController::class, 'employeeData'])->name('hr.kpis.employeeData');
