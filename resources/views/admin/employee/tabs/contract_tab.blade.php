@@ -150,11 +150,14 @@
                                     </div>
                                 </div>
 
+                                @php
+                                    $recent_employee_contract = App\Models\EmployeeContract::where('employee_id', $employee->id)->orderBy('id', 'desc')->first();
+                                @endphp
                                 <div class="row">
                                     <div class="col-6">
                                         <label class="required-field">Thời gian bắt đầu</label>
                                         <div class="input-group date" id="contract_s_date" data-target-input="nearest">
-                                            <input type="text" name="contract_s_date" class="form-control datetimepicker-input" data-target="#contract_s_date"/>
+                                            <input type="text" name="contract_s_date" class="form-control datetimepicker-input" @if($recent_employee_contract) value="{{date('d/m/Y', strtotime($recent_employee_contract->end_date . '+ 1 days'))}}" @endif data-target="#contract_s_date"/>
                                             <div class="input-group-append" data-target="#contract_s_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>

@@ -78,7 +78,7 @@ class AdminEmployeeContractController extends Controller
         $employee_contract->status = 'On';
         $employee_contract->save();
 
-        Alert::toast('Thêm hợp đồng mới thành công!', 'success', 'top-right');
+        Alert::toast('Thêm hợp đồng mới thành công. Bạn cần tạo QT công tác!', 'success', 'top-right');
         return redirect()->back();
     }
 
@@ -152,7 +152,7 @@ class AdminEmployeeContractController extends Controller
         $employee_contract->status = 'On';
         $employee_contract->save();
 
-        Alert::toast('Sửa hợp đồng mới thành công!', 'success', 'top-right');
+        Alert::toast('Sửa hợp đồng mới thành công. Bạn cần sửa quá trình công tác!', 'success', 'top-right');
         return redirect()->route('admin.hr.employees.show', $employee_contract->employee_id);
     }
 
@@ -246,7 +246,7 @@ class AdminEmployeeContractController extends Controller
         $employee_contract->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
         $employee_contract->save();
 
-        Alert::toast('Cập nhật thành công!', 'success', 'top-right');
+        Alert::toast('Cập nhật thành công. Bạn cần cập nhật QT công tác!', 'success', 'top-right');
         return redirect()->route('admin.hr.employees.show', $employee_contract->employee_id);
     }
 }

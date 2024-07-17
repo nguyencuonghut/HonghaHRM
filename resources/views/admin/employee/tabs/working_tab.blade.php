@@ -85,6 +85,9 @@
                                 </button>
                             </div>
                             <div class="modal-body">
+                                @php
+                                    $employee_contract = App\Models\EmployeeContract::where('employee_id', $employee->id)->orderBy('id', 'desc')->first();
+                                @endphp
                                 <input type="hidden" name="employee_id" id="employee_id" value="{{$employee->id}}">
                                 <div class="row">
                                     <div class="col-12">
@@ -95,7 +98,7 @@
                                                     <select name="company_job_id" id="company_job_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                         <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                         @foreach ($company_jobs as $company_job)
-                                                            <option value="{{$company_job->id}}">{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
+                                                            <option value="{{$company_job->id}}" @if($employee_contract && $company_job->id == $employee_contract->company_job_id) selected="selected" @endif>{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
                                                         @endforeach
                                                     </select>
                                                 </div>
@@ -108,7 +111,7 @@
                                     <div class="col-12">
                                         <label class="required-field">Thời gian bắt đầu</label>
                                         <div class="input-group date" id="s_date" data-target-input="nearest">
-                                            <input type="text" name="s_date" class="form-control datetimepicker-input" data-target="#s_date"/>
+                                            <input type="text" name="s_date" class="form-control datetimepicker-input" @if($employee_contract) value="{{date('d/m/Y', strtotime($employee_contract->start_date))}}" @endif data-target="#s_date"/>
                                             <div class="input-group-append" data-target="#s_date" data-toggle="datetimepicker">
                                                 <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                             </div>

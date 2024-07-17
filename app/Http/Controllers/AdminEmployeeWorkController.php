@@ -24,8 +24,7 @@ class AdminEmployeeWorkController extends Controller
      */
     public function create()
     {
-        $company_jobs = CompanyJob::all();
-        return view('admin.working.create', ['company_jobs' => $company_jobs]);
+        //
     }
 
     /**

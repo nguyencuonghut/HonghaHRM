@@ -37,11 +37,14 @@
                         {{ csrf_field() }}
                         <!-- /.card-header -->
                         <div class="card-body">
+                            @php
+                                $employee_contract = App\Models\EmployeeContract::where('employee_id', $employee_work->employee_id)->orderBy('id', 'desc')->first();
+                            @endphp
                             <div class="row">
                                 <div class="col-12">
                                   <label class="required-field">Thời gian kết thúc</label>
                                   <div class="input-group date" id="e_date" data-target-input="nearest">
-                                      <input type="text" name="e_date" class="form-control datetimepicker-input" data-target="#e_date"/>
+                                      <input type="text" name="e_date" class="form-control datetimepicker-input" value="{{date('d/m/Y', strtotime($employee_contract->end_date))}}" data-target="#e_date"/>
                                       <div class="input-group-append" data-target="#e_date" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
