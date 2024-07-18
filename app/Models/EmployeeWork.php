@@ -12,7 +12,7 @@ class EmployeeWork extends Model
 
     protected $table = "employee_works";
 
-    protected $fillable = ['employee_id', 'company_job_id', 'status', 'start_date', 'end_date'];
+    protected $fillable = ['employee_id', 'company_job_id', 'status', 'start_date', 'end_date', 'off_type', 'off_reason'];
 
     public function employee(): BelongsTo
     {

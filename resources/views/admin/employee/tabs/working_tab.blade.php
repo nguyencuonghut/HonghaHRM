@@ -17,9 +17,11 @@
                     <th>Vị trí</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
+                    <th>Phân loại nghỉ</th>
+                    <th>Lý do nghỉ</th>
                     <th>Trạng thái</th>
                     @can('create-working')
-                    <th>Thao tác</th>
+                    <th style="width:12%;">Thao tác</th>
                     @endcan
                   </tr>
                 </thead>
@@ -59,6 +61,8 @@
                         -
                         @endif
                       </td>
+                      <td>{{$employee_work->off_type}}</td>
+                      <td>{!! $employee_work->off_reason !!}</td>
                       <td>
                         <span class="badge @if ("On" == $employee_work->status) badge-success @else badge-danger @endif">
                             {{$employee_work->status}}

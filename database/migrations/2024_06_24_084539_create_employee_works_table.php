@@ -18,6 +18,8 @@ return new class extends Migration
             $table->enum('status', ['On', 'Off']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->enum('off_type', ['Nghỉ việc', 'Nghỉ không lương', 'Nghỉ hưu'])->nullable();
+            $table->text('off_reason')->nullable();
             $table->timestamps();
         });
     }

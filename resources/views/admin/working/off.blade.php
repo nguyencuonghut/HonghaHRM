@@ -3,6 +3,11 @@
 @endsection
 
 @push('styles')
+<!-- Select2 -->
+<link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+<!-- Summernote -->
+<link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css') }}">
   <!-- Tempusdominus Bootstrap 4 -->
   <link rel="stylesheet" href="{{asset('plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css')}}">
 @endpush
@@ -41,14 +46,36 @@
                                 $employee_contract = App\Models\EmployeeContract::where('employee_id', $employee_work->employee_id)->orderBy('id', 'desc')->first();
                             @endphp
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                   <label class="required-field">Thời gian kết thúc</label>
                                   <div class="input-group date" id="e_date" data-target-input="nearest">
-                                      <input type="text" name="e_date" class="form-control datetimepicker-input" value="{{date('d/m/Y', strtotime($employee_contract->end_date))}}" data-target="#e_date"/>
+                                      <input type="text" name="e_date" class="form-control datetimepicker-input" @if($employee_contract->end_date) value="{{date('d/m/Y', strtotime($employee_contract->end_date))}}" @endif data-target="#e_date"/>
                                       <div class="input-group-append" data-target="#e_date" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
                                   </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <div class="control-group">
+                                            <label class="control-label">Phân loại nghỉ việc</label>
+                                            <div class="controls">
+                                                <select name="off_type" id="off_type" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
+                                                    <option value="Nghỉ việc">Nghỉ việc</option>
+                                                    <option value="Nghỉ không lương">Nghỉ không lương</option>
+                                                    <option value="Nghỉ hưu">Nghỉ hưu</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <label class="control-label">Lý do nghỉ</label>
+                                    <textarea id="off_reason" name="off_reason">
+                                    </textarea>
                                 </div>
                             </div>
 
@@ -69,12 +96,36 @@
 
 
 @push('scripts')
+<!-- Select2 -->
+<script src="{{ asset('plugins/select2/js/select2.full.min.js') }}"></script>
+<script src="{{asset('plugins/moment/moment.min.js')}}"></script>
+<!-- Summernote -->
+<script src="{{ asset('plugins/summernote/summernote-bs4.min.js') }}"></script>
 <script src="{{asset('plugins/moment/moment.min.js')}}"></script>
 <!-- Tempusdominus Bootstrap 4 -->
 <script src="{{asset('plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js')}}"></script>
 
 <script>
     $(function () {
+        //Initialize Select2 Elements
+        $('.select2').select2({
+        theme: 'bootstrap4'
+        })
+
+        // Summernote
+        $("#off_reason").on("summernote.enter", function(we, e) {
+            $(this).summernote("pasteHTML", "<br><br>");
+            e.preventDefault();
+        });
+        $('#off_reason').summernote({
+            height: 90,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+            ]
+        })
+
         //Date picker
         $('#e_date').datetimepicker({
             format: 'DD/MM/YYYY'

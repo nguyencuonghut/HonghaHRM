@@ -48,6 +48,8 @@
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                     <th>Trạng thái</th>
+                    <th>Phân loại nghỉ</th>
+                    <th>Lý do nghỉ</th>
                   </tr>
                   </thead>
                 </table>
@@ -95,14 +97,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
 
             },
@@ -110,28 +112,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             }
         ],
@@ -144,6 +146,8 @@
             {data: 'start_date', name: 'start_date'},
             {data: 'end_date', name: 'end_date'},
             {data: 'status', name: 'status'},
+            {data: 'off_type', name: 'off_type'},
+            {data: 'off_reason', name: 'off_reason'},
        ]
       }).buttons().container().appendTo('#workings-table_wrapper .col-md-6:eq(0)');
     });

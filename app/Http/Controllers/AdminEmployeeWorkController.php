@@ -140,6 +140,12 @@ class AdminEmployeeWorkController extends Controller
         $employee_work = EmployeeWork::findOrFail($id);
         $employee_work->status = 'Off';
         $employee_work->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
+        if ($request->off_type) {
+            $employee_work->off_type = $request->off_type;
+        }
+        if ($request->off_reason) {
+            $employee_work->off_reason = $request->off_reason;
+        }
         $employee_work->save();
 
         Alert::toast('Cập nhật thành công!', 'success', 'top-right');
@@ -179,7 +185,13 @@ class AdminEmployeeWorkController extends Controller
                     return '<span class="badge badge-danger">' . $employee_works->status . '</span>';
                 }
             })
-            ->rawColumns(['employee_name', 'status'])
+            ->editColumn('off_type', function ($employee_works) {
+                return $employee_works->off_type;
+            })
+            ->editColumn('off_reason', function ($employee_works) {
+                return $employee_works->off_reason;
+            })
+            ->rawColumns(['employee_name', 'status', 'off_reason'])
             ->make(true);
     }
 }
