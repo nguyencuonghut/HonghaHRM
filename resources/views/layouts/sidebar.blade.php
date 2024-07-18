@@ -189,6 +189,12 @@
                   <p>Thâm niên</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('admin.reports.offWork')}}" class="nav-link {{ Request::is('admin/reports/off_work') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Nghỉ việc</p>
+                </a>
+              </li>
             </ul>
           </li>
 

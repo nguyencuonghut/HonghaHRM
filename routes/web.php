@@ -87,6 +87,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('reports/kidData', [AdminReportController::class, 'kidData'])->name('reports.kidData');
         Route::get('reports/kid_policy', [AdminReportController::class, 'kid_policy'])->name('reports.kid_policy');
         Route::get('reports/seniority', [AdminReportController::class, 'seniority'])->name('reports.seniority');
+        Route::get('reports/off_work', [AdminReportController::class, 'offWork'])->name('reports.offWork');
+        Route::get('reports/off_work_data', [AdminReportController::class, 'offWorkData'])->name('reports.offWorkData');
 
         Route::get('departments/get-division/{department_id}', [AdminDepartmentController::class, 'getDivision'])->name('departments.getDivision');
         Route::get('departments/data', [AdminDepartmentController::class, 'anyData'])->name('departments.data');

@@ -174,4 +174,42 @@ class AdminReportController extends Controller
 
         return view('admin.report.seniority');
     }
+
+    public function offWork()
+    {
+        return view('admin.report.off_work');
+    }
+
+    public function offworkData()
+    {
+        $employee_works = EmployeeWork::where('status', 'Off')->where('off_type', 'Nghỉ việc')->orderBy('employee_id', 'asc')->get();
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('employee', function ($employee_works) {
+                return '<a href=' . route("admin.hr.employees.show", $employee_works->employee_id) . '>' . $employee_works->employee->name . '</a>' ;
+            })
+            ->editColumn('company_job', function ($employee_works) {
+                return $employee_works->company_job->name;
+            })
+            ->editColumn('department', function ($employee_works) {
+                if ($employee_works->company_job->division_id) {
+                    return $employee_works->company_job->division->name .  ' - ' . $employee_works->company_job->department->name;
+
+                } else {
+                    return $employee_works->company_job->department->name;
+                }
+            })
+            ->editColumn('end_date', function ($employee_works) {
+                if ($employee_works->end_date) {
+                    return date('d/m/Y', strtotime($employee_works->end_date));
+                } else {
+                    return '-';
+                }
+            })
+            ->editColumn('off_reason', function ($employee_works) {
+                return $employee_works->off_reason;
+            })
+            ->rawColumns(['employee', 'off_reason'])
+            ->make(true);
+    }
 }
