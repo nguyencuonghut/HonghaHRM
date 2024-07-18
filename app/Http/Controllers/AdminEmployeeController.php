@@ -567,14 +567,6 @@ class AdminEmployeeController extends Controller
         $employee->marriage_status = $request->marriage_status;
         $employee->save();
 
-        // Create EmployeeWork
-        $employee_work = new EmployeeWork();
-        $employee_work->employee_id = $employee->id;
-        $employee_work->company_job_id = $request->company_job_id;
-        $employee_work->status = 'On';
-        $employee_work->start_date = Carbon::today()->toDateString();
-        $employee_work->save();
-
         // Create EmployeeSchool
         foreach ($request->addmore as $item) {
             $employee_school = new EmployeeSchool();
