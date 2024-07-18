@@ -11,6 +11,7 @@
             $employee_work_str = '';
             $i = 0;
             $length = count($employee_works);
+            // Trường hợp nhân sự đang có QT công tác ở trạng thái On
             if ($length) {
                 foreach ($employee_works as $employee_work) {
                     $company_job = App\Models\CompanyJob::findOrFail($employee_work->company_job_id);
@@ -20,8 +21,17 @@
                         $employee_work_str .= $company_job->name . ' - ' . $company_job->department->name . ' | ';
                     }
                 }
-            } else {
-                $employee_work_str .= '!! Chưa tạo QT công tác !!';
+            }
+            // Trường hợp nhân sự đang không có QT công tác ở trạng thái On
+            else {
+                // Trường hợp đã có QT công tác, nhưng ở trạng thái Off
+                $off_employee_works = App\Models\EmployeeWork::where('employee_id', $employee->id)->where('status', 'Off')->get();
+                $latest_employee_work = App\Models\EmployeeWork::where('employee_id', $employee->id)->where('status', 'Off')->orderBy('id', 'desc')->first();
+                if ($off_employee_works->count()) {
+                    $employee_work_str .= $latest_employee_work->company_job->name . ' - ' . $latest_employee_work->off_type;
+                } else {
+                    $employee_work_str .= '!! Chưa tạo QT công tác !!';
+                }
             }
           @endphp
           <span class="description">{{$employee_work_str}}</span>
