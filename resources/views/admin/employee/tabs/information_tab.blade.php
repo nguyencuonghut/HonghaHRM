@@ -79,9 +79,11 @@
             <div class="col-sm-4 invoice-col">
                 <address>
                     <strong>Địa chỉ</strong><br>
-                    - Thường trú: {{$employee->address}}, {{$employee->commune->name}}, {{$employee->commune->district->name}}, {{$employee->commune->district->province->name}} <br>
                     @if ($employee->temporary_address)
+                    - Thường trú: {{$employee->address}}, {{$employee->commune->name}}, {{$employee->commune->district->name}}, {{$employee->commune->district->province->name}} <br>
                     - Tạm trú: {{$employee->temporary_address}}, {{$employee->temporary_commune->name}}, {{$employee->temporary_commune->district->name}}, {{$employee->temporary_commune->district->province->name}} <br>
+                    @else
+                    {{$employee->address}}, {{$employee->commune->name}}, {{$employee->commune->district->name}}, {{$employee->commune->district->province->name}} <br>
                     @endif
                 </address>
             </div>
