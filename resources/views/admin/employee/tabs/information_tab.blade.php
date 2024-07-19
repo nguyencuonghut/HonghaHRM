@@ -113,10 +113,26 @@
         <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
                 <address>
+                    <strong>Giới tính</strong><br>
+                    {{$employee->gender}}<br>
+                </address>
+            </div>
+            <div class="col-sm-4 invoice-col">
+                <address>
+                    <strong>Số BHXH</strong><br>
+                    {{$employee->bhxh}}<br>
+                </address>
+            </div>
+            <div class="col-sm-4 invoice-col">
+                <address>
                     <strong>Tình trạng hôn nhân</strong><br>
                     {{$employee->marriage_status}}<br>
                 </address>
             </div>
+        </div>
+        <hr>
+
+        <div class="row invoice-info">
             <div class="col-sm-4 invoice-col">
                 <address>
                     <strong>Ngày vào</strong><br>

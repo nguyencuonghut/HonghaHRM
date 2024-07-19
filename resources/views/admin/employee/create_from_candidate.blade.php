@@ -228,12 +228,20 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-12">
+                                    <div class="col-6">
                                         <div class="control-group">
                                             <label class="control-label">Ảnh</label>
                                             <div class="custom-file text-left">
                                                 <input type="file" name="img_path" accept="image/*" class="custom-file-input" id="img_path">
                                                 <label class="custom-file-label" for="img_path">Chọn file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Số BHXH</label>
+                                            <div class="controls">
+                                                <input type="text" class="form-control" required="" name="bhxh" id="bhxh">
                                             </div>
                                         </div>
                                     </div>

@@ -32,6 +32,7 @@ return new class extends Migration
             $table->text('experience');
             $table->date('join_date');
             $table->enum('marriage_status', ['Kết hôn', 'Độc thân']);
+            $table->string('bhxh')->nullable();
             $table->timestamps();
         });
     }
