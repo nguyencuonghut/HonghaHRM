@@ -146,6 +146,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('admin.hr.regimes.index')}}" class="nav-link {{ Request::is('admin/hr/regimes*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Chế độ BH</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('admin.hr.orgs.index')}}" class="nav-link {{ Request::is('admin/hr/orgs*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Sơ đồ tổ chức</p>
