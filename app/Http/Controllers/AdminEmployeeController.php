@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\AdminDepartment;
+use App\Models\Insurance;
 use App\Models\Employee;
 use App\Models\EmployeeAppendix;
 use App\Models\EmployeeContract;
@@ -11,6 +12,7 @@ use App\Models\EmployeeSchool;
 use App\Models\EmployeeDocument;
 use App\Models\EmployeeRelative;
 use App\Models\EmployeeKpi;
+use App\Models\EmployeeInsurance;
 use App\Models\School;
 use App\Models\Degree;
 use App\Models\Commune;
@@ -190,7 +192,8 @@ class AdminEmployeeController extends Controller
         $employee_appendixs = EmployeeAppendix::where('employee_id', $employee->id)->get();
         $contract_types = ContractType::all();
         $employee_kpis = EmployeeKpi::where('employee_id', $employee->id)->get();
-
+        $insurances = Insurance::all();
+        $employee_insurances = EmployeeInsurance::where('employee_id', $employee->id)->get();
 
         $this_year_total_kpi = 0;
         $this_year_my_kpis = EmployeeKpi::where('employee_id', $employee->id)->where('year', Carbon::now()->year)->get();
@@ -217,6 +220,8 @@ class AdminEmployeeController extends Controller
                     'employee_kpis' => $employee_kpis,
                     'this_year_kpi_average' => $this_year_kpi_average,
                     'employee_appendixs' => $employee_appendixs,
+                    'insurances' => $insurances,
+                    'employee_insurances' => $employee_insurances,
                     ]);
     }
 

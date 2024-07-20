@@ -47,7 +47,7 @@
                                   <input type="hidden" name="_token" value="' . csrf_token(). '"></form>';
 
                           $action = '';
-                          if (Auth::user()->can('create-working')) {
+                          if (Auth::user()->can('create-contract')) {
                               $action = $action . $action_edit_contracts;
                           }
                       @endphp

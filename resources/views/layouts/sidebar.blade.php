@@ -140,6 +140,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('admin.hr.insurances.index')}}" class="nav-link {{ Request::is('admin/hr/insurances*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Bảo hiểm</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('admin.hr.orgs.index')}}" class="nav-link {{ Request::is('admin/hr/orgs*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Sơ đồ tổ chức</p>

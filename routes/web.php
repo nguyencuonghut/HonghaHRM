@@ -51,6 +51,7 @@ use App\Http\Controllers\AdminEmployeeYearReviewController;
 use App\Http\Controllers\AdminEmployeeRewardController;
 use App\Http\Controllers\AdminEmployeeDisciplineController;
 use App\Http\Controllers\AdminEmployeeAppendixController;
+use App\Http\Controllers\AdminEmployeeInsuranceController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -226,6 +227,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('hr/disciplines/data', [AdminEmployeeDisciplineController::class, 'anyData'])->name('hr.disciplines.data');
         Route::get('hr/disciplines/employeeData/{employee_id}', [AdminEmployeeDisciplineController::class, 'employeeData'])->name('hr.disciplines.employeeData');
         Route::resource('hr/disciplines', AdminEmployeeDisciplineController::class, ['names' => 'hr.disciplines']);
+
+        Route::get('hr/insurances/data', [AdminEmployeeInsuranceController::class, 'anyData'])->name('hr.insurances.data');
+        Route::resource('hr/insurances', AdminEmployeeInsuranceController::class, ['names' => 'hr.insurances']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
         Route::get('hr/orgs/{department_id}', [AdminOrgController::class, 'show'])->name('hr.orgs.show');
