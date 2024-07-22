@@ -12,7 +12,7 @@ class EmployeeWork extends Model
 
     protected $table = "employee_works";
 
-    protected $fillable = ['employee_id', 'company_job_id', 'status', 'start_date', 'end_date', 'off_type_id', 'off_reason'];
+    protected $fillable = ['employee_id', 'company_job_id', 'status', 'start_date', 'end_date', 'on_type_id','off_type_id', 'off_reason'];
 
     public function employee(): BelongsTo
     {
@@ -22,6 +22,11 @@ class EmployeeWork extends Model
     public function company_job(): BelongsTo
     {
         return $this->belongsTo(CompanyJob::class);
+    }
+
+    public function on_type(): BelongsTo
+    {
+        return $this->belongsTo(OnType::class);
     }
 
     public function off_type(): BelongsTo

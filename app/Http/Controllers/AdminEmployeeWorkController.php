@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CompanyJob;
 use App\Models\EmployeeWork;
 use App\Models\OffType;
+use App\Models\OnType;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Datatables;
@@ -36,12 +37,14 @@ class AdminEmployeeWorkController extends Controller
         $rules = [
             'employee_id' => 'required',
             'company_job_id' => 'required',
+            'on_type_id' => 'required',
             's_date' => 'required',
         ];
 
         $messages = [
             'employee_id.required' => 'Số Id nhân sự chưa có.',
             'company_job_id.required' => 'Bạn cần chọn Vị trí.',
+            'on_type_id.required' => 'Bạn cần chọn Phân loại tạo.',
             's_date.required' => 'Bạn cần nhập ngày bắt đầu.',
         ];
 
@@ -51,6 +54,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work = new EmployeeWork();
         $employee_work->employee_id = $request->employee_id;
         $employee_work->company_job_id = $request->company_job_id;
+        $employee_work->on_type_id = $request->on_type_id;
         $employee_work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
         $employee_work->status = 'On';
         $employee_work->save();
@@ -74,9 +78,11 @@ class AdminEmployeeWorkController extends Controller
     {
         $employee_work = EmployeeWork::findOrFail($id);
         $company_jobs = CompanyJob::all();
+        $on_types = OnType::all();
         return view('admin.working.edit', [
             'employee_work' => $employee_work,
-            'company_jobs' => $company_jobs
+            'company_jobs' => $company_jobs,
+            'on_types' => $on_types,
         ]);
     }
 
@@ -87,11 +93,13 @@ class AdminEmployeeWorkController extends Controller
     {
         $rules = [
             'company_job_id' => 'required',
+            'on_type_id' => 'required',
             's_date' => 'required',
         ];
 
         $messages = [
             'company_job_id.required' => 'Bạn cần chọn Vị trí.',
+            'on_type_id.required' => 'Bạn cần chọn Phân loại tạo.',
             's_date.required' => 'Bạn cần nhập ngày bắt đầu.',
         ];
 
@@ -100,6 +108,7 @@ class AdminEmployeeWorkController extends Controller
         // Edit EmployeeWork
         $employee_work = EmployeeWork::findOrFail($id);
         $employee_work->company_job_id = $request->company_job_id;
+        $employee_work->on_type_id = $request->on_type_id;
         $employee_work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
         $employee_work->save();
 
@@ -189,6 +198,11 @@ class AdminEmployeeWorkController extends Controller
                     return '<span class="badge badge-success">' . $employee_works->status . '</span>';
                 } else {
                     return '<span class="badge badge-danger">' . $employee_works->status . '</span>';
+                }
+            })
+            ->editColumn('on_type', function ($employee_works) {
+                if ($employee_works->on_type_id) {
+                    return $employee_works->on_type->name;
                 }
             })
             ->editColumn('off_type', function ($employee_works) {

@@ -30,6 +30,7 @@ use App\Models\RecruitmentCandidate;
 use App\Models\RecruitmentProposal;
 use App\Models\Regime;
 use App\Models\Welfare;
+use App\Models\OnType;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
@@ -202,6 +203,7 @@ class AdminEmployeeController extends Controller
         $employee_regimes = EmployeeRegime::where('employee_id', $employee->id)->get();
         $welfares = Welfare::all();
         $employee_welfares = EmployeeWelfare::where('employee_id', $employee->id)->get();
+        $on_types = OnType::all();
 
         $this_year_total_kpi = 0;
         $this_year_my_kpis = EmployeeKpi::where('employee_id', $employee->id)->where('year', Carbon::now()->year)->get();
@@ -234,6 +236,7 @@ class AdminEmployeeController extends Controller
                     'employee_regimes' => $employee_regimes,
                     'welfares' => $welfares,
                     'employee_welfares' => $employee_welfares,
+                    'on_types' => $on_types,
                     ]);
     }
 
