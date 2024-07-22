@@ -14,6 +14,7 @@ use App\Models\EmployeeRelative;
 use App\Models\EmployeeKpi;
 use App\Models\EmployeeInsurance;
 use App\Models\EmployeeRegime;
+use App\Models\EmployeeWelfare;
 use App\Models\School;
 use App\Models\Degree;
 use App\Models\Commune;
@@ -28,6 +29,7 @@ use App\Models\Province;
 use App\Models\RecruitmentCandidate;
 use App\Models\RecruitmentProposal;
 use App\Models\Regime;
+use App\Models\Welfare;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
@@ -198,6 +200,8 @@ class AdminEmployeeController extends Controller
         $employee_insurances = EmployeeInsurance::where('employee_id', $employee->id)->get();
         $regimes = Regime::all();
         $employee_regimes = EmployeeRegime::where('employee_id', $employee->id)->get();
+        $welfares = Welfare::all();
+        $employee_welfares = EmployeeWelfare::where('employee_id', $employee->id)->get();
 
         $this_year_total_kpi = 0;
         $this_year_my_kpis = EmployeeKpi::where('employee_id', $employee->id)->where('year', Carbon::now()->year)->get();
@@ -228,6 +232,8 @@ class AdminEmployeeController extends Controller
                     'employee_insurances' => $employee_insurances,
                     'regimes' => $regimes,
                     'employee_regimes' => $employee_regimes,
+                    'welfares' => $welfares,
+                    'employee_welfares' => $employee_welfares,
                     ]);
     }
 

@@ -42,6 +42,7 @@ class DatabaseSeeder extends Seeder
             EmployeeContractsTableSeeder::class,
             InsurancesTableSeeder::class,
             RegimesTableSeeder::class,
+            WelfaresTableSeeder::class,
         ]);
     }
 }

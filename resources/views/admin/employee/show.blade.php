@@ -42,6 +42,7 @@
                             <li class="nav-item"><a class="nav-link" href="#tab-reward-discipline" data-toggle="tab">Khen thưởng - Kỷ luật</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-training" data-toggle="tab">Đào tạo</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-insurance" data-toggle="tab">Bảo hiểm</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-welfare" data-toggle="tab">Phúc lợi</a></li>
                             @can('view-salary')
                             <li class="nav-item"><a class="nav-link" href="#tab-salary" data-toggle="tab">Lương</a></li>
                             @endcan
@@ -60,6 +61,7 @@
                           @include('admin.employee.tabs.reward_discipline_tab')
                           @include('admin.employee.tabs.training_tab')
                           @include('admin.employee.tabs.insurance_tab')
+                          @include('admin.employee.tabs.welfare_tab')
                           @can('view-salary')
                           @include('admin.employee.tabs.salary_tab')
                           @endcan

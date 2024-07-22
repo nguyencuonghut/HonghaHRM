@@ -53,6 +53,7 @@ use App\Http\Controllers\AdminEmployeeDisciplineController;
 use App\Http\Controllers\AdminEmployeeAppendixController;
 use App\Http\Controllers\AdminEmployeeInsuranceController;
 use App\Http\Controllers\AdminEmployeeRegimeController;
+use App\Http\Controllers\AdminEmployeeWelfareController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -234,6 +235,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('hr/regimes/data', [AdminEmployeeRegimeController::class, 'anyData'])->name('hr.regimes.data');
         Route::resource('hr/regimes', AdminEmployeeRegimeController::class, ['names' => 'hr.regimes']);
+
+        Route::get('hr/welfares/data', [AdminEmployeeWelfareController::class, 'anyData'])->name('hr.welfares.data');
+        Route::resource('hr/welfares', AdminEmployeeWelfareController::class, ['names' => 'hr.welfares']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
         Route::get('hr/orgs/{department_id}', [AdminOrgController::class, 'show'])->name('hr.orgs.show');

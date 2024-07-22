@@ -188,7 +188,7 @@
                         @endif
                       </td>
                       <td>
-                        <span class="badge @if ("Mở" == $employee_regime->status) badge-success @else badge-danger @endif">{{$employee_regime->status}}</span>
+                        <span class="badge @if ("Mở" == $employee_regime->status) badge-success @else badge-secondary @endif">{{$employee_regime->status}}</span>
                       </td>
                       @can('create-insurance')
                       <td>{!! $action !!}</td>
