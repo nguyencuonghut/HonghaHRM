@@ -182,7 +182,8 @@ class AdminReportController extends Controller
 
     public function offworkData()
     {
-        $employee_works = EmployeeWork::where('status', 'Off')->where('off_type', 'Nghỉ việc')->orderBy('employee_id', 'asc')->get();
+        // off_type_id = 1 -> Nghỉ việc
+        $employee_works = EmployeeWork::where('status', 'Off')->where('off_type_id', 1)->orderBy('employee_id', 'asc')->get();
         return Datatables::of($employee_works)
             ->addIndexColumn()
             ->editColumn('employee', function ($employee_works) {

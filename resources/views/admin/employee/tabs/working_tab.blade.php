@@ -61,7 +61,11 @@
                         -
                         @endif
                       </td>
-                      <td>{{$employee_work->off_type}}</td>
+                      <td>
+                        @if($employee_work->off_type_id)
+                        {{$employee_work->off_type->name}}
+                        @endif
+                      </td>
                       <td>{!! $employee_work->off_reason !!}</td>
                       <td>
                         <span class="badge @if ("On" == $employee_work->status) badge-success @else badge-danger @endif">

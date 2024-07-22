@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanyJob;
 use App\Models\EmployeeWork;
+use App\Models\OffType;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Datatables;
@@ -121,7 +122,12 @@ class AdminEmployeeWorkController extends Controller
     public function getOff($id)
     {
         $employee_work = EmployeeWork::findOrFail($id);
-        return view('admin.working.off', ['employee_work' => $employee_work]);
+        $off_types = OffType::all();
+        return view('admin.working.off',
+                    [
+                        'employee_work' => $employee_work,
+                        'off_types' => $off_types,
+                    ]);
     }
 
     public function off(Request $request, $id)
@@ -140,8 +146,8 @@ class AdminEmployeeWorkController extends Controller
         $employee_work = EmployeeWork::findOrFail($id);
         $employee_work->status = 'Off';
         $employee_work->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
-        if ($request->off_type) {
-            $employee_work->off_type = $request->off_type;
+        if ($request->off_type_id) {
+            $employee_work->off_type_id = $request->off_type_id;
         }
         if ($request->off_reason) {
             $employee_work->off_reason = $request->off_reason;
@@ -186,7 +192,9 @@ class AdminEmployeeWorkController extends Controller
                 }
             })
             ->editColumn('off_type', function ($employee_works) {
-                return $employee_works->off_type;
+                if ($employee_works->off_type_id) {
+                    return $employee_works->off_type->name;
+                }
             })
             ->editColumn('off_reason', function ($employee_works) {
                 return $employee_works->off_reason;

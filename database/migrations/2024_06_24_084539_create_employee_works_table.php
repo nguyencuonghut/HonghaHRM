@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees');
             $table->foreignId('company_job_id')->constrained('company_jobs');
+            $table->foreignId('off_type_id')->nullable()->constrained('off_types');
             $table->enum('status', ['On', 'Off']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
-            $table->enum('off_type', ['Nghỉ việc', 'Nghỉ không lương', 'Nghỉ hưu'])->nullable();
             $table->text('off_reason')->nullable();
             $table->timestamps();
         });

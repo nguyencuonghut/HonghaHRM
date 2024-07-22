@@ -49,7 +49,13 @@
                                 <div class="col-6">
                                   <label class="required-field">Thời gian kết thúc</label>
                                   <div class="input-group date" id="e_date" data-target-input="nearest">
-                                      <input type="text" name="e_date" class="form-control datetimepicker-input" @if($employee_contract->end_date) value="{{date('d/m/Y', strtotime($employee_contract->end_date))}}" @endif data-target="#e_date"/>
+                                      <input type="text" name="e_date" class="form-control datetimepicker-input"
+                                            @if($employee_contract->end_date)
+                                                value="{{date('d/m/Y', strtotime($employee_contract->end_date))}}"
+                                            @else
+                                                value="{{date('d/m/Y', strtotime($employee_work->end_date))}}"
+                                            @endif data-target="#e_date"
+                                      />
                                       <div class="input-group-append" data-target="#e_date" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
@@ -60,11 +66,11 @@
                                         <div class="control-group">
                                             <label class="control-label">Phân loại nghỉ việc</label>
                                             <div class="controls">
-                                                <select name="off_type" id="off_type" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                <select name="off_type_id" id="off_type_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
-                                                    <option value="Nghỉ việc">Nghỉ việc</option>
-                                                    <option value="Nghỉ không lương">Nghỉ không lương</option>
-                                                    <option value="Nghỉ hưu">Nghỉ hưu</option>
+                                                    @foreach ($off_types as $off_type)
+                                                    <option value="{{$off_type->id}}" @if($off_type->id == $employee_work->off_type_id) selected="selected" @endif>{{$off_type->name}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -75,6 +81,9 @@
                                 <div class="col-12">
                                     <label class="control-label">Lý do nghỉ</label>
                                     <textarea id="off_reason" name="off_reason">
+                                        @if ($employee_work->off_reason)
+                                        {{$employee_work->off_reason}}
+                                        @endif
                                     </textarea>
                                 </div>
                             </div>

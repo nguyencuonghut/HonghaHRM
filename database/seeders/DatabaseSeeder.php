@@ -35,6 +35,7 @@ class DatabaseSeeder extends Seeder
             DocumentsTableSeeder::class,
             EmployeesTableSeeder::class,
             EmployeeSchoolsTableSeeder::class,
+            OffTypesTableSeeder::class,
             EmployeeWorksTableSeeder::class,
             DepartmentManagersTableSeeder::class,
             DivisionManagersTableSeeder::class,

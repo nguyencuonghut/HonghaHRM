@@ -28,7 +28,7 @@
                 $off_employee_works = App\Models\EmployeeWork::where('employee_id', $employee->id)->where('status', 'Off')->get();
                 $latest_employee_work = App\Models\EmployeeWork::where('employee_id', $employee->id)->where('status', 'Off')->orderBy('id', 'desc')->first();
                 if ($off_employee_works->count()) {
-                    $employee_work_str .= $latest_employee_work->company_job->name . ' - ' . $latest_employee_work->off_type;
+                    $employee_work_str .= $latest_employee_work->company_job->name . ' - ' . $latest_employee_work->off_type->name;
                 } else {
                     $employee_work_str .= '!! Chưa tạo QT công tác !!';
                 }
