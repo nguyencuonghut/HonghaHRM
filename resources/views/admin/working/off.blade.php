@@ -53,7 +53,9 @@
                                             @if($employee_contract->end_date)
                                                 value="{{date('d/m/Y', strtotime($employee_contract->end_date))}}"
                                             @else
+                                                @if($employee_work->end_date)
                                                 value="{{date('d/m/Y', strtotime($employee_work->end_date))}}"
+                                                @endif
                                             @endif data-target="#e_date"
                                       />
                                       <div class="input-group-append" data-target="#e_date" data-toggle="datetimepicker">

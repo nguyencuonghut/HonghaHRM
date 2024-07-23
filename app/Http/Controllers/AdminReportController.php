@@ -213,4 +213,115 @@ class AdminReportController extends Controller
             ->rawColumns(['employee', 'off_reason'])
             ->make(true);
     }
+
+    public function incDecBhxh()
+    {
+        return view('admin.report.inc_dec_bhxh');
+    }
+
+    public function incBhxhData()
+    {
+        $this_month = Carbon::now()->month;
+        $this_year = Carbon::now()->year;
+        $employee_works = EmployeeWork::where('on_type_id', 2)->whereMonth('start_date', $this_month)->whereYear('start_date', $this_year)->select('*');
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('code', function ($employee_works) {
+                return $employee_works->employee->code;
+            })
+            ->editColumn('name', function ($employee_works) {
+                return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
+
+            })
+            ->editColumn('start_date', function ($employee_works) {
+                return date('d/m/Y', strtotime($employee_works->start_date));
+            })
+            ->editColumn('insurance_salary', function ($employee_works) {
+                return number_format($employee_works->employee->company_job->insurance_salary, 0, '.', ',');
+            })
+            ->rawColumns(['name'])
+            ->make(true);
+    }
+
+    public function decBhxhData()
+    {
+        $this_month = Carbon::now()->month;
+        $this_year = Carbon::now()->year;
+        $employee_works = EmployeeWork::where('off_type_id', '!=', null)->whereMonth('end_date', $this_month)->whereYear('end_date', $this_year)->select('*');
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('code', function ($employee_works) {
+                return $employee_works->employee->code;
+            })
+            ->editColumn('name', function ($employee_works) {
+                return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
+
+            })
+            ->editColumn('end_date', function ($employee_works) {
+                return date('d/m/Y', strtotime($employee_works->end_date));
+            })
+            ->editColumn('insurance_salary', function ($employee_works) {
+                return number_format($employee_works->company_job->insurance_salary, 0, '.', ',');
+            })
+            ->rawColumns(['name'])
+            ->make(true);
+    }
+
+    public function incDecBhxhByMonth(Request $request)
+    {
+        $filter_month_year = explode('/', $request->month_of_year);
+        $month = $filter_month_year[0];
+        $year   = $filter_month_year[1];
+        return view('admin.report.inc_dec_bhxh_by_month',
+                    [
+                        'month' => $month,
+                        'year' => $year,
+                    ]);
+    }
+
+    public function incBhxhByMonthData($month, $year)
+    {
+        // 2 - Phát sinh tăng khi ký HĐLĐ
+        $employee_works = EmployeeWork::where('on_type_id', 2)->whereMonth('start_date', $month)->whereYear('start_date', $year)->select('*');
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('code', function ($employee_works) {
+                return $employee_works->employee->code;
+            })
+            ->editColumn('name', function ($employee_works) {
+                return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
+
+            })
+            ->editColumn('start_date', function ($employee_works) {
+                return date('d/m/Y', strtotime($employee_works->start_date));
+            })
+            ->editColumn('insurance_salary', function ($employee_works) {
+                return number_format($employee_works->company_job->insurance_salary, 0, '.', ',');
+            })
+            ->rawColumns(['name'])
+            ->make(true);
+    }
+
+    public function decBhxhByMonthData($month, $year)
+    {
+        //Phát sinh giảm khi nghỉ việc
+        $employee_works = EmployeeWork::where('off_type_id', '!=', null)->whereMonth('end_date', $month)->whereYear('end_date', $year)->select('*');
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('code', function ($employee_works) {
+                return $employee_works->employee->code;
+            })
+            ->editColumn('name', function ($employee_works) {
+                return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
+
+            })
+            ->editColumn('end_date', function ($employee_works) {
+                return date('d/m/Y', strtotime($employee_works->end_date));
+            })
+            ->editColumn('insurance_salary', function ($employee_works) {
+                return number_format($employee_works->company_job->insurance_salary, 0, '.', ',');
+            })
+            ->rawColumns(['name'])
+            ->make(true);
+    }
 }
