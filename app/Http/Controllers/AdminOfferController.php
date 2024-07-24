@@ -66,10 +66,6 @@ class AdminOfferController extends Controller
         $offer->desired_salary = $request->desired_salary;
         $offer->insurance_salary = $request->insurance_salary;
         $offer->position_salary = $request->position_salary;
-        if ($company_job->max_capacity_salary < $request->capacity_salary) {
-            Alert::toast('Lương năng lực vượt quá giới hạn!', 'error', 'top-right');
-            return redirect()->back();
-        }
         $offer->capacity_salary = $request->capacity_salary;
         $offer->position_allowance = $request->position_allowance;
         $offer->feedback = $request->feedback;
