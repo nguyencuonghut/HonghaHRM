@@ -92,12 +92,6 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="{{route('admin.hr.probations.index')}}" class="nav-link {{ Request::is('admin/hr/probations*') ? 'active' : '' }}">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
-                  <p>Thử việc</p>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="{{route('admin.hr.contracts.index')}}" class="nav-link {{ Request::is('admin/hr/contracts*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Hợp đồng</p>
@@ -113,6 +107,38 @@
                 <a href="{{route('admin.hr.workings.index')}}" class="nav-link {{ Request::is('admin/hr/workings*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>QT công tác</p>
+                </a>
+              </li>
+              @can('view-salary')
+              <li class="nav-item">
+                <a href="{{route('admin.hr.salaries.index')}}" class="nav-link {{ Request::is('admin/hr/salaries*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Lương</p>
+                </a>
+              </li>
+              @endcan
+              <li class="nav-item">
+                <a href="{{route('admin.hr.probations.index')}}" class="nav-link {{ Request::is('admin/hr/probations*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Thử việc</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.hr.insurances.index')}}" class="nav-link {{ Request::is('admin/hr/insurances*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Bảo hiểm</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.hr.regimes.index')}}" class="nav-link {{ Request::is('admin/hr/regimes*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Chế độ BH</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{route('admin.hr.welfares.index')}}" class="nav-link {{ Request::is('admin/hr/welfares*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Phúc lợi</p>
                 </a>
               </li>
               <li class="nav-item">
@@ -137,24 +163,6 @@
                 <a href="{{route('admin.hr.disciplines.index')}}" class="nav-link {{ Request::is('admin/hr/disciplines*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Kỷ luật</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('admin.hr.insurances.index')}}" class="nav-link {{ Request::is('admin/hr/insurances*') ? 'active' : '' }}">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
-                  <p>Bảo hiểm</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('admin.hr.regimes.index')}}" class="nav-link {{ Request::is('admin/hr/regimes*') ? 'active' : '' }}">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
-                  <p>Chế độ BH</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{route('admin.hr.welfares.index')}}" class="nav-link {{ Request::is('admin/hr/welfares*') ? 'active' : '' }}">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
-                  <p>Phúc lợi</p>
                 </a>
               </li>
               <li class="nav-item">

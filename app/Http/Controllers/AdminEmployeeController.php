@@ -14,6 +14,7 @@ use App\Models\EmployeeRelative;
 use App\Models\EmployeeKpi;
 use App\Models\EmployeeInsurance;
 use App\Models\EmployeeRegime;
+use App\Models\EmployeeSalary;
 use App\Models\EmployeeWelfare;
 use App\Models\School;
 use App\Models\Degree;
@@ -204,6 +205,7 @@ class AdminEmployeeController extends Controller
         $welfares = Welfare::all();
         $employee_welfares = EmployeeWelfare::where('employee_id', $employee->id)->get();
         $on_types = OnType::all();
+        $employee_salaries = EmployeeSalary::where('employee_id', $employee->id)->get();
 
         $this_year_total_kpi = 0;
         $this_year_my_kpis = EmployeeKpi::where('employee_id', $employee->id)->where('year', Carbon::now()->year)->get();
@@ -237,6 +239,7 @@ class AdminEmployeeController extends Controller
                     'welfares' => $welfares,
                     'employee_welfares' => $employee_welfares,
                     'on_types' => $on_types,
+                    'employee_salaries' => $employee_salaries,
                     ]);
     }
 

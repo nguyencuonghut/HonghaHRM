@@ -40,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         'create-appendix' => ['Admin', 'Nhân sự'],
         'create-insurance' => ['Admin', 'Nhân sự'],
         'create-welfare' => ['Admin', 'Nhân sự'],
+        'create-salary' => ['Admin', 'Nhân sự'],
     ];
 
     /**

@@ -54,6 +54,7 @@ use App\Http\Controllers\AdminEmployeeAppendixController;
 use App\Http\Controllers\AdminEmployeeInsuranceController;
 use App\Http\Controllers\AdminEmployeeRegimeController;
 use App\Http\Controllers\AdminEmployeeWelfareController;
+use App\Http\Controllers\AdminEmployeeSalaryController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -244,6 +245,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('hr/welfares/data', [AdminEmployeeWelfareController::class, 'anyData'])->name('hr.welfares.data');
         Route::resource('hr/welfares', AdminEmployeeWelfareController::class, ['names' => 'hr.welfares']);
+
+        Route::get('hr/salaries/data', [AdminEmployeeSalaryController::class, 'anyData'])->name('hr.salaries.data');
+        Route::get('hr/salaries/employeeData/{employee_id}', [AdminEmployeeSalaryController::class, 'employeeData'])->name('hr.salaries.employeeData');
+        Route::resource('hr/salaries', AdminEmployeeSalaryController::class, ['names' => 'hr.salaries']);
 
         Route::get('hr/orgs/data', [AdminOrgController::class, 'anyData'])->name('hr.orgs.data');
         Route::get('hr/orgs/{department_id}', [AdminOrgController::class, 'show'])->name('hr.orgs.show');
