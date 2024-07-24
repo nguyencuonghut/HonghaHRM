@@ -246,6 +246,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('hr/welfares/data', [AdminEmployeeWelfareController::class, 'anyData'])->name('hr.welfares.data');
         Route::resource('hr/welfares', AdminEmployeeWelfareController::class, ['names' => 'hr.welfares']);
 
+        Route::post('hr/salaries/off/{id}', [AdminEmployeeSalaryController::class, 'off'])->name('hr.salaries.off');
         Route::get('hr/salaries/data', [AdminEmployeeSalaryController::class, 'anyData'])->name('hr.salaries.data');
         Route::get('hr/salaries/employeeData/{employee_id}', [AdminEmployeeSalaryController::class, 'employeeData'])->name('hr.salaries.employeeData');
         Route::resource('hr/salaries', AdminEmployeeSalaryController::class, ['names' => 'hr.salaries']);

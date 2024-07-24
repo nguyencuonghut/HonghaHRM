@@ -150,6 +150,10 @@ class AdminEmployeeSalaryController extends Controller
             })
             ->addColumn('actions', function ($employee_salaries) {
                 $action = '<a href="' . route("admin.hr.salaries.edit", $employee_salaries->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
+                            <form style="display:inline" action="'. route("admin.hr.salaries.off", $employee_salaries->id) . '" method="POST">
+                                <input type="hidden" name="_method" value="POST">
+                                <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn Off?\');" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></button>
+                                <input type="hidden" name="_token" value="' . csrf_token(). '"></form>
                            <form style="display:inline" action="'. route("admin.hr.salaries.destroy", $employee_salaries->id) . '" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -211,5 +215,16 @@ class AdminEmployeeSalaryController extends Controller
             })
             ->rawColumns(['department', 'employee', 'status'])
             ->make(true);
+    }
+
+    public function off($id)
+    {
+        // Off the EmployeeWork
+        $employee_salary = EmployeeSalary::findOrFail($id);
+        $employee_salary->status = 'Off';
+        $employee_salary->save();
+
+        Alert::toast('Off thành công!', 'success', 'top-right');
+        return redirect()->back();
     }
 }
