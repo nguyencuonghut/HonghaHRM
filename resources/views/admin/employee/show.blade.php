@@ -33,38 +33,38 @@
                       <div class="card-header p-0 pt-1 border-bottom-0">
                         <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                             <li class="nav-item"><a class="nav-link active" href="#tab-information" data-toggle="tab">Thông tin</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-document" data-toggle="tab">Hồ sơ</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-probation" data-toggle="tab">Thử việc</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-family" data-toggle="tab">Gia đình</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-contract" data-toggle="tab">Hợp đồng</a></li>
                             <li class="nav-item"><a class="nav-link" href="#tab-working" data-toggle="tab">Công tác</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-productivity" data-toggle="tab">Hiệu suất</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-reward-discipline" data-toggle="tab">Khen thưởng - Kỷ luật</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-training" data-toggle="tab">Đào tạo</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-insurance" data-toggle="tab">Bảo hiểm</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#tab-welfare" data-toggle="tab">Phúc lợi</a></li>
                             @can('view-salary')
                             <li class="nav-item"><a class="nav-link" href="#tab-salary" data-toggle="tab">Lương</a></li>
                             @endcan
+                            <li class="nav-item"><a class="nav-link" href="#tab-document" data-toggle="tab">Hồ sơ</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-probation" data-toggle="tab">Thử việc</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-family" data-toggle="tab">Gia đình</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-insurance" data-toggle="tab">Bảo hiểm</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-welfare" data-toggle="tab">Phúc lợi</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-productivity" data-toggle="tab">Hiệu suất</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-reward-discipline" data-toggle="tab">Khen thưởng - Kỷ luật</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#tab-training" data-toggle="tab">Đào tạo</a></li>
                         </ul>
                       </div><!-- /.card-header -->
 
                       <div class="card-body">
                         <div class="tab-content">
                           @include('admin.employee.tabs.information_tab')
-                          @include('admin.employee.tabs.document_tab')
-                          @include('admin.employee.tabs.probation_tab')
-                          @include('admin.employee.tabs.family_tab')
                           @include('admin.employee.tabs.contract_tab')
                           @include('admin.employee.tabs.working_tab')
-                          @include('admin.employee.tabs.productivity_tab')
-                          @include('admin.employee.tabs.reward_discipline_tab')
-                          @include('admin.employee.tabs.training_tab')
-                          @include('admin.employee.tabs.insurance_tab')
-                          @include('admin.employee.tabs.welfare_tab')
                           @can('view-salary')
                           @include('admin.employee.tabs.salary_tab')
                           @endcan
+                          @include('admin.employee.tabs.document_tab')
+                          @include('admin.employee.tabs.probation_tab')
+                          @include('admin.employee.tabs.family_tab')
+                          @include('admin.employee.tabs.insurance_tab')
+                          @include('admin.employee.tabs.productivity_tab')
+                          @include('admin.employee.tabs.reward_discipline_tab')
+                          @include('admin.employee.tabs.welfare_tab')
+                          @include('admin.employee.tabs.training_tab')
                         </div>
                         <!-- /.tab-content -->
                       </div><!-- /.card-body -->
