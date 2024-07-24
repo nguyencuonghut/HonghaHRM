@@ -50,7 +50,7 @@
                     <th>Bảo hiểm</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
-                    <th>Tỷ lệ đóng</th>
+                    <th>Tỷ lệ đóng (%)</th>
                   </tr>
                   </thead>
                 </table>

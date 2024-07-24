@@ -37,7 +37,6 @@ class AdminEmployeeInsuranceController extends Controller
             'employee_id' => 'required',
             'insurance_id' => 'required',
             'insurance_s_date' => 'required',
-            'insurance_e_date' => 'required',
             'pay_rate' => 'required',
         ];
 
@@ -45,7 +44,6 @@ class AdminEmployeeInsuranceController extends Controller
             'employee_id.required' => 'Số id nhân sự không hợp lệ.',
             'insurance_id.required' => 'Bạn phải chọn loại bảo hiểm.',
             'insurance_s_date.required' => 'Bạn phải nhập ngày bắt đầu.',
-            'insurance_d_date.required' => 'Bạn phải nhập ngày kết thúc.',
             'pay_rate.required' => 'Bạn phải nhập tỷ lệ đóng.',
         ];
 
@@ -55,7 +53,9 @@ class AdminEmployeeInsuranceController extends Controller
         $employee_insurance->employee_id = $request->employee_id;
         $employee_insurance->insurance_id = $request->insurance_id;
         $employee_insurance->start_date = Carbon::createFromFormat('d/m/Y', $request->insurance_s_date);
-        $employee_insurance->end_date = Carbon::createFromFormat('d/m/Y', $request->insurance_e_date);
+        if ($request->insurance_e_date) {
+            $employee_insurance->end_date = Carbon::createFromFormat('d/m/Y', $request->insurance_e_date);
+        }
         $employee_insurance->pay_rate = $request->pay_rate;
         $employee_insurance->save();
 
@@ -92,14 +92,12 @@ class AdminEmployeeInsuranceController extends Controller
         $rules = [
             'insurance_id' => 'required',
             'insurance_s_date' => 'required',
-            'insurance_e_date' => 'required',
             'pay_rate' => 'required',
         ];
 
         $messages = [
             'insurance_id.required' => 'Bạn phải chọn loại bảo hiểm.',
             'insurance_s_date.required' => 'Bạn phải nhập ngày bắt đầu.',
-            'insurance_d_date.required' => 'Bạn phải nhập ngày kết thúc.',
             'pay_rate.required' => 'Bạn phải nhập tỷ lệ đóng.',
         ];
 
@@ -107,7 +105,11 @@ class AdminEmployeeInsuranceController extends Controller
 
         $employee_insurance = EmployeeInsurance::findOrFail($id);
         $employee_insurance->start_date = Carbon::createFromFormat('d/m/Y', $request->insurance_s_date);
-        $employee_insurance->end_date = Carbon::createFromFormat('d/m/Y', $request->insurance_e_date);
+        if ($request->insurance_e_date) {
+            $employee_insurance->end_date = Carbon::createFromFormat('d/m/Y', $request->insurance_e_date);
+        } else {
+            $employee_insurance->end_date = null;
+        }
         $employee_insurance->pay_rate = $request->pay_rate;
         $employee_insurance->save();
 

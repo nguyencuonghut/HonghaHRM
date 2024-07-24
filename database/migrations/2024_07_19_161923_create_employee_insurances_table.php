@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('employee_id')->constrained('employees');
             $table->foreignId('insurance_id')->constrained('insurances');
             $table->date('start_date');
-            $table->date('end_date');
+            $table->date('end_date')->nullable();
             $table->float('pay_rate');
             $table->timestamps();
         });

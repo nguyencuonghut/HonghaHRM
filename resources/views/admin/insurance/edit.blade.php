@@ -77,9 +77,9 @@
                                   </div>
                                 </div>
                                 <div class="col-6">
-                                  <label class="required-field">Thời gian kết thúc</label>
+                                  <label>Thời gian kết thúc</label>
                                   <div class="input-group date" id="insurance_e_date" data-target-input="nearest">
-                                      <input type="text" name="insurance_e_date" class="form-control datetimepicker-input"value="{{date('d/m/Y', strtotime($employee_insurance->end_date))}}" data-target="#insurance_e_date"/>
+                                      <input type="text" name="insurance_e_date" class="form-control datetimepicker-input" @if($employee_insurance->end_date) value="{{date('d/m/Y', strtotime($employee_insurance->end_date))}}" @endif data-target="#insurance_e_date"/>
                                       <div class="input-group-append" data-target="#insurance_e_date" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
