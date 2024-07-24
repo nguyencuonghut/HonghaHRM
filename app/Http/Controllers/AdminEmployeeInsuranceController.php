@@ -170,10 +170,14 @@ class AdminEmployeeInsuranceController extends Controller
                 return date('d/m/Y', strtotime($employee_insurances->start_date));
             })
             ->editColumn('end_date', function ($employee_insurances) {
-                return date('d/m/Y', strtotime($employee_insurances->end_date));
+                if ($employee_insurances->end_date) {
+                    return date('d/m/Y', strtotime($employee_insurances->end_date));
+                } else {
+                    return '';
+                }
             })
             ->editColumn('pay_rate', function ($employee_insurances) {
-                return $employee_insurances->pay_rate . ' %';
+                return $employee_insurances->pay_rate;
             })
             ->rawColumns(['employee_name', 'employee_department'])
             ->make(true);

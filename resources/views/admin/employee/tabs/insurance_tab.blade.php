@@ -45,8 +45,14 @@
                               $action = $action . $action_edit_insurances;
                           }
                       @endphp
-                      <td>{{date('d/m/Y', strtotime($employee_insurance->start_date))}}</td>
-                      <td>{{date('d/m/Y', strtotime($employee_insurance->end_date))}}</td>
+                      <td>
+                        {{date('d/m/Y', strtotime($employee_insurance->start_date))}}
+                      </td>
+                      <td>
+                        @if($employee_insurance->end_date)
+                        {{date('d/m/Y', strtotime($employee_insurance->end_date))}}
+                        @endif
+                      </td>
                       <td>{{$employee_insurance->pay_rate}}</td>
                       @can('create-insurance')
                       <td>{!! $action !!}</td>
