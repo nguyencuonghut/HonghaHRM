@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('employee_id')->constrained('employees');
             $table->foreignId('regime_id')->constrained('regimes');
-            $table->date('off_start_date')->nullable();
-            $table->date('off_end_date')->nullable();
+            $table->date('off_start_date')->nullable(); //Ngày bắt đầu nghỉ
+            $table->date('off_end_date')->nullable(); //Ngày kết thúc nghỉ
             $table->text('payment_period')->nullable();
             $table->bigInteger('payment_amount')->nullable();
             $table->enum('status', ['Mở', 'Đóng']);

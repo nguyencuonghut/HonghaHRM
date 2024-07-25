@@ -151,8 +151,8 @@
                 <thead>
                   <tr>
                     <th>Chế độ</th>
-                    <th>Ngày bắt đầu</th>
-                    <th>Ngày kết thúc</th>
+                    <th>Ngày bắt đầu nghỉ</th>
+                    <th>Ngày kết thúc nghỉ</th>
                     <th>Đợt thanh toán</th>
                     <th>Số tiền được thanh toán</th>
                     <th>Trạng thái</th>
