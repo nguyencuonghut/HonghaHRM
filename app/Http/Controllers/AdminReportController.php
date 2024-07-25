@@ -6,6 +6,7 @@ use App\Models\CompanyJob;
 use App\Models\Employee;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeRelative;
+use App\Models\EmployeeSalary;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
@@ -236,8 +237,14 @@ class AdminReportController extends Controller
             ->editColumn('start_date', function ($employee_works) {
                 return date('d/m/Y', strtotime($employee_works->start_date));
             })
-            ->editColumn('insurance_salary', function ($employee_works) {
-                return number_format($employee_works->employee->company_job->insurance_salary, 0, '.', ',');
+            ->editColumn('insurance_salary', function ($employee_works) use ($this_month, $this_year){
+                // Tính lương bhxh tại tháng này
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                if ($employee_salary) {
+                    return number_format($employee_salary->insurance_salary, 0, '.', ',');
+                } else {
+                    return '';
+                }
             })
             ->rawColumns(['name'])
             ->make(true);
@@ -260,8 +267,14 @@ class AdminReportController extends Controller
             ->editColumn('end_date', function ($employee_works) {
                 return date('d/m/Y', strtotime($employee_works->end_date));
             })
-            ->editColumn('insurance_salary', function ($employee_works) {
-                return number_format($employee_works->company_job->insurance_salary, 0, '.', ',');
+            ->editColumn('insurance_salary', function ($employee_works) use ($this_month, $this_year){
+                // Tính lương bhxh tại tháng này
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                if ($employee_salary) {
+                    return number_format($employee_salary->insurance_salary, 0, '.', ',');
+                } else {
+                    return '';
+                }
             })
             ->rawColumns(['name'])
             ->make(true);
@@ -282,7 +295,7 @@ class AdminReportController extends Controller
     public function incBhxhByMonthData($month, $year)
     {
         // 2 - Phát sinh tăng khi ký HĐLĐ
-        $employee_works = EmployeeWork::where('on_type_id', 2)->whereMonth('start_date', $month)->whereYear('start_date', $year)->select('*');
+        $employee_works = EmployeeWork::where('off_type_id', null)->where('on_type_id', 2)->whereMonth('start_date', $month)->whereYear('start_date', $year)->select('*');
         return Datatables::of($employee_works)
             ->addIndexColumn()
             ->editColumn('code', function ($employee_works) {
@@ -290,15 +303,20 @@ class AdminReportController extends Controller
             })
             ->editColumn('name', function ($employee_works) {
                 return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
-
             })
             ->editColumn('start_date', function ($employee_works) {
                 return date('d/m/Y', strtotime($employee_works->start_date));
             })
-            ->editColumn('insurance_salary', function ($employee_works) {
-                return number_format($employee_works->company_job->insurance_salary, 0, '.', ',');
+            ->editColumn('insurance_salary', function ($employee_works) use ($month, $year){
+                // Tính lương bhxh tại thời điểm chạy báo cáo
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $month, $year);
+                if ($employee_salary) {
+                    return number_format($employee_salary->insurance_salary, 0, '.', ',');
+                } else {
+                    return '';
+                }
             })
-            ->rawColumns(['name'])
+            ->rawColumns(['name', 'start_date'])
             ->make(true);
     }
 
@@ -318,10 +336,53 @@ class AdminReportController extends Controller
             ->editColumn('end_date', function ($employee_works) {
                 return date('d/m/Y', strtotime($employee_works->end_date));
             })
-            ->editColumn('insurance_salary', function ($employee_works) {
-                return number_format($employee_works->company_job->insurance_salary, 0, '.', ',');
+            ->editColumn('insurance_salary', function ($employee_works) use ($month, $year){
+                // Tính lương bhxh tại thời điểm chạy báo cáo
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $month, $year);
+                if ($employee_salary) {
+                    return number_format($employee_salary->insurance_salary, 0, '.', ',');
+                } else {
+                    return '';
+                }
             })
             ->rawColumns(['name'])
             ->make(true);
+    }
+
+    private function getEmployeeSalaryByMonthYear($employee_id, $month, $year)
+    {
+        // Tìm các EmployeeSalary với trạng thái On
+        $on_employee_salary = EmployeeSalary::where('employee_id', $employee_id)
+                                                ->where('status', 'On')
+                                                ->whereYear('start_date', '<=', $year)
+                                                ->whereMonth('start_date', '<=', $month)
+                                                ->first();
+        if ($on_employee_salary) {
+            return $on_employee_salary;
+        } else {
+            // Tìm các EmployeeSalary với trạng thái Off
+            $off_employee_salaries = EmployeeSalary::where('employee_id', $employee_id)
+                                                    ->where('status', 'Off')
+                                                    ->whereYear('start_date', '<=', $year)
+                                                    ->whereYear('end_date', '>=', $year)
+                                                    ->get();
+            if ($off_employee_salaries->count() > 1) {
+                // Tiếp tục lọc theo tháng
+            return EmployeeSalary::where('employee_id', $employee_id)
+                                ->where('status', 'Off')
+                                ->whereYear('start_date', '<=', $year)
+                                ->whereYear('end_date', '>=', $year)
+                                ->whereMonth('start_date', '<=', $month)
+                                ->whereMonth('end_date', '>=', $month)
+                                ->first();
+            } else {
+                // Trả về luôn
+                return EmployeeSalary::where('employee_id', $employee_id)
+                                    ->where('status', 'Off')
+                                    ->whereYear('start_date', '<=', $year)
+                                    ->whereYear('end_date', '>=', $year)
+                                    ->first();
+            }
+        }
     }
 }

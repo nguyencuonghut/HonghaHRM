@@ -82,6 +82,12 @@
                     <th>Ngày phát sinh tăng</th>
                     <th>Lương BHXH</th>
                   </tr>
+                  <tfoot>
+                    <tr>
+                        <th colspan="4">Tổng tăng</th>
+                        <th id="total_increase"></th>
+                    </tr>
+                  </tfoot>
                   </thead>
                 </table>
               </div>
@@ -107,6 +113,12 @@
                     <th>Lương BHXH</th>
                   </tr>
                   </thead>
+                  <tfoot>
+                    <tr>
+                        <th colspan="4">Tổng giảm</th>
+                        <th id="total_decrease"></th>
+                    </tr>
+                  </tfoot>
                 </table>
               </div>
             </div>
@@ -215,9 +227,30 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
-            {data: 'end_date', name: 'end_date'},
+            {data: 'start_date', name: 'start_date'},
             {data: 'insurance_salary', name: 'insurance_salary'},
-        ]
+        ],
+        drawCallback:function(settings) {
+            var api = this.api();
+            var intVal = function(i) {
+                return typeof i === 'string' ?
+                i.replace(/[\,]/g, '') * 1:
+                typeof i === 'number' ?
+                i : 0;
+            };
+
+            var total = api
+                .column(4)
+                .data()
+                .reduce(function(a,b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+            $('#total_increase').html(total.toLocaleString(
+                undefined, // leave undefined to use the visitor's browser
+                            // locale or a string like 'en-US' to override it.
+                { minimumFractionDigits: 0 }
+            ));
+        }
         });
 
         $('#dec-employees-table').DataTable({
@@ -277,7 +310,28 @@
             {data: 'name', name: 'name'},
             {data: 'end_date', name: 'end_date'},
             {data: 'insurance_salary', name: 'insurance_salary'},
-        ]
+        ],
+        drawCallback:function(settings) {
+            var api = this.api();
+            var intVal = function(i) {
+                return typeof i === 'string' ?
+                i.replace(/[\,]/g, '') * 1:
+                typeof i === 'number' ?
+                i : 0;
+            };
+
+            var total = api
+                .column(4)
+                .data()
+                .reduce(function(a,b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+            $('#total_decrease').html(total.toLocaleString(
+                undefined, // leave undefined to use the visitor's browser
+                            // locale or a string like 'en-US' to override it.
+                { minimumFractionDigits: 0 }
+            ));
+        }
         });
     });
   </script>
