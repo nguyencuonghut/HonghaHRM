@@ -81,12 +81,15 @@
                         <th>Họ tên</th>
                         <th>Ngày phát sinh tăng</th>
                         <th>Lương BHXH</th>
+                        <th>Tiền tăng BHXH</th>
+                        <th>Tiền tăng BHTN</th>
                     </tr>
                     </thead>
                     <tfoot>
                       <tr>
-                          <th colspan="4">Tổng tăng</th>
-                          <th id="total_increase"></th>
+                          <th colspan="5">Tổng tăng</th>
+                          <th id="total_inc_bhxh"></th>
+                          <th id="total_inc_bhtn"></th>
                       </tr>
                     </tfoot>
                     </table>
@@ -111,12 +114,15 @@
                         <th>Họ tên</th>
                         <th>Ngày phát sinh giảm</th>
                         <th>Lương BHXH</th>
+                        <th>Tiền giảm BHXH</th>
+                        <th>Tiền giảm BHTN</th>
                     </tr>
                     </thead>
                     <tfoot>
                         <tr>
-                            <th colspan="4">Tổng giảm</th>
-                            <th id="total_decrease"></th>
+                            <th colspan="5">Tổng giảm</th>
+                            <th id="total_dec_bhxh"></th>
+                            <th id="total_dec_bhtn"></th>
                         </tr>
                     </tfoot>
                     </table>
@@ -229,6 +235,8 @@
             {data: 'name', name: 'name'},
             {data: 'start_date', name: 'start_date'},
             {data: 'insurance_salary', name: 'insurance_salary'},
+            {data: 'bhxh_increase', name: 'bhxh_increase'},
+            {data: 'bhtn_increase', name: 'bhtn_increase'},
         ],
         drawCallback:function(settings) {
             var api = this.api();
@@ -239,13 +247,25 @@
                 i : 0;
             };
 
-            var total = api
-                .column(4)
+            var total_inc_bhxh = api
+                .column(5)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);
                 }, 0);
-            $('#total_increase').html(total.toLocaleString(
+            $('#total_inc_bhxh').html(total_inc_bhxh.toLocaleString(
+                undefined, // leave undefined to use the visitor's browser
+                            // locale or a string like 'en-US' to override it.
+                { minimumFractionDigits: 0 }
+            ));
+
+            var total_inc_bhtn = api
+                .column(6)
+                .data()
+                .reduce(function(a,b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+            $('#total_inc_bhtn').html(total_inc_bhtn.toLocaleString(
                 undefined, // leave undefined to use the visitor's browser
                             // locale or a string like 'en-US' to override it.
                 { minimumFractionDigits: 0 }
@@ -312,6 +332,8 @@
             {data: 'name', name: 'name'},
             {data: 'end_date', name: 'end_date'},
             {data: 'insurance_salary', name: 'insurance_salary'},
+            {data: 'bhxh_decrease', name: 'bhxh_decrease'},
+            {data: 'bhtn_decrease', name: 'bhtn_decrease'},
         ],
         drawCallback:function(settings) {
             var api = this.api();
@@ -322,13 +344,25 @@
                 i : 0;
             };
 
-            var total = api
-                .column(4)
+            var total_dec_bhxh = api
+                .column(5)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);
                 }, 0);
-            $('#total_decrease').html(total.toLocaleString(
+            $('#total_dec_bhxh').html(total_dec_bhxh.toLocaleString(
+                undefined, // leave undefined to use the visitor's browser
+                            // locale or a string like 'en-US' to override it.
+                { minimumFractionDigits: 0 }
+            ));
+
+            var total_dec_bhtn = api
+                .column(6)
+                .data()
+                .reduce(function(a,b) {
+                    return intVal(a) + intVal(b);
+                }, 0);
+            $('#total_dec_bhtn').html(total_dec_bhtn.toLocaleString(
                 undefined, // leave undefined to use the visitor's browser
                             // locale or a string like 'en-US' to override it.
                 { minimumFractionDigits: 0 }

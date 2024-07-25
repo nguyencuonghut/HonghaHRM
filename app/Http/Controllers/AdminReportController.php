@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanyJob;
 use App\Models\Employee;
+use App\Models\EmployeeInsurance;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeRelative;
 use App\Models\EmployeeSalary;
@@ -246,6 +247,41 @@ class AdminReportController extends Controller
                     return '';
                 }
             })
+            ->editColumn('bhxh_increase', function ($employee_works) use ($this_month, $this_year){
+                // Tính toán số tiền tăng cho 1- bhxh
+                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                                                        ->where('insurance_id', 1)
+                                                        ->first();
+                if ($employee_insurance) {
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    if ($employee_salary) {
+                        $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        return number_format($bhxh_increase, 0, '.', ',');
+                    } else {
+                        return '';
+                    }
+                } else {
+                    return 'Chưa khai báo BHXH';
+                }
+            })
+            ->editColumn('bhtn_increase', function ($employee_works) use ($this_month, $this_year){
+                // Tính toán số tiền tăng cho bhtn
+                // Tính toán số tiền tăng cho 2- bhtn
+                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                                                        ->where('insurance_id', 2)
+                                                        ->first();
+                if ($employee_insurance) {
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    if ($employee_salary) {
+                        $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        return number_format($bhxh_increase, 0, '.', ',');
+                    } else {
+                        return '';
+                    }
+                    } else {
+                    return 'Chưa khai báo BHTN';
+                }
+            })
             ->rawColumns(['name'])
             ->make(true);
     }
@@ -274,6 +310,40 @@ class AdminReportController extends Controller
                     return number_format($employee_salary->insurance_salary, 0, '.', ',');
                 } else {
                     return '';
+                }
+            })
+            ->editColumn('bhxh_decrease', function ($employee_works) use ($this_month, $this_year){
+                // Tính toán số tiền giảm cho 1- bhxh
+                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                                                        ->where('insurance_id', 1)
+                                                        ->first();
+                if ($employee_insurance) {
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    if ($employee_salary) {
+                        $bhxh_decrease = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        return number_format($bhxh_decrease, 0, '.', ',');
+                    } else {
+                        return '';
+                    }
+                } else {
+                    return 'Chưa khai báo BHXH';
+                }
+            })
+            ->editColumn('bhtn_decrease', function ($employee_works) use ($this_month, $this_year){
+                // Tính toán số tiền giảm cho 2- bhtn
+                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                                                        ->where('insurance_id', 2)
+                                                        ->first();
+                if ($employee_insurance) {
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    if ($employee_salary) {
+                        $bhtn_decrease = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        return number_format($bhtn_decrease, 0, '.', ',');
+                    } else {
+                        return '';
+                    }
+                    } else {
+                    return 'Chưa khai báo BHTN';
                 }
             })
             ->rawColumns(['name'])
