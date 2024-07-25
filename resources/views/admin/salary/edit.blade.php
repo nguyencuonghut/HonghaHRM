@@ -34,30 +34,45 @@
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Lương vị trí</label>
                                         <input class="form-control" type="number" name="position_salary" id="position_salary" value="{{$employee_salary->position_salary}}">
                                     </div>
                                   </div>
-                                  <div class="col-3">
+                                  <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Lương năng lực</label>
                                         <input class="form-control" type="number" name="capacity_salary" id="capacity_salary" value="{{$employee_salary->capacity_salary}}">
                                     </div>
                                   </div>
-                                  <div class="col-3">
+                            </div>
+
+                            <div class="row">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Phụ cấp vị trí</label>
                                         <input class="form-control" type="number" name="position_allowance" id="position_allowance" value="{{$employee_salary->position_allowance}}">
                                     </div>
-                                  </div>
-                                  <div class="col-3">
+                                </div>
+                                <div class="col-6">
                                     <div class="control-group">
                                         <label class="required-field" class="control-label">Lương bảo hiểm</label>
                                         <input class="form-control" type="number" name="insurance_salary" id="insurance_salary" value="{{$employee_salary->insurance_salary}}">
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12">
+                                  <label class="required-field">Thời gian bắt đầu</label>
+                                  <div class="input-group date" id="salary_start_date" data-target-input="nearest">
+                                      <input type="text" name="salary_start_date" class="form-control datetimepicker-input" data-target="#salary_start_date" value="{{date('d/m/Y', strtotime($employee_salary->start_date))}}"/>
+                                      <div class="input-group-append" data-target="#salary_start_date" data-toggle="datetimepicker">
+                                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                      </div>
                                   </div>
+                                </div>
                             </div>
 
                             <br>

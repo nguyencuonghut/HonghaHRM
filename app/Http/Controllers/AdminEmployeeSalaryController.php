@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\EmployeeSalary;
 use App\Models\EmployeeWork;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Datatables;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -37,6 +38,7 @@ class AdminEmployeeSalaryController extends Controller
             'capacity_salary' => 'required',
             'position_allowance' => 'required',
             'insurance_salary' => 'required',
+            'salary_start_date' => 'required',
         ];
 
         $messages = [
@@ -45,6 +47,7 @@ class AdminEmployeeSalaryController extends Controller
             'capacity_salary.required' => 'Bạn phải nhập lương năng lực.',
             'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
             'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
+            'salary_start_date.required' => 'Bạn phải nhập thời gian bắt đầu.',
         ];
 
         $request->validate($rules, $messages);
@@ -55,6 +58,7 @@ class AdminEmployeeSalaryController extends Controller
         $employee_salary->capacity_salary = $request->capacity_salary;
         $employee_salary->position_allowance = $request->position_allowance;
         $employee_salary->insurance_salary = $request->insurance_salary;
+        $employee_salary->start_date = Carbon::createFromFormat('d/m/Y', $request->salary_start_date);
         $employee_salary->status = 'On';
         $employee_salary->save();
 
@@ -89,6 +93,7 @@ class AdminEmployeeSalaryController extends Controller
             'capacity_salary' => 'required',
             'position_allowance' => 'required',
             'insurance_salary' => 'required',
+            'salary_start_date' => 'required',
         ];
 
         $messages = [
@@ -96,6 +101,7 @@ class AdminEmployeeSalaryController extends Controller
             'capacity_salary.required' => 'Bạn phải nhập lương năng lực.',
             'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
             'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
+            'salary_start_date.required' => 'Bạn phải nhập thời gian bắt đầu.',
         ];
 
         $request->validate($rules, $messages);
@@ -105,6 +111,7 @@ class AdminEmployeeSalaryController extends Controller
         $employee_salary->capacity_salary = $request->capacity_salary;
         $employee_salary->position_allowance = $request->position_allowance;
         $employee_salary->insurance_salary = $request->insurance_salary;
+        $employee_salary->start_date = Carbon::createFromFormat('d/m/Y', $request->salary_start_date);
         $employee_salary->save();
 
         Alert::toast('Sửa lương thành công!', 'success', 'top-right');
@@ -141,6 +148,16 @@ class AdminEmployeeSalaryController extends Controller
             ->editColumn('insurance_salary', function ($employee_salaries) {
                 return number_format($employee_salaries->insurance_salary, 0, '.', ',');
             })
+            ->editColumn('start_date', function ($employee_salaries) {
+                return date('d/m/Y', strtotime($employee_salaries->start_date));
+            })
+            ->editColumn('end_date', function ($employee_salaries) {
+                if ($employee_salaries->end_date) {
+                    return date('d/m/Y', strtotime($employee_salaries->end_date));
+                } else {
+                    return '';
+                }
+            })
             ->editColumn('status', function ($employee_salaries) {
                 if($employee_salaries->status == 'On') {
                     return '<span class="badge badge-success">On</span>';
@@ -150,10 +167,7 @@ class AdminEmployeeSalaryController extends Controller
             })
             ->addColumn('actions', function ($employee_salaries) {
                 $action = '<a href="' . route("admin.hr.salaries.edit", $employee_salaries->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>
-                            <form style="display:inline" action="'. route("admin.hr.salaries.off", $employee_salaries->id) . '" method="POST">
-                                <input type="hidden" name="_method" value="POST">
-                                <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn Off?\');" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></button>
-                                <input type="hidden" name="_token" value="' . csrf_token(). '"></form>
+                            <a href="' . route("admin.hr.salaries.getOff", $employee_salaries->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
                            <form style="display:inline" action="'. route("admin.hr.salaries.destroy", $employee_salaries->id) . '" method="POST">
                     <input type="hidden" name="_method" value="DELETE">
                     <button type="submit" name="submit" onclick="return confirm(\'Bạn có muốn xóa?\');" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
@@ -217,14 +231,21 @@ class AdminEmployeeSalaryController extends Controller
             ->make(true);
     }
 
-    public function off($id)
+    public function getOff($id)
+    {
+        $employee_salary = EmployeeSalary::findOrFail($id);
+        return view('admin.salary.off', ['employee_salary' => $employee_salary]);
+    }
+
+    public function off(Request $request, $id)
     {
         // Off the EmployeeWork
         $employee_salary = EmployeeSalary::findOrFail($id);
+        $employee_salary->end_date = Carbon::createFromFormat('d/m/Y', $request->salary_end_date);
         $employee_salary->status = 'Off';
         $employee_salary->save();
 
         Alert::toast('Off thành công!', 'success', 'top-right');
-        return redirect()->back();
+        return redirect()->route('admin.hr.employees.show', $employee_salary->employee_id);
     }
 }

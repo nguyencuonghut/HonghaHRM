@@ -17,6 +17,8 @@ class EmployeeSalary extends Model
         'insurance_salary',
         'employee_id',
         'status',
+        'start_date',
+        'end_date',
     ];
 
     public function employee(): BelongsTo

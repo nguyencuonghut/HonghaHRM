@@ -18,6 +18,8 @@ return new class extends Migration
             $table->bigInteger('position_salary');
             $table->bigInteger('capacity_salary');
             $table->bigInteger('position_allowance');
+            $table->date('start_date'); // Ngày bắt đầu áp dụng lương
+            $table->date('end_date')->nullable(); // Ngày kết thúc áp dụng lương
             $table->enum('status', ['On', 'Off']);
             $table->timestamps();
         });
