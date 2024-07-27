@@ -488,6 +488,88 @@ class AdminReportController extends Controller
             ->make(true);
     }
 
+    public function insurancePayment()
+    {
+        return view('admin.report.insurance_payment');
+
+    }
+
+    public function insurancePaymentData()
+    {
+        $this_month = Carbon::now()->month;
+        $this_year = Carbon::now()->year;
+        $greater_year_employee_works = EmployeeWork::where('status', 'On')
+                                        ->where('off_type_id', null)
+                                        ->whereYear('start_date', '<', $this_year)
+                                        ->select('*')->get();
+        $equal_year_employee_works = EmployeeWork::where('status', 'On')
+                                        ->where('off_type_id', null)
+                                        ->whereYear('start_date', $this_year)
+                                        ->whereMonth('start_date', '<=',$this_month)
+                                        ->select('*')->get();
+        $tempCollection = collect([$greater_year_employee_works, $equal_year_employee_works]);
+        $employee_works = $tempCollection->flatten(1)->unique('employee_id');
+
+        return Datatables::of($employee_works)
+            ->addIndexColumn()
+            ->editColumn('code', function ($employee_works) {
+                return $employee_works->employee->code;
+            })
+            ->editColumn('name', function ($employee_works) {
+                return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
+
+            })
+            ->editColumn('end_date', function ($employee_works) {
+                return date('d/m/Y', strtotime($employee_works->end_date));
+            })
+            ->editColumn('insurance_salary', function ($employee_works) use ($this_month, $this_year){
+                // Tính lương bhxh tại tháng này
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                if ($employee_salary) {
+                    return number_format($employee_salary->insurance_salary, 0, '.', ',');
+                } else {
+                    return '';
+                }
+            })
+            ->editColumn('bhxh_payment', function ($employee_works) use ($this_month, $this_year){
+                // Tính toán số tiền nộp cho 1- bhxh
+                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                                                        ->where('insurance_id', 1)
+                                                        ->first();
+                if ($employee_insurance) {
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    if ($employee_salary) {
+                        $bhxh_decrease = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        return number_format($bhxh_decrease, 0, '.', ',');
+                    } else {
+                        return '';
+                    }
+                } else {
+                    return 'Chưa khai báo BHXH';
+                }
+            })
+            ->editColumn('bhtn_payment', function ($employee_works) use ($this_month, $this_year){
+                // Tính toán số tiền nộp cho 2- bhtn
+                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                                                        ->where('insurance_id', 2)
+                                                        ->first();
+                if ($employee_insurance) {
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    if ($employee_salary) {
+                        $bhtn_decrease = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        return number_format($bhtn_decrease, 0, '.', ',');
+                    } else {
+                        return '';
+                    }
+                    } else {
+                    return 'Chưa khai báo BHTN';
+                }
+            })
+            ->rawColumns(['name'])
+            ->make(true);
+    }
+
+
     private function getEmployeeSalaryByMonthYear($employee_id, $month, $year)
     {
         // Tìm các EmployeeSalary với trạng thái On
