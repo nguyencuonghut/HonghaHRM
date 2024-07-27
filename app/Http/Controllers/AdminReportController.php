@@ -526,7 +526,12 @@ class AdminReportController extends Controller
                 // Tính lương bhxh tại tháng này
                 $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
                 if ($employee_salary) {
-                    return number_format($employee_salary->insurance_salary, 0, '.', ',');
+                    // Kiểm tra có phải là Nhân Sự tăng trong tháng
+                    if (date('m', strtotime($employee_works->start_date)) == $this_month) {
+                        return '+' . number_format($employee_salary->insurance_salary, 0, '.', ',');
+                    } else {
+                        return number_format($employee_salary->insurance_salary, 0, '.', ',');
+                    }
                 } else {
                     return '';
                 }
@@ -539,8 +544,12 @@ class AdminReportController extends Controller
                 if ($employee_insurance) {
                     $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
                     if ($employee_salary) {
-                        $bhxh_decrease = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
-                        return number_format($bhxh_decrease, 0, '.', ',');
+                        $bhxh_payment = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        if (date('m', strtotime($employee_works->start_date)) == $this_month) {
+                            return '+' . number_format($bhxh_payment, 0, '.', ',');
+                        } else {
+                            return number_format($bhxh_payment, 0, '.', ',');
+                        }
                     } else {
                         return '';
                     }
@@ -556,8 +565,12 @@ class AdminReportController extends Controller
                 if ($employee_insurance) {
                     $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
                     if ($employee_salary) {
-                        $bhtn_decrease = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
-                        return number_format($bhtn_decrease, 0, '.', ',');
+                        $bhtn_payment = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                        if (date('m', strtotime($employee_works->start_date)) == $this_month) {
+                            return '+' . number_format($bhtn_payment, 0, '.', ',');
+                        } else {
+                            return number_format($bhtn_payment, 0, '.', ',');
+                        }
                     } else {
                         return '';
                     }
@@ -565,7 +578,7 @@ class AdminReportController extends Controller
                     return 'Chưa khai báo BHTN';
                 }
             })
-            ->rawColumns(['name'])
+            ->rawColumns(['name', 'insurance_salary', 'bhxh_payment', 'bhtn_payment'])
             ->make(true);
     }
 
