@@ -28,7 +28,7 @@
                     <th>Trạng thái</th>
                     <th>File</th>
                     @can('create-contract')
-                    <th style="width:14%;">Thao tác</th>
+                    <th style="width:18%;">Thao tác</th>
                     @endcan
                   </tr>
                 </thead>
@@ -39,6 +39,7 @@
                       @php
                           $company_job = App\Models\CompanyJob::findOrFail($employee_contract->company_job_id);
                           $action_edit_contracts = '<a href="' . route("admin.hr.contracts.edit", $employee_contract->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
+                                                    <a href="'.route("admin.hr.contracts.export", $employee_contract->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-cloud-download-alt"></i></a>
                                                     <a href="'.route("admin.hr.contracts.getOff", $employee_contract->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
                                                     <a href="'.route("admin.hr.appendixs.getAdd", $employee_contract->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-code-branch"></i></a>
                                   <form style="display:inline" action="'. route("admin.hr.contracts.destroy", $employee_contract->id) . '" method="POST">
