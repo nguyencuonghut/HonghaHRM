@@ -62,16 +62,6 @@
                                 <div class="col-6">
                                     <div class="control-group">
                                         <div class="control-group">
-                                            <label class="required-field" class="control-label">Số HĐ</label>
-                                            <div class="controls">
-                                                <input class="form-control" type="text" name="code" id="code" value="{{$employee_contract->code}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="control-group">
-                                        <div class="control-group">
                                             <label class="required-field" class="control-label">Loại HĐ</label>
                                             <div class="controls">
                                                 <select name="contract_type_id" id="contract_type_id" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
@@ -84,6 +74,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <label class="control-label">File (pdf)</label>
+                                        <div class="custom-file text-left">
+                                            <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
+                                            <label class="custom-file-label" for="img_path">Chọn file</label>
+                                        </div>
+                                    </div>
+                                  </div>
                             </div>
 
                             <div class="row">
@@ -102,18 +101,6 @@
                                       <input type="text" name="e_date" class="form-control datetimepicker-input" @if ($employee_contract->end_date) value="{{date('d/m/Y', strtotime($employee_contract->end_date))}}" @endif data-target="#e_date"/>
                                       <div class="input-group-append" data-target="#e_date" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                      </div>
-                                  </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12">
-                                  <div class="control-group">
-                                      <label class="control-label">File (pdf)</label>
-                                      <div class="custom-file text-left">
-                                          <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
-                                          <label class="custom-file-label" for="img_path">Chọn file</label>
                                       </div>
                                   </div>
                                 </div>
