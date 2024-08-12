@@ -111,7 +111,6 @@ class AdminEmployeeController extends Controller
             'experience.required' => 'Bạn phải nhập kinh nghiệm.',
             'join_date.required' => 'Bạn phải nhập ngày vào.',
             'marriage_status.required' => 'Bạn phải nhập tình trạng hôn nhân.',
-            'bhxh.required' => 'Bạn phải nhập số BHXH.',
         ];
         $request->validate($rules,$messages);
 

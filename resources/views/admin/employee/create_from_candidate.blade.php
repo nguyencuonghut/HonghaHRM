@@ -239,7 +239,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="control-group">
-                                            <label class="required-field" class="control-label">Số BHXH</label>
+                                            <label class="control-label">Số BHXH</label>
                                             <div class="controls">
                                                 <input type="text" class="form-control" required="" name="bhxh" id="bhxh">
                                             </div>
