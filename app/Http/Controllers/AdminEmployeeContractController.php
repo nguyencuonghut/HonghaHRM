@@ -76,13 +76,13 @@ class AdminEmployeeContractController extends Controller
         $employee = Employee::findOrFail($request->employee_id);
         switch ($request->contract_type_id) {
             case 1: //HĐ thử việc
-                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HĐTV' . '-HH';
+                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
                 break;
             case 2: //HĐ lao động
-                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HĐLĐ' . '-HH';
+                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
                 break;
             case 3: //HĐ cộng tác viên
-                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HĐCTV' . '-HH';
+                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
                 break;
         }
         $employee_contract->code = $code;
@@ -161,13 +161,13 @@ class AdminEmployeeContractController extends Controller
         $employee = Employee::findOrFail($employee_contract->employee_id);
         switch ($request->contract_type_id) {
             case 1: //HĐ thử việc
-                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HĐTV' . '-HH';
+                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐTV';
                 break;
             case 2: //HĐ lao động
-                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HĐLĐ' . '-HH';
+                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐLĐ';
                 break;
             case 3: //HĐ cộng tác viên
-                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HĐCTV' . '-HH';
+                $code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HH-HĐCTV';
                 break;
         }
         $employee_contract->code = $code;

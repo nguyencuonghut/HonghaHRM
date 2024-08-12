@@ -205,7 +205,7 @@ class AdminEmployeeDocumentController extends Controller
 
         // Số hợp đồng
         $w_sheet->mergeCells("A5:D5");
-        $w_sheet->setCellValue('A5', 'Số: ' . $employee->code .'/' .  Carbon::now()->format('Y') .'/HĐTV-HH');
+        $w_sheet->setCellValue('A5', 'Số: ' . $employee->code .'/' .  Carbon::now()->format('Y') .'/HH-HĐTVH');
         $w_sheet->getStyle("A5")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // Thời gian
@@ -620,7 +620,7 @@ class AdminEmployeeDocumentController extends Controller
 
         // Số hợp đồng
         $w_sheet->mergeCells("A4:D4");
-        $w_sheet->setCellValue('A4', 'Số: ' . $employee->code .'/' .  Carbon::now()->format('Y') .'/HĐLĐ-HH');
+        $w_sheet->setCellValue('A4', 'Số: ' . $employee->code .'/' .  Carbon::now()->format('Y') .'/HH-HĐLĐ');
         $w_sheet->getStyle("A4")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
         // Add a drawing to the worksheet
@@ -781,7 +781,7 @@ class AdminEmployeeDocumentController extends Controller
 
 
         $objRichText = new RichText();
-        $objRichText->createText('Hai bên thỏa thuận ký kết Hhợp đồng lao động này (“');
+        $objRichText->createText('Hai bên thỏa thuận ký kết hợp đồng lao động này (“');
 
         $objBold = $objRichText->createTextRun('Hợp đồng');
         $objBold->getFont()->setBold(true);
