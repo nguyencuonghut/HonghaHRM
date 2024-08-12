@@ -163,7 +163,9 @@ class AdminEmployeeYearReviewController extends Controller
 
     public function anyData()
     {
-        $employee_year_reviews = EmployeeYearReview::orderBy('id', 'desc')->get();
+        $employee_year_reviews = EmployeeYearReview::join('employees', 'employees.id', 'employee_year_reviews.employee_id')
+                                                    ->orderBy('employees.code', 'desc')
+                                                    ->get();
         return Datatables::of($employee_year_reviews)
             ->addIndexColumn()
             ->editColumn('department', function ($employee_year_reviews) {

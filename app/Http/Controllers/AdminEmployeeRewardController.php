@@ -158,7 +158,9 @@ class AdminEmployeeRewardController extends Controller
 
     public function anyData()
     {
-        $employee_rewards = EmployeeReward::orderBy('id', 'desc')->get();
+        $employee_rewards = EmployeeReward::join('employees', 'employees.id', 'employee_rewards.employee_id')
+                                        ->orderBy('employees.code', 'desc')
+                                        ->get();
         return Datatables::of($employee_rewards)
             ->addIndexColumn()
             ->editColumn('department', function ($employee_rewards) {

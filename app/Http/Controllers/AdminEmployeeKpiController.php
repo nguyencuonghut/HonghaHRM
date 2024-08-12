@@ -144,7 +144,9 @@ class AdminEmployeeKpiController extends Controller
 
     public function anyData()
     {
-        $employee_kpis = EmployeeKpi::orderBy('id', 'desc')->get();
+        $employee_kpis = EmployeeKpi::join('employees', 'employees.id', 'employee_kpis.employee_id')
+                                    ->orderBy('employees.code', 'desc')
+                                    ->get();
         return Datatables::of($employee_kpis)
             ->addIndexColumn()
             ->editColumn('department', function ($employee_kpis) {

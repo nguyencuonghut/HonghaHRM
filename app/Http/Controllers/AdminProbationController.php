@@ -229,7 +229,10 @@ class AdminProbationController extends Controller
 
     public function anyData()
     {
-        $probations = Probation::with(['employee', 'creator', 'approver'])->orderBy('id', 'asc')->get();
+        $probations = Probation::with(['employee', 'creator', 'approver'])
+                                ->join('employees', 'employees.id', 'probations.employee_id')
+                                ->orderBy('employees.code', 'desc')
+                                ->get();
         return Datatables::of($probations)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($probations) {

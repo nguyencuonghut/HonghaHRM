@@ -132,7 +132,9 @@ class AdminEmployeeWelfareController extends Controller
 
     public function anyData()
     {
-        $employee_welfares = EmployeeWelfare::orderBy('employee_id', 'asc')->get();
+        $employee_welfares = EmployeeWelfare::join('employees', 'employees.id', 'employee_welfares.employee_id')
+                                            ->orderBy('employees.code', 'desc')
+                                            ->get();
         return Datatables::of($employee_welfares)
             ->addIndexColumn()
             ->editColumn('employee_code', function ($employee_welfares) {

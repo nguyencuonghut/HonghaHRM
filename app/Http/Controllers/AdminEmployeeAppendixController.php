@@ -159,7 +159,9 @@ class AdminEmployeeAppendixController extends Controller
 
     public function anyData()
     {
-        $employee_appendixs = EmployeeAppendix::orderBy('employee_id', 'asc')->get();
+        $employee_appendixs = EmployeeAppendix::join('employees', 'employees.id', 'employee_appendixes.employee_id')
+                                                ->orderBy('employees.code', 'desc')
+                                                ->get();
         return Datatables::of($employee_appendixs)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($employee_appendixs) {

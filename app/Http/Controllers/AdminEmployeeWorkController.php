@@ -169,7 +169,9 @@ class AdminEmployeeWorkController extends Controller
 
     public function anyData()
     {
-        $employee_works = EmployeeWork::orderBy('employee_id', 'asc')->get();
+        $employee_works = EmployeeWork::join('employees', 'employees.id', 'employee_works.employee_id')
+                                        ->orderBy('employees.code', 'desc')
+                                        ->get();
         return Datatables::of($employee_works)
             ->addIndexColumn()
             ->editColumn('employee_name', function ($employee_works) {

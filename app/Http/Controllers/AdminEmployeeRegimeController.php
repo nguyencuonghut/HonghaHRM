@@ -146,7 +146,9 @@ class AdminEmployeeRegimeController extends Controller
 
     public function anyData()
     {
-        $employee_regimes = EmployeeRegime::orderBy('employee_id', 'asc')->get();
+        $employee_regimes = EmployeeRegime::join('employees', 'employees.id', 'employee_regimes.employee_id')
+                                            ->orderBy('employees.code', 'desc')
+                                            ->get();
         return Datatables::of($employee_regimes)
             ->addIndexColumn()
             ->editColumn('employee_code', function ($employee_regimes) {

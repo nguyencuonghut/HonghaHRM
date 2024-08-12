@@ -158,7 +158,9 @@ class AdminEmployeeDisciplineController extends Controller
 
     public function anyData()
     {
-        $employee_disciplines = EmployeeDiscipline::orderBy('id', 'desc')->get();
+        $employee_disciplines = EmployeeDiscipline::join('employees', 'employees.id', 'employee_disciplines.employee_id')
+                                                    ->orderBy('employees.code', 'desc')
+                                                    ->get();
         return Datatables::of($employee_disciplines)
             ->addIndexColumn()
             ->editColumn('department', function ($employee_disciplines) {

@@ -170,7 +170,9 @@ class AdminEmployeeContractController extends Controller
 
     public function anyData()
     {
-        $employee_contracts = EmployeeContract::orderBy('employee_id', 'asc')->get();
+        $employee_contracts = EmployeeContract::join('employees', 'employees.id', 'employee_contracts.employee_id')
+                                                ->orderBy('employees.code', 'desc')
+                                                ->get();
         return Datatables::of($employee_contracts)
             ->addIndexColumn()
             ->editColumn('code', function ($employee_contracts) {

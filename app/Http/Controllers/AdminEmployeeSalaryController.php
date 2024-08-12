@@ -189,9 +189,16 @@ class AdminEmployeeSalaryController extends Controller
             $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
             $company_job_ids = CompanyJob::whereIn('department_id', $department_ids)->pluck('id')->toArray();
             $employee_ids = EmployeeWork::whereIn('company_job_id', $company_job_ids)->pluck('employee_id')->toArray();
-            $employee_salaries = EmployeeSalary::whereIn('employee_id', $employee_ids)->where('status', 'On')->orderBy('id', 'desc')->get();
+            $employee_salaries = EmployeeSalary::whereIn('employee_id', $employee_ids)
+                                                ->where('status', 'On')
+                                                ->join('employees', 'employees.id', 'employee_salaries.employee_id')
+                                                ->orderBy('employees.code', 'desc')
+                                                ->get();
         } else {
-            $employee_salaries = EmployeeSalary::where('status', 'On')->orderBy('id', 'desc')->get();
+            $employee_salaries = EmployeeSalary::where('status', 'On')
+                                                ->join('employees', 'employees.id', 'employee_salaries.employee_id')
+                                                ->orderBy('employees.code', 'desc')
+                                                ->get();
         }
 
         return Datatables::of($employee_salaries)

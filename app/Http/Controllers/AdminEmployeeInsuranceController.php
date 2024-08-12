@@ -132,7 +132,9 @@ class AdminEmployeeInsuranceController extends Controller
 
     public function anyData()
     {
-        $employee_insurances = EmployeeInsurance::orderBy('employee_id', 'asc')->get();
+        $employee_insurances = EmployeeInsurance::join('employees', 'employees.id', 'employee_insurances.employee_id')
+                                                ->orderBy('employees.code', 'desc')
+                                                ->get();
         return Datatables::of($employee_insurances)
             ->addIndexColumn()
             ->editColumn('insurance', function ($employee_insurances) {
