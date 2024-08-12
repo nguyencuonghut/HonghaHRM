@@ -174,48 +174,6 @@
             <!-- /.modal -->
         </div>
     </div>
-
-    <!-- Mẫu giấy tờ -->
-    <hr>
-    <div class="card card-secondary">
-        <div class="card-header">
-            Mẫu giấy tờ
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="document-samples-table" class="table table-bordered table-striped">
-                <thead>
-                  <tr>
-                    <th>Tên giấy tờ</th>
-                    <th>Mẫu</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                      <td>Hợp đồng thử việc</td>
-                      <td>
-
-                        <form class="form-horizontal" method="post" action="{{ route('admin.hr.employees.document.makeSampleHdtv', $employee->id) }}" name="approve_probation" id="approve_probation" novalidate="novalidate">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-success btn-xs"><i class="fas fa-cloud-download-alt"></i></button>
-                        </form>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Hợp đồng lao động</td>
-                      <td>
-
-                        <form class="form-horizontal" method="post" action="{{ route('admin.hr.employees.document.makeSampleHdld', $employee->id) }}" name="make_sample_hdld" id="make_sample_hdld" novalidate="novalidate">
-                            {{ csrf_field() }}
-                            <button type="submit" class="btn btn-success btn-xs"><i class="fas fa-cloud-download-alt"></i></button>
-                        </form>
-                      </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
 </div>
 
 @push('scripts')
