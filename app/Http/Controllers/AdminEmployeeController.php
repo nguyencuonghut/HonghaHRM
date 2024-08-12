@@ -187,6 +187,17 @@ class AdminEmployeeController extends Controller
      */
     public function show($id)
     {
+        // Check condition for Manager to view Employee
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            // Only fetch the Employee according to Admin's Department
+            $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $company_job_ids = CompanyJob::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = EmployeeWork::whereIn('company_job_id', $company_job_ids)->pluck('employee_id')->toArray();
+            if (!in_array($id, $employee_ids)) {
+                Alert::toast('Bạn không có quyền xem nhân sự này!', 'error', 'top-right');
+                return redirect()->route('admin.hr.employees.index');
+            }
+        }
         $employee = Employee::findOrFail($id);
         $documents = Document::all();
         $employee_documents = EmployeeDocument::where('employee_id', $employee->id)->get();

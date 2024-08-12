@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AdminDepartment;
+use App\Models\CompanyJob;
+use App\Models\Employee;
 use App\Models\EmployeeSalary;
 use App\Models\EmployeeWork;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Datatables;
+use Illuminate\Support\Facades\Auth;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminEmployeeSalaryController extends Controller
@@ -180,7 +184,16 @@ class AdminEmployeeSalaryController extends Controller
 
     public function anyData()
     {
-        $employee_salaries = EmployeeSalary::where('status', 'On')->orderBy('id', 'desc')->get();
+        if ('Trưởng đơn vị' == Auth::user()->role->name) {
+            // Only fetch the Employee according to Admin's Department
+            $department_ids = AdminDepartment::where('admin_id', Auth::user()->id)->pluck('department_id')->toArray();
+            $company_job_ids = CompanyJob::whereIn('department_id', $department_ids)->pluck('id')->toArray();
+            $employee_ids = EmployeeWork::whereIn('company_job_id', $company_job_ids)->pluck('employee_id')->toArray();
+            $employee_salaries = EmployeeSalary::whereIn('employee_id', $employee_ids)->where('status', 'On')->orderBy('id', 'desc')->get();
+        } else {
+            $employee_salaries = EmployeeSalary::where('status', 'On')->orderBy('id', 'desc')->get();
+        }
+
         return Datatables::of($employee_salaries)
             ->addIndexColumn()
             ->editColumn('department', function ($employee_salaries) {
