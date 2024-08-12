@@ -46,16 +46,6 @@
                                 <div class="col-6">
                                     <div class="control-group">
                                         <div class="control-group">
-                                            <label class="required-field" class="control-label">Số phụ lục</label>
-                                            <div class="controls">
-                                                <input class="form-control" type="text" name="code" id="code">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="control-group">
-                                        <div class="control-group">
                                             <label class="required-field" class="control-label">Lý do</label>
                                             <div class="controls">
                                                 <select name="reason" id="reason" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
@@ -68,6 +58,15 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-6">
+                                  <div class="control-group">
+                                    <label class="control-label">File (pdf)</label>
+                                    <div class="custom-file text-left">
+                                        <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
+                                        <label class="custom-file-label" for="img_path">Chọn file</label>
+                                    </div>
+                                  </div>
+                                </div>
                             </div>
 
                             <div class="row">
@@ -75,18 +74,6 @@
                                     <label class="required-field control-label">Mô tả</label>
                                     <textarea id="description" name="description">
                                     </textarea>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-12">
-                                  <div class="control-group">
-                                      <label class="control-label">File (pdf)</label>
-                                      <div class="custom-file text-left">
-                                          <input type="file" name="file_path" accept="application/pdf" class="custom-file-input" id="file_path">
-                                          <label class="custom-file-label" for="img_path">Chọn file</label>
-                                      </div>
-                                  </div>
                                 </div>
                             </div>
 

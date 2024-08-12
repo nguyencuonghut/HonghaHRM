@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employee;
 use App\Models\EmployeeAppendix;
 use App\Models\EmployeeContract;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Datatables;
@@ -35,7 +37,6 @@ class AdminEmployeeAppendixController extends Controller
         $rules = [
             'employee_id' => 'required',
             'employee_contract_id' => 'required',
-            'code' => 'required',
             'description' => 'required',
             'reason' => 'required',
         ];
@@ -43,7 +44,6 @@ class AdminEmployeeAppendixController extends Controller
         $messages = [
             'employee_id.required' => 'Số id nhân sự không hợp lệ.',
             'employee_contract_id.required' => 'Số id hợp đồng không hợp lệ.',
-            'code.required' => 'Bạn phải nhập số phụ lục.',
             'description.required' => 'Bạn phải nhập mô tả.',
             'reason.required' => 'Bạn phải chọn lý do.',
         ];
@@ -53,7 +53,6 @@ class AdminEmployeeAppendixController extends Controller
         $employee_appendix = new EmployeeAppendix();
         $employee_appendix->employee_id = $request->employee_id;
         $employee_appendix->employee_contract_id = $request->employee_contract_id;
-        $employee_appendix->code = $request->code;
         $employee_appendix->description = $request->description;
         $employee_appendix->reason = $request->reason;
         if ($request->hasFile('file_path')) {
@@ -67,6 +66,10 @@ class AdminEmployeeAppendixController extends Controller
 
             $employee_appendix->file_path = $path . '/' . $name;
         }
+
+        // Create code
+        $employee = Employee::findOrFail($request->employee_id);
+        $employee_appendix->code = $employee->code . '/' . Carbon::now()->format('Y') . '/' . 'HH-PLHĐ';
         $employee_appendix->save();
 
         Alert::toast('Thêm phụ lục mới thành công. Bạn cần tạo QT công tác!', 'success', 'top-right');
@@ -111,13 +114,11 @@ class AdminEmployeeAppendixController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'code' => 'required',
             'description' => 'required',
             'reason' => 'required',
         ];
 
         $messages = [
-            'code.required' => 'Bạn phải nhập số phụ lục.',
             'description.required' => 'Bạn phải nhập mô tả.',
             'reason.required' => 'Bạn phải chọn lý do.',
         ];
@@ -125,7 +126,6 @@ class AdminEmployeeAppendixController extends Controller
         $request->validate($rules, $messages);
 
         $employee_appendix = EmployeeAppendix::findOrFail($id);
-        $employee_appendix->code = $request->code;
         $employee_appendix->description = $request->description;
         $employee_appendix->reason = $request->reason;
         if ($request->hasFile('file_path')) {
