@@ -73,6 +73,8 @@
                     </div>
                   <!-- /.card-header -->
                   <div class="card-body">
+                    <a href="{{route('admin.reports.exportIncBhxh')}}" class="btn btn-sm btn-primary"><i class="fas fa-cloud-download-alt"></i></a>
+
                     <table id="inc-employees-table" class="table table-bordered table-striped">
                     <thead>
                     <tr>
@@ -181,52 +183,52 @@
         "responsive": true, "lengthChange": false, "autoWidth": false,
         processing: true,
         serverSide: true,
-        buttons: [
-            {
-                extend: 'copy',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
-                }
-            },
-            {
-                extend: 'csv',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
-                }
+        // buttons: [
+        //     {
+        //         extend: 'copy',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'csv',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
 
-            },
-            {
-                extend: 'excel',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
-                }
-            },
-            {
-                extend: 'pdf',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
-                }
-            },
-            {
-                extend: 'print',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
-                }
-            },
-            {
-                extend: 'colvis',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6,7]
-                }
-            }
-        ],
-        dom: 'Blfrtip',
+        //     },
+        //     {
+        //         extend: 'excel',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'pdf',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'print',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     },
+        //     {
+        //         extend: 'colvis',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6,7]
+        //         }
+        //     }
+        // ],
+        //dom: 'Blfrtip',
         ajax: {
           url: "{{ route('admin.reports.incBhxhData') }}",
         },

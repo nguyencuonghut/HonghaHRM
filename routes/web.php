@@ -93,6 +93,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('reports/seniority', [AdminReportController::class, 'seniority'])->name('reports.seniority');
         Route::get('reports/off_work', [AdminReportController::class, 'offWork'])->name('reports.offWork');
         Route::get('reports/off_work_data', [AdminReportController::class, 'offWorkData'])->name('reports.offWorkData');
+        Route::get('reports/export_inc_bhxh', [AdminReportController::class, 'exportIncBhxh'])->name('reports.exportIncBhxh');
         Route::get('reports/inc_dec_bhxh', [AdminReportController::class, 'incDecBhxh'])->name('reports.incDecBhxh');
         Route::get('reports/inc_bhxh_data', [AdminReportController::class, 'incBhxhData'])->name('reports.incBhxhData');
         Route::get('reports/dec_bhxh_data', [AdminReportController::class, 'decBhxhData'])->name('reports.decBhxhData');

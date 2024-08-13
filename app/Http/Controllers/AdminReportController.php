@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CompanyJob;
 use App\Models\Employee;
+use App\Models\EmployeeContract;
 use App\Models\EmployeeInsurance;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeRelative;
@@ -11,6 +11,11 @@ use App\Models\EmployeeSalary;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
+use RealRashid\SweetAlert\Facades\Alert;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use PhpOffice\PhpSpreadsheet\Style\Border;
+use PhpOffice\PhpSpreadsheet\Style\Color;
 
 class AdminReportController extends Controller
 {
@@ -622,5 +627,301 @@ class AdminReportController extends Controller
                                     ->first();
             }
         }
+    }
+
+    public function exportIncBhxh()
+    {
+        // Make new sheet
+        $spreadsheet = new Spreadsheet();
+
+        //Set font
+        $styleArray = array(
+            'font'  => array(
+                'name'  => 'Times New Roman',
+                'size' => 11,
+            ),
+        );
+        $spreadsheet->getDefaultStyle()
+                    ->applyFromArray($styleArray);
+
+        //Create the first worksheet
+        $w_sheet = $spreadsheet->getActiveSheet();
+
+        //Set sheet title
+        $w_sheet->setTitle("Tăng BHXH");
+
+        //Set title of report
+        $w_sheet->setCellValue('C1', 'BÁO CÁO PHÁT SINH TĂNG BHXH THÁNG ' . Carbon::now()->month . '-' . Carbon::now()->year);
+        $w_sheet->getStyle("C1")
+                    ->getFont()
+                    ->setSize(13)
+                    ->setBold(true);
+
+        //Set column width
+        $w_sheet->getColumnDimension('G')->setWidth(15);
+        $w_sheet->getColumnDimension('H')->setWidth(15);
+        $w_sheet->getColumnDimension('I')->setWidth(30);
+        $w_sheet->getColumnDimension('J')->setWidth(20);
+        $w_sheet->getColumnDimension('K')->setWidth(20);
+        $w_sheet->getColumnDimension('L')->setWidth(20);
+        $w_sheet->getColumnDimension('M')->setWidth(20);
+
+        $w_sheet->getColumnDimension('A')->setWidth(6);
+        $w_sheet->getStyle("A3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('A3', 'STT');
+
+        $w_sheet->getColumnDimension('B')->setWidth(6);
+        $w_sheet->getStyle("B3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('B3', 'MÃ');
+
+        $w_sheet->getColumnDimension('C')->setWidth(30);
+        $w_sheet->getStyle("C3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('C3', 'HỌ TÊN');
+
+        $w_sheet->getColumnDimension('D')->setWidth(15);
+        $w_sheet->getStyle("D3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('D3', 'SỐ BHXH');
+
+        $w_sheet->getColumnDimension('E')->setWidth(15);
+        $w_sheet->getStyle("E3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('E3', 'SỐ CCCD');
+
+        $w_sheet->getColumnDimension('F')->setWidth(15);
+        $w_sheet->getStyle("F3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('F3', 'NGÀY SINH');
+
+        $w_sheet->getColumnDimension('G')->setWidth(15);
+        $w_sheet->getStyle("G3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('G3', 'GIỚI TÍNH');
+
+        $w_sheet->getColumnDimension('H')->setWidth(25);
+        $w_sheet->getStyle("H3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('H3', 'VỊ TRÍ');
+
+        $w_sheet->getColumnDimension('I')->setWidth(35);
+        $w_sheet->getStyle("I3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('I3', 'ĐỊA CHỈ');
+
+        $w_sheet->getColumnDimension('J')->setWidth(20);
+        $w_sheet->getStyle("J3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('J3', 'SỐ ĐIỆN THOẠI');
+
+        $w_sheet->getColumnDimension('K')->setWidth(25);
+        $w_sheet->getStyle("K3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('K3', 'SỐ HỢP ĐỒNG');
+
+        $w_sheet->getColumnDimension('L')->setWidth(20);
+        $w_sheet->getStyle("L3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('L3', 'NGÀY KÝ HĐ');
+
+        $w_sheet->getColumnDimension('M')->setWidth(20);
+        $w_sheet->getStyle("M3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('M3', 'LƯƠNG BHXH');
+
+        $w_sheet->getColumnDimension('N')->setWidth(15);
+        $w_sheet->getStyle("N3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('N3', 'TỶ LỆ ĐÓNG');
+
+        $w_sheet->getColumnDimension('O')->setWidth(25);
+        $w_sheet->getStyle("O3")
+                ->getBorders()
+                ->getOutline()
+                ->setBorderStyle(Border::BORDER_THIN);
+        $w_sheet->setCellValue('O3', 'TIỀN TĂNG BHXH');
+
+        //Set bold for column name
+        $w_sheet->getStyle("A3:O3")
+                    ->getFont()
+                    ->setSize(13)
+                    ->setBold(true);
+
+        //Get all increase bhxh in this month
+        $this_month = Carbon::now()->month;
+        $this_year = Carbon::now()->year;
+        $employee_works = EmployeeWork::where('on_type_id', 2)
+                                        ->whereMonth('start_date', $this_month)
+                                        ->whereYear('start_date', $this_year)
+                                        ->get();
+
+
+        $index = 0;
+        $start_row = 3;
+        foreach ($employee_works as $employee_work) {
+            $index += 1;
+            //Write STT
+            $w_sheet->getStyle('A'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('A' . ($start_row + $index), $index);
+            //Write code
+            $w_sheet->getStyle('B'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('B' . ($start_row + $index), $employee_work->employee->code);
+            //Write name
+            $w_sheet->getStyle('C'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('C' . ($start_row + $index), $employee_work->employee->name);
+            //Write BHXH
+            $w_sheet->getStyle('D'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('D' . ($start_row + $index), $employee_work->employee->bhxh);
+            //Write CCCD
+            $w_sheet->getStyle('E'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('E' . ($start_row + $index), $employee_work->employee->cccd);
+            //Write date of birth
+            $w_sheet->getStyle('F'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('F' . ($start_row + $index), date('d/m/Y', strtotime($employee_work->employee->date_of_birth)));
+            //Write gender
+            $w_sheet->getStyle('G'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('G' . ($start_row + $index), $employee_work->employee->gender);
+            //Write company job
+            $w_sheet->getStyle('H'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('H' . ($start_row + $index), $employee_work->company_job->name);
+            //Write address
+            $w_sheet->getStyle('I'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('I' . ($start_row + $index),
+                                    $employee_work->employee->address
+                                    . ', '
+                                    .  $employee_work->employee->commune->name
+                                    .', '
+                                    .  $employee_work->employee->commune->district->name
+                                    .', '
+                                    . $employee_work->employee->commune->district->province->name);
+            //Write phone
+            $w_sheet->getStyle('J'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('J' . ($start_row + $index), $employee_work->employee->phone);
+            //Write contract code
+            $w_sheet->getStyle('K'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $employee_contract = EmployeeContract::where('employee_id', $employee_work->employee_id)
+                                                ->where('company_job_id', $employee_work->company_job_id)
+                                                ->where('contract_type_id', 2) // 2: HĐ lao động
+                                                ->where('status', 'On')
+                                                ->first();
+            $w_sheet->setCellValue('K' . ($start_row + $index), $employee_contract->code);
+            //Write contract start date
+            $w_sheet->getStyle('L'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $w_sheet->setCellValue('L' . ($start_row + $index), $employee_contract->start_date);
+            //Write insurance salary
+            $w_sheet->getStyle('M'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $this_month, $this_year);
+            if ($employee_salary) {
+                $w_sheet->setCellValue('M' . ($start_row + $index), $employee_salary->insurance_salary);
+            } else {
+                $w_sheet->setCellValue('M' . ($start_row + $index), 'Chưa khai báo lương');
+            }
+            //Write pay rate
+            $w_sheet->getStyle('N'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            $employee_insurance = EmployeeInsurance::where('employee_id', $employee_work->employee_id)
+                                                    ->where('insurance_id', 1)
+                                                    ->first();
+            if ($employee_insurance) {
+                $w_sheet->setCellValue('N' . ($start_row + $index), $employee_insurance->pay_rate . '%');
+            } else {
+                $w_sheet->setCellValue('N' . ($start_row + $index), 'Chưa khai báo BHXH');
+            }
+            //Write bhxh increase
+            $w_sheet->getStyle('O'. ($start_row + $index))
+                    ->getBorders()
+                    ->getOutline()
+                    ->setBorderStyle(Border::BORDER_THIN);
+            if ($employee_insurance) {
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $this_month, $this_year);
+                if ($employee_salary) {
+                    $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
+                    $w_sheet->setCellValue('O' . ($start_row + $index), $bhxh_increase);
+                } else {
+                    $w_sheet->setCellValue('O' . ($start_row + $index), 'Chưa khai báo lương');
+                }
+            } else {
+                $w_sheet->setCellValue('O' . ($start_row + $index), 'Chưa khai báo BHXH');
+            }
+        }
+
+        //Save to file
+        $writer = new Xlsx($spreadsheet);
+        $file_name = 'Báo cáo phát sinh tăng BHXH tháng ' . Carbon::now()->format('m-Y') . '.xlsx';
+        $writer->save($file_name);
+
+        Alert::toast('Tải file thành công!!', 'success', 'top-right');
+        return response()->download($file_name)->deleteFileAfterSend(true);
     }
 }
