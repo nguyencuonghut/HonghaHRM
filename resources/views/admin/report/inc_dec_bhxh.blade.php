@@ -79,6 +79,7 @@
                         <th>STT</th>
                         <th>Mã</th>
                         <th>Họ tên</th>
+                        <th>Vị trí</th>
                         <th>Ngày phát sinh tăng</th>
                         <th>Lương BHXH</th>
                         <th>Tiền tăng BHXH</th>
@@ -87,7 +88,7 @@
                     </thead>
                     <tfoot>
                       <tr>
-                          <th colspan="5">Tổng tăng</th>
+                          <th colspan="6">Tổng tăng</th>
                           <th id="total_inc_bhxh"></th>
                           <th id="total_inc_bhtn"></th>
                       </tr>
@@ -185,14 +186,14 @@
                 extend: 'copy',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'csv',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
 
             },
@@ -200,28 +201,28 @@
                 extend: 'excel',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'pdf',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'print',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             },
             {
                 extend: 'colvis',
                 footer: true,
                 exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
+                    columns: [0,1,2,3,4,5,6,7]
                 }
             }
         ],
@@ -233,6 +234,7 @@
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
+            {data: 'company_job', name: 'company_job'},
             {data: 'start_date', name: 'start_date'},
             {data: 'insurance_salary', name: 'insurance_salary'},
             {data: 'bhxh_increase', name: 'bhxh_increase'},
@@ -248,7 +250,7 @@
             };
 
             var total_inc_bhxh = api
-                .column(5)
+                .column(6)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);
@@ -260,7 +262,7 @@
             ));
 
             var total_inc_bhtn = api
-                .column(6)
+                .column(7)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);

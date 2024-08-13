@@ -235,6 +235,10 @@ class AdminReportController extends Controller
                 return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
 
             })
+            ->editColumn('company_job', function ($employee_works) {
+                return $employee_works->company_job->name;
+
+            })
             ->editColumn('start_date', function ($employee_works) {
                 return date('d/m/Y', strtotime($employee_works->start_date));
             })
