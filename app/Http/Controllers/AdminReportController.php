@@ -519,7 +519,7 @@ class AdminReportController extends Controller
                                         ->select('*')
                                         ->get();
         $tempCollection = collect([$greater_year_employee_works, $equal_year_employee_works]);
-        $employee_works = $tempCollection->flatten(1)->unique('employee_id');
+        $employee_works = $tempCollection->flatten(1)->unique('employee_id')->sortByDesc('employee.code');
 
         return Datatables::of($employee_works)
             ->addIndexColumn()
