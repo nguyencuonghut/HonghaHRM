@@ -633,7 +633,7 @@ class AdminReportController extends Controller
     {
         $this_month = Carbon::now()->month;
         $this_year = Carbon::now()->year;
-        $file_name = $this->createIncBhxhFile($this_month, $this_year);
+        $file_name = $this->createIncBhxhFile($this_month, $this_year, true);
 
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
         return response()->download($file_name)->deleteFileAfterSend(true);
@@ -642,12 +642,22 @@ class AdminReportController extends Controller
 
     public function exportIncBhxhByMonth($month, $year)
     {
-        $file_name = $this->createIncBhxhFile($month, $year);
+        $file_name = $this->createIncBhxhFile($month, $year, true);
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
         return response()->download($file_name)->deleteFileAfterSend(true);
     }
 
-    private function createIncBhxhFile($month, $year)
+    public function exportDecBhxh()
+    {
+        $this_month = Carbon::now()->month;
+        $this_year = Carbon::now()->year;
+        $file_name = $this->createIncBhxhFile($this_month, $this_year, false);
+
+        Alert::toast('Tải file thành công!!', 'success', 'top-right');
+        return response()->download($file_name)->deleteFileAfterSend(true);
+    }
+
+    private function createIncBhxhFile($month, $year, $is_increase)
     {
         // Make new sheet
         $spreadsheet = new Spreadsheet();
@@ -669,21 +679,17 @@ class AdminReportController extends Controller
         $w_sheet->setTitle("Tăng BHXH");
 
         //Set title of report
-        $w_sheet->setCellValue('C1', 'BÁO CÁO PHÁT SINH TĂNG BHXH THÁNG ' . $month . '-' . $year);
+        if ($is_increase) {
+            $w_sheet->setCellValue('C1', 'BÁO CÁO PHÁT SINH TĂNG BHXH THÁNG ' . $month . '-' . $year);
+        } else {
+            $w_sheet->setCellValue('C1', 'BÁO CÁO PHÁT SINH GIẢM BHXH THÁNG ' . $month . '-' . $year);
+        }
         $w_sheet->getStyle("C1")
                     ->getFont()
                     ->setSize(13)
                     ->setBold(true);
 
-        //Set column width
-        $w_sheet->getColumnDimension('G')->setWidth(15);
-        $w_sheet->getColumnDimension('H')->setWidth(15);
-        $w_sheet->getColumnDimension('I')->setWidth(30);
-        $w_sheet->getColumnDimension('J')->setWidth(20);
-        $w_sheet->getColumnDimension('K')->setWidth(20);
-        $w_sheet->getColumnDimension('L')->setWidth(20);
-        $w_sheet->getColumnDimension('M')->setWidth(20);
-
+        //Set column width and column name
         $w_sheet->getColumnDimension('A')->setWidth(6);
         $w_sheet->getStyle("A3")
                 ->getBorders()
@@ -761,12 +767,16 @@ class AdminReportController extends Controller
                 ->setBorderStyle(Border::BORDER_THIN);
         $w_sheet->setCellValue('K3', 'SỐ HỢP ĐỒNG');
 
-        $w_sheet->getColumnDimension('L')->setWidth(20);
+        $w_sheet->getColumnDimension('L')->setWidth(30);
         $w_sheet->getStyle("L3")
                 ->getBorders()
                 ->getOutline()
                 ->setBorderStyle(Border::BORDER_THIN);
-        $w_sheet->setCellValue('L3', 'NGÀY KÝ HĐ');
+        if ($is_increase) {
+            $w_sheet->setCellValue('L3', 'NGÀY KÝ HĐ');
+        } else {
+            $w_sheet->setCellValue('L3', 'NGÀY NGHỈ');
+        }
 
         $w_sheet->getColumnDimension('M')->setWidth(20);
         $w_sheet->getStyle("M3")
@@ -787,7 +797,11 @@ class AdminReportController extends Controller
                 ->getBorders()
                 ->getOutline()
                 ->setBorderStyle(Border::BORDER_THIN);
-        $w_sheet->setCellValue('O3', 'TIỀN TĂNG BHXH');
+        if ($is_increase) {
+            $w_sheet->setCellValue('O3', 'TIỀN TĂNG BHXH');
+        } else {
+            $w_sheet->setCellValue('O3', 'TIỀN GIẢM BHXH');
+        }
 
         //Set bold for column name
         $w_sheet->getStyle("A3:O3")
@@ -796,10 +810,18 @@ class AdminReportController extends Controller
                     ->setBold(true);
 
         //Get all increase bhxh by month, year
-        $employee_works = EmployeeWork::where('on_type_id', 2)
-                                        ->whereMonth('start_date', $month)
-                                        ->whereYear('start_date', $year)
-                                        ->get();
+        if ($is_increase) {
+            $employee_works = EmployeeWork::where('on_type_id', 2)
+                                            ->whereMonth('start_date', $month)
+                                            ->whereYear('start_date', $year)
+                                            ->get();
+        } else {
+            //Get all decrease bhxh by month, year
+            $employee_works = EmployeeWork::where('off_type_id', '!=', null)
+                                            ->whereMonth('end_date', $month)
+                                            ->whereYear('end_date', $year)
+                                            ->get();
+        }
 
 
         $index = 0;
@@ -884,12 +906,16 @@ class AdminReportController extends Controller
                                                 ->where('status', 'On')
                                                 ->first();
             $w_sheet->setCellValue('K' . ($start_row + $index), $employee_contract->code);
-            //Write contract start date
+            //Write contract start date/end date
             $w_sheet->getStyle('L'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('L' . ($start_row + $index), $employee_contract->start_date);
+            if ($is_increase) {
+                $w_sheet->setCellValue('L' . ($start_row + $index), $employee_work->start_date);
+            } else {
+                $w_sheet->setCellValue('L' . ($start_row + $index), $employee_work->end_date . ' (' . $employee_work->off_type->name . ')');
+            }
             //Write insurance salary
             $w_sheet->getStyle('M'. ($start_row + $index))
                     ->getBorders()
@@ -914,7 +940,7 @@ class AdminReportController extends Controller
             } else {
                 $w_sheet->setCellValue('N' . ($start_row + $index), 'Chưa khai báo BHXH');
             }
-            //Write bhxh increase
+            //Write bhxh increase/decrease
             $w_sheet->getStyle('O'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
@@ -934,7 +960,11 @@ class AdminReportController extends Controller
 
         //Save to file
         $writer = new Xlsx($spreadsheet);
-        $file_name = 'Báo cáo phát sinh tăng BHXH tháng ' . Carbon::now()->format('m-Y') . '.xlsx';
+        if ($is_increase) {
+            $file_name = 'Báo cáo phát sinh tăng BHXH tháng ' . Carbon::now()->format('m-Y') . '.xlsx';
+        } else {
+            $file_name = 'Báo cáo phát sinh giảm BHXH tháng ' . Carbon::now()->format('m-Y') . '.xlsx';
+        }
         $writer->save($file_name);
 
         return $file_name;
