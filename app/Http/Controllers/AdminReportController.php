@@ -510,12 +510,14 @@ class AdminReportController extends Controller
         $greater_year_employee_works = EmployeeWork::where('status', 'On')
                                         ->where('off_type_id', null)
                                         ->whereYear('start_date', '<', $this_year)
-                                        ->select('*')->get();
+                                        ->select('*')
+                                        ->get();
         $equal_year_employee_works = EmployeeWork::where('status', 'On')
                                         ->where('off_type_id', null)
                                         ->whereYear('start_date', $this_year)
                                         ->whereMonth('start_date', '<=',$this_month)
-                                        ->select('*')->get();
+                                        ->select('*')
+                                        ->get();
         $tempCollection = collect([$greater_year_employee_works, $equal_year_employee_works]);
         $employee_works = $tempCollection->flatten(1)->unique('employee_id');
 
@@ -537,7 +539,7 @@ class AdminReportController extends Controller
                 if ($employee_salary) {
                     // Kiểm tra có phải là Nhân Sự tăng trong tháng
                     if (date('m', strtotime($employee_works->start_date)) == $this_month) {
-                        return '+' . number_format($employee_salary->insurance_salary, 0, '.', ',');
+                        return '<p style="color:#198754;"> ' . '+' . number_format($employee_salary->insurance_salary, 0, '.', ',') . '</p>';
                     } else {
                         return number_format($employee_salary->insurance_salary, 0, '.', ',');
                     }
@@ -555,7 +557,7 @@ class AdminReportController extends Controller
                     if ($employee_salary) {
                         $bhxh_payment = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                         if (date('m', strtotime($employee_works->start_date)) == $this_month) {
-                            return '+' . number_format($bhxh_payment, 0, '.', ',');
+                            return '<p style="color:#198754;"> ' . '+' . number_format($bhxh_payment, 0, '.', ',') . '</p>';
                         } else {
                             return number_format($bhxh_payment, 0, '.', ',');
                         }
@@ -576,7 +578,7 @@ class AdminReportController extends Controller
                     if ($employee_salary) {
                         $bhtn_payment = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                         if (date('m', strtotime($employee_works->start_date)) == $this_month) {
-                            return '+' . number_format($bhtn_payment, 0, '.', ',');
+                            return '<p style="color:#198754;"> ' . '+' . number_format($bhtn_payment, 0, '.', ',') . '</p>';
                         } else {
                             return number_format($bhtn_payment, 0, '.', ',');
                         }
