@@ -631,6 +631,24 @@ class AdminReportController extends Controller
 
     public function exportIncBhxh()
     {
+        $this_month = Carbon::now()->month;
+        $this_year = Carbon::now()->year;
+        $file_name = $this->createIncBhxhFile($this_month, $this_year);
+
+        Alert::toast('Tải file thành công!!', 'success', 'top-right');
+        return response()->download($file_name)->deleteFileAfterSend(true);
+    }
+
+
+    public function exportIncBhxhByMonth($month, $year)
+    {
+        $file_name = $this->createIncBhxhFile($month, $year);
+        Alert::toast('Tải file thành công!!', 'success', 'top-right');
+        return response()->download($file_name)->deleteFileAfterSend(true);
+    }
+
+    private function createIncBhxhFile($month, $year)
+    {
         // Make new sheet
         $spreadsheet = new Spreadsheet();
 
@@ -651,7 +669,7 @@ class AdminReportController extends Controller
         $w_sheet->setTitle("Tăng BHXH");
 
         //Set title of report
-        $w_sheet->setCellValue('C1', 'BÁO CÁO PHÁT SINH TĂNG BHXH THÁNG ' . Carbon::now()->month . '-' . Carbon::now()->year);
+        $w_sheet->setCellValue('C1', 'BÁO CÁO PHÁT SINH TĂNG BHXH THÁNG ' . $month . '-' . $year);
         $w_sheet->getStyle("C1")
                     ->getFont()
                     ->setSize(13)
@@ -777,12 +795,10 @@ class AdminReportController extends Controller
                     ->setSize(13)
                     ->setBold(true);
 
-        //Get all increase bhxh in this month
-        $this_month = Carbon::now()->month;
-        $this_year = Carbon::now()->year;
+        //Get all increase bhxh by month, year
         $employee_works = EmployeeWork::where('on_type_id', 2)
-                                        ->whereMonth('start_date', $this_month)
-                                        ->whereYear('start_date', $this_year)
+                                        ->whereMonth('start_date', $month)
+                                        ->whereYear('start_date', $year)
                                         ->get();
 
 
@@ -879,7 +895,7 @@ class AdminReportController extends Controller
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $this_month, $this_year);
+            $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $month, $year);
             if ($employee_salary) {
                 $w_sheet->setCellValue('M' . ($start_row + $index), $employee_salary->insurance_salary);
             } else {
@@ -904,7 +920,7 @@ class AdminReportController extends Controller
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
             if ($employee_insurance) {
-                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $this_month, $this_year);
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $month, $year);
                 if ($employee_salary) {
                     $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                     $w_sheet->setCellValue('O' . ($start_row + $index), $bhxh_increase);
@@ -921,7 +937,6 @@ class AdminReportController extends Controller
         $file_name = 'Báo cáo phát sinh tăng BHXH tháng ' . Carbon::now()->format('m-Y') . '.xlsx';
         $writer->save($file_name);
 
-        Alert::toast('Tải file thành công!!', 'success', 'top-right');
-        return response()->download($file_name)->deleteFileAfterSend(true);
+        return $file_name;
     }
 }

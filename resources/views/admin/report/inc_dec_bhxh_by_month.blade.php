@@ -73,6 +73,8 @@
                 </div>
               <!-- /.card-header -->
               <div class="card-body">
+                <a href="{{route('admin.reports.exportIncBhxhByMonth', ['month' => $month, 'year' => $year])}}" class="btn btn-sm btn-primary"><i class="fas fa-cloud-download-alt"></i></a>
+
                 <table id="inc-employees-table" class="table table-bordered table-striped">
                   <thead>
                   <tr>
@@ -182,52 +184,52 @@
         "responsive": true, "lengthChange": false, "autoWidth": false,
         processing: true,
         serverSide: true,
-        buttons: [
-            {
-                extend: 'copy',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
-                }
-            },
-            {
-                extend: 'csv',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
-                }
+        // buttons: [
+        //     {
+        //         extend: 'copy',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6]
+        //         }
+        //     },
+        //     {
+        //         extend: 'csv',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6]
+        //         }
 
-            },
-            {
-                extend: 'excel',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
-                }
-            },
-            {
-                extend: 'pdf',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
-                }
-            },
-            {
-                extend: 'print',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
-                }
-            },
-            {
-                extend: 'colvis',
-                footer: true,
-                exportOptions: {
-                    columns: [0,1,2,3,4,5,6]
-                }
-            }
-        ],
-        dom: 'Blfrtip',
+        //     },
+        //     {
+        //         extend: 'excel',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6]
+        //         }
+        //     },
+        //     {
+        //         extend: 'pdf',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6]
+        //         }
+        //     },
+        //     {
+        //         extend: 'print',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6]
+        //         }
+        //     },
+        //     {
+        //         extend: 'colvis',
+        //         footer: true,
+        //         exportOptions: {
+        //             columns: [0,1,2,3,4,5,6]
+        //         }
+        //     }
+        // ],
+        //dom: 'Blfrtip',
         ajax: ' {!! route('admin.reports.incBhxhByMonthData', ['month' => $month, 'year' => $year]) !!}',
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
