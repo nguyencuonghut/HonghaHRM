@@ -633,7 +633,7 @@ class AdminReportController extends Controller
     {
         $this_month = Carbon::now()->month;
         $this_year = Carbon::now()->year;
-        $file_name = $this->createIncBhxhFile($this_month, $this_year, true);
+        $file_name = $this->createIncDecBhxhFile($this_month, $this_year, true);
 
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
         return response()->download($file_name)->deleteFileAfterSend(true);
@@ -642,7 +642,7 @@ class AdminReportController extends Controller
 
     public function exportIncBhxhByMonth($month, $year)
     {
-        $file_name = $this->createIncBhxhFile($month, $year, true);
+        $file_name = $this->createIncDecBhxhFile($month, $year, true);
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
         return response()->download($file_name)->deleteFileAfterSend(true);
     }
@@ -651,13 +651,20 @@ class AdminReportController extends Controller
     {
         $this_month = Carbon::now()->month;
         $this_year = Carbon::now()->year;
-        $file_name = $this->createIncBhxhFile($this_month, $this_year, false);
+        $file_name = $this->createIncDecBhxhFile($this_month, $this_year, false);
 
         Alert::toast('Tải file thành công!!', 'success', 'top-right');
         return response()->download($file_name)->deleteFileAfterSend(true);
     }
 
-    private function createIncBhxhFile($month, $year, $is_increase)
+    public function exportDecBhxhByMonth($month, $year)
+    {
+        $file_name = $this->createIncDecBhxhFile($month, $year, false);
+        Alert::toast('Tải file thành công!!', 'success', 'top-right');
+        return response()->download($file_name)->deleteFileAfterSend(true);
+    }
+
+    private function createIncDecBhxhFile($month, $year, $is_increase)
     {
         // Make new sheet
         $spreadsheet = new Spreadsheet();
