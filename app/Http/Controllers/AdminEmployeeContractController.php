@@ -6,6 +6,7 @@ use App\Models\ContractType;
 use App\Models\CompanyJob;
 use App\Models\Employee;
 use App\Models\EmployeeContract;
+use App\Models\EmployeeSalary;
 use App\Models\EmployeeWork;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
@@ -698,7 +699,9 @@ class AdminEmployeeContractController extends Controller
 
         $objRichText = new RichText();
         $objRichText->createText('- Mức lương: ');
-        $objBold = $objRichText->createTextRun(number_format(4500000, 0, '.', ','));
+
+        $employee_salary = EmployeeSalary::where('employee_id', $employee->id)->whereDate('start_date', $employee_contract->start_date)->orderBy('id', 'desc')->first();
+        $objBold = $objRichText->createTextRun(number_format($employee_salary->insurance_salary, 0, '.', ','));
         $objBold->getFont()->setBold(true);
         $objBold->getFont()->setName("Times New Roman");
         $objRichText->createText(' đồng/tháng.');
@@ -1297,7 +1300,9 @@ class AdminEmployeeContractController extends Controller
                 ->setBold(true);
         $w_sheet->setCellValue('A34', '- Phương tiện đi lại làm việc: tự túc.');
         $w_sheet->setCellValue('A35', '- Mức lương:');
-        $w_sheet->setCellValue('C35', number_format(4500000, 0, '.', ',') . ' đồng/tháng');
+
+        $employee_salary = EmployeeSalary::where('employee_id', $employee->id)->whereDate('start_date', $employee_contract->start_date)->orderBy('id', 'desc')->first();
+        $w_sheet->setCellValue('C35', number_format($employee_salary->insurance_salary, 0, '.', ',') . ' đồng/tháng');
         $w_sheet->getStyle("C35")
                 ->getFont()
                 ->setBold(true);
