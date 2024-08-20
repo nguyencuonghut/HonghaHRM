@@ -36,13 +36,13 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Lương vị trí</label>
+                                        <label class="control-label">Lương vị trí</label>
                                         <input class="form-control" type="number" name="position_salary" id="position_salary" value="{{$employee_salary->position_salary}}">
                                     </div>
                                   </div>
                                   <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Lương năng lực</label>
+                                        <label class="control-label">Lương năng lực</label>
                                         <input class="form-control" type="number" name="capacity_salary" id="capacity_salary" value="{{$employee_salary->capacity_salary}}">
                                     </div>
                                   </div>
@@ -51,7 +51,7 @@
                             <div class="row">
                                 <div class="col-6">
                                     <div class="control-group">
-                                        <label class="required-field" class="control-label">Phụ cấp vị trí</label>
+                                        <label class="control-label">Phụ cấp vị trí</label>
                                         <input class="form-control" type="number" name="position_allowance" id="position_allowance" value="{{$employee_salary->position_allowance}}">
                                     </div>
                                 </div>

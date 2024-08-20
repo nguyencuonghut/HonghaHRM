@@ -38,18 +38,12 @@ class AdminEmployeeSalaryController extends Controller
     {
         $rules = [
             'employee_id' => 'required',
-            'position_salary' => 'required',
-            'capacity_salary' => 'required',
-            'position_allowance' => 'required',
             'insurance_salary' => 'required',
             'salary_start_date' => 'required',
         ];
 
         $messages = [
             'employee_id.required' => 'Số id nhân viên không hợp lệ.',
-            'position_salary.required' => 'Bạn phải nhập lương vị trí.',
-            'capacity_salary.required' => 'Bạn phải nhập lương năng lực.',
-            'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
             'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
             'salary_start_date.required' => 'Bạn phải nhập thời gian bắt đầu.',
         ];
@@ -58,9 +52,15 @@ class AdminEmployeeSalaryController extends Controller
 
         $employee_salary = new EmployeeSalary();
         $employee_salary->employee_id = $request->employee_id;
-        $employee_salary->position_salary = $request->position_salary;
-        $employee_salary->capacity_salary = $request->capacity_salary;
-        $employee_salary->position_allowance = $request->position_allowance;
+        if ($request->position_salary) {
+            $employee_salary->position_salary = $request->position_salary;
+        }
+        if ($request->capacity_salary) {
+            $employee_salary->capacity_salary = $request->capacity_salary;
+        }
+        if ($request->position_allowance) {
+            $employee_salary->position_allowance = $request->position_allowance;
+        }
         $employee_salary->insurance_salary = $request->insurance_salary;
         $employee_salary->start_date = Carbon::createFromFormat('d/m/Y', $request->salary_start_date);
         $employee_salary->status = 'On';
@@ -93,17 +93,11 @@ class AdminEmployeeSalaryController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            'position_salary' => 'required',
-            'capacity_salary' => 'required',
-            'position_allowance' => 'required',
             'insurance_salary' => 'required',
             'salary_start_date' => 'required',
         ];
 
         $messages = [
-            'position_salary.required' => 'Bạn phải nhập lương vị trí.',
-            'capacity_salary.required' => 'Bạn phải nhập lương năng lực.',
-            'position_allowance.required' => 'Bạn phải nhập phụ cấp vị trí.',
             'insurance_salary.required' => 'Bạn phải nhập lương bảo hiểm.',
             'salary_start_date.required' => 'Bạn phải nhập thời gian bắt đầu.',
         ];
@@ -111,9 +105,15 @@ class AdminEmployeeSalaryController extends Controller
         $request->validate($rules, $messages);
 
         $employee_salary = EmployeeSalary::findOrFail($id);
-        $employee_salary->position_salary = $request->position_salary;
-        $employee_salary->capacity_salary = $request->capacity_salary;
-        $employee_salary->position_allowance = $request->position_allowance;
+        if ($request->position_salary) {
+            $employee_salary->position_salary = $request->position_salary;
+        }
+        if ($request->capacity_salary) {
+            $employee_salary->capacity_salary = $request->capacity_salary;
+        }
+        if ($request->position_allowance) {
+            $employee_salary->position_allowance = $request->position_allowance;
+        }
         $employee_salary->insurance_salary = $request->insurance_salary;
         $employee_salary->start_date = Carbon::createFromFormat('d/m/Y', $request->salary_start_date);
         $employee_salary->save();
