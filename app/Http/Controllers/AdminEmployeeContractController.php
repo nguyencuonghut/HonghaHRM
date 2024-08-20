@@ -709,7 +709,12 @@ class AdminEmployeeContractController extends Controller
 
         $w_sheet->setCellValue('B53', '- Hình thức trả lương: Tiền mặt hoặc chuyển khoản ngân hàng.');
 
-        $w_sheet->setCellValue('B54', '- Thời hạn trả lương: Người lao động được trả một lần vào ngày 15 hàng tháng.');
+        if ('Phòng Kinh Doanh' == $employee_contract->company_job->department->name) {
+            $pay_date = 15;
+        } else {
+            $pay_date = 10;
+        }
+        $w_sheet->setCellValue('B54', '- Thời hạn trả lương: Người lao động được trả một lần vào ngày '. $pay_date . ' hàng tháng.');
 
         $w_sheet->setCellValue('B55', '- Phụ cấp trách nhiệm/ Chức vụ: Theo quy định của Công ty.');
 
