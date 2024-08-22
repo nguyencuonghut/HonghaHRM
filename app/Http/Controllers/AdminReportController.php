@@ -301,7 +301,11 @@ class AdminReportController extends Controller
     {
         $this_month = Carbon::now()->month;
         $this_year = Carbon::now()->year;
-        $employee_works = EmployeeWork::where('off_type_id', '!=', null)->whereMonth('end_date', $this_month)->whereYear('end_date', $this_year)->select('*');
+        $employee_works = EmployeeWork::where('off_type_id', '!=', null)
+                                        ->whereIn('on_type_id', [2,3,4])
+                                        ->whereMonth('end_date', $this_month)
+                                        ->whereYear('end_date', $this_year)
+                                        ->select('*');
         return Datatables::of($employee_works)
             ->addIndexColumn()
             ->editColumn('code', function ($employee_works) {
