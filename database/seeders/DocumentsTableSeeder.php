@@ -48,7 +48,7 @@ class DocumentsTableSeeder extends Seeder
             4 =>
                 array (
                     'id' => 5,
-                    'name' => 'Số hộ khẩu/xác nhận cư trú',
+                    'name' => 'Sổ hộ khẩu/xác nhận cư trú',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -69,7 +69,7 @@ class DocumentsTableSeeder extends Seeder
             7 =>
                 array (
                     'id' => 8,
-                    'name' => 'Giấy xác nhận nhân sự',
+                    'name' => 'Giấy xác nhận dân sự',
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),

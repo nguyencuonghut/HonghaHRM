@@ -105,6 +105,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('reports/dec_bhxh_by_month_data/{month}/{year}', [AdminReportController::class, 'decBhxhByMonthData'])->name('reports.decBhxhByMonthData');
         Route::get('reports/insurance_payment_data', [AdminReportController::class, 'insurancePaymentData'])->name('reports.insurancePaymentData');
         Route::get('reports/insurance_payment', [AdminReportController::class, 'insurancePayment'])->name('reports.insurancePayment');
+        Route::get('reports/document', [AdminReportController::class, 'document'])->name('reports.document');
+        Route::get('reports/documentData', [AdminReportController::class, 'documentData'])->name('reports.documentData');
 
         Route::get('departments/get-division/{department_id}', [AdminDepartmentController::class, 'getDivision'])->name('departments.getDivision');
         Route::get('departments/data', [AdminDepartmentController::class, 'anyData'])->name('departments.data');

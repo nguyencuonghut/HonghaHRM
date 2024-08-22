@@ -233,6 +233,12 @@
                   <p>Nộp BHXH</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{route('admin.reports.document')}}" class="nav-link {{ Request::is('admin/reports/document*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Hồ sơ LĐ</p>
+                </a>
+              </li>
             </ul>
           </li>
 

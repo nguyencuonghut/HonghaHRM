@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\EmployeeContract;
+use App\Models\EmployeeDocument;
+use App\Models\EmployeeDocumentReport;
 use App\Models\EmployeeInsurance;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeRelative;
@@ -501,6 +503,52 @@ class AdminReportController extends Controller
     {
         return view('admin.report.insurance_payment');
 
+    }
+
+    public function document()
+    {
+        return view('admin.report.document');
+    }
+
+    public function documentData()
+    {
+        $employee_document_reports = EmployeeDocumentReport::join('employees', 'employees.id', 'employee_document_reports.employee_id')
+                                                            ->orderBy('employees.code', 'desc')
+                                                            ->get();
+        return Datatables::of($employee_document_reports)
+        ->addIndexColumn()
+        ->editColumn('code', function ($employee_document_reports) {
+            return $employee_document_reports->employee->code;
+        })
+        ->editColumn('name', function ($employee_document_reports) {
+            return '<a href="' . route("admin.hr.employees.show", $employee_document_reports->employee->id) . '">' . $employee_document_reports->employee->name . '</a>';
+        })
+        ->editColumn('syll', function ($employee_document_reports) {
+            return $employee_document_reports->syll ? 'X' : '';
+        })
+        ->editColumn('cmt', function ($employee_document_reports) {
+            return $employee_document_reports->cmt ? 'X' : '';
+        })
+        ->editColumn('sk', function ($employee_document_reports) {
+            return $employee_document_reports->sk ? 'X' : '';
+        })
+        ->editColumn('gks', function ($employee_document_reports) {
+            return $employee_document_reports->gks ? 'X' : '';
+        })
+        ->editColumn('shk', function ($employee_document_reports) {
+            return $employee_document_reports->shk ? 'X' : '';
+        })
+        ->editColumn('dxv', function ($employee_document_reports) {
+            return $employee_document_reports->dxv ? 'X' : '';
+        })
+        ->editColumn('bc', function ($employee_document_reports) {
+            return $employee_document_reports->bc ? 'X' : '';
+        })
+        ->editColumn('gxnds', function ($employee_document_reports) {
+            return $employee_document_reports->gxnds ? 'X' : '';
+        })
+        ->rawColumns(['name'])
+        ->make(true);
     }
 
     public function insurancePaymentData()
