@@ -282,6 +282,15 @@ class AdminEmployeeContractController extends Controller
     public function export ($contract_id)
     {
         $employee_contract = EmployeeContract::findOrFail($contract_id);
+
+        // Check if EmployeeSalary is existed
+        $employee_salary = EmployeeSalary::where('employee_id', $employee_contract->employee_id)
+                                            ->where('status', 'On')->first();
+        if (!$employee_salary) {
+            Alert::toast('Nhân sự chưa có thông tin lương!', 'error', 'top-right');
+            return redirect()->back();
+
+        }
         switch ($employee_contract->contract_type_id) {
             case 1: // HĐ thử việc
                 $file_name = $this->makeSampleHdtv($contract_id);

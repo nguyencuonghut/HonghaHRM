@@ -26,7 +26,8 @@
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
                     <th>Trạng thái</th>
-                    <th>File</th>
+                    <th>Form HĐ</th>
+                    <th>File HĐ</th>
                     @can('create-contract')
                     <th style="width:18%;">Thao tác</th>
                     @endcan
@@ -39,7 +40,6 @@
                       @php
                           $company_job = App\Models\CompanyJob::findOrFail($employee_contract->company_job_id);
                           $action_edit_contracts = '<a href="' . route("admin.hr.contracts.edit", $employee_contract->id) . '" class="btn btn-success btn-sm"><i class="fas fa-edit"></i></a>
-                                                    <a href="'.route("admin.hr.contracts.export", $employee_contract->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-cloud-download-alt"></i></a>
                                                     <a href="'.route("admin.hr.contracts.getOff", $employee_contract->id) . '" class="btn btn-secondary btn-sm"><i class="fas fa-power-off"></i></a>
                                                     <a href="'.route("admin.hr.appendixs.getAdd", $employee_contract->id) . '" class="btn btn-primary btn-sm"><i class="fas fa-code-branch"></i></a>
                                   <form style="display:inline" action="'. route("admin.hr.contracts.destroy", $employee_contract->id) . '" method="POST">
@@ -77,6 +77,10 @@
                             {{$employee_contract->status}}
                         </span>
                       </td>
+                      @php
+                            $contract_form_url = '<a href="'.route("admin.hr.contracts.export", $employee_contract->id) . '"><i class="fas fa-file-excel"></i></a>';
+                      @endphp
+                      <td>{!! $contract_form_url !!}</td>
                       @php
                             $url = '';
                             if ($employee_contract->file_path) {
