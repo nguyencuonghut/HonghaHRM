@@ -28,8 +28,9 @@
                     <th>Trạng thái</th>
                     <th>Form HĐ</th>
                     <th>File HĐ</th>
+                    <th>Form KT</th>
                     @can('create-contract')
-                    <th style="width:18%;">Thao tác</th>
+                    <th style="width:14%;">Thao tác</th>
                     @endcan
                   </tr>
                 </thead>
@@ -88,6 +89,13 @@
                             }
                       @endphp
                       <td>{!! $url !!}</td>
+                      @php
+                            $terminate_form_url = '';
+                            if ('Off' == $employee_contract->status) {
+                                $terminate_form_url = '<a href="'.route("admin.hr.contracts.terminate_form", $employee_contract->id) . '"><i class="fas fa-file-excel"></i></a>';
+                            }
+                      @endphp
+                      <td>{!! $terminate_form_url !!}</td>
                       @can('create-contract')
                       <td>{!! $action !!}</td>
                       @endcan
