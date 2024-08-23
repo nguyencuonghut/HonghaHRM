@@ -828,7 +828,7 @@ class AdminReportController extends Controller
                 ->setBorderStyle(Border::BORDER_THIN);
         $w_sheet->setCellValue('K3', 'SỐ HỢP ĐỒNG');
 
-        $w_sheet->getColumnDimension('L')->setWidth(30);
+        $w_sheet->getColumnDimension('L')->setWidth(50);
         $w_sheet->getStyle("L3")
                 ->getBorders()
                 ->getOutline()
@@ -961,11 +961,22 @@ class AdminReportController extends Controller
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $employee_contract = EmployeeContract::where('employee_id', $employee_work->employee_id)
-                                                ->where('company_job_id', $employee_work->company_job_id)
-                                                ->where('contract_type_id', 2) // 2: HĐ lao động
-                                                ->where('status', 'On')
-                                                ->first();
+            if ($is_increase) {
+                $employee_contract = EmployeeContract::where('employee_id', $employee_work->employee_id)
+                                                    ->where('company_job_id', $employee_work->company_job_id)
+                                                    ->where('contract_type_id', 2) // 2: HĐ lao động
+                                                    ->where('status', 'On')
+                                                    ->first();
+            } else {
+                $employee_contract = EmployeeContract::where('employee_id', $employee_work->employee_id)
+                                                    ->where('company_job_id', $employee_work->company_job_id)
+                                                    ->where('contract_type_id', 2) // 2: HĐ lao động
+                                                    ->where('status', 'Off')
+                                                    ->whereMonth('end_date', $month)
+                                                    ->whereYear('end_date', $year)
+                                                    ->first();
+            }
+
             $w_sheet->setCellValue('K' . ($start_row + $index), $employee_contract->code);
             //Write contract start date/end date
             $w_sheet->getStyle('L'. ($start_row + $index))
@@ -975,7 +986,15 @@ class AdminReportController extends Controller
             if ($is_increase) {
                 $w_sheet->setCellValue('L' . ($start_row + $index), $employee_work->start_date);
             } else {
-                $w_sheet->setCellValue('L' . ($start_row + $index), $employee_work->end_date . ' (' . $employee_work->off_type->name . ')');
+                $w_sheet->setCellValue('L' .($start_row + $index),
+                                        $employee_work->end_date .
+                                        ' (' . $employee_work->off_type->name .
+                                        ' - số QĐ: ' .
+                                        $employee_work->employee->code .
+                                        '/' .
+                                        date('Y', strtotime($employee_work->end_date)) .
+                                        '/QĐ-HH' .
+                                        ')');
             }
             //Write insurance salary
             $w_sheet->getStyle('M'. ($start_row + $index))
