@@ -204,7 +204,7 @@ class AdminEmployeeController extends Controller
         $company_jobs = CompanyJob::all();
         $probations = Probation::all();
         $employee_relatives = EmployeeRelative::where('employee_id', $employee->id)->get();
-        $employee_contracts = EmployeeContract::where('employee_id', $employee->id)->get();
+        $employee_contracts = EmployeeContract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
         $employee_appendixs = EmployeeAppendix::where('employee_id', $employee->id)->get();
         $contract_types = ContractType::all();
         $employee_kpis = EmployeeKpi::where('employee_id', $employee->id)->get();

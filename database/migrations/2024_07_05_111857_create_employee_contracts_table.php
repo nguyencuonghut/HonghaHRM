@@ -21,6 +21,7 @@ return new class extends Migration
             $table->enum('status', ['On', 'Off']);
             $table->date('start_date');
             $table->date('end_date')->nullable();
+            $table->date('request_terminate_date')->nullable();
             $table->timestamps();
         });
     }

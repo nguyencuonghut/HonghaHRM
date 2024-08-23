@@ -261,10 +261,12 @@ class AdminEmployeeContractController extends Controller
     {
         $rules = [
             'e_date' => 'required',
+            'request_terminate_date' => 'required',
         ];
 
         $messages = [
             'e_date.required' => 'Bạn phải nhập ngày kết thúc.',
+            'request_terminate_date.required' => 'Bạn phải nhập ngày viết đơn.',
         ];
 
         $request->validate($rules, $messages);
@@ -273,6 +275,7 @@ class AdminEmployeeContractController extends Controller
         $employee_contract = EmployeeContract::findOrFail($id);
         $employee_contract->status = 'Off';
         $employee_contract->end_date = Carbon::createFromFormat('d/m/Y', $request->e_date);
+        $employee_contract->request_terminate_date = Carbon::createFromFormat('d/m/Y', $request->request_terminate_date);
         $employee_contract->save();
 
         Alert::toast('Cập nhật thành công. Bạn cần cập nhật QT công tác!', 'success', 'top-right');
@@ -1610,7 +1613,7 @@ class AdminEmployeeContractController extends Controller
                 ->getFont();
         $w_sheet->getStyle("A18")->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
 
-        $w_sheet->setCellValue('A20', '- Xét đơn xin nghỉ việc của ông/bà ' . $employee_contract->employee->name . ' đề nghị ngày 26.2.2024;');
+        $w_sheet->setCellValue('A20', '- Xét đơn xin nghỉ việc của ông/bà ' . $employee_contract->employee->name . ' đề nghị ngày ' . date('d/m/Y', strtotime($employee_contract->request_terminate_date)) . '.');
 
         // Quyết định
         $w_sheet->mergeCells('A21:J22');

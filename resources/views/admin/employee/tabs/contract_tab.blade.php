@@ -28,6 +28,7 @@
                     <th>Trạng thái</th>
                     <th>Form HĐ</th>
                     <th>File HĐ</th>
+                    <th>Ngày viết đơn</th>
                     <th>Form KT</th>
                     @can('create-contract')
                     <th style="width:14%;">Thao tác</th>
@@ -89,6 +90,7 @@
                             }
                       @endphp
                       <td>{!! $url !!}</td>
+                      <td>{{$employee_contract->request_terminate_date ? date('d/m/Y', strtotime($employee_contract->request_terminate_date)) : ''}}</td>
                       @php
                             $terminate_form_url = '';
                             if ('Off' == $employee_contract->status) {
