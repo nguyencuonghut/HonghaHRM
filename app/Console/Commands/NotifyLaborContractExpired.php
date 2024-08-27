@@ -33,7 +33,7 @@ class NotifyLaborContractExpired extends Command
         // Kiểm tra các hđ chính thức sắp hết hạn trước 1 tháng
         $employee_contracts = EmployeeContract::where('contract_type_id', 2)
                                                 ->where('status', 'On')
-                                                ->whereDate('end_date', Carbon::now()->addDays(31))
+                                                ->whereDate('end_date', Carbon::now()->addDays(30))
                                                 ->get();
         // Gửi mail tới nhân viên nhân sự
         $ns_admins = Admin::where('role_id', 4)->get();
