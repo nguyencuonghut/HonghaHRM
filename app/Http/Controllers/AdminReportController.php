@@ -10,6 +10,7 @@ use App\Models\EmployeeInsurance;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeRelative;
 use App\Models\EmployeeSalary;
+use App\Models\IncreaseInsurance;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
@@ -220,6 +221,41 @@ class AdminReportController extends Controller
                 return $employee_works->off_reason;
             })
             ->rawColumns(['employee', 'off_reason'])
+            ->make(true);
+    }
+
+    public function candidateIncDecBhxh()
+    {
+        return view('admin.report.candidate_inc_dec_bhxh');
+    }
+
+    public function candidateIncBhxhData()
+    {
+        $increase_insurances = IncreaseInsurance::where('confirmed_month', null)
+                                                ->select('employee_works.id AS employee_work_id', 'increase_insurances.id AS increase_insurance_id')
+                                                ->join('employee_works', 'employee_works.id', 'increase_insurances.employee_work_id')
+                                                ->get();
+        return Datatables::of($increase_insurances)
+            ->addIndexColumn()
+            ->editColumn('code', function ($increase_insurances) {
+                return $increase_insurances->employee_work->employee->code;
+            })
+            ->editColumn('name', function ($increase_insurances) {
+                return '<a href="' . route("admin.hr.employees.show", $increase_insurances->employee_work->employee->id) . '">' . $increase_insurances->employee_work->employee->name . '</a>';
+
+            })
+            ->editColumn('company_job', function ($increase_insurances) {
+                return $increase_insurances->employee_work->company_job->name;
+
+            })
+            ->editColumn('start_date', function ($increase_insurances) {
+                return date('d/m/Y', strtotime($increase_insurances->employee_work->start_date));
+            })
+            ->addColumn('actions', function ($increase_insurances) {
+                $action = '<a href="' . route("admin.increase_insurances.getConfirm", $increase_insurances->increase_insurance_id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+                return $action;
+            })
+            ->rawColumns(['name', 'actions'])
             ->make(true);
     }
 

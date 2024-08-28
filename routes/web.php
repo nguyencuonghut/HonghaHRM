@@ -55,6 +55,7 @@ use App\Http\Controllers\AdminEmployeeInsuranceController;
 use App\Http\Controllers\AdminEmployeeRegimeController;
 use App\Http\Controllers\AdminEmployeeWelfareController;
 use App\Http\Controllers\AdminEmployeeSalaryController;
+use App\Http\Controllers\IncreaseInsuranceController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -97,6 +98,8 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('reports/export_inc_bhxh_by_month/{month}/{year}', [AdminReportController::class, 'exportIncBhxhByMonth'])->name('reports.exportIncBhxhByMonth');
         Route::get('reports/export_dec_bhxh', [AdminReportController::class, 'exportDecBhxh'])->name('reports.exportDecBhxh');
         Route::get('reports/export_dec_bhxh_by_month/{month}/{year}', [AdminReportController::class, 'exportDecBhxhByMonth'])->name('reports.exportDecBhxhByMonth');
+        Route::get('reports/candidate_inc_dec_bhxh', [AdminReportController::class, 'candidateIncDecBhxh'])->name('reports.candidateIncDecBhxh');
+        Route::get('reports/candidate_inc_bhxh_data', [AdminReportController::class, 'candidateIncBhxhData'])->name('reports.candidateIncBhxhData');
         Route::get('reports/inc_dec_bhxh', [AdminReportController::class, 'incDecBhxh'])->name('reports.incDecBhxh');
         Route::get('reports/inc_bhxh_data', [AdminReportController::class, 'incBhxhData'])->name('reports.incBhxhData');
         Route::get('reports/dec_bhxh_data', [AdminReportController::class, 'decBhxhData'])->name('reports.decBhxhData');
@@ -271,6 +274,9 @@ Route::name('admin.')->prefix('admin')->group(function() {
 
         Route::get('division_managers/data', [AdminDivisionManagerController::class, 'anyData'])->name('division_managers.data');
         Route::resource('division_managers', AdminDivisionManagerController::class);
+
+        Route::get('increase_insurances/confirm/{id}', [IncreaseInsuranceController::class, 'getConfirm'])->name('increase_insurances.getConfirm');
+        Route::post('increase_insurances/confirm/{id}', [IncreaseInsuranceController::class, 'confirm'])->name('increase_insurances.confirm');
     });
 });
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CompanyJob;
 use App\Models\EmployeeWork;
+use App\Models\IncreaseInsurance;
 use App\Models\OffType;
 use App\Models\OnType;
 use Illuminate\Http\Request;
@@ -59,6 +60,13 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->status = 'On';
         $employee_work->save();
 
+        // Tạo bảng theo dõi tăng BHXH với HĐ ký mới là HĐLĐ
+        if (2 == $request->on_type_id) {
+            $increase_insurance = new IncreaseInsurance();
+            $increase_insurance->employee_work_id = $employee_work->id;
+            $increase_insurance->save();
+        }
+
         Alert::toast('Thêm quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->back();
     }
@@ -112,6 +120,12 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
         $employee_work->save();
 
+        // Xóa bảng theo dõi tăng BHXH với HĐ ký mới khác HĐLĐ
+        if (2 != $request->on_type_id) {
+            $increase_insurance = IncreaseInsurance::where('employee_work_id', $employee_work->id)->first();
+            $increase_insurance->destroy($increase_insurance->id);
+        }
+
         Alert::toast('Sửa quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->route('admin.hr.employees.show', $employee_work->employee_id);
     }
@@ -123,6 +137,12 @@ class AdminEmployeeWorkController extends Controller
     {
         $employee_work = EmployeeWork::findOrFail($id);
         $employee_work->destroy($id);
+
+        // Xóa bảng theo dõi tăng BHXH với HĐ ký mới là HĐLĐ
+        if (2 == $employee_work->on_type_id) {
+            $increase_insurance = IncreaseInsurance::where('employee_work_id', $employee_work->id)->first();
+            $increase_insurance->destroy($increase_insurance->id);
+        }
 
         Alert::toast('Xóa quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->back();

@@ -222,6 +222,12 @@
                 </a>
               </li>
               <li class="nav-item">
+                <a href="{{route('admin.reports.candidateIncDecBhxh')}}" class="nav-link {{ Request::is('admin/reports/candidate_inc_dec_bhxh*') ? 'active' : '' }}">
+                    &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
+                  <p>Dự kiến tăng BHXH</p>
+                </a>
+              </li>
+              <li class="nav-item">
                 <a href="{{route('admin.reports.incDecBhxh')}}" class="nav-link {{ Request::is('admin/reports/inc_dec_bhxh*') ? 'active' : '' }}">
                     &nbsp;&nbsp;&nbsp;&nbsp;<i class="far fa-circle nav-icon"></i>
                   <p>Tăng-Giảm BHXH</p>
