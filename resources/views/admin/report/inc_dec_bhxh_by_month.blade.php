@@ -82,17 +82,18 @@
                     <th>Mã</th>
                     <th>Họ tên</th>
                     <th>Ngày phát sinh tăng</th>
+                    <th>Tháng báo tăng</th>
                     <th>Lương BHXH</th>
                     <th>Tiền tăng BHXH</th>
                     <th>Tiền tăng BHTN</th>
                   </tr>
-                  {{-- <tfoot>
+                  <tfoot>
                     <tr>
-                        <th colspan="5">Tổng tăng</th>
+                        <th colspan="6">Tổng tăng</th>
                         <th id="total_inc_bhxh"></th>
                         <th id="total_inc_bhtn"></th>
                     </tr>
-                  </tfoot> --}}
+                  </tfoot>
                   </thead>
                 </table>
               </div>
@@ -238,6 +239,7 @@
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'start_date', name: 'start_date'},
+            {data: 'confirmed_month', name: 'confirmed_month'},
             {data: 'insurance_salary', name: 'insurance_salary'},
             {data: 'bhxh_increase', name: 'bhxh_increase'},
             {data: 'bhtn_increase', name: 'bhtn_increase'},
@@ -252,7 +254,7 @@
             };
 
             var total_inc_bhxh = api
-                .column(5)
+                .column(6)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);
@@ -264,7 +266,7 @@
             ));
 
             var total_inc_bhtn = api
-                .column(6)
+                .column(7)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);

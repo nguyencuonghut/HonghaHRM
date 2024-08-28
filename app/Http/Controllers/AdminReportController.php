@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use App\Models\EmployeeContract;
-use App\Models\EmployeeDocument;
 use App\Models\EmployeeDocumentReport;
 use App\Models\EmployeeInsurance;
 use App\Models\EmployeeWork;
@@ -268,39 +267,45 @@ class AdminReportController extends Controller
     {
         $this_month = Carbon::now()->month;
         $this_year = Carbon::now()->year;
-        $employee_works = EmployeeWork::where('on_type_id', 2)->whereMonth('start_date', $this_month)->whereYear('start_date', $this_year)->select('*');
-        return Datatables::of($employee_works)
+        $increase_insurances = IncreaseInsurance::where('confirmed_month', '!=', null)
+                                                ->whereMonth('confirmed_month', $this_month)
+                                                ->whereYear('confirmed_month', $this_year)
+                                                ->select('*');
+        return Datatables::of($increase_insurances)
             ->addIndexColumn()
-            ->editColumn('code', function ($employee_works) {
-                return $employee_works->employee->code;
+            ->editColumn('code', function ($increase_insurances) {
+                return $increase_insurances->employee_work->employee->code;
             })
-            ->editColumn('name', function ($employee_works) {
-                return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
+            ->editColumn('name', function ($increase_insurances) {
+                return '<a href="' . route("admin.hr.employees.show", $increase_insurances->employee_work->employee->id) . '">' . $increase_insurances->employee_work->employee->name . '</a>';
 
             })
-            ->editColumn('company_job', function ($employee_works) {
-                return $employee_works->company_job->name;
+            ->editColumn('company_job', function ($increase_insurances) {
+                return $increase_insurances->employee_work->company_job->name;
 
             })
-            ->editColumn('start_date', function ($employee_works) {
-                return date('d/m/Y', strtotime($employee_works->start_date));
+            ->editColumn('start_date', function ($increase_insurances) {
+                return date('d/m/Y', strtotime($increase_insurances->employee_work->start_date));
             })
-            ->editColumn('insurance_salary', function ($employee_works) use ($this_month, $this_year){
+            ->editColumn('confirmed_month', function ($increase_insurances) {
+                return date('m/Y', strtotime($increase_insurances->confirmed_month));
+            })
+            ->editColumn('insurance_salary', function ($increase_insurances) use ($this_month, $this_year){
                 // Tính lương bhxh tại tháng này
-                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurances->employee_work->employee_id, $this_month, $this_year);
                 if ($employee_salary) {
                     return number_format($employee_salary->insurance_salary, 0, '.', ',');
                 } else {
                     return '';
                 }
             })
-            ->editColumn('bhxh_increase', function ($employee_works) use ($this_month, $this_year){
+            ->editColumn('bhxh_increase', function ($increase_insurances) use ($this_month, $this_year){
                 // Tính toán số tiền tăng cho 1- bhxh
-                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                $employee_insurance = EmployeeInsurance::where('employee_id', $increase_insurances->employee_work->employee_id)
                                                         ->where('insurance_id', 1)
                                                         ->first();
                 if ($employee_insurance) {
-                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurances->employee_work->employee_id, $this_month, $this_year);
                     if ($employee_salary) {
                         $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                         return number_format($bhxh_increase, 0, '.', ',');
@@ -311,14 +316,13 @@ class AdminReportController extends Controller
                     return 'Chưa khai báo BHXH';
                 }
             })
-            ->editColumn('bhtn_increase', function ($employee_works) use ($this_month, $this_year){
-                // Tính toán số tiền tăng cho bhtn
+            ->editColumn('bhtn_increase', function ($increase_insurances) use ($this_month, $this_year){
                 // Tính toán số tiền tăng cho 2- bhtn
-                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                $employee_insurance = EmployeeInsurance::where('employee_id', $increase_insurances->employee_work->employee_id)
                                                         ->where('insurance_id', 2)
                                                         ->first();
                 if ($employee_insurance) {
-                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $this_month, $this_year);
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurances->employee_work->employee_id, $this_month, $this_year);
                     if ($employee_salary) {
                         $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                         return number_format($bhxh_increase, 0, '.', ',');
@@ -415,35 +419,40 @@ class AdminReportController extends Controller
 
     public function incBhxhByMonthData($month, $year)
     {
-        // 2 - Phát sinh tăng khi ký HĐLĐ
-        $employee_works = EmployeeWork::where('off_type_id', null)->where('on_type_id', 2)->whereMonth('start_date', $month)->whereYear('start_date', $year)->select('*');
-        return Datatables::of($employee_works)
+        $increase_insurances = IncreaseInsurance::where('confirmed_month', '!=', null)
+                                                ->whereMonth('confirmed_month', $month)
+                                                ->whereYear('confirmed_month', $year)
+                                                ->select('*');
+        return Datatables::of($increase_insurances)
             ->addIndexColumn()
-            ->editColumn('code', function ($employee_works) {
-                return $employee_works->employee->code;
+            ->editColumn('code', function ($increase_insurances) {
+                return $increase_insurances->employee_work->employee->code;
             })
-            ->editColumn('name', function ($employee_works) {
-                return '<a href="' . route("admin.hr.employees.show", $employee_works->employee->id) . '">' . $employee_works->employee->name . '</a>';
+            ->editColumn('name', function ($increase_insurances) {
+                return '<a href="' . route("admin.hr.employees.show", $increase_insurances->employee_work->employee->id) . '">' . $increase_insurances->employee_work->employee->name . '</a>';
             })
-            ->editColumn('start_date', function ($employee_works) {
-                return date('d/m/Y', strtotime($employee_works->start_date));
+            ->editColumn('start_date', function ($increase_insurances) {
+                return date('d/m/Y', strtotime($increase_insurances->employee_work->start_date));
             })
-            ->editColumn('insurance_salary', function ($employee_works) use ($month, $year){
+            ->editColumn('confirmed_month', function ($increase_insurances) {
+                return date('m/Y', strtotime($increase_insurances->confirmed_month));
+            })
+            ->editColumn('insurance_salary', function ($increase_insurances) use ($month, $year){
                 // Tính lương bhxh tại thời điểm chạy báo cáo
-                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $month, $year);
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurances->employee_work->employee_id, $month, $year);
                 if ($employee_salary) {
                     return number_format($employee_salary->insurance_salary, 0, '.', ',');
                 } else {
                     return '';
                 }
             })
-            ->editColumn('bhxh_increase', function ($employee_works) use ($month, $year){
+            ->editColumn('bhxh_increase', function ($increase_insurances) use ($month, $year){
                 // Tính toán số tiền tăng cho 1- bhxh
-                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                $employee_insurance = EmployeeInsurance::where('employee_id', $increase_insurances->employee_work->employee_id)
                                                         ->where('insurance_id', 1)
                                                         ->first();
                 if ($employee_insurance) {
-                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $month, $year);
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurances->employee_work->employee_id, $month, $year);
                     if ($employee_salary) {
                         $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                         return number_format($bhxh_increase, 0, '.', ',');
@@ -454,14 +463,14 @@ class AdminReportController extends Controller
                     return 'Chưa khai báo BHXH';
                 }
             })
-            ->editColumn('bhtn_increase', function ($employee_works) use ($month, $year){
+            ->editColumn('bhtn_increase', function ($increase_insurances) use ($month, $year){
                 // Tính toán số tiền tăng cho bhtn
                 // Tính toán số tiền tăng cho 2- bhtn
-                $employee_insurance = EmployeeInsurance::where('employee_id', $employee_works->employee_id)
+                $employee_insurance = EmployeeInsurance::where('employee_id', $increase_insurances->employee_work->employee_id)
                                                         ->where('insurance_id', 2)
                                                         ->first();
                 if ($employee_insurance) {
-                    $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_works->employee_id, $month, $year);
+                    $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurances->employee_work->employee_id, $month, $year);
                     if ($employee_salary) {
                         $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                         return number_format($bhxh_increase, 0, '.', ',');
@@ -908,9 +917,9 @@ class AdminReportController extends Controller
 
         //Get all increase bhxh by month, year
         if ($is_increase) {
-            $employee_works = EmployeeWork::where('on_type_id', 2)
-                                            ->whereMonth('start_date', $month)
-                                            ->whereYear('start_date', $year)
+            $increase_insurances = IncreaseInsurance::where('confirmed_month', '!=', null)
+                                            ->whereMonth('confirmed_month', $month)
+                                            ->whereYear('confirmed_month', $year)
                                             ->get();
         } else {
             //Get all decrease bhxh by month, year
@@ -923,7 +932,7 @@ class AdminReportController extends Controller
 
         $index = 0;
         $start_row = 3;
-        foreach ($employee_works as $employee_work) {
+        foreach ($increase_insurances as $increase_insurance) {
             $index += 1;
             //Write STT
             $w_sheet->getStyle('A'. ($start_row + $index))
@@ -936,76 +945,76 @@ class AdminReportController extends Controller
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('B' . ($start_row + $index), $employee_work->employee->code);
+            $w_sheet->setCellValue('B' . ($start_row + $index), $increase_insurance->employee_work->employee->code);
             //Write name
             $w_sheet->getStyle('C'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('C' . ($start_row + $index), $employee_work->employee->name);
+            $w_sheet->setCellValue('C' . ($start_row + $index), $increase_insurance->employee_work->employee->name);
             //Write BHXH
             $w_sheet->getStyle('D'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('D' . ($start_row + $index), $employee_work->employee->bhxh);
+            $w_sheet->setCellValue('D' . ($start_row + $index), $increase_insurance->employee_work->employee->bhxh);
             //Write CCCD
             $w_sheet->getStyle('E'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('E' . ($start_row + $index), $employee_work->employee->cccd);
+            $w_sheet->setCellValue('E' . ($start_row + $index), $increase_insurance->employee_work->employee->cccd);
             //Write date of birth
             $w_sheet->getStyle('F'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('F' . ($start_row + $index), date('d/m/Y', strtotime($employee_work->employee->date_of_birth)));
+            $w_sheet->setCellValue('F' . ($start_row + $index), date('d/m/Y', strtotime($increase_insurance->employee_work->employee->date_of_birth)));
             //Write gender
             $w_sheet->getStyle('G'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('G' . ($start_row + $index), $employee_work->employee->gender);
+            $w_sheet->setCellValue('G' . ($start_row + $index), $increase_insurance->employee_work->employee->gender);
             //Write company job
             $w_sheet->getStyle('H'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('H' . ($start_row + $index), $employee_work->company_job->name);
+            $w_sheet->setCellValue('H' . ($start_row + $index), $increase_insurance->employee_work->company_job->name);
             //Write address
             $w_sheet->getStyle('I'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
             $w_sheet->setCellValue('I' . ($start_row + $index),
-                                    $employee_work->employee->address
+                                    $increase_insurance->employee_work->employee->address
                                     . ', '
-                                    .  $employee_work->employee->commune->name
+                                    .  $increase_insurance->employee_work->employee->commune->name
                                     .', '
-                                    .  $employee_work->employee->commune->district->name
+                                    .  $increase_insurance->employee_work->employee->commune->district->name
                                     .', '
-                                    . $employee_work->employee->commune->district->province->name);
+                                    . $increase_insurance->employee_work->employee->commune->district->province->name);
             //Write phone
             $w_sheet->getStyle('J'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $w_sheet->setCellValue('J' . ($start_row + $index), $employee_work->employee->phone);
+            $w_sheet->setCellValue('J' . ($start_row + $index), $increase_insurance->employee_work->employee->phone);
             //Write contract code
             $w_sheet->getStyle('K'. ($start_row + $index))
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
             if ($is_increase) {
-                $employee_contract = EmployeeContract::where('employee_id', $employee_work->employee_id)
-                                                    ->where('company_job_id', $employee_work->company_job_id)
+                $employee_contract = EmployeeContract::where('employee_id', $increase_insurance->employee_work->employee_id)
+                                                    ->where('company_job_id', $increase_insurance->employee_work->company_job_id)
                                                     ->where('contract_type_id', 2) // 2: HĐ lao động
                                                     ->where('status', 'On')
                                                     ->first();
             } else {
-                $employee_contract = EmployeeContract::where('employee_id', $employee_work->employee_id)
-                                                    ->where('company_job_id', $employee_work->company_job_id)
+                $employee_contract = EmployeeContract::where('employee_id', $increase_insurance->employee_work->employee_id)
+                                                    ->where('company_job_id', $increase_insurance->employee_work->company_job_id)
                                                     ->where('contract_type_id', 2) // 2: HĐ lao động
                                                     ->where('status', 'Off')
                                                     ->whereMonth('end_date', $month)
@@ -1020,15 +1029,15 @@ class AdminReportController extends Controller
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
             if ($is_increase) {
-                $w_sheet->setCellValue('L' . ($start_row + $index), $employee_work->start_date);
+                $w_sheet->setCellValue('L' . ($start_row + $index), $increase_insurance->employee_work->start_date);
             } else {
                 $w_sheet->setCellValue('L' .($start_row + $index),
-                                        $employee_work->end_date .
-                                        ' (' . $employee_work->off_type->name .
+                                        $increase_insurance->employee_work->end_date .
+                                        ' (' . $increase_insurance->employee_work->off_type->name .
                                         ' - số QĐ: ' .
-                                        $employee_work->employee->code .
+                                        $increase_insurance->employee_work->employee->code .
                                         '/' .
-                                        date('Y', strtotime($employee_work->end_date)) .
+                                        date('Y', strtotime($increase_insurance->employee_work->end_date)) .
                                         '/QĐ-HH' .
                                         ')');
             }
@@ -1037,7 +1046,7 @@ class AdminReportController extends Controller
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $month, $year);
+            $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurance->employee_work->employee_id, $month, $year);
             if ($employee_salary) {
                 $w_sheet->setCellValue('M' . ($start_row + $index), $employee_salary->insurance_salary);
             } else {
@@ -1048,7 +1057,7 @@ class AdminReportController extends Controller
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            $employee_insurance = EmployeeInsurance::where('employee_id', $employee_work->employee_id)
+            $employee_insurance = EmployeeInsurance::where('employee_id', $increase_insurance->employee_work->employee_id)
                                                     ->where('insurance_id', 1)
                                                     ->first();
             if ($employee_insurance) {
@@ -1062,7 +1071,7 @@ class AdminReportController extends Controller
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
             if ($employee_insurance) {
-                $employee_salary = $this->getEmployeeSalaryByMonthYear($employee_work->employee_id, $month, $year);
+                $employee_salary = $this->getEmployeeSalaryByMonthYear($increase_insurance->employee_work->employee_id, $month, $year);
                 if ($employee_salary) {
                     $bhxh_increase = $employee_salary->insurance_salary * $employee_insurance->pay_rate / 100;
                     $w_sheet->setCellValue('O' . ($start_row + $index), $bhxh_increase);
