@@ -119,6 +119,7 @@
                         <th>Mã</th>
                         <th>Họ tên</th>
                         <th>Ngày phát sinh giảm</th>
+                        <th>Tháng báo giảm</th>
                         <th>Lương BHXH</th>
                         <th>Tiền giảm BHXH</th>
                         <th>Tiền giảm BHTN</th>
@@ -126,7 +127,7 @@
                     </thead>
                     <tfoot>
                         <tr>
-                            <th colspan="5">Tổng giảm</th>
+                            <th colspan="6">Tổng giảm</th>
                             <th id="total_dec_bhxh"></th>
                             <th id="total_dec_bhtn"></th>
                         </tr>
@@ -339,6 +340,7 @@
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'end_date', name: 'end_date'},
+            {data: 'confirmed_month', name: 'confirmed_month'},
             {data: 'insurance_salary', name: 'insurance_salary'},
             {data: 'bhxh_decrease', name: 'bhxh_decrease'},
             {data: 'bhtn_decrease', name: 'bhtn_decrease'},
@@ -353,7 +355,7 @@
             };
 
             var total_dec_bhxh = api
-                .column(5)
+                .column(6)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);
@@ -365,7 +367,7 @@
             ));
 
             var total_dec_bhtn = api
-                .column(6)
+                .column(7)
                 .data()
                 .reduce(function(a,b) {
                     return intVal(a) + intVal(b);

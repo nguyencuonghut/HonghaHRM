@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CompanyJob;
+use App\Models\DecreaseInsurance;
 use App\Models\EmployeeWork;
 use App\Models\IncreaseInsurance;
 use App\Models\OffType;
@@ -136,13 +137,20 @@ class AdminEmployeeWorkController extends Controller
     public function destroy($id)
     {
         $employee_work = EmployeeWork::findOrFail($id);
-        $employee_work->destroy($id);
-
         // Xóa bảng theo dõi tăng BHXH với HĐ ký mới là HĐLĐ
         if (2 == $employee_work->on_type_id) {
             $increase_insurance = IncreaseInsurance::where('employee_work_id', $employee_work->id)->first();
             $increase_insurance->destroy($increase_insurance->id);
         }
+
+        // Xóa bảng theo dõi giảm BHXH
+        if (2 == $employee_work->on_type_id) {
+            $increase_insurance = IncreaseInsurance::where('employee_work_id', $employee_work->id)->first();
+            $increase_insurance->destroy($increase_insurance->id);
+        }
+
+        $employee_work->destroy($id);
+
 
         Alert::toast('Xóa quá trình công tác mới thành công!', 'success', 'top-right');
         return redirect()->back();
@@ -182,6 +190,15 @@ class AdminEmployeeWorkController extends Controller
             $employee_work->off_reason = $request->off_reason;
         }
         $employee_work->save();
+
+        // Tạo bảng theo dõi giảm BHXH
+        if (2 == $employee_work->on_type_id
+            || 3 == $employee_work->on_type_id
+            || 4 == $employee_work->on_type_id) {
+            $decrease_insurance = new DecreaseInsurance();
+            $decrease_insurance->employee_work_id = $employee_work->id;
+            $decrease_insurance->save();
+        }
 
         Alert::toast('Cập nhật thành công!', 'success', 'top-right');
         return redirect()->route('admin.hr.employees.show', $employee_work->employee_id);
