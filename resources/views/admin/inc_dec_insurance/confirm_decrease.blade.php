@@ -1,5 +1,5 @@
 @section('title')
-{{ 'Xác nhận tăng BHXH' }}
+{{ 'Xác nhận giam BHXH' }}
 @endsection
 
 @push('styles')
@@ -15,11 +15,11 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Xác nhận tăng BHXH</h1>
+            <h1 class="m-0">Xác nhận giảm BHXH</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('admin.reports.candidateIncDecBhxh') }}">Tất cả dự kiến tăng BHXH</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('admin.reports.candidateIncDecBhxh') }}">Tất cả dự kiến tăng giảm BHXH</a></li>
               <li class="breadcrumb-item active">Xác nhận</li>
             </ol>
           </div><!-- /.col -->
@@ -33,16 +33,16 @@
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                    <form class="form-horizontal" method="post" action="{{ route('admin.increase_insurances.confirm', $increase_insurance->id) }}" name="confirm" id="confirm" novalidate="novalidate">
+                    <form class="form-horizontal" method="post" action="{{ route('admin.inc_dec_insurances.confirmDecrease', $increase_decrease_insurance->id) }}" name="confirm" id="confirm" novalidate="novalidate">
                         {{ csrf_field() }}
                         <!-- /.card-header -->
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12">
                                   <label class="required-field">Chọn tháng tăng</label>
-                                  <div class="input-group date" id="confirmed_month" data-target-input="nearest">
-                                      <input type="text" name="confirmed_month" class="form-control datetimepicker-input" value="{{date('m/Y', strtotime($increase_insurance->employee_work->start_date))}}" data-target="#confirmed_month"/>
-                                      <div class="input-group-append" data-target="#confirmed_month" data-toggle="datetimepicker">
+                                  <div class="input-group date" id="decrease_confirmed_month" data-target-input="nearest">
+                                      <input type="text" name="decrease_confirmed_month" class="form-control datetimepicker-input" value="{{date('m/Y', strtotime($increase_decrease_insurance->employee_work->end_date))}}" data-target="#decrease_confirmed_month"/>
+                                      <div class="input-group-append" data-target="#decrease_confirmed_month" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
                                   </div>
@@ -72,7 +72,7 @@
 <script>
     $(function () {
         //Date picker
-        $('#confirmed_month').datetimepicker({
+        $('#decrease_confirmed_month').datetimepicker({
             format: 'MM/YYYY'
         });
     })

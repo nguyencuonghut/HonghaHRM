@@ -55,8 +55,7 @@ use App\Http\Controllers\AdminEmployeeInsuranceController;
 use App\Http\Controllers\AdminEmployeeRegimeController;
 use App\Http\Controllers\AdminEmployeeWelfareController;
 use App\Http\Controllers\AdminEmployeeSalaryController;
-use App\Http\Controllers\DecreaseInsuranceController;
-use App\Http\Controllers\IncreaseInsuranceController;
+use App\Http\Controllers\IncreaseDecreaseInsuranceController;
 use App\Http\Controllers\UserHomeController;
 use App\Http\Controllers\UserLoginController;
 
@@ -277,11 +276,10 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('division_managers/data', [AdminDivisionManagerController::class, 'anyData'])->name('division_managers.data');
         Route::resource('division_managers', AdminDivisionManagerController::class);
 
-        Route::get('increase_insurances/confirm/{id}', [IncreaseInsuranceController::class, 'getConfirm'])->name('increase_insurances.getConfirm');
-        Route::post('increase_insurances/confirm/{id}', [IncreaseInsuranceController::class, 'confirm'])->name('increase_insurances.confirm');
-
-        Route::get('decrease_insurances/confirm/{id}', [DecreaseInsuranceController::class, 'getConfirm'])->name('decrease_insurances.getConfirm');
-        Route::post('decrease_insurances/confirm/{id}', [DecreaseInsuranceController::class, 'confirm'])->name('decrease_insurances.confirm');
+        Route::get('inc_dec_insurances/confirmIncrease/{id}', [IncreaseDecreaseInsuranceController::class, 'getConfirmIncrease'])->name('inc_dec_insurances.getConfirmIncrease');
+        Route::post('inc_dec_insurances/confirmIncrease/{id}', [IncreaseDecreaseInsuranceController::class, 'confirmIncrease'])->name('inc_dec_insurances.confirmIncrease');
+        Route::get('inc_dec_insurances/confirm/{id}', [IncreaseDecreaseInsuranceController::class, 'getConfirm'])->name('inc_dec_insurances.getConfirmDecrease');
+        Route::post('inc_dec_insurances/confirm/{id}', [IncreaseDecreaseInsuranceController::class, 'confirm'])->name('inc_dec_insurances.confirmDecrease');
     });
 });
 

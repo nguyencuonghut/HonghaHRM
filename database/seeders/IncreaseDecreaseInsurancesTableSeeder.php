@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
 
-class IncreaseInsurancesTableSeeder extends Seeder
+class IncreaseDecreaseInsurancesTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -16,14 +16,16 @@ class IncreaseInsurancesTableSeeder extends Seeder
     public function run(): void
     {
 
-        DB::table('increase_insurances')->delete();
+        DB::table('increase_decrease_insurances')->delete();
 
-        DB::table('increase_insurances')->insert(array (
+        DB::table('increase_decrease_insurances')->insert(array (
             0 =>
                 array (
                     'id' => 1,
                     'employee_work_id' => 1,
-                    'confirmed_month' => '2014-01-01',
+                    'increase_confirmed_month' => '2014-01-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -31,7 +33,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 2,
                     'employee_work_id' => 3,
-                    'confirmed_month' => '2016-09-01',
+                    'increase_confirmed_month' => '2016-09-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -39,7 +43,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 3,
                     'employee_work_id' => 4,
-                    'confirmed_month' => '2020-02-01',
+                    'increase_confirmed_month' => '2020-02-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -47,7 +53,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 4,
                     'employee_work_id' => 6,
-                    'confirmed_month' => null,
+                    'increase_confirmed_month' => null,
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -55,7 +63,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 5,
                     'employee_work_id' => 8,
-                    'confirmed_month' => null,
+                    'increase_confirmed_month' => null,
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -63,7 +73,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 6,
                     'employee_work_id' => 9,
-                    'confirmed_month' => '2015-06-01',
+                    'increase_confirmed_month' => '2015-06-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -71,7 +83,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 7,
                     'employee_work_id' => 11,
-                    'confirmed_month' => '2012-08-01',
+                    'increase_confirmed_month' => '2012-08-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -79,7 +93,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 8,
                     'employee_work_id' => 13,
-                    'confirmed_month' => '2023-09-01',
+                    'increase_confirmed_month' => '2023-09-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -87,7 +103,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 9,
                     'employee_work_id' => 14,
-                    'confirmed_month' => '2011-10-01',
+                    'increase_confirmed_month' => '2011-10-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -95,7 +113,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 10,
                     'employee_work_id' => 15,
-                    'confirmed_month' => '2011-11-01',
+                    'increase_confirmed_month' => '2011-11-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -103,7 +123,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 11,
                     'employee_work_id' => 19,
-                    'confirmed_month' => '2011-04-01',
+                    'increase_confirmed_month' => '2011-04-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -111,7 +133,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 12,
                     'employee_work_id' => 20,
-                    'confirmed_month' => '2011-05-01',
+                    'increase_confirmed_month' => '2011-05-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -119,7 +143,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 13,
                     'employee_work_id' => 21,
-                    'confirmed_month' => '2011-06-01',
+                    'increase_confirmed_month' => '2011-06-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -127,7 +153,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 14,
                     'employee_work_id' => 23,
-                    'confirmed_month' => '2011-05-01',
+                    'increase_confirmed_month' => '2011-05-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -135,7 +163,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 15,
                     'employee_work_id' => 24,
-                    'confirmed_month' => '2013-06-01',
+                    'increase_confirmed_month' => '2013-06-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -143,7 +173,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 16,
                     'employee_work_id' => 26,
-                    'confirmed_month' => '2016-07-01',
+                    'increase_confirmed_month' => '2016-07-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -151,7 +183,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 17,
                     'employee_work_id' => 28,
-                    'confirmed_month' => '2015-08-01',
+                    'increase_confirmed_month' => '2015-08-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -159,7 +193,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 18,
                     'employee_work_id' => 29,
-                    'confirmed_month' => '2003-09-01',
+                    'increase_confirmed_month' => '2003-09-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -167,7 +203,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 19,
                     'employee_work_id' => 30,
-                    'confirmed_month' => '2015-10-01',
+                    'increase_confirmed_month' => '2015-10-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -175,7 +213,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 20,
                     'employee_work_id' => 32,
-                    'confirmed_month' => '2015-11-01',
+                    'increase_confirmed_month' => '2015-11-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -183,7 +223,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 21,
                     'employee_work_id' => 33,
-                    'confirmed_month' => '2018-12-01',
+                    'increase_confirmed_month' => '2018-12-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -191,7 +233,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 22,
                     'employee_work_id' => 34,
-                    'confirmed_month' => '2019-02-01',
+                    'increase_confirmed_month' => '2019-02-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -199,7 +243,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 23,
                     'employee_work_id' => 35,
-                    'confirmed_month' => '2022-03-01',
+                    'increase_confirmed_month' => '2022-03-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -207,7 +253,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 24,
                     'employee_work_id' => 37,
-                    'confirmed_month' => '2016-05-01',
+                    'increase_confirmed_month' => '2016-05-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -215,7 +263,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 25,
                     'employee_work_id' => 39,
-                    'confirmed_month' => '2024-03-01',
+                    'increase_confirmed_month' => '2024-03-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),
@@ -223,7 +273,9 @@ class IncreaseInsurancesTableSeeder extends Seeder
                 array (
                     'id' => 26,
                     'employee_work_id' => 40,
-                    'confirmed_month' => '2013-06-01',
+                    'increase_confirmed_month' => '2013-06-01',
+                    'is_increase' => true,
+                    'is_decrease' => false,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ),

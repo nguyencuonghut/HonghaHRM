@@ -239,7 +239,7 @@
             {data: 'code', name: 'code'},
             {data: 'name', name: 'name'},
             {data: 'start_date', name: 'start_date'},
-            {data: 'confirmed_month', name: 'confirmed_month'},
+            {data: 'increase_confirmed_month', name: 'increase_confirmed_month'},
             {data: 'insurance_salary', name: 'insurance_salary'},
             {data: 'bhxh_increase', name: 'bhxh_increase'},
             {data: 'bhtn_increase', name: 'bhtn_increase'},

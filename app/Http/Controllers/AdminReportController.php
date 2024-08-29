@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\DecreaseInsurance;
 use App\Models\Employee;
 use App\Models\EmployeeContract;
 use App\Models\EmployeeDocumentReport;
@@ -10,7 +9,7 @@ use App\Models\EmployeeInsurance;
 use App\Models\EmployeeWork;
 use App\Models\EmployeeRelative;
 use App\Models\EmployeeSalary;
-use App\Models\IncreaseInsurance;
+use App\Models\IncreaseDecreaseInsurance;
 use Illuminate\Http\Request;
 use Datatables;
 use Carbon\Carbon;
@@ -231,10 +230,11 @@ class AdminReportController extends Controller
 
     public function candidateIncBhxhData()
     {
-        $increase_insurances = IncreaseInsurance::where('confirmed_month', null)
-                                                ->select('employee_works.id AS employee_work_id', 'increase_insurances.id AS increase_insurance_id')
-                                                ->join('employee_works', 'employee_works.id', 'increase_insurances.employee_work_id')
-                                                ->get();
+        $increase_insurances = IncreaseDecreaseInsurance::where('increase_confirmed_month', null)
+                                                        ->where('is_increase', true)
+                                                        ->select('employee_works.id AS employee_work_id', 'increase_decrease_insurances.id AS increase_insurance_id')
+                                                        ->join('employee_works', 'employee_works.id', 'increase_decrease_insurances.employee_work_id')
+                                                        ->get();
         return Datatables::of($increase_insurances)
             ->addIndexColumn()
             ->editColumn('code', function ($increase_insurances) {
@@ -252,7 +252,7 @@ class AdminReportController extends Controller
                 return date('d/m/Y', strtotime($increase_insurances->employee_work->start_date));
             })
             ->addColumn('actions', function ($increase_insurances) {
-                $action = '<a href="' . route("admin.increase_insurances.getConfirm", $increase_insurances->increase_insurance_id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+                $action = '<a href="' . route("admin.inc_dec_insurances.getConfirmIncrease", $increase_insurances->increase_insurance_id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
                 return $action;
             })
             ->rawColumns(['name', 'actions'])
@@ -261,10 +261,11 @@ class AdminReportController extends Controller
 
     public function candidateDecBhxhData()
     {
-        $decrease_insurances = DecreaseInsurance::where('confirmed_month', null)
-                                                ->select('employee_works.id AS employee_work_id', 'decrease_insurances.id AS decrease_insurance_id')
-                                                ->join('employee_works', 'employee_works.id', 'decrease_insurances.employee_work_id')
-                                                ->get();
+        $decrease_insurances = IncreaseDecreaseInsurance::where('decrease_confirmed_month', null)
+                                                        ->where('is_decrease', true)
+                                                        ->select('employee_works.id AS employee_work_id', 'increase_decrease_insurances.id AS decrease_insurance_id')
+                                                        ->join('employee_works', 'employee_works.id', 'increase_decrease_insurances.employee_work_id')
+                                                        ->get();
         return Datatables::of($decrease_insurances)
             ->addIndexColumn()
             ->editColumn('code', function ($decrease_insurances) {
@@ -278,7 +279,7 @@ class AdminReportController extends Controller
                 return date('d/m/Y', strtotime($decrease_insurances->employee_work->end_date));
             })
             ->addColumn('actions', function ($decrease_insurances) {
-                $action = '<a href="' . route("admin.decrease_insurances.getConfirm", $decrease_insurances->decrease_insurance_id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
+                $action = '<a href="' . route("admin.inc_dec_insurances.getConfirmDecrease", $decrease_insurances->decrease_insurance_id) . '" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i></a>';
                 return $action;
             })
             ->rawColumns(['name', 'actions'])
@@ -294,10 +295,11 @@ class AdminReportController extends Controller
     {
         $this_month = Carbon::now()->month;
         $this_year = Carbon::now()->year;
-        $increase_insurances = IncreaseInsurance::where('confirmed_month', '!=', null)
-                                                ->whereMonth('confirmed_month', $this_month)
-                                                ->whereYear('confirmed_month', $this_year)
-                                                ->select('*');
+        $increase_insurances = IncreaseDecreaseInsurance::where('increase_confirmed_month', '!=', null)
+                                                        ->where('is_increase', true)
+                                                        ->whereMonth('increase_confirmed_month', $this_month)
+                                                        ->whereYear('increase_confirmed_month', $this_year)
+                                                        ->select('*');
         return Datatables::of($increase_insurances)
             ->addIndexColumn()
             ->editColumn('code', function ($increase_insurances) {
@@ -314,8 +316,8 @@ class AdminReportController extends Controller
             ->editColumn('start_date', function ($increase_insurances) {
                 return date('d/m/Y', strtotime($increase_insurances->employee_work->start_date));
             })
-            ->editColumn('confirmed_month', function ($increase_insurances) {
-                return date('m/Y', strtotime($increase_insurances->confirmed_month));
+            ->editColumn('increase_confirmed_month', function ($increase_insurances) {
+                return date('m/Y', strtotime($increase_insurances->increase_confirmed_month));
             })
             ->editColumn('insurance_salary', function ($increase_insurances) use ($this_month, $this_year){
                 // Tính lương bhxh tại tháng này
@@ -368,10 +370,11 @@ class AdminReportController extends Controller
     {
         $this_month = Carbon::now()->month;
         $this_year = Carbon::now()->year;
-        $decrease_insurances = DecreaseInsurance::where('confirmed_month', '!=', null)
-                                                ->whereMonth('confirmed_month', $this_month)
-                                                ->whereYear('confirmed_month', $this_year)
-                                                ->select('*');
+        $decrease_insurances = IncreaseDecreaseInsurance::where('decrease_confirmed_month', '!=', null)
+                                                        ->where('is_decrease', true)
+                                                        ->whereMonth('decrease_confirmed_month', $this_month)
+                                                        ->whereYear('decrease_confirmed_month', $this_year)
+                                                        ->select('*');
         return Datatables::of($decrease_insurances)
             ->addIndexColumn()
             ->editColumn('code', function ($decrease_insurances) {
@@ -384,8 +387,8 @@ class AdminReportController extends Controller
             ->editColumn('end_date', function ($decrease_insurances) {
                 return date('d/m/Y', strtotime($decrease_insurances->employee_work->end_date));
             })
-            ->editColumn('confirmed_month', function ($decrease_insurances) {
-                return date('m/Y', strtotime($decrease_insurances->confirmed_month));
+            ->editColumn('decrease_confirmed_month', function ($decrease_insurances) {
+                return date('m/Y', strtotime($decrease_insurances->decrease_confirmed_month));
             })
             ->editColumn('insurance_salary', function ($decrease_insurances) use ($this_month, $this_year){
                 // Tính lương bhxh tại tháng này
@@ -448,10 +451,11 @@ class AdminReportController extends Controller
 
     public function incBhxhByMonthData($month, $year)
     {
-        $increase_insurances = IncreaseInsurance::where('confirmed_month', '!=', null)
-                                                ->whereMonth('confirmed_month', $month)
-                                                ->whereYear('confirmed_month', $year)
-                                                ->select('*');
+        $increase_insurances = IncreaseDecreaseInsurance::where('increase_confirmed_month', '!=', null)
+                                                        ->where('is_increase', true)
+                                                        ->whereMonth('increase_confirmed_month', $month)
+                                                        ->whereYear('increase_confirmed_month', $year)
+                                                        ->select('*');
         return Datatables::of($increase_insurances)
             ->addIndexColumn()
             ->editColumn('code', function ($increase_insurances) {
@@ -463,8 +467,8 @@ class AdminReportController extends Controller
             ->editColumn('start_date', function ($increase_insurances) {
                 return date('d/m/Y', strtotime($increase_insurances->employee_work->start_date));
             })
-            ->editColumn('confirmed_month', function ($increase_insurances) {
-                return date('m/Y', strtotime($increase_insurances->confirmed_month));
+            ->editColumn('increase_confirmed_month', function ($increase_insurances) {
+                return date('m/Y', strtotime($increase_insurances->increase_confirmed_month));
             })
             ->editColumn('insurance_salary', function ($increase_insurances) use ($month, $year){
                 // Tính lương bhxh tại thời điểm chạy báo cáo
@@ -516,10 +520,11 @@ class AdminReportController extends Controller
 
     public function decBhxhByMonthData($month, $year)
     {
-        $decrease_insurances = DecreaseInsurance::where('confirmed_month', '!=', null)
-                                                ->whereMonth('confirmed_month', $month)
-                                                ->whereYear('confirmed_month', $year)
-                                                ->select('*');
+        $decrease_insurances = IncreaseDecreaseInsurance::where('decrease_confirmed_month', '!=', null)
+                                                        ->where('is_decrease', true)
+                                                        ->whereMonth('decrease_confirmed_month', $month)
+                                                        ->whereYear('decrease_confirmed_month', $year)
+                                                        ->select('*');
         return Datatables::of($decrease_insurances)
             ->addIndexColumn()
             ->editColumn('code', function ($decrease_insurances) {
@@ -532,8 +537,8 @@ class AdminReportController extends Controller
             ->editColumn('end_date', function ($decrease_insurances) {
                 return date('d/m/Y', strtotime($decrease_insurances->employee_work->end_date));
             })
-            ->editColumn('confirmed_month', function ($decrease_insurances) {
-                return date('m/Y', strtotime($decrease_insurances->confirmed_month));
+            ->editColumn('decrease_confirmed_month', function ($decrease_insurances) {
+                return date('m/Y', strtotime($decrease_insurances->decrease_confirmed_month));
             })
             ->editColumn('insurance_salary', function ($decrease_insurances) use ($month, $year){
                 // Tính lương bhxh tại thời điểm chạy báo cáo
@@ -951,16 +956,18 @@ class AdminReportController extends Controller
 
         //Get all increase bhxh by month, year
         if ($is_increase) {
-            $inc_dec_insurances = IncreaseInsurance::where('confirmed_month', '!=', null)
-                                            ->whereMonth('confirmed_month', $month)
-                                            ->whereYear('confirmed_month', $year)
-                                            ->get();
+            $inc_dec_insurances = IncreaseDecreaseInsurance::where('increase_confirmed_month', '!=', null)
+                                                            ->where('is_increase', true)
+                                                            ->whereMonth('increase_confirmed_month', $month)
+                                                            ->whereYear('increase_confirmed_month', $year)
+                                                            ->get();
         } else {
             //Get all decrease bhxh by month, year
-            $inc_dec_insurances = DecreaseInsurance::where('confirmed_month', '!=', null)
-                                            ->whereMonth('confirmed_month', $month)
-                                            ->whereYear('confirmed_month', $year)
-                                            ->get();
+            $inc_dec_insurances = IncreaseDecreaseInsurance::where('decrease_confirmed_month', '!=', null)
+                                                            ->where('is_decrease', true)
+                                                            ->whereMonth('decrease_confirmed_month', $month)
+                                                            ->whereYear('decrease_confirmed_month', $year)
+                                                            ->get();
         }
 
 
