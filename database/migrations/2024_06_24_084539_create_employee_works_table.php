@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_works', function (Blueprint $table) {
             $table->id();
+            $table->string('contract_code');
             $table->foreignId('employee_id')->constrained('employees');
             $table->foreignId('company_job_id')->constrained('company_jobs');
             $table->foreignId('off_type_id')->nullable()->constrained('off_types');

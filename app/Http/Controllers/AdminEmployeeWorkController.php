@@ -36,6 +36,7 @@ class AdminEmployeeWorkController extends Controller
     public function store(Request $request)
     {
         $rules = [
+            'contract_code' => 'required',
             'employee_id' => 'required',
             'company_job_id' => 'required',
             'on_type_id' => 'required',
@@ -43,6 +44,7 @@ class AdminEmployeeWorkController extends Controller
         ];
 
         $messages = [
+            'contract_code.required' => 'Bạn phải nhập số hợp đồng.',
             'employee_id.required' => 'Số Id nhân sự chưa có.',
             'company_job_id.required' => 'Bạn cần chọn Vị trí.',
             'on_type_id.required' => 'Bạn cần chọn Phân loại tạo.',
@@ -57,6 +59,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->company_job_id = $request->company_job_id;
         $employee_work->on_type_id = $request->on_type_id;
         $employee_work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
+        $employee_work->contract_code = $request->contract_code;
         $employee_work->status = 'On';
         $employee_work->save();
 
@@ -101,12 +104,14 @@ class AdminEmployeeWorkController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
+            'contract_code' => 'required',
             'company_job_id' => 'required',
             'on_type_id' => 'required',
             's_date' => 'required',
         ];
 
         $messages = [
+            'contract_code.required' => 'Bạn phải nhập số hợp đồng.',
             'company_job_id.required' => 'Bạn cần chọn Vị trí.',
             'on_type_id.required' => 'Bạn cần chọn Phân loại tạo.',
             's_date.required' => 'Bạn cần nhập ngày bắt đầu.',
@@ -119,6 +124,7 @@ class AdminEmployeeWorkController extends Controller
         $employee_work->company_job_id = $request->company_job_id;
         $employee_work->on_type_id = $request->on_type_id;
         $employee_work->start_date = Carbon::createFromFormat('d/m/Y', $request->s_date);
+        $employee_work->contract_code = $request->contract_code;
         $employee_work->save();
 
         // Xóa bảng theo dõi tăng BHXH với HĐ ký mới khác HĐLĐ

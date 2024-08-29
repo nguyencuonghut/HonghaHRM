@@ -1047,21 +1047,9 @@ class AdminReportController extends Controller
                     ->getBorders()
                     ->getOutline()
                     ->setBorderStyle(Border::BORDER_THIN);
-            if ($is_increase) {
-                $employee_contract = EmployeeContract::where('employee_id', $inc_dec_insurance->employee_work->employee_id)
-                                                    ->where('company_job_id', $inc_dec_insurance->employee_work->company_job_id)
-                                                    ->where('contract_type_id', 2) // 2: HĐ lao động
-                                                    ->where('status', 'On')
-                                                    ->first();
-            } else {
-                $employee_contract = EmployeeContract::where('employee_id', $inc_dec_insurance->employee_work->employee_id)
-                                                    ->where('company_job_id', $inc_dec_insurance->employee_work->company_job_id)
-                                                    ->where('contract_type_id', 2) // 2: HĐ lao động
-                                                    ->orderBy('id', 'desc')
-                                                    ->first();
-            }
 
-           // dd($inc_dec_insurance->employee_work->employee_id);
+            $employee_contract = EmployeeContract::where('code', $inc_dec_insurance->employee_work->contract_code)->first();
+
             $w_sheet->setCellValue('K' . ($start_row + $index), $employee_contract->code);
             //Write contract start date/end date
             $w_sheet->getStyle('L'. ($start_row + $index))
