@@ -130,7 +130,9 @@ class AdminEmployeeWorkController extends Controller
         // Xóa bảng theo dõi tăng BHXH với HĐ ký mới khác HĐLĐ
         if (2 != $request->on_type_id) {
             $increase_decrease_insurance = IncreaseDecreaseInsurance::where('employee_work_id', $employee_work->id)->first();
-            $increase_decrease_insurance->destroy($increase_decrease_insurance->id);
+            if ($increase_decrease_insurance) {
+                $increase_decrease_insurance->destroy($increase_decrease_insurance->id);
+            }
         }
 
         Alert::toast('Sửa quá trình công tác mới thành công!', 'success', 'top-right');

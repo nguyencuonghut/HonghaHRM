@@ -14,6 +14,7 @@
             <table id="employee-workings-table" class="table table-bordered table-striped">
                 <thead>
                   <tr>
+                    <th>Mã HĐ</th>
                     <th>Vị trí</th>
                     <th>Ngày bắt đầu</th>
                     <th>Ngày kết thúc</th>
@@ -43,6 +44,7 @@
                               $action = $action . $action_edit_working;
                           }
                       @endphp
+                      <td>{{$employee_work->contract_code}}</td>
                       <td>
                         @php
                             $company_job_str = '';
@@ -113,6 +115,26 @@
                                                         <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                         @foreach ($company_jobs as $company_job)
                                                             <option value="{{$company_job->id}}" @if($employee_contract && $company_job->id == $employee_contract->company_job_id) selected="selected" @endif>{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @php
+                                    $employee_contracts = App\Models\EmployeeContract::where('employee_id', $employee->id)->orderBy('id', 'desc')->get();
+                                @endphp
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="control-group">
+                                            <div class="control-group">
+                                                <label class="required-field" class="control-label">Mã hợp đồng</label>
+                                                <div class="controls">
+                                                    <select name="contract_code" id="contract_code" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                        @foreach ($employee_contracts as $employee_contract)
+                                                            <option value="{{$employee_contract->code}}">{{$employee_contract->code}} </option>
                                                         @endforeach
                                                     </select>
                                                 </div>

@@ -45,7 +45,7 @@
                                 $employee_contract = App\Models\EmployeeContract::where('employee_id', $employee_work->employee_id)->orderBy('id', 'desc')->first();
                             @endphp
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-6">
                                     <div class="control-group">
                                         <div class="control-group">
                                             <label class="required-field" class="control-label">Vị trí</label>
@@ -54,6 +54,23 @@
                                                     <option value="-- Chọn --" disabled="disabled" selected="selected">-- Chọn --</option>
                                                     @foreach ($company_jobs as $company_job)
                                                         <option value="{{$company_job->id}}" @if ($company_job->id == $employee_contract->company_job_id) selected="selected" @endif>{{$company_job->name}} {{$company_job->division_id ? (' - ' . $company_job->division->name) : ''}} {{$company_job->department_id ? ( ' - ' . $company_job->department->name) : ''}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @php
+                                    $employee_contracts = App\Models\EmployeeContract::where('employee_id', $employee_work->employee_id)->orderBy('id', 'desc')->get();
+                                @endphp
+                                <div class="col-6">
+                                    <div class="control-group">
+                                        <div class="control-group">
+                                            <label class="required-field" class="control-label">Mã hợp đồng</label>
+                                            <div class="controls">
+                                                <select name="contract_code" id="contract_code" data-placeholder="Chọn" class="form-control select2" style="width: 100%;">
+                                                    @foreach ($employee_contracts as $employee_contract)
+                                                        <option value="{{$employee_contract->code}}" @if ($employee_contract->code == $employee_work->contract_code) selected="selected" @endif>{{$employee_contract->code}}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
