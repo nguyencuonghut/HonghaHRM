@@ -371,6 +371,15 @@
               </p>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a href="{{route('admin.schools.index')}}" class="nav-link {{ Request::is('admin/schools*') ? 'active' : '' }}">
+              <i class="fas fa-graduation-cap"></i>
+              <p>
+                Trường
+              </p>
+            </a>
+          </li>
           @endauth
         </ul>
       </nav>

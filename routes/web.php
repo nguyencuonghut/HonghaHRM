@@ -131,6 +131,7 @@ Route::name('admin.')->prefix('admin')->group(function() {
         Route::get('communes/data', [AdminCommuneController::class, 'anyData'])->name('communes.data');
         Route::resource('communes', AdminCommuneController::class);
 
+        Route::get('schools/data', [AdminSchoolController::class, 'anyData'])->name('schools.data');
         Route::resource('schools', AdminSchoolController::class);
 
         Route::resource('degrees', AdminDegreeController::class);

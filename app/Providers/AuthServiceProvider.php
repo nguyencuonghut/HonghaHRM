@@ -41,6 +41,7 @@ class AuthServiceProvider extends ServiceProvider
         'create-insurance' => ['Admin', 'Nhân sự'],
         'create-welfare' => ['Admin', 'Nhân sự'],
         'create-salary' => ['Admin', 'Nhân sự'],
+        'create-school' => ['Admin', 'Nhân sự'],
     ];
 
     /**
